@@ -2,27 +2,35 @@ import { useState, useEffect } from 'react';
 import type { Question } from '../utils/quizParser';
 
 interface QuizProps {
+  setId?: string;
+  setTitle?: string;
   questions: Question[];
   onFinish: (answers: Record<number, string>) => void;
   onBack: () => void;
 }
 
-const STORAGE_KEY_INDEX = 'keyt_quiz_index';
-const STORAGE_KEY_ANSWERS = 'keyt_quiz_answers';
-const STORAGE_KEY_MASTERED = 'keyt_quiz_mastered';
+export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: QuizProps) {
+  const storageKeyIndex = setId ? `keyt_quiz_index_${setId}` : 'keyt_quiz_index';
+  const storageKeyAnswers = setId ? `keyt_quiz_answers_${setId}` : 'keyt_quiz_answers';
+  const storageKeyMastered = setId ? `keyt_quiz_mastered_${setId}` : 'keyt_quiz_mastered';
 
-export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
   // Load initial states from localStorage
   const [currentIndex, setCurrentIndex] = useState<number>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_INDEX);
+    const saved = localStorage.getItem(storageKeyIndex);
     const parsed = saved !== null ? parseInt(saved, 10) : 0;
     return !isNaN(parsed) && parsed >= 0 && parsed < questions.length ? parsed : 0;
   });
 
   const [answers, setAnswers] = useState<Record<number, string>>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_ANSWERS);
-      return saved ? JSON.parse(saved) : {};
+      const saved = localStorage.getItem(storageKeyAnswers);
+      if (saved) return JSON.parse(saved);
+      // Fallback for legacy key
+      if (setId === 'ccnc_426') {
+        const legacy = localStorage.getItem('keyt_quiz_answers');
+        if (legacy) return JSON.parse(legacy);
+      }
+      return {};
     } catch {
       return {};
     }
@@ -30,8 +38,14 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
 
   const [masteredIds, setMasteredIds] = useState<number[]>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_MASTERED);
-      return saved ? JSON.parse(saved) : [];
+      const saved = localStorage.getItem(storageKeyMastered);
+      if (saved) return JSON.parse(saved);
+      // Fallback for legacy key
+      if (setId === 'ccnc_426') {
+        const legacy = localStorage.getItem('keyt_quiz_mastered');
+        if (legacy) return JSON.parse(legacy);
+      }
+      return [];
     } catch {
       return [];
     }
@@ -41,16 +55,16 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
 
   // Sync to localStorage
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_INDEX, currentIndex.toString());
-  }, [currentIndex]);
+    localStorage.setItem(storageKeyIndex, currentIndex.toString());
+  }, [currentIndex, storageKeyIndex]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_ANSWERS, JSON.stringify(answers));
-  }, [answers]);
+    localStorage.setItem(storageKeyAnswers, JSON.stringify(answers));
+  }, [answers, storageKeyAnswers]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_MASTERED, JSON.stringify(masteredIds));
-  }, [masteredIds]);
+    localStorage.setItem(storageKeyMastered, JSON.stringify(masteredIds));
+  }, [masteredIds, storageKeyMastered]);
 
   const question = questions[currentIndex];
   const selectedAnswer = answers[question.id];
@@ -95,9 +109,9 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
       setCurrentIndex(0);
       setAnswers({});
       setMasteredIds([]);
-      localStorage.removeItem(STORAGE_KEY_INDEX);
-      localStorage.removeItem(STORAGE_KEY_ANSWERS);
-      localStorage.removeItem(STORAGE_KEY_MASTERED);
+      localStorage.removeItem(storageKeyIndex);
+      localStorage.removeItem(storageKeyAnswers);
+      localStorage.removeItem(storageKeyMastered);
     }
   };
 
@@ -106,7 +120,7 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
       {/* Top Banner */}
       <div className="fuo-header-banner">
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span className="fuo-header-title">MULTIPLE CHOICE</span>
+          <span className="fuo-header-title">{setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE'}</span>
           <span className="fuo-learned-badge">
             ✓ Đã học: {masteredIds.length}/{questions.length} ({Math.round((masteredIds.length / questions.length) * 100)}%)
           </span>
@@ -124,7 +138,7 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
             🔄 Học lại từ đầu
           </button>
           <button type="button" className="fuo-btn-text" onClick={onBack}>
-            Đổi đề thi
+            ← Đổi bộ đề
           </button>
         </div>
       </div>

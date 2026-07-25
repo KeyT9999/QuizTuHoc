@@ -359,3 +359,209 @@
   gap: 12px;
   justify-content: flex-end;
 }
+
+/* ===========================
+   TESLA MINIMALIST STYLES
+   =========================== */
+
+.tesla-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #171a20;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.tesla-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 48px;
+  background-color: #ffffff;
+}
+
+.tesla-logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 8px;
+  color: #171a20;
+}
+
+/* Main Content Area */
+.tesla-main-content {
+  max-width: 1080px;
+  margin: 40px auto 80px;
+  padding: 0 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tesla-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  align-items: stretch;
+}
+
+.tesla-spec-column {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+
+.tesla-spec-column:hover {
+  border-color: #171a20;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+.tesla-huge-model-title {
+  font-size: 56px;
+  font-weight: 800;
+  color: #171a20;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  margin-bottom: 8px;
+}
+
+.tesla-model-sub-tag {
+  font-size: 13px;
+  font-weight: 500;
+  color: #5c5e62;
+  margin-bottom: 24px;
+}
+
+.tesla-divider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin-bottom: 28px;
+}
+
+/* Metric Groups */
+.tesla-metric-group {
+  margin-bottom: 24px;
+}
+
+.tesla-metric-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #70757a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.tesla-metric-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #171a20;
+  line-height: 1.1;
+}
+
+.tesla-metric-value.text-medium {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tesla-metric-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: #5c5e62;
+  margin-left: 4px;
+}
+
+.tesla-add-body {
+  margin-bottom: 24px;
+}
+
+.tesla-add-desc {
+  font-size: 14px;
+  color: #5c5e62;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Prominent Action Button */
+.tesla-action-area {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.tesla-btn-prominent {
+  width: 100%;
+  background-color: #171a20;
+  color: #ffffff;
+  border: 3px solid #171a20;
+  padding: 16px 24px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(23, 26, 32, 0.25);
+}
+
+.tesla-btn-prominent:hover {
+  background-color: #000000;
+  border-color: #000000;
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.tesla-btn-prominent.secondary {
+  background-color: #ffffff;
+  color: #171a20;
+  box-shadow: none;
+}
+
+.tesla-btn-prominent.secondary:hover {
+  background-color: #171a20;
+  color: #ffffff;
+}
+
+.tesla-spec-column.add-column {
+  border-style: dashed;
+  cursor: pointer;
+}
+
+/* Footer */
+.tesla-footer {
+  margin-top: auto;
+  border-top: 1px solid #f1f5f9;
+  padding: 32px 24px;
+  background-color: #ffffff;
+}
+
+.tesla-footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  font-size: 12px;
+  color: #70757a;
+}
+
+.tesla-footer-links a {
+  color: #70757a;
+  text-decoration: none;
+}
+
+.tesla-footer-links a:hover {
+  color: #171a20;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .tesla-huge-model-title {
+    font-size: 42px;
+  }
+}

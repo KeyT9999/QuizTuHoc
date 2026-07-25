@@ -552,10 +552,6 @@ A
 
 The classic projective technique, "Completion and Interpretation Tasks" uses incomplete or ambiguous stimuli to elicit consumer thoughts and. | A. Concerns | B. Feelings | C. Analysis | D. Comparison
 B
-Chưa học (287)
-Bạn chưa học các thuật ngữ này!
-
-Chọn 287
 
 
 What is the role of market segmentation in managing brands across geographic boundaries?(NHUNG HOÀNG) | A. To target specific market segments with customized offerings | B. To establish a consistent brand image across all geographic markets | C. To maximize profits by targeting high-value market segments | D. To protect the brand's intellectual property rights globally
@@ -564,6 +560,10 @@ A
 
 Other geographic associations besides country of origin are possible such as: (check all that apply) | A. States. | B. Regions. | C. Cities. | D. People.
 ABC
+Chưa học (285)
+Bạn chưa học các thuật ngữ này!
+
+Chọn 285
 
 
 Which of these statements is untrue? | A. Marketers should fully understand consumer perceptions of value for pricing strategies. | B. Successful brands often create strong, favorable, and unique brand associations, with both functional a symbolic benefits. | C. From a brand equity perspective, consumers do not have to find the price of the brand appropriate and given the benefits they receive from the product and its relative advantages over competitive offerings, am other factors. | D. Marketers personalize their consumer interactions through experiential and relationship marketing

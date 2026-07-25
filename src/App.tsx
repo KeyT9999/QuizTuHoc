@@ -1,21 +1,49 @@
 import { useState } from 'react';
+import QuizSetSelector from './components/QuizSetSelector';
 import TextInput from './components/TextInput';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
-import { SAMPLE_QUIZ_TEXT } from './data/sampleQuiz';
+import { DEFAULT_QUIZ_SETS, type QuizSetInfo } from './data/quizSets';
 import './App.css';
 
-type AppScreen = 'input' | 'quiz' | 'result';
+type AppScreen = 'quiz_list' | 'input' | 'quiz' | 'result';
 
 export default function App() {
-  const defaultQuestions = parseQuizText(SAMPLE_QUIZ_TEXT);
-  const [screen, setScreen] = useState<AppScreen>('quiz');
-  const [questions, setQuestions] = useState<Question[]>(defaultQuestions);
+  const [screen, setScreen] = useState<AppScreen>('quiz_list');
+  const [quizSets, setQuizSets] = useState<QuizSetInfo[]>(DEFAULT_QUIZ_SETS);
+  const [currentSet, setCurrentSet] = useState<QuizSetInfo | null>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
-  const handleStartQuiz = (parsedQuestions: Question[]) => {
+  const handleSelectSet = (setInfo: QuizSetInfo) => {
+    const parsed = parseQuizText(setInfo.rawText);
+    setCurrentSet(setInfo);
+    setQuestions(parsed);
+    setAnswers({});
+    setScreen('quiz');
+  };
+
+  const handleCreateNewSet = () => {
+    setScreen('input');
+  };
+
+  const handleStartCustomQuiz = (
+    parsedQuestions: Question[],
+    title: string = 'Bộ đề tự nhập',
+    rawText: string = ''
+  ) => {
+    const newSet: QuizSetInfo = {
+      id: `custom_${Date.now()}`,
+      title,
+      description: `Bộ đề tự dán (${parsedQuestions.length} câu)`,
+      category: 'Bộ đề tự tạo',
+      badge: `${parsedQuestions.length} câu`,
+      rawText: rawText,
+    };
+    setQuizSets((prev) => [...prev, newSet]);
+    setCurrentSet(newSet);
     setQuestions(parsedQuestions);
     setAnswers({});
     setScreen('quiz');
@@ -31,23 +59,33 @@ export default function App() {
     setScreen('quiz');
   };
 
-  const handleNewQuiz = () => {
-    setScreen('input');
-  };
-
-  const handleBackToInput = () => {
-    setScreen('input');
+  const handleBackToQuizList = () => {
+    setScreen('quiz_list');
   };
 
   return (
     <div className="app">
       <main className="app-main">
-        {screen === 'input' && <TextInput onStartQuiz={handleStartQuiz} />}
+        {screen === 'quiz_list' && (
+          <QuizSetSelector
+            quizSets={quizSets}
+            onSelectSet={handleSelectSet}
+            onCreateNewSet={handleCreateNewSet}
+          />
+        )}
+        {screen === 'input' && (
+          <TextInput
+            onStartQuiz={handleStartCustomQuiz}
+            onBack={handleBackToQuizList}
+          />
+        )}
         {screen === 'quiz' && questions.length > 0 && (
           <Quiz
+            setId={currentSet?.id}
+            setTitle={currentSet?.title}
             questions={questions}
             onFinish={handleFinishQuiz}
-            onBack={handleBackToInput}
+            onBack={handleBackToQuizList}
           />
         )}
         {screen === 'result' && (
@@ -55,7 +93,7 @@ export default function App() {
             questions={questions}
             answers={answers}
             onRetry={handleRetry}
-            onNewQuiz={handleNewQuiz}
+            onNewQuiz={handleBackToQuizList}
           />
         )}
       </main>

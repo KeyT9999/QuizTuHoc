@@ -40,36 +40,64 @@ export function parseQuizText(rawText: string): Question[] {
     if (!ansMatch) continue;
 
     const correctAnswerKey = ansMatch[1].toUpperCase().charAt(0);
+    const contentLines = lines.slice(0, lines.length - 1);
 
-    // Combine remaining lines into question content
-    const contentText = lines.slice(0, lines.length - 1).join(' ');
-
-    // Split question content by |
-    const parts = contentText.split('|').map((p) => p.trim()).filter((p) => p.length > 0);
-    if (parts.length < 2) continue;
-
-    const questionText = parts[0];
-
-    // Parse options (A. Option, B. Option, etc.)
     const options: QuizOption[] = [];
-    for (let j = 1; j < parts.length; j++) {
-      const optMatch = parts[j].match(/^([A-Z])[\.\s]\s*(.+)$/i);
-      if (optMatch) {
-        options.push({
-          key: optMatch[1].toUpperCase(),
-          text: optMatch[2].trim(),
-        });
+    const seenKeys = new Set<string>();
+    let questionText = '';
+
+    // Strategy 1: Check if options are split by '|' on a single/joined line
+    const contentText = contentLines.join(' ');
+    const parts = contentText.split('|').map((p) => p.trim()).filter((p) => p.length > 0);
+    if (parts.length >= 2) {
+      questionText = parts[0];
+      for (let j = 1; j < parts.length; j++) {
+        const optMatch = parts[j].match(/^([A-E])[\.\:\)\-]?\s*(.+)$/i);
+        if (optMatch) {
+          const key = optMatch[1].toUpperCase();
+          if (!seenKeys.has(key)) {
+            seenKeys.add(key);
+            options.push({
+              key,
+              text: optMatch[2].trim(),
+            });
+          }
+        }
       }
     }
 
-    if (options.length < 2) continue;
+    // Strategy 2: Multiline options (A., B., C., D. on separate lines)
+    if (options.length < 2) {
+      options.length = 0;
+      seenKeys.clear();
+      const qTextLines: string[] = [];
 
-    questions.push({
-      id: questions.length + 1,
-      text: questionText,
-      options,
-      correctAnswer: correctAnswerKey,
-    });
+      for (const line of contentLines) {
+        const optMatch = line.match(/^([A-E])[\.\:\)\-]\s*(.+)$/i);
+        if (optMatch) {
+          const key = optMatch[1].toUpperCase();
+          if (!seenKeys.has(key)) {
+            seenKeys.add(key);
+            options.push({
+              key,
+              text: optMatch[2].trim(),
+            });
+          }
+        } else if (options.length === 0) {
+          qTextLines.push(line);
+        }
+      }
+      questionText = qTextLines.join(' ');
+    }
+
+    if (options.length >= 2 && questionText.trim().length > 0) {
+      questions.push({
+        id: questions.length + 1,
+        text: questionText.trim(),
+        options,
+        correctAnswer: correctAnswerKey,
+      });
+    }
   }
 
   return questions;
