@@ -1,20 +1,10 @@
 import { useState } from 'react';
 import { parseQuizText, type Question } from '../utils/quizParser';
+import { SAMPLE_QUIZ_TEXT } from '../data/sampleQuiz';
 
 interface TextInputProps {
   onStartQuiz: (questions: Question[]) => void;
 }
-
-const SAMPLE_TEXT = `"The differential effect that brand knowledge has on customer response to the marketing of that brand" is the definition of? | A. Customer-Based Brand Equity | B. Consumer-Based Brand Element | C. Consumer-Based Brand Equity | D. Customer-Based Brand Element
-A
-
-
-____ are the personal value and meaning that consumers attach to the product or service attributes.(NHUNG HOÀNG) | A. Brand attributes | B. Brand benefits | C. Brand images | D. Brand mantras
-B
-
-
-What factors that marketers need to consider to create the differential response that leads to customer-based brand equity? | A. The strength, weakness, and uniqueness of brand associations. | B. The strength, favorability, and uniqueness of brand associations. | C. The strength and weakness of brand associations. | D. The strength and uniqueness of brand associations.
-B`;
 
 export default function TextInput({ onStartQuiz }: TextInputProps) {
   const [text, setText] = useState('');
@@ -32,7 +22,7 @@ export default function TextInput({ onStartQuiz }: TextInputProps) {
   };
 
   const handleLoadSample = () => {
-    setText(SAMPLE_TEXT);
+    setText(SAMPLE_QUIZ_TEXT);
     setError('');
   };
 
