@@ -36,6 +36,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .fuo-header-title {
@@ -44,6 +46,16 @@
   font-size: 13px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+}
+
+.fuo-learned-badge {
+  background-color: #e6f4ea;
+  color: #137333;
+  border: 1px solid #ceedd5;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 
 .fuo-header-controls {
@@ -66,6 +78,64 @@
   text-decoration: underline;
 }
 
+.fuo-btn-text:hover {
+  color: #1557b0;
+}
+
+/* Quick Question List Modal / Drawer */
+.fuo-grid-modal {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dadce0;
+  padding: 16px 24px;
+}
+
+.fuo-grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.fuo-grid-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.fuo-grid-item {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid #dadce0;
+  background-color: #ffffff;
+  color: #3c4043;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fuo-grid-item.active {
+  border-color: #1a73e8;
+  outline: 2px solid #1a73e8;
+}
+
+.fuo-grid-item.mastered {
+  background-color: #137333;
+  color: #ffffff;
+  border-color: #137333;
+}
+
+.fuo-grid-item.answered:not(.mastered) {
+  background-color: #e8f0fe;
+  color: #1a73e8;
+}
+
 /* Main Content Area */
 .fuo-content-area {
   padding: 28px 24px;
@@ -78,6 +148,30 @@
   margin-bottom: 20px;
   line-height: 1.5;
   font-weight: 400;
+}
+
+.fuo-toggle-mastered-btn {
+  background-color: #ffffff;
+  border: 1px solid #dadce0;
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: 16px;
+  transition: all 0.15s ease;
+}
+
+.fuo-toggle-mastered-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.fuo-toggle-mastered-btn.is-mastered {
+  background-color: #e6f4ea;
+  border-color: #137333;
+  color: #137333;
 }
 
 /* Options */
@@ -187,7 +281,7 @@
   color: #c5221f;
 }
 
-/* Bottom Left Logo Badge matching image reference */
+/* Bottom Left Logo Badge */
 .fuo-watermark {
   position: fixed;
   bottom: 0;
