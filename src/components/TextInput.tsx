@@ -24,7 +24,7 @@ export default function TextInput({ onStartQuiz }: TextInputProps) {
 
   const handleStart = () => {
     if (parsedQuestions.length === 0) {
-      setError('Không tìm thấy câu hỏi nào. Hãy kiểm tra lại format text.');
+      setError('Không tìm thấy câu hỏi nào. Vui lòng nhập đúng format!');
       return;
     }
     setError('');
@@ -37,78 +37,41 @@ export default function TextInput({ onStartQuiz }: TextInputProps) {
   };
 
   return (
-    <div className="text-input-container">
-      <div className="text-input-card">
-        <div className="card-header">
-          <div className="header-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14,2 14,8 20,8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
-              <polyline points="10,9 9,9 8,9" />
-            </svg>
-          </div>
-          <div>
-            <h1>Quiz Tự Học</h1>
-            <p className="subtitle">Paste đề thi trắc nghiệm để bắt đầu làm bài</p>
-          </div>
-        </div>
-
-        <div className="format-hint">
-          <span className="hint-label">Format:</span>
-          <code>Câu hỏi? | A. Đáp án | B. Đáp án | C. Đáp án | D. Đáp án</code>
-          <br />
-          <code>Đáp_án_đúng (A/B/C/D)</code>
-        </div>
+    <div className="fuo-input-container">
+      <div className="fuo-input-card">
+        <h1>FUOVERFLOW Quiz Maker</h1>
+        <p>Dán đoạn văn bản câu hỏi trắc nghiệm vào ô bên dưới để tạo bài làm:</p>
 
         <textarea
-          id="quiz-text-input"
-          className="text-area"
-          placeholder="Paste nội dung đề thi vào đây..."
+          className="fuo-textarea"
+          rows={12}
+          placeholder={`Nội dung câu hỏi | A. Đáp án 1 | B. Đáp án 2 | C. Đáp án 3 | D. Đáp án 4\nĐáp_án_đúng`}
           value={text}
           onChange={(e) => {
             setText(e.target.value);
             setError('');
           }}
-          rows={12}
         />
 
-        {error && <div className="error-message">{error}</div>}
+        {error && <div style={{ color: '#c5221f', fontSize: '13px', marginBottom: '12px' }}>{error}</div>}
 
-        <div className="input-footer">
-          <div className="question-count">
-            {parsedQuestions.length > 0 && (
-              <span className="count-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="20,6 9,17 4,12" />
-                </svg>
-                {parsedQuestions.length} câu hỏi
-              </span>
-            )}
-          </div>
-          <div className="button-group">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleLoadSample}
-            >
-              Tải đề mẫu
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleStart}
-              disabled={parsedQuestions.length === 0}
-            >
-              Bắt đầu làm bài
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12,5 19,12 12,19" />
-              </svg>
-            </button>
-          </div>
+        <div className="fuo-btn-group">
+          <button type="button" className="fuo-nav-btn" onClick={handleLoadSample}>
+            Tải dữ liệu mẫu
+          </button>
+          <button
+            type="button"
+            className="fuo-nav-btn fuo-primary"
+            onClick={handleStart}
+          >
+            Tạo bài làm ({parsedQuestions.length} câu)
+          </button>
         </div>
+      </div>
+
+      <div className="fuo-watermark">
+        <div className="fuo-logo-main">FUO</div>
+        <div className="fuo-logo-sub">FUOVERFLOW.COM</div>
       </div>
     </div>
   );
