@@ -3,13 +3,16 @@ import TextInput from './components/TextInput';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
 import type { Question } from './utils/quizParser';
+import { parseQuizText } from './utils/quizParser';
+import { SAMPLE_QUIZ_TEXT } from './data/sampleQuiz';
 import './App.css';
 
 type AppScreen = 'input' | 'quiz' | 'result';
 
-function App() {
-  const [screen, setScreen] = useState<AppScreen>('input');
-  const [questions, setQuestions] = useState<Question[]>([]);
+export default function App() {
+  const defaultQuestions = parseQuizText(SAMPLE_QUIZ_TEXT);
+  const [screen, setScreen] = useState<AppScreen>('quiz');
+  const [questions, setQuestions] = useState<Question[]>(defaultQuestions);
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
   const handleStartQuiz = (parsedQuestions: Question[]) => {
@@ -29,8 +32,6 @@ function App() {
   };
 
   const handleNewQuiz = () => {
-    setQuestions([]);
-    setAnswers({});
     setScreen('input');
   };
 
@@ -40,16 +41,9 @@ function App() {
 
   return (
     <div className="app">
-      {/* Animated background */}
-      <div className="bg-decoration">
-        <div className="bg-orb bg-orb-1" />
-        <div className="bg-orb bg-orb-2" />
-        <div className="bg-orb bg-orb-3" />
-      </div>
-
       <main className="app-main">
         {screen === 'input' && <TextInput onStartQuiz={handleStartQuiz} />}
-        {screen === 'quiz' && (
+        {screen === 'quiz' && questions.length > 0 && (
           <Quiz
             questions={questions}
             onFinish={handleFinishQuiz}
@@ -68,5 +62,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

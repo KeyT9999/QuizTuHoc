@@ -7,7 +7,7 @@ interface TextInputProps {
 }
 
 export default function TextInput({ onStartQuiz }: TextInputProps) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(SAMPLE_QUIZ_TEXT);
   const [error, setError] = useState('');
 
   const parsedQuestions = text.trim() ? parseQuizText(text) : [];
