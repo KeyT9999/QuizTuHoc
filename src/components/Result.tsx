@@ -78,8 +78,8 @@ export default function Result({ questions, answers, onRetry, onNewQuiz }: Resul
       </div>
 
       <div className="fuo-watermark">
-        <div className="fuo-logo-main">FUO</div>
-        <div className="fuo-logo-sub">FUOVERFLOW.COM</div>
+        <div className="fuo-logo-main">KEYT</div>
+        <div className="fuo-logo-sub">KEYT.COM</div>
       </div>
     </div>
   );

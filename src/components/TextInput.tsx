@@ -39,7 +39,7 @@ export default function TextInput({ onStartQuiz }: TextInputProps) {
   return (
     <div className="fuo-input-container">
       <div className="fuo-input-card">
-        <h1>FUOVERFLOW Quiz Maker</h1>
+        <h1>KeyT Quiz Maker</h1>
         <p>Dán đoạn văn bản câu hỏi trắc nghiệm vào ô bên dưới để tạo bài làm:</p>
 
         <textarea
@@ -70,8 +70,8 @@ export default function TextInput({ onStartQuiz }: TextInputProps) {
       </div>
 
       <div className="fuo-watermark">
-        <div className="fuo-logo-main">FUO</div>
-        <div className="fuo-logo-sub">FUOVERFLOW.COM</div>
+        <div className="fuo-logo-main">KEYT</div>
+        <div className="fuo-logo-sub">KEYT.COM</div>
       </div>
     </div>
   );

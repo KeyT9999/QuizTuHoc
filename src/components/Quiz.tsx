@@ -111,10 +111,10 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
         </div>
       </div>
 
-      {/* Bottom Left Logo Box matching image reference */}
+      {/* Bottom Left Logo Box */}
       <div className="fuo-watermark">
-        <div className="fuo-logo-main">FUO</div>
-        <div className="fuo-logo-sub">FUOVERFLOW.COM</div>
+        <div className="fuo-logo-main">KEYT</div>
+        <div className="fuo-logo-sub">KEYT.COM</div>
       </div>
     </div>
   );
