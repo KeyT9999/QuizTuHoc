@@ -10,7 +10,6 @@ interface QuizProps {
 export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [showFeedback, setShowFeedback] = useState(false);
 
   const question = questions[currentIndex];
   const selectedAnswer = answers[question.id];
@@ -19,11 +18,9 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
   const handleSelectOption = (key: string) => {
     if (isAnswered) return;
     setAnswers((prev) => ({ ...prev, [question.id]: key }));
-    setShowFeedback(true);
   };
 
   const handleNext = () => {
-    setShowFeedback(false);
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -33,7 +30,6 @@ export default function Quiz({ questions, onFinish, onBack }: QuizProps) {
 
   const handlePrev = () => {
     if (currentIndex > 0) {
-      setShowFeedback(false);
       setCurrentIndex(currentIndex - 1);
     }
   };
