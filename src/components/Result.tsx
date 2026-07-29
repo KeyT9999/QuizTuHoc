@@ -46,7 +46,7 @@ export default function Result({ questions, answers, onRetry, onNewQuiz }: Resul
           {questions.map((q, idx) => {
             const userAnswer = answers[q.id];
             const isCorrect = userAnswer === q.correctAnswer;
-            const correctOpt = q.options.find((o) => o.key === q.correctAnswer);
+            const correctOptions = q.options.filter((o) => q.correctAnswer.includes(o.key));
 
             return (
               <div
@@ -68,7 +68,9 @@ export default function Result({ questions, answers, onRetry, onNewQuiz }: Resul
                 </div>
                 {!isCorrect && (
                   <div style={{ fontSize: '13px', color: '#137333', marginTop: '2px' }}>
-                    Đáp án đúng: {q.correctAnswer}. {correctOpt?.text}
+                    Đáp án đúng: {correctOptions
+                      .map((option) => `${option.key}. ${option.text}`)
+                      .join(' | ')}
                   </div>
                 )}
               </div>

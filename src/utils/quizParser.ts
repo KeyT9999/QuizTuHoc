@@ -25,6 +25,20 @@ export function parseQuizText(rawText: string): Question[] {
       .map((l) => l.trim())
       .filter((l) => l.length > 0);
 
+    // Accept answers appended to the final option, such as
+    // "D. link() . A" or "D. link() . B, C".
+    const inlineAnswerMatch = lines
+      .join('\n')
+      .match(/\s+\.\s*([A-E](?:\s*,\s*[A-E]){0,3})\s*$/i);
+    if (inlineAnswerMatch) {
+      const answer = inlineAnswerMatch[1].replace(/[^A-E]/gi, '').toUpperCase();
+      const withoutAnswer = lines
+        .join('\n')
+        .slice(0, inlineAnswerMatch.index)
+        .trimEnd();
+      lines = [...withoutAnswer.split('\n'), answer];
+    }
+
     // Filter out Quizlet section headers like "Chưa học (287)", "Bạn chưa học các thuật ngữ này!", "Chọn 287"
     lines = lines.filter(
       (l) => !/^(Chưa học|Bạn chưa học|Chọn \d+|Chưa học \(\d+\))/i.test(l)
@@ -36,10 +50,15 @@ export function parseQuizText(rawText: string): Question[] {
     const lastLine = lines[lines.length - 1];
 
     // Extract answer letter (A, B, C, D) even if followed by explanation/parentheses: e.g. "D (Kiểu hỏi khác...)"
-    const ansMatch = lastLine.match(/^([A-Z]{1,4})(?:\s*\(.*|\s+.*)?$/i);
+    const ansMatch = lastLine.match(/^([A-E](?:\s*,?\s*[A-E]){0,3})(?:\s*\(.*|\s+.*)?$/i);
     if (!ansMatch) continue;
 
-    const correctAnswerKey = ansMatch[1].toUpperCase().charAt(0);
+    const correctAnswerKey = ansMatch[1]
+      .replace(/[^A-E]/gi, '')
+      .toUpperCase()
+      .split('')
+      .sort()
+      .join('');
     const contentLines = lines.slice(0, lines.length - 1);
 
     const options: QuizOption[] = [];
@@ -93,7 +112,7 @@ export function parseQuizText(rawText: string): Question[] {
     if (options.length >= 2 && questionText.trim().length > 0) {
       questions.push({
         id: questions.length + 1,
-        text: questionText.trim(),
+        text: questionText.trim().replace(/^\d+\.\s*/, ''),
         options,
         correctAnswer: correctAnswerKey,
       });

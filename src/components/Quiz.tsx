@@ -13,6 +13,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   const storageKeyIndex = setId ? `keyt_quiz_index_${setId}` : 'keyt_quiz_index';
   const storageKeyAnswers = setId ? `keyt_quiz_answers_${setId}` : 'keyt_quiz_answers';
   const storageKeyMastered = setId ? `keyt_quiz_mastered_${setId}` : 'keyt_quiz_mastered';
+  const storageKeySubmitted = setId ? `keyt_quiz_submitted_${setId}` : 'keyt_quiz_submitted';
 
   // Load initial states from localStorage
   const [currentIndex, setCurrentIndex] = useState<number>(() => {
@@ -51,6 +52,15 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     }
   });
 
+  const [submittedIds, setSubmittedIds] = useState<number[]>(() => {
+    try {
+      const saved = localStorage.getItem(storageKeySubmitted);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
 
   // Sync to localStorage
@@ -66,18 +76,41 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     localStorage.setItem(storageKeyMastered, JSON.stringify(masteredIds));
   }, [masteredIds, storageKeyMastered]);
 
+  useEffect(() => {
+    localStorage.setItem(storageKeySubmitted, JSON.stringify(submittedIds));
+  }, [submittedIds, storageKeySubmitted]);
+
   const question = questions[currentIndex];
   const selectedAnswer = answers[question.id];
-  const isAnswered = selectedAnswer !== undefined;
+  const isMultipleChoice = question.correctAnswer.length > 1;
+  const isAnswered = isMultipleChoice
+    ? submittedIds.includes(question.id)
+    : selectedAnswer !== undefined;
   const isMastered = masteredIds.includes(question.id);
 
   const handleSelectOption = (key: string) => {
     if (isAnswered) return;
-    const newAnswers = { ...answers, [question.id]: key };
+    const answer = isMultipleChoice
+      ? (selectedAnswer?.includes(key)
+          ? selectedAnswer.replace(key, '')
+          : `${selectedAnswer ?? ''}${key}`)
+          .split('')
+          .sort()
+          .join('')
+      : key;
+    const newAnswers = { ...answers, [question.id]: answer };
     setAnswers(newAnswers);
 
     // If answer is correct, automatically mark as mastered!
-    if (key === question.correctAnswer && !masteredIds.includes(question.id)) {
+    if (!isMultipleChoice && answer === question.correctAnswer && !masteredIds.includes(question.id)) {
+      setMasteredIds((prev) => [...prev, question.id]);
+    }
+  };
+
+  const handleCheckMultiple = () => {
+    if (!selectedAnswer || isAnswered) return;
+    setSubmittedIds((prev) => [...prev, question.id]);
+    if (selectedAnswer === question.correctAnswer && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
     }
   };
@@ -109,9 +142,11 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
       setCurrentIndex(0);
       setAnswers({});
       setMasteredIds([]);
+      setSubmittedIds([]);
       localStorage.removeItem(storageKeyIndex);
       localStorage.removeItem(storageKeyAnswers);
       localStorage.removeItem(storageKeyMastered);
+      localStorage.removeItem(storageKeySubmitted);
     }
   };
 
@@ -160,7 +195,9 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
             {questions.map((q, idx) => {
               const isCurrent = idx === currentIndex;
               const isQMastered = masteredIds.includes(q.id);
-              const isQAnswered = answers[q.id] !== undefined;
+              const isQAnswered = q.correctAnswer.length > 1
+                ? submittedIds.includes(q.id)
+                : answers[q.id] !== undefined;
 
               let btnClass = 'fuo-grid-item';
               if (isCurrent) btnClass += ' active';
@@ -205,8 +242,8 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
         <div className="fuo-options-list">
           {question.options.map((opt) => {
-            const isSelected = selectedAnswer === opt.key;
-            const isCorrect = opt.key === question.correctAnswer;
+            const isSelected = selectedAnswer?.includes(opt.key) ?? false;
+            const isCorrect = question.correctAnswer.includes(opt.key);
 
             let optionStatusClass = '';
             if (isAnswered) {
@@ -247,6 +284,17 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
                 <span className="fuo-txt-error">✗ Sai! Đáp án đúng là {question.correctAnswer}</span>
               )}
             </div>
+          )}
+
+          {isMultipleChoice && !isAnswered && (
+            <button
+              type="button"
+              className="fuo-nav-btn fuo-primary"
+              onClick={handleCheckMultiple}
+              disabled={!selectedAnswer}
+            >
+              Kiểm tra đáp án
+            </button>
           )}
 
           <button
