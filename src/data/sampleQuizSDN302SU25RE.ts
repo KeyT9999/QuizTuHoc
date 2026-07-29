@@ -171,7 +171,7 @@ A. @Injectable
 B. @Inject
 C. @Service
 D. @Provider
-A
+B
 
 What is the purpose of a salt in password hashing?
 A. To add flavor to the hashed password.
