@@ -39,11 +39,23 @@ export default function QuizSetSelector({
     <div className="tesla-container">
       {/* Top Header - Minimalist KeyT Logo */}
       <header className="tesla-nav">
-        <div className="tesla-logo">K E Y T</div>
+        <div className="tesla-logo-mark">K</div>
+        <div>
+          <div className="tesla-logo">KEYT</div>
+          <div className="tesla-logo-caption">Quiz tự học</div>
+        </div>
       </header>
 
-      {/* Main Model Selector Section */}
       <main className="tesla-main-content">
+        <div className="tesla-page-heading">
+          <div>
+            <span className="tesla-eyebrow">THƯ VIỆN BỘ ĐỀ</span>
+            <h1>Hôm nay bạn muốn học gì?</h1>
+            <p>Chọn một bộ đề để tiếp tục ôn tập và theo dõi tiến độ của bạn.</p>
+          </div>
+          <div className="tesla-set-count">{quizSets.length} bộ đề</div>
+        </div>
+
         <div className="tesla-specs-grid">
           {quizSets.map((set) => {
             const { total, mastered, percent } = getSetProgress(set.id, set.rawText);
@@ -54,71 +66,73 @@ export default function QuizSetSelector({
               : set.id.includes('swd') || set.title.includes('SWD')
               ? 'SWD392'
               : set.title.split(' ')[0];
+            const courseKey = shortName.toLowerCase().replace(/[^a-z0-9]/g, '');
 
             return (
-              <div key={set.id} className="tesla-spec-column">
-                {/* Big Model Name */}
-                <div className="tesla-huge-model-title">{shortName}</div>
-                <div className="tesla-model-sub-tag">{set.title}</div>
+              <article key={set.id} className={`tesla-spec-column course-${courseKey}`}>
+                <div className="tesla-card-topline">
+                  <span className="tesla-course-pill">{set.category}</span>
+                  <span className="tesla-card-arrow" aria-hidden="true">↗</span>
+                </div>
 
-                <div className="tesla-divider" />
+                <div className="tesla-card-heading">
+                  <h2 className="tesla-huge-model-title">{shortName}</h2>
+                  <p className="tesla-model-sub-tag">{set.title}</p>
+                </div>
 
-                {/* Metric 1: Total Questions */}
-                <div className="tesla-metric-group">
-                  <div className="tesla-metric-value">
-                    {total} <span className="tesla-metric-unit">câu hỏi</span>
+                <p className="tesla-card-description">{set.description}</p>
+
+                <div className="tesla-progress-block">
+                  <div className="tesla-progress-copy">
+                    <span>Tiến độ</span>
+                    <strong>{percent}%</strong>
+                  </div>
+                  <div className="tesla-progress-track">
+                    <div className="tesla-progress-fill" style={{ width: `${percent}%` }} />
                   </div>
                 </div>
 
-                {/* Metric 2: Progress */}
-                <div className="tesla-metric-group">
-                  <div className="tesla-metric-label">Tiến độ học</div>
-                  <div className="tesla-metric-value">
-                    {percent}% <span className="tesla-metric-unit">({mastered}/{total} câu)</span>
+                <div className="tesla-card-stats">
+                  <div>
+                    <strong>{total}</strong>
+                    <span>Câu hỏi</span>
+                  </div>
+                  <div>
+                    <strong>{mastered}</strong>
+                    <span>Đã học</span>
                   </div>
                 </div>
 
-                {/* Metric 3: Category */}
-                <div className="tesla-metric-group">
-                  <div className="tesla-metric-label">Môn học</div>
-                  <div className="tesla-metric-value text-medium">
-                    {set.category}
-                  </div>
-                </div>
-
-                {/* Prominent Tesla Action Button */}
                 <div className="tesla-action-area">
                   <button
                     type="button"
                     className="tesla-btn-prominent"
                     onClick={() => onSelectSet(set)}
                   >
-                    {isStarted ? 'TIẾP TỤC HỌC' : 'VÀO HỌC NGAY'}
+                    <span>{isStarted ? 'Tiếp tục học' : 'Bắt đầu học'}</span>
+                    <span aria-hidden="true">→</span>
                   </button>
                 </div>
-              </div>
+              </article>
             );
           })}
 
-          {/* Add Custom Model Box */}
-          <div className="tesla-spec-column add-column" onClick={onCreateNewSet}>
-            <div className="tesla-huge-model-title" style={{ opacity: 0.4 }}>+ TẠO ĐỀ</div>
-            <div className="tesla-model-sub-tag">Nhập bộ đề tùy chọn mới</div>
-
-            <div className="tesla-divider" />
-
+          <article className="tesla-spec-column add-column" onClick={onCreateNewSet}>
+            <div className="tesla-add-icon">+</div>
             <div className="tesla-add-body">
+              <span className="tesla-eyebrow">BỘ ĐỀ CỦA BẠN</span>
+              <h2>Tạo bộ đề mới</h2>
               <p className="tesla-add-desc">
-                Dán nội dung câu hỏi trắc nghiệm riêng của bạn để làm bài làm tự ôn luyện
+                Dán câu hỏi và đáp án của riêng bạn để tạo một buổi ôn tập mới.
               </p>
             </div>
-
-            <div className="tesla-action-area" style={{ marginTop: 'auto' }}>
+            <div className="tesla-action-area">
               <button type="button" className="tesla-btn-prominent secondary">
-                + TẠO BỘ ĐỀ MỚI
+                <span>Tạo bộ đề</span>
+                <span aria-hidden="true">→</span>
               </button>
             </div>
-          </div>
+          </article>
         </div>
       </main>
 
