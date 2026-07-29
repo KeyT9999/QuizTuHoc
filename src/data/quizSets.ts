@@ -4,6 +4,7 @@ import { SAMPLE_QUIZ_SDN302 } from './sampleQuizSDN302';
 import { SAMPLE_QUIZ_SDN302_SU25_RE } from './sampleQuizSDN302SU25RE';
 import { SAMPLE_QUIZ_SDN302_SU25_B5_1 } from './sampleQuizSDN302SU25B51';
 import { SAMPLE_QUIZ_SDN302_FA2024_FE } from './sampleQuizSDN302FA2024FE';
+import { SAMPLE_QUIZ_SWD392_SU26_FE } from './sampleQuizSWD392SU26FE';
 
 export interface QuizSetInfo {
   id: string;
@@ -62,5 +63,13 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn SDN302',
     badge: 'Đề SDN302 FA 2024 - 50 câu',
     rawText: SAMPLE_QUIZ_SDN302_FA2024_FE,
+  },
+  {
+    id: 'swd392_su26_fe',
+    title: 'SWD392_SU26_FE',
+    description: 'Bộ 60 câu hỏi SWD392 Final Exam SU26 về UML, COMET, kiến trúc phần mềm, thiết kế hướng đối tượng, SOA, Software Product Line và design patterns.',
+    category: 'Môn SWD392',
+    badge: 'Đề SWD392 SU26 FE - 60 câu',
+    rawText: SAMPLE_QUIZ_SWD392_SU26_FE,
   },
 ];
