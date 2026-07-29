@@ -150,7 +150,7 @@ A. GET
 B. POST with Content-Type: application/json
 C. DELETE
 D. OPTIONS
-D
+B
 
 What are appropriate ways to secure a RESTful API? (Choose 2 answers)
 A. Including API keys in URL parameters.
