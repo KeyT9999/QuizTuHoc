@@ -287,7 +287,7 @@ A. default: 18
 B. required: true
 C. validate: {}
 D. immutable: true
-C
+B
 
 Which of the following statements about npm (Node Package Manager) are correct? (Choose 2 answers)
 A. npm is a package manager for JavaScript.
