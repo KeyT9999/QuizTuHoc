@@ -1,6 +1,7 @@
 import { SAMPLE_QUIZ_TEXT } from './sampleQuiz';
 import { SAMPLE_QUIZ_SWD392 } from './sampleQuizSWD392';
 import { SAMPLE_QUIZ_SDN302 } from './sampleQuizSDN302';
+import { SAMPLE_QUIZ_SDN302_SU25_RE } from './sampleQuizSDN302SU25RE';
 
 export interface QuizSetInfo {
   id: string;
@@ -35,5 +36,13 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn SDN302',
     badge: 'Đề SDN302_SP26 - 50 câu',
     rawText: SAMPLE_QUIZ_SDN302,
+  },
+  {
+    id: 'sdn302_su25_re',
+    title: 'SDN302 - SU25 - RE',
+    description: 'Bộ 50 câu hỏi ôn tập SDN302 SU25 về Node.js, Express, MongoDB, Mongoose, REST API, NestJS, CORS và xác thực.',
+    category: 'Môn SDN302',
+    badge: 'Đề SDN302 SU25 - 50 câu',
+    rawText: SAMPLE_QUIZ_SDN302_SU25_RE,
   },
 ];

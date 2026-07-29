@@ -499,7 +499,8 @@
   --course-soft: #ecfeff;
 }
 
-.tesla-spec-column.course-sdn302sp26 {
+.tesla-spec-column.course-sdn302sp26,
+.tesla-spec-column.course-sdn302 {
   --course-color: #ea580c;
   --course-soft: #fff7ed;
 }
