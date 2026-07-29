@@ -3,6 +3,7 @@ import { SAMPLE_QUIZ_SWD392 } from './sampleQuizSWD392';
 import { SAMPLE_QUIZ_SDN302 } from './sampleQuizSDN302';
 import { SAMPLE_QUIZ_SDN302_SU25_RE } from './sampleQuizSDN302SU25RE';
 import { SAMPLE_QUIZ_SDN302_SU25_B5_1 } from './sampleQuizSDN302SU25B51';
+import { SAMPLE_QUIZ_SDN302_FA2024_FE } from './sampleQuizSDN302FA2024FE';
 
 export interface QuizSetInfo {
   id: string;
@@ -53,5 +54,13 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn SDN302',
     badge: 'Đề SDN302 SU25 B5 - 50 câu',
     rawText: SAMPLE_QUIZ_SDN302_SU25_B5_1,
+  },
+  {
+    id: 'sdn302_fa2024_fe',
+    title: 'SDN302 - FA 2024 - FE',
+    description: 'Bộ 50 câu hỏi SDN302 Final Exam FA 2024 về Node.js, Express, MongoDB, Mongoose, REST API, CORS, HTTPS, OAuth và EJS.',
+    category: 'Môn SDN302',
+    badge: 'Đề SDN302 FA 2024 - 50 câu',
+    rawText: SAMPLE_QUIZ_SDN302_FA2024_FE,
   },
 ];
