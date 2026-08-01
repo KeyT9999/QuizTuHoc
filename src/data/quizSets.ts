@@ -12,6 +12,9 @@ import { SAMPLE_QUIZ_SWD392_SU26_FE_FUO } from './sampleQuizSWD392SU26FEFUO';
 import { SAMPLE_QUIZ_SWD392_SU25_FINAL_EXAM } from './sampleQuizSWD392SU25FinalExam';
 import { SAMPLE_QUIZ_SWD392_FA25_FEB5 } from './sampleQuizSWD392FA25FEB5';
 import { SAMPLE_QUIZ_SWD392_SP2025_FE } from './sampleQuizSWD392SP2025FE';
+import { SAMPLE_QUIZ_SWD392_SP2024_FE } from './sampleQuizSWD392SP2024FE';
+import { SAMPLE_QUIZ_SWD392_SU2024_FE } from './sampleQuizSWD392SU2024FE';
+import { SAMPLE_QUIZ_SWD392_FA2024_FE } from './sampleQuizSWD392FA2024FE';
 
 export interface QuizSetInfo {
   id: string;
@@ -134,5 +137,29 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn SWD392',
     badge: 'SWD392 SP 2025 FE - 50 câu',
     rawText: SAMPLE_QUIZ_SWD392_SP2025_FE,
+  },
+  {
+    id: 'swd392_sp2024_fe',
+    title: 'SWD392 - SP 2024 - FE',
+    description: 'Bộ 60 câu hỏi SWD392 Final Exam kỳ SP 2024 về UML, thiết kế hướng đối tượng, kiến trúc điều khiển, Software Product Line và cơ sở dữ liệu.',
+    category: 'Môn SWD392',
+    badge: 'SWD392 SP 2024 FE - 60 câu',
+    rawText: SAMPLE_QUIZ_SWD392_SP2024_FE,
+  },
+  {
+    id: 'swd392_su2024_fe',
+    title: 'SWD392 - SU 2024 - FE',
+    description: 'Bộ 60 câu hỏi SWD392 Final Exam kỳ SU 2024 về UML, mô hình hóa, subsystem, hệ thời gian thực, bảo mật và chất lượng phần mềm.',
+    category: 'Môn SWD392',
+    badge: 'SWD392 SU 2024 FE - 60 câu',
+    rawText: SAMPLE_QUIZ_SWD392_SU2024_FE,
+  },
+  {
+    id: 'swd392_fa2024_fe',
+    title: 'SWD392 - FA 2024 - FE',
+    description: 'Bộ 60 câu hỏi SWD392 Final Exam kỳ FA 2024 về UML, use case, kiến trúc phần mềm, thiết kế subsystem, SOA và cơ sở dữ liệu.',
+    category: 'Môn SWD392',
+    badge: 'SWD392 FA 2024 FE - 60 câu',
+    rawText: SAMPLE_QUIZ_SWD392_FA2024_FE,
   },
 ];

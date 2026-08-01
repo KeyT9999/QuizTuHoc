@@ -35,6 +35,12 @@ export default function QuizSetSelector({
     }
   };
 
+  const orderedQuizSets = [...quizSets].sort((a, b) => {
+    const aIsSwd = a.id.includes('swd392') || a.title.includes('SWD392');
+    const bIsSwd = b.id.includes('swd392') || b.title.includes('SWD392');
+    return Number(bIsSwd) - Number(aIsSwd);
+  });
+
   return (
     <div className="tesla-container">
       {/* Top Header - Minimalist KeyT Logo */}
@@ -57,7 +63,7 @@ export default function QuizSetSelector({
         </div>
 
         <div className="tesla-specs-grid">
-          {quizSets.map((set) => {
+          {orderedQuizSets.map((set) => {
             const { total, mastered, percent } = getSetProgress(set.id, set.rawText);
             const isStarted = mastered > 0;
             // Get short name (e.g. CCHN, SWD392)
