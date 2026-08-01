@@ -157,7 +157,7 @@ A. One client and multiple services
 B. Multiple clients and one service
 C. Multiple clients and multiple services
 D. One client and one service
-C
+B
 
 In COMET, what is the first step in the software development process?
 A. Requirements modeling
