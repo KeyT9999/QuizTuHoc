@@ -276,7 +276,7 @@ A. A task that interacts with I/O devices
 B. A task that interacts with users
 C. A task that interacts with a user sequentially
 D. A task that interacts with a user concurrently
-B
+C
 
 Which one of the following is NOT a concept associated with object-oriented programming?
 A. Encapsulation
