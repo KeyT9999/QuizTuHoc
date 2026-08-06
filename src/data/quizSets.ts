@@ -15,6 +15,7 @@ import { SAMPLE_QUIZ_SWD392_SP2025_FE } from './sampleQuizSWD392SP2025FE';
 import { SAMPLE_QUIZ_SWD392_SP2024_FE } from './sampleQuizSWD392SP2024FE';
 import { SAMPLE_QUIZ_SWD392_SU2024_FE } from './sampleQuizSWD392SU2024FE';
 import { SAMPLE_QUIZ_SWD392_FA2024_FE } from './sampleQuizSWD392FA2024FE';
+import { PMG201C_QUIZ_SETS } from './pmg201cQuizSets';
 
 export interface QuizSetInfo {
   id: string;
@@ -23,9 +24,14 @@ export interface QuizSetInfo {
   category: string;
   badge?: string;
   rawText: string;
+  kind?: 'text' | 'image';
+  imageBasePath?: string;
+  imageCount?: number;
+  imageExtension?: string;
 }
 
 export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
+  ...PMG201C_QUIZ_SETS,
   {
     id: 'cchn_426',
     title: 'Bộ đề CCHN (426 câu)',

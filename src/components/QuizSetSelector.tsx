@@ -13,17 +13,19 @@ export default function QuizSetSelector({
   onCreateNewSet,
 }: QuizSetSelectorProps) {
   // Helper to calculate progress for a quiz set
-  const getSetProgress = (setId: string, rawText: string) => {
-    const questions = parseQuizText(rawText);
-    const total = questions.length;
+  const getSetProgress = (set: QuizSetInfo) => {
+    const total = set.kind === 'image' ? (set.imageCount ?? 0) : parseQuizText(set.rawText).length;
     if (total === 0) return { total: 0, mastered: 0, percent: 0 };
 
     try {
-      const savedMastered = localStorage.getItem(`keyt_quiz_mastered_${setId}`);
+      const storageKey = set.kind === 'image'
+        ? `keyt_image_quiz_mastered_${set.id}`
+        : `keyt_quiz_mastered_${set.id}`;
+      const savedMastered = localStorage.getItem(storageKey);
       let masteredIds: number[] = [];
       if (savedMastered) {
         masteredIds = JSON.parse(savedMastered);
-      } else if (setId === 'cchn_426' || setId === 'ccnc_426') {
+      } else if (set.id === 'cchn_426' || set.id === 'ccnc_426') {
         const legacyMastered = localStorage.getItem('keyt_quiz_mastered');
         if (legacyMastered) masteredIds = JSON.parse(legacyMastered);
       }
@@ -36,9 +38,12 @@ export default function QuizSetSelector({
   };
 
   const orderedQuizSets = [...quizSets].sort((a, b) => {
-    const aIsSwd = a.id.includes('swd392') || a.title.includes('SWD392');
-    const bIsSwd = b.id.includes('swd392') || b.title.includes('SWD392');
-    return Number(bIsSwd) - Number(aIsSwd);
+    const getRank = (set: QuizSetInfo) => {
+      if (set.id.includes('pmg201c') || set.title.includes('PMG201c')) return 0;
+      if (set.id.includes('swd392') || set.title.includes('SWD392')) return 1;
+      return 2;
+    };
+    return getRank(a) - getRank(b);
   });
 
   return (
@@ -64,10 +69,12 @@ export default function QuizSetSelector({
 
         <div className="tesla-specs-grid">
           {orderedQuizSets.map((set) => {
-            const { total, mastered, percent } = getSetProgress(set.id, set.rawText);
+            const { total, mastered, percent } = getSetProgress(set);
             const isStarted = mastered > 0;
             // Get short name (e.g. CCHN, SWD392)
-            const shortName = set.id.includes('cchn') || set.title.includes('CCHN')
+            const shortName = set.id.includes('pmg201c') || set.title.includes('PMG201c')
+              ? 'PMG201c'
+              : set.id.includes('cchn') || set.title.includes('CCHN')
               ? 'CCHN'
               : set.id.includes('swd') || set.title.includes('SWD')
               ? 'SWD392'

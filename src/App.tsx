@@ -2,6 +2,7 @@ import { useState } from 'react';
 import QuizSetSelector from './components/QuizSetSelector';
 import TextInput from './components/TextInput';
 import Quiz from './components/Quiz';
+import ImageQuiz from './components/ImageQuiz';
 import Result from './components/Result';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
@@ -18,6 +19,14 @@ export default function App() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
   const handleSelectSet = (setInfo: QuizSetInfo) => {
+    if (setInfo.kind === 'image') {
+      setCurrentSet(setInfo);
+      setQuestions([]);
+      setAnswers({});
+      setScreen('quiz');
+      return;
+    }
+
     const parsed = parseQuizText(setInfo.rawText);
     setCurrentSet(setInfo);
     setQuestions(parsed);
@@ -85,6 +94,17 @@ export default function App() {
             setTitle={currentSet?.title}
             questions={questions}
             onFinish={handleFinishQuiz}
+            onBack={handleBackToQuizList}
+          />
+        )}
+        {screen === 'quiz' && currentSet?.kind === 'image' && (
+          <ImageQuiz
+            setId={currentSet.id}
+            setTitle={currentSet.title}
+            imageBasePath={currentSet.imageBasePath ?? ''}
+            imageCount={currentSet.imageCount ?? 0}
+            imageExtension={currentSet.imageExtension ?? 'webp'}
+            onComplete={handleBackToQuizList}
             onBack={handleBackToQuizList}
           />
         )}
