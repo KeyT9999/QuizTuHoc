@@ -1,15 +1,20 @@
 import type { QuizSetInfo } from '../data/quizSets';
+import type { FlashcardSet } from '../data/flashcardData';
 import { parseQuizText } from '../utils/quizParser';
 
 interface QuizSetSelectorProps {
   quizSets: QuizSetInfo[];
+  flashcardSets: FlashcardSet[];
   onSelectSet: (setInfo: QuizSetInfo) => void;
+  onSelectFlashcard: (fcSet: FlashcardSet) => void;
   onCreateNewSet: () => void;
 }
 
 export default function QuizSetSelector({
   quizSets,
+  flashcardSets,
   onSelectSet,
+  onSelectFlashcard,
   onCreateNewSet,
 }: QuizSetSelectorProps) {
   // Helper to calculate progress for a quiz set
@@ -37,6 +42,19 @@ export default function QuizSetSelector({
     }
   };
 
+  const getFlashcardProgress = (fcSet: FlashcardSet) => {
+    const total = fcSet.cards.length;
+    try {
+      const saved = localStorage.getItem(`keyt_flashcard_known_${fcSet.id}`);
+      const knownIds: number[] = saved ? JSON.parse(saved) : [];
+      const known = knownIds.length;
+      const percent = total > 0 ? Math.round((known / total) * 100) : 0;
+      return { total, known, percent };
+    } catch {
+      return { total, known: 0, percent: 0 };
+    }
+  };
+
   const orderedQuizSets = [...quizSets].sort((a, b) => {
     const getRank = (set: QuizSetInfo) => {
       if (set.id.includes('pmg201c') || set.title.includes('PMG201c')) return 0;
@@ -45,6 +63,8 @@ export default function QuizSetSelector({
     };
     return getRank(a) - getRank(b);
   });
+
+  const totalSets = quizSets.length + flashcardSets.length;
 
   return (
     <div className="tesla-container">
@@ -64,10 +84,65 @@ export default function QuizSetSelector({
             <h1>Hôm nay bạn muốn học gì?</h1>
             <p>Chọn một bộ đề để tiếp tục ôn tập và theo dõi tiến độ của bạn.</p>
           </div>
-          <div className="tesla-set-count">{quizSets.length} bộ đề</div>
+          <div className="tesla-set-count">{totalSets} bộ đề</div>
         </div>
 
         <div className="tesla-specs-grid">
+          {/* Flashcard sets first */}
+          {flashcardSets.map((fcSet) => {
+            const { total, known, percent } = getFlashcardProgress(fcSet);
+            const isStarted = known > 0;
+
+            return (
+              <article key={fcSet.id} className="tesla-spec-column course-flashcard">
+                <div className="tesla-card-topline">
+                  <span className="tesla-course-pill">🔄 {fcSet.category}</span>
+                  <span className="tesla-card-arrow" aria-hidden="true">↗</span>
+                </div>
+
+                <div className="tesla-card-heading">
+                  <h2 className="tesla-huge-model-title">Flashcard</h2>
+                  <p className="tesla-model-sub-tag">{fcSet.title}</p>
+                </div>
+
+                <p className="tesla-card-description">{fcSet.description}</p>
+
+                <div className="tesla-progress-block">
+                  <div className="tesla-progress-copy">
+                    <span>Tiến độ</span>
+                    <strong>{percent}%</strong>
+                  </div>
+                  <div className="tesla-progress-track">
+                    <div className="tesla-progress-fill" style={{ width: `${percent}%` }} />
+                  </div>
+                </div>
+
+                <div className="tesla-card-stats">
+                  <div>
+                    <strong>{total}</strong>
+                    <span>Thuật ngữ</span>
+                  </div>
+                  <div>
+                    <strong>{known}</strong>
+                    <span>Đã thuộc</span>
+                  </div>
+                </div>
+
+                <div className="tesla-action-area">
+                  <button
+                    type="button"
+                    className="tesla-btn-prominent"
+                    onClick={() => onSelectFlashcard(fcSet)}
+                  >
+                    <span>{isStarted ? 'Tiếp tục học' : 'Bắt đầu lật thẻ'}</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+
+          {/* Quiz sets */}
           {orderedQuizSets.map((set) => {
             const { total, mastered, percent } = getSetProgress(set);
             const isStarted = mastered > 0;

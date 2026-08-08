@@ -4,17 +4,20 @@ import TextInput from './components/TextInput';
 import Quiz from './components/Quiz';
 import ImageQuiz from './components/ImageQuiz';
 import Result from './components/Result';
+import Flashcard from './components/Flashcard';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
 import { DEFAULT_QUIZ_SETS, type QuizSetInfo } from './data/quizSets';
+import { FLASHCARD_SETS, type FlashcardSet } from './data/flashcardData';
 import './App.css';
 
-type AppScreen = 'quiz_list' | 'input' | 'quiz' | 'result';
+type AppScreen = 'quiz_list' | 'input' | 'quiz' | 'result' | 'flashcard';
 
 export default function App() {
   const [screen, setScreen] = useState<AppScreen>('quiz_list');
   const [quizSets, setQuizSets] = useState<QuizSetInfo[]>(DEFAULT_QUIZ_SETS);
   const [currentSet, setCurrentSet] = useState<QuizSetInfo | null>(null);
+  const [currentFlashcardSet, setCurrentFlashcardSet] = useState<FlashcardSet | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
@@ -32,6 +35,11 @@ export default function App() {
     setQuestions(parsed);
     setAnswers({});
     setScreen('quiz');
+  };
+
+  const handleSelectFlashcard = (fcSet: FlashcardSet) => {
+    setCurrentFlashcardSet(fcSet);
+    setScreen('flashcard');
   };
 
   const handleCreateNewSet = () => {
@@ -78,7 +86,9 @@ export default function App() {
         {screen === 'quiz_list' && (
           <QuizSetSelector
             quizSets={quizSets}
+            flashcardSets={FLASHCARD_SETS}
             onSelectSet={handleSelectSet}
+            onSelectFlashcard={handleSelectFlashcard}
             onCreateNewSet={handleCreateNewSet}
           />
         )}
@@ -105,6 +115,12 @@ export default function App() {
             imageCount={currentSet.imageCount ?? 0}
             imageExtension={currentSet.imageExtension ?? 'webp'}
             onComplete={handleBackToQuizList}
+            onBack={handleBackToQuizList}
+          />
+        )}
+        {screen === 'flashcard' && currentFlashcardSet && (
+          <Flashcard
+            flashcardSet={currentFlashcardSet}
             onBack={handleBackToQuizList}
           />
         )}
