@@ -29,7 +29,7 @@ export function parseQuizText(rawText: string): Question[] {
     // "D. link() . A" or "D. link() . B, C".
     const inlineAnswerMatch = lines
       .join('\n')
-      .match(/\s+\.\s*([A-E](?:\s*,\s*[A-E]){0,3})\s*$/i);
+      .match(/\s+\.\s*([A-F](?:\s*,\s*[A-F]){0,3})\s*$/i);
     if (inlineAnswerMatch) {
       const answer = inlineAnswerMatch[1].replace(/[^A-E]/gi, '').toUpperCase();
       const withoutAnswer = lines
@@ -50,7 +50,7 @@ export function parseQuizText(rawText: string): Question[] {
     const lastLine = lines[lines.length - 1];
 
     // Extract answer letter (A, B, C, D) even if followed by explanation/parentheses: e.g. "D (Kiểu hỏi khác...)"
-    const ansMatch = lastLine.match(/^([A-E](?:\s*,?\s*[A-E]){0,3})(?:\s*\(.*|\s+.*)?$/i);
+    const ansMatch = lastLine.match(/^([A-F](?:\s*,?\s*[A-F]){0,3})(?:\s*\(.*|\s+.*)?$/i);
     if (!ansMatch) continue;
 
     const correctAnswerKey = ansMatch[1]
@@ -71,7 +71,7 @@ export function parseQuizText(rawText: string): Question[] {
     if (parts.length >= 2) {
       questionText = parts[0];
       for (let j = 1; j < parts.length; j++) {
-        const optMatch = parts[j].match(/^([A-E])[\.\:\)\-]?\s*(.+)$/i);
+        const optMatch = parts[j].match(/^([A-F])[\.\:\)\-]?\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (!seenKeys.has(key)) {
@@ -92,7 +92,7 @@ export function parseQuizText(rawText: string): Question[] {
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-E])[\.\:\)\-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-F])[\.\:\)\-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (!seenKeys.has(key)) {

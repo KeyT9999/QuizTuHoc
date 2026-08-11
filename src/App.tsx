@@ -114,6 +114,7 @@ export default function App() {
             imageBasePath={currentSet.imageBasePath ?? ''}
             imageCount={currentSet.imageCount ?? 0}
             imageExtension={currentSet.imageExtension ?? 'webp'}
+            imageViewport={currentSet.imageViewport}
             onComplete={handleBackToQuizList}
             onBack={handleBackToQuizList}
           />

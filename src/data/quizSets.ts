@@ -15,7 +15,13 @@ import { SAMPLE_QUIZ_SWD392_SP2025_FE } from './sampleQuizSWD392SP2025FE';
 import { SAMPLE_QUIZ_SWD392_SP2024_FE } from './sampleQuizSWD392SP2024FE';
 import { SAMPLE_QUIZ_SWD392_SU2024_FE } from './sampleQuizSWD392SU2024FE';
 import { SAMPLE_QUIZ_SWD392_FA2024_FE } from './sampleQuizSWD392FA2024FE';
-import { PMG201C_QUIZ_SETS } from './pmg201cQuizSets';
+import { SAMPLE_QUIZ_PMG201C_SP26_RE } from './sampleQuizPMG201cSP26RE';
+import { SAMPLE_QUIZ_PMG201C_FA25_FE } from './sampleQuizPMG201cFA25FE';
+import { SAMPLE_QUIZ_PMG201C_FA25_RE } from './sampleQuizPMG201cFA25RE';
+import { SAMPLE_QUIZ_PMG201C_CODECRAFTERS } from './sampleQuizPMG201cCodeCrafters';
+import { SAMPLE_QUIZ_PMG201C_SU25_FE } from './sampleQuizPMG201cSU25FE';
+import { SAMPLE_QUIZ_PMG201C_SP24_FE } from './sampleQuizPMG201cSP24FE';
+import { SAMPLE_QUIZ_PMG201C_SU24_FE1 } from './sampleQuizPMG201cSU24FE1';
 
 export interface QuizSetInfo {
   id: string;
@@ -28,10 +34,66 @@ export interface QuizSetInfo {
   imageBasePath?: string;
   imageCount?: number;
   imageExtension?: string;
+  imageViewport?: 'left' | 'right';
 }
 
 export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
-  ...PMG201C_QUIZ_SETS,
+  {
+    id: 'pmg201c_su24_fe1',
+    title: 'PMG201c_SU24_FE1',
+    description: 'Bộ 50 câu hỏi PMG201c SU24 FE1 về khởi tạo, phạm vi, tiến độ, chi phí, chất lượng, giao tiếp, rủi ro và stakeholder.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c SU24 FE1 - 50 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_SU24_FE1,
+  },
+  {
+    id: 'pmg201c_sp24_fe',
+    title: 'PMG201c_SP24_FE',
+    description: 'Bộ 50 câu hỏi PMG201c SP24 FE về khởi tạo, phạm vi, tiến độ, chi phí, chất lượng, giao tiếp, rủi ro và stakeholder.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c SP24 FE - 50 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_SP24_FE,
+  },
+  {
+    id: 'pmg201c_su25_fe',
+    title: 'PMG201c_SU25_FE',
+    description: 'Bộ 50 câu hỏi PMG201c SU25 FE về tổ chức, phạm vi, tiến độ, chi phí, chất lượng, giao tiếp, rủi ro và stakeholder.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c SU25 FE - 50 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_SU25_FE,
+  },
+  {
+    id: 'pmg201c_codecrafters',
+    title: 'PMG201c CodeCrafters',
+    description: 'Bộ câu hỏi PMG201c CodeCrafters về phạm vi, tiến độ, chi phí, chất lượng, giao tiếp, rủi ro và stakeholder.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c CodeCrafters - 315 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_CODECRAFTERS,
+  },
+  {
+    id: 'pmg201c_fa25_re',
+    title: 'PMG201c_FA25_RE',
+    description: 'Bộ 50 câu hỏi PMG201c FA25 RE về khởi tạo, phạm vi, tiến độ, chi phí, chất lượng, giao tiếp, rủi ro và stakeholder.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c FA25 RE - 50 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_FA25_RE,
+  },
+  {
+    id: 'pmg201c_fa25_fe',
+    title: 'PMG201c_FA25_FE',
+    description: 'Bộ 50 câu hỏi PMG201c FA25 FE về tổ chức, phạm vi, tiến độ, chi phí, chất lượng, giao tiếp, rủi ro và stakeholder.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c FA25 FE - 50 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_FA25_FE,
+  },
+  {
+    id: 'pmg201c_sp26_re',
+    title: 'PMG201c_SP26_RE',
+    description: 'Bộ 50 câu hỏi PMG201c SP26 RE về quản lý dự án, giao tiếp, phạm vi, tiến độ, chi phí, chất lượng và rủi ro.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c SP26 RE - 50 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_SP26_RE,
+  },
   {
     id: 'cchn_426',
     title: 'Bộ đề CCHN (426 câu)',
