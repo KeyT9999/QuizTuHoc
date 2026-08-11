@@ -20,6 +20,7 @@ import { SAMPLE_QUIZ_PMG201C_FA25_FE } from './sampleQuizPMG201cFA25FE';
 import { SAMPLE_QUIZ_PMG201C_FA25_RE } from './sampleQuizPMG201cFA25RE';
 import { SAMPLE_QUIZ_PMG201C_CODECRAFTERS } from './sampleQuizPMG201cCodeCrafters';
 import { SAMPLE_QUIZ_PMG201C_SU25_FE } from './sampleQuizPMG201cSU25FE';
+import { SAMPLE_QUIZ_PMG201C_CAU_LAP } from './sampleQuizPMG201cCauLap';
 import { SAMPLE_QUIZ_PMG201C_SP24_FE } from './sampleQuizPMG201cSP24FE';
 import { SAMPLE_QUIZ_PMG201C_SU24_FE1 } from './sampleQuizPMG201cSU24FE1';
 
@@ -38,6 +39,14 @@ export interface QuizSetInfo {
 }
 
 export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
+  {
+    id: 'pmg201c_cau_lap',
+    title: 'PMG201c_CAU_LAP',
+    description: 'Bộ 80 câu hỏi PMG201c bị lặp giữa các đề; 19 câu xuất hiện trong ít nhất 3 đề và được xếp ở đầu.',
+    category: 'Môn PMG201c',
+    badge: 'PMG201c Câu lặp - 80 câu',
+    rawText: SAMPLE_QUIZ_PMG201C_CAU_LAP,
+  },
   {
     id: 'pmg201c_su24_fe1',
     title: 'PMG201c_SU24_FE1',
