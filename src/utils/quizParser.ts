@@ -31,7 +31,7 @@ export function parseQuizText(rawText: string): Question[] {
       .join('\n')
       .match(/\s+\.\s*([A-F](?:\s*,\s*[A-F]){0,3})\s*$/i);
     if (inlineAnswerMatch) {
-      const answer = inlineAnswerMatch[1].replace(/[^A-E]/gi, '').toUpperCase();
+      const answer = inlineAnswerMatch[1].replace(/[^A-F]/gi, '').toUpperCase();
       const withoutAnswer = lines
         .join('\n')
         .slice(0, inlineAnswerMatch.index)
@@ -54,7 +54,7 @@ export function parseQuizText(rawText: string): Question[] {
     if (!ansMatch) continue;
 
     const correctAnswerKey = ansMatch[1]
-      .replace(/[^A-E]/gi, '')
+      .replace(/[^A-F]/gi, '')
       .toUpperCase()
       .split('')
       .sort()
