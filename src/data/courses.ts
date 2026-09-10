@@ -10,6 +10,20 @@ export interface Course {
 
 export const DEFAULT_COURSES: Course[] = [
   {
+    id: 'mln111',
+    code: 'MLN111',
+    name: 'Triết học Mác - Lênin',
+    description: 'Bao gồm 5 bộ đề thi kỳ SP25 và SU26, tổng 301 câu hỏi trắc nghiệm chuẩn tiếng Việt.',
+    badge: '5 bộ đề',
+  },
+  {
+    id: 'mln122',
+    code: 'MLN122',
+    name: 'Kinh tế chính trị Mác - Lênin',
+    description: 'Bao gồm 5 bộ đề thi từ FA23 đến SU26, tổng 300 câu hỏi trắc nghiệm chuẩn tiếng Việt.',
+    badge: '5 bộ đề',
+  },
+  {
     id: 'pmg201c',
     code: 'PMG201c',
     name: 'Quản lý dự án CNTT',
@@ -36,20 +50,6 @@ export const DEFAULT_COURSES: Course[] = [
     name: 'Quản trị Thương hiệu & CSKH',
     description: 'Bộ đề 426 câu hỏi chuẩn về CBBE, Brand Elements, Brand Architecture, Marketing Communication.',
     badge: 'Đề chuẩn 426 câu',
-  },
-  {
-    id: 'mln111',
-    code: 'MLN111',
-    name: 'Triết học Mác - Lênin',
-    description: 'Bao gồm 5 bộ đề thi ảnh MLN111 kỳ SP25 và SU26, tổng 301 câu hỏi trắc nghiệm.',
-    badge: '5 bộ đề (Ảnh)',
-  },
-  {
-    id: 'mln122',
-    code: 'MLN122',
-    name: 'Kinh tế chính trị Mác - Lênin',
-    description: 'Bao gồm 5 bộ đề thi ảnh MLN122 từ FA23 đến SU26, tổng 300 câu hỏi trắc nghiệm.',
-    badge: '5 bộ đề (Ảnh)',
   },
   {
     id: 'flashcard',
