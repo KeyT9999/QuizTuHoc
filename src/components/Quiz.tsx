@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import type { Question } from '../utils/quizParser';
 import { MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
 
@@ -63,6 +63,8 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   });
 
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
+  const questionCardRef = useRef<HTMLDivElement>(null);
 
   // Sync to localStorage
   useEffect(() => {
@@ -92,8 +94,9 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     : selectedAnswer !== undefined;
   const isMastered = masteredIds.includes(question.id);
   const uncertainSet = new Set(MLN_RESEARCH_UNCERTAIN[setId ?? ''] ?? []);
+  const progressPercent = Math.round((masteredIds.length / questions.length) * 100);
 
-  const handleSelectOption = (key: string) => {
+  const handleSelectOption = useCallback((key: string) => {
     if (isAnswered) return;
     const answer = isMultipleChoice
       ? (selectedAnswer?.includes(key)
@@ -110,15 +113,15 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     if (!isUnresolved && !isMultipleChoice && answer === question.correctAnswer && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
     }
-  };
+  }, [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds]);
 
-  const handleCheckMultiple = () => {
+  const handleCheckMultiple = useCallback(() => {
     if (!selectedAnswer || isAnswered) return;
     setSubmittedIds((prev) => [...prev, question.id]);
     if (selectedAnswer === question.correctAnswer && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
     }
-  };
+  }, [selectedAnswer, isAnswered, question, masteredIds]);
 
   const toggleMastered = (questionId: number) => {
     setMasteredIds((prev) =>
@@ -128,19 +131,26 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     );
   };
 
-  const handleNext = () => {
+  const triggerSlide = (direction: 'next' | 'prev') => {
+    setSlideDirection(direction);
+    setTimeout(() => setSlideDirection(null), 280);
+  };
+
+  const handleNext = useCallback(() => {
     if (currentIndex < questions.length - 1) {
+      triggerSlide('next');
       setCurrentIndex(currentIndex + 1);
     } else {
       onFinish(answers);
     }
-  };
+  }, [currentIndex, questions.length, answers, onFinish]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
+      triggerSlide('prev');
       setCurrentIndex(currentIndex - 1);
     }
-  };
+  }, [currentIndex]);
 
   const handleResetProgress = () => {
     if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) {
@@ -155,48 +165,113 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     }
   };
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input/textarea
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      const key = e.key.toLowerCase();
+
+      // Option selection: A/B/C/D or 1/2/3/4
+      const optionKeys: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', '1': 'A', '2': 'B', '3': 'C', '4': 'D' };
+      if (optionKeys[key]) {
+        e.preventDefault();
+        const optionKey = optionKeys[key];
+        if (question.options.some((o) => o.key === optionKey)) {
+          handleSelectOption(optionKey);
+        }
+        return;
+      }
+
+      // Navigation
+      if (key === 'arrowright' || key === 'enter') {
+        e.preventDefault();
+        if (isMultipleChoice && !isAnswered && selectedAnswer) {
+          handleCheckMultiple();
+        } else {
+          handleNext();
+        }
+        return;
+      }
+
+      if (key === 'arrowleft') {
+        e.preventDefault();
+        handlePrev();
+        return;
+      }
+
+      // Toggle mastered
+      if (key === 'm') {
+        e.preventDefault();
+        toggleMastered(question.id);
+        return;
+      }
+
+      // Toggle question grid
+      if (key === 'g') {
+        e.preventDefault();
+        setShowQuestionGrid((prev) => !prev);
+        return;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [question, handleSelectOption, handleNext, handlePrev, handleCheckMultiple, isMultipleChoice, isAnswered, selectedAnswer]);
+
   return (
-    <div className="fuo-quiz-wrapper">
-      {/* Top Banner */}
-      <div className="fuo-header-banner">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span className="fuo-header-title">{setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE'}</span>
-          <span className="fuo-learned-badge">
-            ✓ Đã học: {masteredIds.length}/{questions.length} ({Math.round((masteredIds.length / questions.length) * 100)}%)
+    <div className="quiz-v2-wrapper">
+      {/* Top Header Bar */}
+      <div className="quiz-v2-header">
+        <div className="quiz-v2-header-left">
+          <span className="quiz-v2-title">{setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE'}</span>
+          <span className="quiz-v2-mastered-badge">
+            ✓ Đã học: {masteredIds.length}/{questions.length} ({progressPercent}%)
           </span>
         </div>
 
-        <div className="fuo-header-controls">
+        <div className="quiz-v2-header-right">
           <button
             type="button"
-            className="fuo-btn-text"
+            className="quiz-v2-header-btn"
             onClick={() => setShowQuestionGrid(!showQuestionGrid)}
+            title="Phím tắt: G"
           >
             📋 Danh sách câu ({currentIndex + 1}/{questions.length})
           </button>
-          <button type="button" className="fuo-btn-text" onClick={handleResetProgress}>
+          <button type="button" className="quiz-v2-header-btn" onClick={handleResetProgress}>
             🔄 Học lại từ đầu
           </button>
-          <button type="button" className="fuo-btn-text" onClick={onBack}>
+          <button type="button" className="quiz-v2-header-btn" onClick={onBack}>
             ← Đổi bộ đề
           </button>
         </div>
       </div>
 
+      {/* Progress Bar */}
+      <div className="quiz-v2-progress-track">
+        <div
+          className="quiz-v2-progress-fill"
+          style={{ width: `${progressPercent}%` }}
+        />
+      </div>
+
       {/* Quick Question List Grid */}
       {showQuestionGrid && (
-        <div className="fuo-grid-modal">
-          <div className="fuo-grid-header">
+        <div className="quiz-v2-grid-modal">
+          <div className="quiz-v2-grid-header">
             <strong>Danh sách câu hỏi & Tiến độ học:</strong>
             <button
               type="button"
-              className="fuo-btn-text"
+              className="quiz-v2-header-btn"
               onClick={() => setShowQuestionGrid(false)}
             >
               ✕ Đóng
             </button>
           </div>
-          <div className="fuo-grid-items">
+          <div className="quiz-v2-grid-items">
             {questions.map((q, idx) => {
               const isCurrent = idx === currentIndex;
               const isQMastered = masteredIds.includes(q.id);
@@ -204,7 +279,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
                 ? submittedIds.includes(q.id)
                 : answers[q.id] !== undefined;
 
-              let btnClass = 'fuo-grid-item';
+              let btnClass = 'quiz-v2-grid-item';
               if (isCurrent) btnClass += ' active';
               if (isQMastered) btnClass += ' mastered';
               else if (isQAnswered) btnClass += ' answered';
@@ -229,96 +304,115 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         </div>
       )}
 
-      {/* Main Content Area */}
-      <div className="fuo-content-area">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <div className="fuo-question-text" style={{ marginBottom: 0, flex: 1 }}>
-            <strong>Câu {currentIndex + 1}:</strong> {question.text}
+      {/* Main Content — Centered Card */}
+      <div className="quiz-v2-content-center">
+        <div
+          ref={questionCardRef}
+          className={`quiz-v2-question-card ${slideDirection === 'next' ? 'slide-in-right' : slideDirection === 'prev' ? 'slide-in-left' : ''}`}
+          key={currentIndex}
+        >
+          {/* Question Header */}
+          <div className="quiz-v2-q-header">
+            <div className="quiz-v2-q-number">
+              Câu {currentIndex + 1} <span className="quiz-v2-q-total">/ {questions.length}</span>
+            </div>
+            <button
+              type="button"
+              className={`quiz-v2-mastered-toggle ${isMastered ? 'is-mastered' : ''}`}
+              onClick={() => toggleMastered(question.id)}
+              title="Phím tắt: M"
+            >
+              {isMastered ? '✓ Đã học' : '📖 Đánh dấu đã học'}
+            </button>
           </div>
 
-          <button
-            type="button"
-            className={`fuo-toggle-mastered-btn ${isMastered ? 'is-mastered' : ''}`}
-            onClick={() => toggleMastered(question.id)}
-            title="Bấm để đánh dấu Đã học / Chưa học câu này"
-          >
-            {isMastered ? '✓ Đã học' : '📖 Đánh dấu đã học'}
-          </button>
-        </div>
+          {/* Question Text */}
+          <div className="quiz-v2-q-text">{question.text}</div>
 
-        <div className="fuo-options-list">
-          {question.options.map((opt) => {
-            const isSelected = selectedAnswer?.includes(opt.key) ?? false;
-            const isCorrect = question.correctAnswer.includes(opt.key);
+          {/* Options */}
+          <div className="quiz-v2-options">
+            {question.options.map((opt) => {
+              const isSelected = selectedAnswer?.includes(opt.key) ?? false;
+              const isCorrect = question.correctAnswer.includes(opt.key);
 
-            let optionStatusClass = '';
-            if (isAnswered && !isUnresolved) {
-              if (isCorrect) optionStatusClass = 'fuo-opt-correct';
-              else if (isSelected) optionStatusClass = 'fuo-opt-incorrect';
-              else optionStatusClass = 'fuo-opt-dimmed';
-            }
+              let optClass = 'quiz-v2-option';
+              if (isSelected && !isAnswered) optClass += ' selected';
+              if (isAnswered && !isUnresolved) {
+                if (isCorrect) optClass += ' correct';
+                else if (isSelected) optClass += ' incorrect';
+                else optClass += ' dimmed';
+              }
 
-            return (
-              <div
-                key={opt.key}
-                className={`fuo-option-item ${isSelected ? 'selected' : ''} ${optionStatusClass}`}
-                onClick={() => handleSelectOption(opt.key)}
-              >
-                <span className="fuo-option-label">{opt.key}.</span>
-                <span className="fuo-option-content">{opt.text}</span>
-              </div>
-            );
-          })}
-        </div>
+              return (
+                <div
+                  key={opt.key}
+                  className={optClass}
+                  onClick={() => handleSelectOption(opt.key)}
+                >
+                  <span className="quiz-v2-option-key">{opt.key}</span>
+                  <span className="quiz-v2-option-text">{opt.text}</span>
+                  {isAnswered && !isUnresolved && isCorrect && (
+                    <span className="quiz-v2-option-icon correct-icon">✓</span>
+                  )}
+                  {isAnswered && !isUnresolved && isSelected && !isCorrect && (
+                    <span className="quiz-v2-option-icon incorrect-icon">✗</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Action Controls */}
-        <div className="fuo-action-bar">
-          <button
-            type="button"
-            className="fuo-nav-btn"
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-          >
-            ← Câu trước
-          </button>
-
+          {/* Feedback */}
           {isAnswered && (
-            <div className="fuo-instant-result">
+            <div className="quiz-v2-feedback">
               {isUnresolved ? (
-                <span className="mln-txt-review">⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.</span>
+                <span className="quiz-v2-feedback-warning">⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.</span>
               ) : selectedAnswer === question.correctAnswer ? (
-                <span className="fuo-txt-success">✓ Đáp án chính xác</span>
+                <span className="quiz-v2-feedback-correct">✓ Đáp án chính xác!</span>
               ) : (
-                <span className="fuo-txt-error">✗ Sai! Đáp án đúng là {question.correctAnswer}</span>
+                <span className="quiz-v2-feedback-incorrect">✗ Sai! Đáp án đúng là {question.correctAnswer}</span>
               )}
             </div>
           )}
 
-          {isMultipleChoice && !isAnswered && (
+          {/* Action Bar */}
+          <div className="quiz-v2-actions">
             <button
               type="button"
-              className="fuo-nav-btn fuo-primary"
-              onClick={handleCheckMultiple}
-              disabled={!selectedAnswer}
+              className="quiz-v2-btn secondary"
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              title="Phím tắt: ←"
             >
-              Kiểm tra đáp án
+              ← Câu trước
             </button>
-          )}
 
-          <button
-            type="button"
-            className="fuo-nav-btn fuo-primary"
-            onClick={handleNext}
-          >
-            {currentIndex === questions.length - 1 ? 'Nộp bài & Kết quả' : 'Câu tiếp →'}
-          </button>
+            {isMultipleChoice && !isAnswered && (
+              <button
+                type="button"
+                className="quiz-v2-btn primary"
+                onClick={handleCheckMultiple}
+                disabled={!selectedAnswer}
+              >
+                Kiểm tra đáp án
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="quiz-v2-btn primary"
+              onClick={handleNext}
+              title="Phím tắt: → hoặc Enter"
+            >
+              {currentIndex === questions.length - 1 ? 'Nộp bài & Kết quả' : 'Câu tiếp →'}
+            </button>
+          </div>
+
+          {/* Keyboard Hint */}
+          <div className="quiz-v2-keyboard-hint">
+            💡 Phím tắt: <kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd> chọn đáp án · <kbd>←</kbd><kbd>→</kbd> chuyển câu · <kbd>M</kbd> đánh dấu · <kbd>G</kbd> danh sách
+          </div>
         </div>
-      </div>
-
-      {/* Bottom Left Logo Box */}
-      <div className="fuo-watermark">
-        <div className="fuo-logo-main">KEYT</div>
-        <div className="fuo-logo-sub">KEYT.COM</div>
       </div>
     </div>
   );
