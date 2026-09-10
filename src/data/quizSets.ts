@@ -28,11 +28,13 @@ import { SAMPLE_QUIZ_MLN111_SU26_C2FE } from './sampleQuizMLN111SU26C2FE';
 import { SAMPLE_QUIZ_MLN111_SU26_RE } from './sampleQuizMLN111SU26RE';
 import { SAMPLE_QUIZ_MLN111_SP25_FE } from './sampleQuizMLN111SP25FE';
 import { SAMPLE_QUIZ_MLN111_SP25_RE } from './sampleQuizMLN111SP25RE';
+import { SAMPLE_QUIZ_MLN111_SU25_BL5_FE } from './sampleQuizMLN111SU25BL5FE';
 import { SAMPLE_QUIZ_MLN122_FA23_FEB5 } from './sampleQuizMLN122FA23FEB5';
 import { SAMPLE_QUIZ_MLN122_SP26_C2FE } from './sampleQuizMLN122SP26C2FE';
 import { SAMPLE_QUIZ_MLN122_SU25_B5_1 } from './sampleQuizMLN122SU25B51';
 import { SAMPLE_QUIZ_MLN122_SU26_FE_C1 } from './sampleQuizMLN122SU26C1FE';
 import { SAMPLE_QUIZ_MLN122_SU26_RE } from './sampleQuizMLN122SU26RE';
+import { SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330 } from './sampleQuizMLN122SU25FEC14330';
 
 export interface QuizSetInfo {
   id: string;
@@ -321,6 +323,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     rawText: SAMPLE_QUIZ_MLN111_SP25_RE,
   },
   {
+    id: 'mln111_su25_bl5_fe',
+    courseId: 'mln111',
+    title: 'MLN111_SU25_BL5_FE',
+    description: 'Bộ 60 câu hỏi trắc nghiệm Triết học Mác - Lênin SU25 BL5 FE chuẩn tiếng Việt có dấu.',
+    category: 'Môn MLN111',
+    badge: 'Đề chuẩn 60 câu',
+    rawText: SAMPLE_QUIZ_MLN111_SU25_BL5_FE,
+  },
+  {
     id: 'mln122_fa23_feb5',
     courseId: 'mln122',
     title: 'MLN122 - FA23 - FEB5',
@@ -364,5 +375,14 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MLN122',
     badge: 'Đề chuẩn 60 câu',
     rawText: SAMPLE_QUIZ_MLN122_SU25_B5_1,
+  },
+  {
+    id: 'mln122_su25_fe_c1_4330',
+    courseId: 'mln122',
+    title: 'MLN122_SU25_FE_C1_4330',
+    description: 'Bộ 60 câu hỏi trắc nghiệm Kinh tế chính trị Mác - Lênin SU25 FE C1, mã đề 4330.',
+    category: 'Môn MLN122',
+    badge: 'Đề chuẩn 60 câu',
+    rawText: SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330,
   },
 ];
