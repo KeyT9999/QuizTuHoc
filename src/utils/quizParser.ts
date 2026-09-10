@@ -50,8 +50,38 @@ export function parseQuizText(rawText: string): Question[] {
     const lastLine = lines[lines.length - 1];
 
     // Extract answer letter (A, B, C, D) even if followed by explanation/parentheses: e.g. "D (Kiểu hỏi khác...)"
-    const ansMatch = lastLine.match(/^([A-F](?:\s*,?\s*[A-F]){0,3})(?:\s*\(.*|\s+.*)?$/i);
+    const ansMatch = lastLine.match(/^(\?|[A-F](?:\s*,?\s*[A-F]){0,3})(?:\s*\(.*|\s+.*)?$/i);
     if (!ansMatch) continue;
+
+    if (ansMatch[1] === '?') {
+      const contentLines = lines.slice(0, lines.length - 1);
+      const options: QuizOption[] = [];
+      const seenKeys = new Set<string>();
+      const qTextLines: string[] = [];
+
+      for (const line of contentLines) {
+        const optMatch = line.match(/^([A-F])[\.\:\)\-]\s*(.+)$/i);
+        if (optMatch) {
+          const key = optMatch[1].toUpperCase();
+          if (!seenKeys.has(key)) {
+            seenKeys.add(key);
+            options.push({ key, text: optMatch[2].trim() });
+          }
+        } else if (options.length === 0) {
+          qTextLines.push(line);
+        }
+      }
+
+      if (options.length >= 2 && qTextLines.join(' ').trim()) {
+        questions.push({
+          id: questions.length + 1,
+          text: qTextLines.join(' ').trim().replace(/^\d+\.\s*/, ''),
+          options,
+          correctAnswer: '?',
+        });
+      }
+      continue;
+    }
 
     const correctAnswerKey = ansMatch[1]
       .replace(/[^A-F]/gi, '')

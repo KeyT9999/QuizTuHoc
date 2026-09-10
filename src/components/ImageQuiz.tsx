@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { MLN_RESEARCH_ANSWER_KEYS, MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
 
 interface ImageQuizProps {
   setId: string;
@@ -6,12 +7,15 @@ interface ImageQuizProps {
   imageBasePath: string;
   imageCount: number;
   imageExtension: string;
-  imageViewport?: 'left' | 'right';
   onComplete: () => void;
   onBack: () => void;
 }
 
-const ANSWER_OPTIONS = ['A', 'B', 'C', 'D', 'E', 'F'];
+const BASE_ANSWER_OPTIONS = ['A', 'B', 'C', 'D'];
+
+function sortAnswer(answer: string) {
+  return answer.split('').sort().join('');
+}
 
 export default function ImageQuiz({
   setId,
@@ -19,13 +23,15 @@ export default function ImageQuiz({
   imageBasePath,
   imageCount,
   imageExtension,
-  imageViewport = 'left',
   onComplete,
   onBack,
 }: ImageQuizProps) {
+  const key = MLN_RESEARCH_ANSWER_KEYS[setId];
+  const uncertainQuestions = MLN_RESEARCH_UNCERTAIN[setId] ?? [];
   const indexKey = `keyt_image_quiz_index_${setId}`;
   const masteredKey = `keyt_image_quiz_mastered_${setId}`;
   const answersKey = `keyt_image_quiz_answers_${setId}`;
+  const submittedKey = `keyt_image_quiz_submitted_${setId}`;
 
   const [currentIndex, setCurrentIndex] = useState(() => {
     const saved = Number(localStorage.getItem(indexKey));
@@ -47,179 +53,235 @@ export default function ImageQuiz({
       return {};
     }
   });
-  const [showFullImage, setShowFullImage] = useState(false);
+  const [submittedIds, setSubmittedIds] = useState<number[]>(() => {
+    try {
+      const saved = localStorage.getItem(submittedKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [showQuestionGrid, setShowQuestionGrid] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem(indexKey, String(currentIndex));
-  }, [currentIndex, indexKey]);
-
-  useEffect(() => {
-    localStorage.setItem(masteredKey, JSON.stringify(masteredIds));
-  }, [masteredIds, masteredKey]);
-
-  useEffect(() => {
-    localStorage.setItem(answersKey, JSON.stringify(answers));
-  }, [answers, answersKey]);
+  useEffect(() => localStorage.setItem(indexKey, String(currentIndex)), [currentIndex, indexKey]);
+  useEffect(() => localStorage.setItem(masteredKey, JSON.stringify(masteredIds)), [masteredIds, masteredKey]);
+  useEffect(() => localStorage.setItem(answersKey, JSON.stringify(answers)), [answers, answersKey]);
+  useEffect(() => localStorage.setItem(submittedKey, JSON.stringify(submittedIds)), [submittedIds, submittedKey]);
 
   const questionNumber = currentIndex + 1;
+  const researchAnswer = key?.[currentIndex] ?? '?';
+  const answerOptions = researchAnswer.includes('E')
+    ? [...BASE_ANSWER_OPTIONS, 'E']
+    : BASE_ANSWER_OPTIONS;
+  const isUnresolved = researchAnswer === '?';
+  const isMultipleChoice = !isUnresolved && researchAnswer.length > 1;
+  const selectedAnswer = answers[questionNumber] ?? '';
+  const isAnswered = submittedIds.includes(questionNumber);
+  const isMastered = masteredIds.includes(questionNumber);
+  const isCorrect = !isUnresolved && selectedAnswer === researchAnswer;
+  const answerCount = Object.keys(answers).length;
+  const researchedCount = key?.filter((answer) => answer !== '?').length ?? 0;
+  const imageUrl = `${imageBasePath}/Q${questionNumber}.${imageExtension}`;
+  const percent = Math.round((masteredIds.length / imageCount) * 100);
+  const uncertainSet = new Set(uncertainQuestions);
 
-  const markCurrentAsViewed = () => {
-    if (masteredIds.includes(questionNumber)) return;
-    setMasteredIds((prev) => [...prev, questionNumber]);
+  const markMastered = () => {
+    if (!isMastered) setMasteredIds((previous) => [...previous, questionNumber]);
   };
 
-  const handleSelectAnswer = (key: string) => {
-    const currentAnswer = answers[questionNumber];
-    // Toggle: click again to deselect
-    if (currentAnswer === key) {
-      const newAnswers = { ...answers };
-      delete newAnswers[questionNumber];
-      setAnswers(newAnswers);
-    } else {
-      setAnswers((prev) => ({ ...prev, [questionNumber]: key }));
-      // Auto-mark as viewed when selecting an answer
-      if (!masteredIds.includes(questionNumber)) {
-        setMasteredIds((prev) => [...prev, questionNumber]);
-      }
+  const handleSelectAnswer = (option: string) => {
+    if (isAnswered) return;
+
+    const nextAnswer = isMultipleChoice
+      ? sortAnswer(selectedAnswer.includes(option)
+        ? selectedAnswer.replace(option, '')
+        : `${selectedAnswer}${option}`)
+      : option;
+
+    setAnswers((previous) => ({ ...previous, [questionNumber]: nextAnswer }));
+
+    if (!isMultipleChoice) {
+      setSubmittedIds((previous) => [...new Set([...previous, questionNumber])]);
+      if (!isUnresolved && nextAnswer === researchAnswer) markMastered();
     }
+  };
+
+  const handleCheckMultiple = () => {
+    if (!selectedAnswer || isAnswered) return;
+    setSubmittedIds((previous) => [...new Set([...previous, questionNumber])]);
+    if (selectedAnswer === researchAnswer) markMastered();
+  };
+
+  const toggleMastered = () => {
+    setMasteredIds((previous) => previous.includes(questionNumber)
+      ? previous.filter((id) => id !== questionNumber)
+      : [...previous, questionNumber]);
   };
 
   const handleNext = () => {
-    markCurrentAsViewed();
-    if (currentIndex < imageCount - 1) {
-      setCurrentIndex((previous) => previous + 1);
-    } else {
-      onComplete();
-    }
+    if (currentIndex < imageCount - 1) setCurrentIndex((previous) => previous + 1);
+    else onComplete();
   };
 
-  const handleReset = () => {
-    if (!window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình và bắt đầu lại?')) return;
+  const handleResetProgress = () => {
+    if (!window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) return;
     setCurrentIndex(0);
-    setMasteredIds([]);
     setAnswers({});
+    setMasteredIds([]);
+    setSubmittedIds([]);
     localStorage.removeItem(indexKey);
-    localStorage.removeItem(masteredKey);
     localStorage.removeItem(answersKey);
+    localStorage.removeItem(masteredKey);
+    localStorage.removeItem(submittedKey);
   };
 
-  if (imageCount === 0) {
-    return null;
-  }
-
-  const imageUrl = `${imageBasePath}/Q${questionNumber}.${imageExtension}`;
-  const isViewed = masteredIds.includes(questionNumber);
-  const selectedAnswer = answers[questionNumber];
-  const answeredCount = Object.keys(answers).length;
-  const percent = Math.round((masteredIds.length / imageCount) * 100);
+  if (imageCount === 0) return null;
 
   return (
-    <div className="image-quiz-wrapper">
-      <div className="image-quiz-header">
-        <div>
-          <div className="image-quiz-title">{setTitle}</div>
-          <div className="image-quiz-progress">
-            Đã xem: {masteredIds.length}/{imageCount} ({percent}%)
-            {answeredCount > 0 && (
-              <span style={{ marginLeft: 12, color: '#1a73e8' }}>
-                · Đã chọn đáp án: {answeredCount}/{imageCount}
-              </span>
-            )}
-          </div>
-          <div className="image-quiz-note">Luyện từ ảnh · chọn đáp án · tự đối chiếu</div>
+    <div className="fuo-quiz-wrapper">
+      <div className="fuo-header-banner">
+        <div className="mln-header-title-group">
+          <span className="fuo-header-title">{setTitle.toUpperCase()}</span>
+          <span className="fuo-learned-badge">
+            ✓ Đã học: {masteredIds.length}/{imageCount} ({percent}%)
+          </span>
         </div>
-        <div className="image-quiz-actions">
-          <button type="button" className="fuo-btn-text" onClick={handleReset}>🔄 Học lại từ đầu</button>
-          <button type="button" className="fuo-btn-text" onClick={onBack}>← Đổi bộ đề</button>
+
+        <div className="fuo-header-controls">
+          <button type="button" className="fuo-btn-text" onClick={() => setShowQuestionGrid((previous) => !previous)}>
+            📋 Danh sách câu ({questionNumber}/{imageCount})
+          </button>
+          <button type="button" className="fuo-btn-text" onClick={handleResetProgress}>
+            🔄 Học lại từ đầu
+          </button>
+          <button type="button" className="fuo-btn-text" onClick={onBack}>
+            ← Đổi bộ đề
+          </button>
         </div>
       </div>
 
-      <div className="image-quiz-content">
-        <div className="image-quiz-toolbar">
-          <strong>Câu {questionNumber}/{imageCount}</strong>
-          <div className="image-quiz-toolbar-actions">
-            <button
-              type="button"
-              className="image-quiz-toggle-image"
-              onClick={() => setShowFullImage((previous) => !previous)}
-            >
-              {showFullImage ? 'Phóng to câu hỏi' : 'Xem toàn ảnh'}
-            </button>
-            <button
-              type="button"
-              className={`image-quiz-viewed ${isViewed ? 'is-viewed' : ''}`}
-              onClick={markCurrentAsViewed}
-            >
-              {isViewed ? '✓ Đã xem' : 'Đánh dấu đã xem'}
-            </button>
+      <div className="mln-progress-strip">
+        <span>Đã chọn: {answerCount}/{imageCount}</span>
+        <span>Đáp án nghiên cứu: {researchedCount}/{imageCount}</span>
+        <span className="mln-review-hint">Các câu đánh dấu cần kiểm tra sẽ không tự tính “đã học”.</span>
+      </div>
+
+      {showQuestionGrid && (
+        <div className="fuo-grid-modal">
+          <div className="fuo-grid-header">
+            <strong>Danh sách câu hỏi & tiến độ</strong>
+            <button type="button" className="fuo-btn-text" onClick={() => setShowQuestionGrid(false)}>✕ Đóng</button>
           </div>
-        </div>
-
-        <div className={`image-quiz-frame image-quiz-frame--${imageViewport} ${showFullImage ? 'is-full-image' : ''}`}>
-          <img src={imageUrl} alt={`${setTitle} - câu ${questionNumber}`} />
-        </div>
-
-        {/* Answer Selection Buttons */}
-        <div className="image-quiz-answer-bar">
-          <span className="image-quiz-answer-label">Chọn đáp án:</span>
-          <div className="image-quiz-answer-options">
-            {ANSWER_OPTIONS.map((key) => (
-              <button
-                key={key}
-                type="button"
-                className={`image-quiz-answer-btn ${selectedAnswer === key ? 'selected' : ''}`}
-                onClick={() => handleSelectAnswer(key)}
-              >
-                {key}
-              </button>
-            ))}
-          </div>
-          {selectedAnswer && (
-            <span className="image-quiz-answer-chosen">
-              ✓ Bạn chọn: <strong>{selectedAnswer}</strong>
-            </span>
-          )}
-        </div>
-
-        <div className="image-quiz-navigation">
-          <button
-            type="button"
-            className="fuo-nav-btn"
-            disabled={currentIndex === 0}
-            onClick={() => setCurrentIndex((previous) => previous - 1)}
-          >
-            ← Câu trước
-          </button>
-          <div className="image-quiz-dots" aria-label="Danh sách câu hỏi">
+          <div className="fuo-grid-items">
             {Array.from({ length: imageCount }, (_, index) => {
               const qNum = index + 1;
-              const isCurrent = index === currentIndex;
-              const isQViewed = masteredIds.includes(qNum);
-              const hasAnswer = answers[qNum] !== undefined;
-
-              let className = '';
-              if (isCurrent) className += ' active';
-              if (isQViewed) className += ' viewed';
-              if (hasAnswer) className += ' answered';
+              const answered = submittedIds.includes(qNum);
+              const selected = answers[qNum];
+              let className = 'fuo-grid-item';
+              if (index === currentIndex) className += ' active';
+              if (masteredIds.includes(qNum)) className += ' mastered';
+              else if (answered) className += ' answered';
+              if (uncertainSet.has(qNum)) className += ' needs-review';
 
               return (
                 <button
                   key={qNum}
                   type="button"
-                  className={className.trim()}
-                  onClick={() => setCurrentIndex(index)}
-                  aria-label={`Câu ${qNum}${hasAnswer ? ` - đã chọn ${answers[qNum]}` : ''}`}
-                  title={hasAnswer ? `Đã chọn: ${answers[qNum]}` : `Câu ${qNum}`}
+                  className={className}
+                  onClick={() => {
+                    setCurrentIndex(index);
+                    setShowQuestionGrid(false);
+                  }}
+                  title={`Câu ${qNum}${selected ? ` - đã chọn ${selected}` : ''}`}
                 >
                   {qNum}
                 </button>
               );
             })}
           </div>
-          <button type="button" className="fuo-nav-btn primary" onClick={handleNext}>
-            {currentIndex === imageCount - 1 ? 'Hoàn tất' : 'Câu tiếp theo'} →
+        </div>
+      )}
+
+      <div className="fuo-content-area mln-content-area">
+        <div className="mln-question-heading">
+          <div className="fuo-question-text">
+            <strong>Câu {questionNumber}:</strong> Luyện câu hỏi trong ảnh; chọn đáp án bên dưới.
+          </div>
+          <button
+            type="button"
+            className={`fuo-toggle-mastered-btn ${isMastered ? 'is-mastered' : ''}`}
+            onClick={toggleMastered}
+          >
+            {isMastered ? '✓ Đã học' : '📖 Đánh dấu đã học'}
           </button>
         </div>
+
+        <div className="mln-image-question-card">
+          <img src={imageUrl} alt={`${setTitle} - câu ${questionNumber}`} />
+        </div>
+
+        <div className="mln-answer-instruction">
+          {isMultipleChoice ? 'Câu này có nhiều đáp án: chọn đủ phương án rồi bấm “Kiểm tra đáp án”.' : 'Bấm vào chữ cái của đáp án bạn chọn.'}
+        </div>
+
+        <div className="fuo-options-list mln-answer-options" aria-label="Các phương án trả lời">
+          {answerOptions.map((option) => {
+            const selected = selectedAnswer.includes(option);
+            const correct = !isUnresolved && researchAnswer.includes(option);
+            let statusClass = '';
+            if (isAnswered) {
+              if (correct) statusClass = 'fuo-opt-correct';
+              else if (selected) statusClass = 'fuo-opt-incorrect';
+              else statusClass = 'fuo-opt-dimmed';
+            }
+
+            return (
+              <button
+                key={option}
+                type="button"
+                className={`fuo-option-item mln-answer-option ${selected ? 'selected' : ''} ${statusClass}`}
+                onClick={() => handleSelectAnswer(option)}
+                disabled={isAnswered}
+                aria-pressed={selected}
+              >
+                <span className="fuo-option-label">{option}.</span>
+                <span className="fuo-option-content">Đáp án {option}</span>
+                {isAnswered && correct && <span aria-label="đáp án đúng">✓</span>}
+              </button>
+            );
+          })}
+        </div>
+
+        {isAnswered && (
+          <div className="fuo-instant-result mln-result-message" role="status">
+            {isUnresolved ? (
+              <span className="mln-txt-review">⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.</span>
+            ) : isCorrect ? (
+              <span className="fuo-txt-success">✓ Đáp án chính xác</span>
+            ) : (
+              <span className="fuo-txt-error">✗ Sai! Đáp án nghiên cứu là {researchAnswer}</span>
+            )}
+          </div>
+        )}
+
+        <div className="fuo-action-bar">
+          <button type="button" className="fuo-nav-btn" onClick={() => setCurrentIndex((previous) => previous - 1)} disabled={currentIndex === 0}>
+            ← Câu trước
+          </button>
+          {isMultipleChoice && !isAnswered && (
+            <button type="button" className="fuo-nav-btn fuo-primary" onClick={handleCheckMultiple} disabled={!selectedAnswer}>
+              Kiểm tra đáp án
+            </button>
+          )}
+          <button type="button" className="fuo-nav-btn fuo-primary" onClick={handleNext}>
+            {currentIndex === imageCount - 1 ? 'Hoàn tất' : 'Câu tiếp'} →
+          </button>
+        </div>
+      </div>
+
+      <div className="fuo-watermark">
+        <div className="fuo-logo-main">KEYT</div>
+        <div className="fuo-logo-sub">KEYT.COM</div>
       </div>
     </div>
   );

@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { parseQuizText, type Question } from '../utils/quizParser';
 import { SAMPLE_QUIZ_TEXT } from '../data/sampleQuiz';
+import type { Course } from '../data/courses';
 
 interface TextInputProps {
-  onStartQuiz: (questions: Question[], title?: string, rawText?: string) => void;
+  targetCourse?: Course | null;
+  onStartQuiz: (questions: Question[], title?: string, rawText?: string, courseId?: string) => void;
   onBack: () => void;
 }
 
-export default function TextInput({ onStartQuiz, onBack }: TextInputProps) {
-  const [setTitle, setSetTitle] = useState('Bộ đề tự nhập');
+export default function TextInput({ targetCourse, onStartQuiz, onBack }: TextInputProps) {
+  const [setTitle, setSetTitle] = useState(
+    targetCourse ? `Đề ôn tập ${targetCourse.code}` : 'Bộ đề tự nhập'
+  );
   const [text, setText] = useState('');
   const [error, setError] = useState('');
 
@@ -20,7 +24,7 @@ export default function TextInput({ onStartQuiz, onBack }: TextInputProps) {
       return;
     }
     setError('');
-    onStartQuiz(parsedQuestions, setTitle || 'Bộ đề tự nhập', text);
+    onStartQuiz(parsedQuestions, setTitle || 'Bộ đề tự nhập', text, targetCourse?.id);
   };
 
   const handleLoadSample = () => {
@@ -33,9 +37,11 @@ export default function TextInput({ onStartQuiz, onBack }: TextInputProps) {
     <div className="fuo-input-container">
       <div className="fuo-input-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h1 style={{ margin: 0 }}>Tạo / Nhập Bộ Đề Mới</h1>
+          <h1 style={{ margin: 0 }}>
+            {targetCourse ? `Thêm Đề Mới: ${targetCourse.code}` : 'Tạo / Nhập Bộ Đề Mới'}
+          </h1>
           <button type="button" className="fuo-nav-btn" onClick={onBack}>
-            ← Quay lại danh sách
+            ← Quay lại
           </button>
         </div>
 

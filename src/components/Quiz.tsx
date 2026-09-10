@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Question } from '../utils/quizParser';
+import { MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
 
 interface QuizProps {
   setId?: string;
@@ -82,11 +83,15 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
   const question = questions[currentIndex];
   const selectedAnswer = answers[question.id];
-  const isMultipleChoice = question.correctAnswer.length > 1;
-  const isAnswered = isMultipleChoice
+  const isUnresolved = question.correctAnswer === '?';
+  const isMultipleChoice = !isUnresolved && question.correctAnswer.length > 1;
+  const isAnswered = isUnresolved
+    ? selectedAnswer !== undefined
+    : isMultipleChoice
     ? submittedIds.includes(question.id)
     : selectedAnswer !== undefined;
   const isMastered = masteredIds.includes(question.id);
+  const uncertainSet = new Set(MLN_RESEARCH_UNCERTAIN[setId ?? ''] ?? []);
 
   const handleSelectOption = (key: string) => {
     if (isAnswered) return;
@@ -102,7 +107,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     setAnswers(newAnswers);
 
     // If answer is correct, automatically mark as mastered!
-    if (!isMultipleChoice && answer === question.correctAnswer && !masteredIds.includes(question.id)) {
+    if (!isUnresolved && !isMultipleChoice && answer === question.correctAnswer && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
     }
   };
@@ -203,6 +208,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
               if (isCurrent) btnClass += ' active';
               if (isQMastered) btnClass += ' mastered';
               else if (isQAnswered) btnClass += ' answered';
+              if (uncertainSet.has(idx + 1)) btnClass += ' needs-review';
 
               return (
                 <button
@@ -246,7 +252,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
             const isCorrect = question.correctAnswer.includes(opt.key);
 
             let optionStatusClass = '';
-            if (isAnswered) {
+            if (isAnswered && !isUnresolved) {
               if (isCorrect) optionStatusClass = 'fuo-opt-correct';
               else if (isSelected) optionStatusClass = 'fuo-opt-incorrect';
               else optionStatusClass = 'fuo-opt-dimmed';
@@ -278,7 +284,9 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
           {isAnswered && (
             <div className="fuo-instant-result">
-              {selectedAnswer === question.correctAnswer ? (
+              {isUnresolved ? (
+                <span className="mln-txt-review">⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.</span>
+              ) : selectedAnswer === question.correctAnswer ? (
                 <span className="fuo-txt-success">✓ Đáp án chính xác</span>
               ) : (
                 <span className="fuo-txt-error">✗ Sai! Đáp án đúng là {question.correctAnswer}</span>

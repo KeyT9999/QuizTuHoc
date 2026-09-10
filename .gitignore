@@ -25,4 +25,15 @@ dist-ssr
 
 # Raw asset source folders
 PMG201c - */
+MLN111/
+MLN122/
+TaiLieu Tham Khao/
+
+# Temporary files and local cache
+.serena/
+tmp/
+mln111_*.json
+tools/__pycache__/
+tools/*.txt
+
 
