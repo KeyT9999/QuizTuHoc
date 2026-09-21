@@ -60,9 +60,13 @@ export function parseQuizText(rawText: string): Question[] {
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-F])[\.\:\)\-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-F])[.:)-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
+          if (options.length === 0 && key !== 'A') {
+            qTextLines.push(line);
+            continue;
+          }
           if (!seenKeys.has(key)) {
             seenKeys.add(key);
             options.push({ key, text: optMatch[2].trim() });
@@ -101,7 +105,7 @@ export function parseQuizText(rawText: string): Question[] {
     if (parts.length >= 2) {
       questionText = parts[0];
       for (let j = 1; j < parts.length; j++) {
-        const optMatch = parts[j].match(/^([A-F])[\.\:\)\-]?\s*(.+)$/i);
+        const optMatch = parts[j].match(/^([A-F])[.:)-]?\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (!seenKeys.has(key)) {
@@ -122,9 +126,13 @@ export function parseQuizText(rawText: string): Question[] {
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-F])[\.\:\)\-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-F])[.:)-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
+          if (options.length === 0 && key !== 'A') {
+            qTextLines.push(line);
+            continue;
+          }
           if (!seenKeys.has(key)) {
             seenKeys.add(key);
             options.push({

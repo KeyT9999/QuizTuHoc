@@ -23,12 +23,14 @@ import { SAMPLE_QUIZ_PMG201C_SU25_FE } from './sampleQuizPMG201cSU25FE';
 import { SAMPLE_QUIZ_PMG201C_CAU_LAP } from './sampleQuizPMG201cCauLap';
 import { SAMPLE_QUIZ_PMG201C_SP24_FE } from './sampleQuizPMG201cSP24FE';
 import { SAMPLE_QUIZ_PMG201C_SU24_FE1 } from './sampleQuizPMG201cSU24FE1';
+import { SAMPLE_QUIZ_MLN111_FULL } from './sampleQuizMLN111Full';
 import { SAMPLE_QUIZ_MLN111_SU26_C1FE } from './sampleQuizMLN111SU26C1FE';
 import { SAMPLE_QUIZ_MLN111_SU26_C2FE } from './sampleQuizMLN111SU26C2FE';
 import { SAMPLE_QUIZ_MLN111_SU26_RE } from './sampleQuizMLN111SU26RE';
 import { SAMPLE_QUIZ_MLN111_SP25_FE } from './sampleQuizMLN111SP25FE';
 import { SAMPLE_QUIZ_MLN111_SP25_RE } from './sampleQuizMLN111SP25RE';
 import { SAMPLE_QUIZ_MLN111_SU25_BL5_FE } from './sampleQuizMLN111SU25BL5FE';
+import { SAMPLE_QUIZ_MLN122_FULL } from './sampleQuizMLN122Full';
 import { SAMPLE_QUIZ_MLN122_FA23_FEB5 } from './sampleQuizMLN122FA23FEB5';
 import { SAMPLE_QUIZ_MLN122_SP26_C2FE } from './sampleQuizMLN122SP26C2FE';
 import { SAMPLE_QUIZ_MLN122_SU25_B5_1 } from './sampleQuizMLN122SU25B51';
@@ -278,6 +280,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     rawText: SAMPLE_QUIZ_SWD392_FA2024_FE,
   },
   {
+    id: 'mln111_full',
+    courseId: 'mln111',
+    title: 'MLN111',
+    description: 'Bộ ngân hàng 556 câu hỏi trắc nghiệm Triết học Mác - Lênin tổng hợp chuẩn tiếng Việt có dấu.',
+    category: 'Môn MLN111',
+    badge: 'Đề chuẩn 556 câu',
+    rawText: SAMPLE_QUIZ_MLN111_FULL,
+  },
+  {
     id: 'mln111_su26_c1fe',
     courseId: 'mln111',
     title: 'MLN111 - SU26 - C1FE',
@@ -330,6 +341,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MLN111',
     badge: 'Đề chuẩn 60 câu',
     rawText: SAMPLE_QUIZ_MLN111_SU25_BL5_FE,
+  },
+  {
+    id: 'mln122_full',
+    courseId: 'mln122',
+    title: 'MLN122',
+    description: 'Bộ ngân hàng 510 câu hỏi trắc nghiệm Kinh tế chính trị Mác - Lênin tổng hợp chuẩn tiếng Việt có dấu.',
+    category: 'Môn MLN122',
+    badge: 'Đề chuẩn 510 câu',
+    rawText: SAMPLE_QUIZ_MLN122_FULL,
   },
   {
     id: 'mln122_fa23_feb5',
