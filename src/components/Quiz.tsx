@@ -1,6 +1,13 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import type { Question } from '../utils/quizParser';
 import { MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
+import {
+  loadQuizSplitSettings,
+  saveQuizSplitSettings,
+  calculateQuizParts,
+  type QuizSplitSettings,
+} from '../utils/quizSplit';
+import QuizSplitModal from './QuizSplitModal';
 
 interface QuizProps {
   setId?: string;
@@ -16,18 +23,47 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   const storageKeyMastered = setId ? `keyt_quiz_mastered_${setId}` : 'keyt_quiz_mastered';
   const storageKeySubmitted = setId ? `keyt_quiz_submitted_${setId}` : 'keyt_quiz_submitted';
 
-  // Load initial states from localStorage
+  // Load split settings
+  const [splitSettings, setSplitSettings] = useState<QuizSplitSettings>(() => {
+    return loadQuizSplitSettings(setId, 50);
+  });
+  const [isSplitModalOpen, setIsSplitModalOpen] = useState(false);
+  const [showPartCompleteModal, setShowPartCompleteModal] = useState(false);
+
+  // Calculate parts based on splitSettings
+  const parts = useMemo(() => {
+    return calculateQuizParts(questions.length, splitSettings.chunkSize || 50);
+  }, [questions.length, splitSettings.chunkSize]);
+
+  const currentPartIndex = useMemo(() => {
+    if (!splitSettings.enabled || parts.length === 0) return 0;
+    if (splitSettings.currentPart >= parts.length) return parts.length - 1;
+    return Math.max(0, splitSettings.currentPart);
+  }, [splitSettings.enabled, splitSettings.currentPart, parts.length]);
+
+  const currentPart = splitSettings.enabled && parts.length > 0 ? parts[currentPartIndex] : null;
+
+  // Load initial index from localStorage, clamped to currentPart if split mode is active
   const [currentIndex, setCurrentIndex] = useState<number>(() => {
     const saved = localStorage.getItem(storageKeyIndex);
     const parsed = saved !== null ? parseInt(saved, 10) : 0;
-    return !isNaN(parsed) && parsed >= 0 && parsed < questions.length ? parsed : 0;
+    const valid = !isNaN(parsed) && parsed >= 0 && parsed < questions.length ? parsed : 0;
+
+    const initialSplit = loadQuizSplitSettings(setId, 50);
+    if (initialSplit.enabled) {
+      const initialParts = calculateQuizParts(questions.length, initialSplit.chunkSize || 50);
+      const targetPart = initialParts[initialSplit.currentPart] || initialParts[0];
+      if (targetPart && (valid < targetPart.startIndex || valid > targetPart.endIndex)) {
+        return targetPart.startIndex;
+      }
+    }
+    return valid;
   });
 
   const [answers, setAnswers] = useState<Record<number, string>>(() => {
     try {
       const saved = localStorage.getItem(storageKeyAnswers);
       if (saved) return JSON.parse(saved);
-      // Fallback for legacy key
       if (setId === 'ccnc_426') {
         const legacy = localStorage.getItem('keyt_quiz_answers');
         if (legacy) return JSON.parse(legacy);
@@ -42,7 +78,6 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     try {
       const saved = localStorage.getItem(storageKeyMastered);
       if (saved) return JSON.parse(saved);
-      // Fallback for legacy key
       if (setId === 'ccnc_426') {
         const legacy = localStorage.getItem('keyt_quiz_mastered');
         if (legacy) return JSON.parse(legacy);
@@ -63,6 +98,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   });
 
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
+  const [gridFilter, setGridFilter] = useState<'part' | 'all'>('part');
   const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
   const questionCardRef = useRef<HTMLDivElement>(null);
 
@@ -83,40 +119,71 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     localStorage.setItem(storageKeySubmitted, JSON.stringify(submittedIds));
   }, [submittedIds, storageKeySubmitted]);
 
-  const question = questions[currentIndex];
-  const selectedAnswer = answers[question.id];
-  const isUnresolved = question.correctAnswer === '?';
-  const isMultipleChoice = !isUnresolved && question.correctAnswer.length > 1;
+  useEffect(() => {
+    saveQuizSplitSettings(setId, splitSettings);
+  }, [splitSettings, setId]);
+
+  // Safe question derivation
+  const question = questions[currentIndex] || questions[0];
+
+  const selectedAnswer = question ? answers[question.id] : undefined;
+  const isUnresolved = question?.correctAnswer === '?';
+  const isMultipleChoice = !isUnresolved && (question?.correctAnswer.length ?? 0) > 1;
   const isAnswered = isUnresolved
     ? selectedAnswer !== undefined
     : isMultipleChoice
-    ? submittedIds.includes(question.id)
+    ? (question ? submittedIds.includes(question.id) : false)
     : selectedAnswer !== undefined;
-  const isMastered = masteredIds.includes(question.id);
+  const isMastered = question ? masteredIds.includes(question.id) : false;
   const uncertainSet = new Set(MLN_RESEARCH_UNCERTAIN[setId ?? ''] ?? []);
-  const progressPercent = Math.round((masteredIds.length / questions.length) * 100);
 
-  const handleSelectOption = useCallback((key: string) => {
-    if (isAnswered) return;
-    const answer = isMultipleChoice
-      ? (selectedAnswer?.includes(key)
-          ? selectedAnswer.replace(key, '')
-          : `${selectedAnswer ?? ''}${key}`)
-          .split('')
-          .sort()
-          .join('')
-      : key;
-    const newAnswers = { ...answers, [question.id]: answer };
-    setAnswers(newAnswers);
+  // Progress stats
+  const progressPercent = questions.length > 0 ? Math.round((masteredIds.length / questions.length) * 100) : 0;
 
-    // If answer is correct, automatically mark as mastered!
-    if (!isUnresolved && !isMultipleChoice && answer === question.correctAnswer && !masteredIds.includes(question.id)) {
-      setMasteredIds((prev) => [...prev, question.id]);
-    }
-  }, [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds]);
+  const partQuestionIds = useMemo(() => {
+    if (!currentPart) return [];
+    return questions.slice(currentPart.startIndex, currentPart.endIndex + 1).map((q) => q.id);
+  }, [currentPart, questions]);
+
+  const partMasteredCount = useMemo(() => {
+    return partQuestionIds.filter((id) => masteredIds.includes(id)).length;
+  }, [partQuestionIds, masteredIds]);
+
+  const partProgressPercent = currentPart && currentPart.totalCount > 0
+    ? Math.round((partMasteredCount / currentPart.totalCount) * 100)
+    : 0;
+
+  const relativeIndex = currentPart ? currentIndex - currentPart.startIndex : currentIndex;
+
+  // Handlers
+  const handleSelectOption = useCallback(
+    (key: string) => {
+      if (!question || isAnswered) return;
+      const answer = isMultipleChoice
+        ? (selectedAnswer?.includes(key)
+            ? selectedAnswer.replace(key, '')
+            : `${selectedAnswer ?? ''}${key}`)
+            .split('')
+            .sort()
+            .join('')
+        : key;
+      const newAnswers = { ...answers, [question.id]: answer };
+      setAnswers(newAnswers);
+
+      if (
+        !isUnresolved &&
+        !isMultipleChoice &&
+        answer === question.correctAnswer &&
+        !masteredIds.includes(question.id)
+      ) {
+        setMasteredIds((prev) => [...prev, question.id]);
+      }
+    },
+    [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds]
+  );
 
   const handleCheckMultiple = useCallback(() => {
-    if (!selectedAnswer || isAnswered) return;
+    if (!question || !selectedAnswer || isAnswered) return;
     setSubmittedIds((prev) => [...prev, question.id]);
     if (selectedAnswer === question.correctAnswer && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
@@ -125,9 +192,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
   const toggleMastered = (questionId: number) => {
     setMasteredIds((prev) =>
-      prev.includes(questionId)
-        ? prev.filter((id) => id !== questionId)
-        : [...prev, questionId]
+      prev.includes(questionId) ? prev.filter((id) => id !== questionId) : [...prev, questionId]
     );
   };
 
@@ -137,49 +202,130 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   };
 
   const handleNext = useCallback(() => {
-    if (currentIndex < questions.length - 1) {
-      triggerSlide('next');
-      setCurrentIndex(currentIndex + 1);
+    if (splitSettings.enabled && currentPart) {
+      if (currentIndex < currentPart.endIndex) {
+        triggerSlide('next');
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        setShowPartCompleteModal(true);
+      }
     } else {
-      onFinish(answers);
+      if (currentIndex < questions.length - 1) {
+        triggerSlide('next');
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        onFinish(answers);
+      }
     }
-  }, [currentIndex, questions.length, answers, onFinish]);
+  }, [currentIndex, questions.length, answers, onFinish, splitSettings.enabled, currentPart]);
 
   const handlePrev = useCallback(() => {
-    if (currentIndex > 0) {
-      triggerSlide('prev');
-      setCurrentIndex(currentIndex - 1);
+    if (splitSettings.enabled && currentPart) {
+      if (currentIndex > currentPart.startIndex) {
+        triggerSlide('prev');
+        setCurrentIndex(currentIndex - 1);
+      }
+    } else {
+      if (currentIndex > 0) {
+        triggerSlide('prev');
+        setCurrentIndex(currentIndex - 1);
+      }
     }
-  }, [currentIndex]);
+  }, [currentIndex, splitSettings.enabled, currentPart]);
+
+  const handleSwitchPart = (targetPartIndex: number) => {
+    if (targetPartIndex < 0 || targetPartIndex >= parts.length) return;
+    const targetPart = parts[targetPartIndex];
+    const updated: QuizSplitSettings = {
+      ...splitSettings,
+      currentPart: targetPartIndex,
+    };
+    setSplitSettings(updated);
+    saveQuizSplitSettings(setId, updated);
+    setCurrentIndex(targetPart.startIndex);
+    setShowPartCompleteModal(false);
+  };
+
+  const handleApplySplitSettings = (newSettings: QuizSplitSettings, targetPartIndex?: number) => {
+    setSplitSettings(newSettings);
+    saveQuizSplitSettings(setId, newSettings);
+    if (newSettings.enabled) {
+      const newParts = calculateQuizParts(questions.length, newSettings.chunkSize);
+      const targetIdx = targetPartIndex !== undefined ? targetPartIndex : newSettings.currentPart;
+      const p = newParts[targetIdx] || newParts[0];
+      if (p) {
+        if (currentIndex < p.startIndex || currentIndex > p.endIndex) {
+          setCurrentIndex(p.startIndex);
+        }
+      }
+    }
+  };
 
   const handleResetProgress = () => {
-    if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) {
-      setCurrentIndex(0);
-      setAnswers({});
-      setMasteredIds([]);
-      setSubmittedIds([]);
-      localStorage.removeItem(storageKeyIndex);
-      localStorage.removeItem(storageKeyAnswers);
-      localStorage.removeItem(storageKeyMastered);
-      localStorage.removeItem(storageKeySubmitted);
+    if (splitSettings.enabled && currentPart) {
+      const resetChoice = window.confirm(
+        `Bạn muốn học lại từ đầu?\n\n• Nhấn OK: Đặt lại toàn bộ đề thi (${questions.length} câu).\n• Nhấn Hủy (Cancel): Chỉ đặt lại tiến trình của riêng ${currentPart.name} (${currentPart.totalCount} câu).`
+      );
+
+      if (resetChoice) {
+        // Reset all
+        setCurrentIndex(0);
+        setAnswers({});
+        setMasteredIds([]);
+        setSubmittedIds([]);
+        localStorage.removeItem(storageKeyIndex);
+        localStorage.removeItem(storageKeyAnswers);
+        localStorage.removeItem(storageKeyMastered);
+        localStorage.removeItem(storageKeySubmitted);
+      } else {
+        // Reset current part only
+        const partIds = new Set(partQuestionIds);
+        setAnswers((prev) => {
+          const next = { ...prev };
+          partIds.forEach((id) => delete next[id]);
+          return next;
+        });
+        setMasteredIds((prev) => prev.filter((id) => !partIds.has(id)));
+        setSubmittedIds((prev) => prev.filter((id) => !partIds.has(id)));
+        setCurrentIndex(currentPart.startIndex);
+      }
+    } else {
+      if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) {
+        setCurrentIndex(0);
+        setAnswers({});
+        setMasteredIds([]);
+        setSubmittedIds([]);
+        localStorage.removeItem(storageKeyIndex);
+        localStorage.removeItem(storageKeyAnswers);
+        localStorage.removeItem(storageKeyMastered);
+        localStorage.removeItem(storageKeySubmitted);
+      }
     }
   };
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if user is typing in an input/textarea
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
       const key = e.key.toLowerCase();
 
       // Option selection: A/B/C/D or 1/2/3/4
-      const optionKeys: Record<string, string> = { a: 'A', b: 'B', c: 'C', d: 'D', '1': 'A', '2': 'B', '3': 'C', '4': 'D' };
+      const optionKeys: Record<string, string> = {
+        a: 'A',
+        b: 'B',
+        c: 'C',
+        d: 'D',
+        '1': 'A',
+        '2': 'B',
+        '3': 'C',
+        '4': 'D',
+      };
       if (optionKeys[key]) {
         e.preventDefault();
         const optionKey = optionKeys[key];
-        if (question.options.some((o) => o.key === optionKey)) {
+        if (question?.options.some((o) => o.key === optionKey)) {
           handleSelectOption(optionKey);
         }
         return;
@@ -203,7 +349,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
       }
 
       // Toggle mastered
-      if (key === 'm') {
+      if (key === 'm' && question) {
         e.preventDefault();
         toggleMastered(question.id);
         return;
@@ -219,7 +365,39 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [question, handleSelectOption, handleNext, handlePrev, handleCheckMultiple, isMultipleChoice, isAnswered, selectedAnswer]);
+  }, [
+    question,
+    handleSelectOption,
+    handleNext,
+    handlePrev,
+    handleCheckMultiple,
+    isMultipleChoice,
+    isAnswered,
+    selectedAnswer,
+  ]);
+
+  // Questions displayed in Grid Modal
+  const displayedQuestions = useMemo(() => {
+    if (splitSettings.enabled && currentPart && gridFilter === 'part') {
+      return questions
+        .slice(currentPart.startIndex, currentPart.endIndex + 1)
+        .map((q, i) => ({ q, idx: currentPart.startIndex + i }));
+    }
+    return questions.map((q, idx) => ({ q, idx }));
+  }, [questions, splitSettings.enabled, currentPart, gridFilter]);
+
+  if (!question) {
+    return (
+      <div className="quiz-v2-wrapper">
+        <div className="app-error-state">
+          <h3>Không có câu hỏi nào</h3>
+          <button className="back-btn" onClick={onBack}>
+            ← Quay lại
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="quiz-v2-wrapper">
@@ -227,34 +405,111 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
       <div className="quiz-v2-header">
         <div className="quiz-v2-header-left">
           <span className="quiz-v2-title">{setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE'}</span>
-          <span className="quiz-v2-mastered-badge">
-            ✓ Đã học: {masteredIds.length}/{questions.length} ({progressPercent}%)
-          </span>
+          
+          {splitSettings.enabled && currentPart ? (
+            <span
+              className="quiz-v2-mastered-badge quiz-v2-mastered-split"
+              title="Tiến độ học phần hiện tại và tổng toàn bộ đề"
+            >
+              ✓ {currentPart.name}: {partMasteredCount}/{currentPart.totalCount} ({partProgressPercent}%)
+              <span className="quiz-v2-mastered-total-tag">
+                Tổng: {masteredIds.length}/{questions.length}
+              </span>
+            </span>
+          ) : (
+            <span className="quiz-v2-mastered-badge">
+              ✓ Đã học: {masteredIds.length}/{questions.length} ({progressPercent}%)
+            </span>
+          )}
         </div>
 
+        {/* Center / Part Navigation when Split Mode is Active */}
+        {splitSettings.enabled && currentPart && (
+          <div className="quiz-v2-header-center">
+            <div className="quiz-v2-part-selector">
+              <button
+                type="button"
+                className="quiz-v2-part-nav-btn"
+                disabled={currentPartIndex === 0}
+                onClick={() => handleSwitchPart(currentPartIndex - 1)}
+                title="Về phần trước"
+              >
+                ◀
+              </button>
+
+              <div className="quiz-v2-part-select-wrapper">
+                <select
+                  className="quiz-v2-part-select"
+                  value={currentPartIndex}
+                  onChange={(e) => handleSwitchPart(parseInt(e.target.value, 10))}
+                  aria-label="Chọn phần đề thi"
+                >
+                  {parts.map((p) => {
+                    const pQuestions = questions.slice(p.startIndex, p.endIndex + 1);
+                    const pMastered = pQuestions.filter((q) => masteredIds.includes(q.id)).length;
+                    return (
+                      <option key={p.partIndex} value={p.partIndex}>
+                        {p.name} (Câu {p.startNumber} - {p.endNumber}) · {pMastered}/{p.totalCount} đã học
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              <button
+                type="button"
+                className="quiz-v2-part-nav-btn"
+                disabled={currentPartIndex === parts.length - 1}
+                onClick={() => handleSwitchPart(currentPartIndex + 1)}
+                title="Sang phần tiếp theo"
+              >
+                ▶
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="quiz-v2-header-right">
+          {/* Split Mode Config Button */}
+          <button
+            type="button"
+            className={`quiz-v2-header-btn quiz-v2-split-config-btn ${
+              splitSettings.enabled ? 'is-split-active' : ''
+            }`}
+            onClick={() => setIsSplitModalOpen(true)}
+            title="Thiết lập chia nhỏ Quiz (số câu/phần) hoặc làm toàn bộ"
+          >
+            {splitSettings.enabled ? (
+              <>⚙️ Chia nhỏ ({splitSettings.chunkSize} câu/quiz)</>
+            ) : (
+              <>✂️ Chia nhỏ quiz</>
+            )}
+          </button>
+
           <button
             type="button"
             className="quiz-v2-header-btn"
             onClick={() => setShowQuestionGrid(!showQuestionGrid)}
             title="Phím tắt: G"
           >
-            📋 Danh sách câu ({currentIndex + 1}/{questions.length})
+            📋 Danh sách ({splitSettings.enabled && currentPart ? `${relativeIndex + 1}/${currentPart.totalCount}` : `${currentIndex + 1}/${questions.length}`})
           </button>
+          
           <button type="button" className="quiz-v2-header-btn" onClick={handleResetProgress}>
             🔄 Học lại từ đầu
           </button>
+          
           <button type="button" className="quiz-v2-header-btn" onClick={onBack}>
             ← Đổi bộ đề
           </button>
         </div>
       </div>
 
-      {/* Progress Bar */}
+      {/* Progress Bar (shows current part progress if split mode, else full progress) */}
       <div className="quiz-v2-progress-track">
         <div
           className="quiz-v2-progress-fill"
-          style={{ width: `${progressPercent}%` }}
+          style={{ width: `${splitSettings.enabled ? partProgressPercent : progressPercent}%` }}
         />
       </div>
 
@@ -262,7 +517,27 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
       {showQuestionGrid && (
         <div className="quiz-v2-grid-modal">
           <div className="quiz-v2-grid-header">
-            <strong>Danh sách câu hỏi & Tiến độ học:</strong>
+            <div className="quiz-v2-grid-header-left">
+              <strong>Danh sách câu hỏi & Tiến độ học:</strong>
+              {splitSettings.enabled && currentPart && (
+                <div className="quiz-v2-grid-filter-tabs">
+                  <button
+                    type="button"
+                    className={`quiz-v2-grid-tab ${gridFilter === 'part' ? 'active' : ''}`}
+                    onClick={() => setGridFilter('part')}
+                  >
+                    {currentPart.name} ({currentPart.startNumber} - {currentPart.endNumber})
+                  </button>
+                  <button
+                    type="button"
+                    className={`quiz-v2-grid-tab ${gridFilter === 'all' ? 'active' : ''}`}
+                    onClick={() => setGridFilter('all')}
+                  >
+                    Tất cả ({questions.length} câu)
+                  </button>
+                </div>
+              )}
+            </div>
             <button
               type="button"
               className="quiz-v2-header-btn"
@@ -272,12 +547,13 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
             </button>
           </div>
           <div className="quiz-v2-grid-items">
-            {questions.map((q, idx) => {
+            {displayedQuestions.map(({ q, idx }) => {
               const isCurrent = idx === currentIndex;
               const isQMastered = masteredIds.includes(q.id);
-              const isQAnswered = q.correctAnswer.length > 1
-                ? submittedIds.includes(q.id)
-                : answers[q.id] !== undefined;
+              const isQAnswered =
+                q.correctAnswer.length > 1
+                  ? submittedIds.includes(q.id)
+                  : answers[q.id] !== undefined;
 
               let btnClass = 'quiz-v2-grid-item';
               if (isCurrent) btnClass += ' active';
@@ -291,10 +567,23 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
                   type="button"
                   className={btnClass}
                   onClick={() => {
+                    if (splitSettings.enabled) {
+                      const targetPartIdx = Math.floor(idx / (splitSettings.chunkSize || 50));
+                      if (targetPartIdx !== currentPartIndex && targetPartIdx < parts.length) {
+                        const updated: QuizSplitSettings = {
+                          ...splitSettings,
+                          currentPart: targetPartIdx,
+                        };
+                        setSplitSettings(updated);
+                        saveQuizSplitSettings(setId, updated);
+                      }
+                    }
                     setCurrentIndex(idx);
                     setShowQuestionGrid(false);
                   }}
-                  title={`Câu ${idx + 1}: ${isQMastered ? 'Đã học' : isQAnswered ? 'Đã làm' : 'Chưa học'}`}
+                  title={`Câu ${idx + 1}: ${
+                    isQMastered ? 'Đã học' : isQAnswered ? 'Đã làm' : 'Chưa học'
+                  }`}
                 >
                   {idx + 1}
                 </button>
@@ -308,13 +597,32 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
       <div className="quiz-v2-content-center">
         <div
           ref={questionCardRef}
-          className={`quiz-v2-question-card ${slideDirection === 'next' ? 'slide-in-right' : slideDirection === 'prev' ? 'slide-in-left' : ''}`}
+          className={`quiz-v2-question-card ${
+            slideDirection === 'next'
+              ? 'slide-in-right'
+              : slideDirection === 'prev'
+              ? 'slide-in-left'
+              : ''
+          }`}
           key={currentIndex}
         >
           {/* Question Header */}
           <div className="quiz-v2-q-header">
             <div className="quiz-v2-q-number">
-              Câu {currentIndex + 1} <span className="quiz-v2-q-total">/ {questions.length}</span>
+              {splitSettings.enabled && currentPart ? (
+                <>
+                  <span className="quiz-v2-q-main-num">Câu {relativeIndex + 1}</span>
+                  <span className="quiz-v2-q-total"> / {currentPart.totalCount}</span>
+                  <span className="quiz-v2-q-part-pill">
+                    {currentPart.name} · Gốc: #{currentIndex + 1}/{questions.length}
+                  </span>
+                </>
+              ) : (
+                <>
+                  Câu {currentIndex + 1}{' '}
+                  <span className="quiz-v2-q-total">/ {questions.length}</span>
+                </>
+              )}
             </div>
             <button
               type="button"
@@ -366,11 +674,15 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           {isAnswered && (
             <div className="quiz-v2-feedback">
               {isUnresolved ? (
-                <span className="quiz-v2-feedback-warning">⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.</span>
+                <span className="quiz-v2-feedback-warning">
+                  ⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.
+                </span>
               ) : selectedAnswer === question.correctAnswer ? (
                 <span className="quiz-v2-feedback-correct">✓ Đáp án chính xác!</span>
               ) : (
-                <span className="quiz-v2-feedback-incorrect">✗ Sai! Đáp án đúng là {question.correctAnswer}</span>
+                <span className="quiz-v2-feedback-incorrect">
+                  ✗ Sai! Đáp án đúng là {question.correctAnswer}
+                </span>
               )}
             </div>
           )}
@@ -381,7 +693,11 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
               type="button"
               className="quiz-v2-btn secondary"
               onClick={handlePrev}
-              disabled={currentIndex === 0}
+              disabled={
+                splitSettings.enabled && currentPart
+                  ? currentIndex <= currentPart.startIndex
+                  : currentIndex === 0
+              }
               title="Phím tắt: ←"
             >
               ← Câu trước
@@ -404,16 +720,102 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
               onClick={handleNext}
               title="Phím tắt: → hoặc Enter"
             >
-              {currentIndex === questions.length - 1 ? 'Nộp bài & Kết quả' : 'Câu tiếp →'}
+              {splitSettings.enabled && currentPart
+                ? currentIndex === currentPart.endIndex
+                  ? currentPartIndex === parts.length - 1
+                    ? 'Nộp bài & Kết quả'
+                    : `Hoàn thành ${currentPart.name} →`
+                  : 'Câu tiếp →'
+                : currentIndex === questions.length - 1
+                ? 'Nộp bài & Kết quả'
+                : 'Câu tiếp →'}
             </button>
           </div>
 
           {/* Keyboard Hint */}
           <div className="quiz-v2-keyboard-hint">
-            💡 Phím tắt: <kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd> chọn đáp án · <kbd>←</kbd><kbd>→</kbd> chuyển câu · <kbd>M</kbd> đánh dấu · <kbd>G</kbd> danh sách
+            💡 Phím tắt: <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> chọn đáp án · <kbd>←</kbd> <kbd>→</kbd> chuyển câu · <kbd>M</kbd> đánh dấu · <kbd>G</kbd> danh sách
           </div>
         </div>
       </div>
+
+      {/* Part Complete Celebration Modal */}
+      {showPartCompleteModal && currentPart && (
+        <div className="quiz-split-modal-overlay">
+          <div className="quiz-split-complete-card">
+            <div className="quiz-split-complete-icon">🎉</div>
+            <h3 className="quiz-split-complete-title">
+              Hoàn thành {currentPart.name}!
+            </h3>
+            <p className="quiz-split-complete-subtitle">
+              Bạn đã xem hết {currentPart.totalCount} câu trong phần này (Câu {currentPart.startNumber} – {currentPart.endNumber}).
+            </p>
+
+            <div className="quiz-split-complete-stats">
+              <div className="quiz-split-stat-box">
+                <div className="quiz-split-stat-value">{currentPart.totalCount}</div>
+                <div className="quiz-split-stat-label">Tổng số câu</div>
+              </div>
+              <div className="quiz-split-stat-box highlight">
+                <div className="quiz-split-stat-value">{partMasteredCount}</div>
+                <div className="quiz-split-stat-label">Đã học thành thạo</div>
+              </div>
+              <div className="quiz-split-stat-box">
+                <div className="quiz-split-stat-value">{partProgressPercent}%</div>
+                <div className="quiz-split-stat-label">Tiến độ phần</div>
+              </div>
+            </div>
+
+            <div className="quiz-split-complete-actions">
+              {currentPartIndex < parts.length - 1 ? (
+                <button
+                  type="button"
+                  className="quiz-split-complete-btn-next"
+                  onClick={() => handleSwitchPart(currentPartIndex + 1)}
+                >
+                  Làm tiếp {parts[currentPartIndex + 1].name} →
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="quiz-split-complete-btn-next"
+                  onClick={() => onFinish(answers)}
+                >
+                  Xem bảng điểm tổng kết 🏆
+                </button>
+              )}
+              <button
+                type="button"
+                className="quiz-split-complete-btn-retry"
+                onClick={() => {
+                  setCurrentIndex(currentPart.startIndex);
+                  setShowPartCompleteModal(false);
+                }}
+              >
+                Ôn lại phần này 🔄
+              </button>
+              <button
+                type="button"
+                className="quiz-split-complete-btn-close"
+                onClick={() => setShowPartCompleteModal(false)}
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Split Settings Modal */}
+      <QuizSplitModal
+        isOpen={isSplitModalOpen}
+        onClose={() => setIsSplitModalOpen(false)}
+        totalQuestions={questions.length}
+        settings={splitSettings}
+        masteredIds={masteredIds}
+        questions={questions}
+        onApply={handleApplySplitSettings}
+      />
     </div>
   );
 }
