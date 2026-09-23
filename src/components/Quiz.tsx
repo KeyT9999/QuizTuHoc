@@ -8,6 +8,12 @@ import {
   type QuizSplitSettings,
 } from '../utils/quizSplit';
 import QuizSplitModal from './QuizSplitModal';
+import QuizModeBar, { type QuizPlayMode } from './QuizModeBar';
+import TimeAttackGame from './games/TimeAttackGame';
+import SurvivalTowerGame from './games/SurvivalTowerGame';
+import TrueFalseGame from './games/TrueFalseGame';
+import MistakeBusterView from './games/MistakeBusterView';
+import { getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
 
 interface QuizProps {
   setId?: string;
@@ -29,6 +35,12 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   });
   const [isSplitModalOpen, setIsSplitModalOpen] = useState(false);
   const [showPartCompleteModal, setShowPartCompleteModal] = useState(false);
+
+  // Play Mode (Cốt lõi vs Đột phá) & Mistake count
+  const [activeMode, setActiveMode] = useState<QuizPlayMode>('study');
+  const [mistakeCount, setMistakeCount] = useState<number>(() => {
+    return setId ? getMistakeQuestionIds(setId).length : 0;
+  });
 
   // Calculate parts based on splitSettings
   const parts = useMemo(() => {
@@ -177,6 +189,11 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         !masteredIds.includes(question.id)
       ) {
         setMasteredIds((prev) => [...prev, question.id]);
+      } else if (!isUnresolved && !isMultipleChoice && answer !== question.correctAnswer) {
+        if (setId) {
+          saveMistakeQuestion(setId, question.id);
+          setMistakeCount(getMistakeQuestionIds(setId).length);
+        }
       }
     },
     [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds]
@@ -306,6 +323,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeMode !== 'study') return;
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
@@ -401,26 +419,45 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
   return (
     <div className="quiz-v2-wrapper">
-      {/* Top Header Bar */}
+      {/* Tier 1 — Premium Dark Header Bar */}
       <div className="quiz-v2-header">
         <div className="quiz-v2-header-left">
           <span className="quiz-v2-title">{setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE'}</span>
           
-          {splitSettings.enabled && currentPart ? (
-            <span
-              className="quiz-v2-mastered-badge quiz-v2-mastered-split"
-              title="Tiến độ học phần hiện tại và tổng toàn bộ đề"
-            >
-              ✓ {currentPart.name}: {partMasteredCount}/{currentPart.totalCount} ({partProgressPercent}%)
-              <span className="quiz-v2-mastered-total-tag">
-                Tổng: {masteredIds.length}/{questions.length}
+          {/* Circular Progress Ring */}
+          <div className="quiz-progress-ring-wrapper">
+            <svg className="quiz-progress-ring" viewBox="0 0 36 36">
+              <defs>
+                <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#818cf8" />
+                  <stop offset="50%" stopColor="#06b6d4" />
+                  <stop offset="100%" stopColor="#34d399" />
+                </linearGradient>
+              </defs>
+              <circle className="quiz-progress-ring-bg" cx="18" cy="18" r="15.5" />
+              <circle
+                className="quiz-progress-ring-fill"
+                cx="18" cy="18" r="15.5"
+                strokeDasharray={`${2 * Math.PI * 15.5}`}
+                strokeDashoffset={`${2 * Math.PI * 15.5 * (1 - (splitSettings.enabled ? partProgressPercent : progressPercent) / 100)}`}
+              />
+            </svg>
+            <span className="quiz-progress-ring-text">
+              {splitSettings.enabled ? partProgressPercent : progressPercent}%
+            </span>
+            {splitSettings.enabled && currentPart ? (
+              <span className="quiz-progress-ring-label">
+                <strong>{partMasteredCount}/{currentPart.totalCount}</strong> {currentPart.name}
+                <span className="quiz-v2-mastered-total-tag" style={{ marginLeft: 6 }}>
+                  Σ {masteredIds.length}/{questions.length}
+                </span>
               </span>
-            </span>
-          ) : (
-            <span className="quiz-v2-mastered-badge">
-              ✓ Đã học: {masteredIds.length}/{questions.length} ({progressPercent}%)
-            </span>
-          )}
+            ) : (
+              <span className="quiz-progress-ring-label">
+                <strong>{masteredIds.length}/{questions.length}</strong> đã học
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Center / Part Navigation when Split Mode is Active */}
@@ -470,37 +507,45 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         )}
 
         <div className="quiz-v2-header-right">
-          {/* Split Mode Config Button */}
+          {/* Split Mode Config — Icon Button */}
           <button
             type="button"
-            className={`quiz-v2-header-btn quiz-v2-split-config-btn ${
-              splitSettings.enabled ? 'is-split-active' : ''
-            }`}
+            className={`quiz-v2-header-icon-btn ${splitSettings.enabled ? 'is-split-active' : ''}`}
             onClick={() => setIsSplitModalOpen(true)}
-            title="Thiết lập chia nhỏ Quiz (số câu/phần) hoặc làm toàn bộ"
+            title={splitSettings.enabled 
+              ? `Chia nhỏ: ${splitSettings.chunkSize} câu/quiz` 
+              : 'Chia nhỏ quiz'
+            }
           >
-            {splitSettings.enabled ? (
-              <>⚙️ Chia nhỏ ({splitSettings.chunkSize} câu/quiz)</>
-            ) : (
-              <>✂️ Chia nhỏ quiz</>
-            )}
+            ✂️
           </button>
 
+          {/* Question Grid — Icon Button */}
           <button
             type="button"
-            className="quiz-v2-header-btn"
+            className="quiz-v2-header-icon-btn"
             onClick={() => setShowQuestionGrid(!showQuestionGrid)}
-            title="Phím tắt: G"
+            title={`Danh sách câu hỏi (${splitSettings.enabled && currentPart ? `${relativeIndex + 1}/${currentPart.totalCount}` : `${currentIndex + 1}/${questions.length}`}) · Phím tắt: G`}
           >
-            📋 Danh sách ({splitSettings.enabled && currentPart ? `${relativeIndex + 1}/${currentPart.totalCount}` : `${currentIndex + 1}/${questions.length}`})
+            📋
+            <span className="header-btn-count">
+              {splitSettings.enabled && currentPart ? `${relativeIndex + 1}` : `${currentIndex + 1}`}
+            </span>
+          </button>
+
+          {/* Reset Progress — Icon Button */}
+          <button 
+            type="button" 
+            className="quiz-v2-header-icon-btn" 
+            onClick={handleResetProgress}
+            title="Học lại từ đầu"
+          >
+            🔄
           </button>
           
-          <button type="button" className="quiz-v2-header-btn" onClick={handleResetProgress}>
-            🔄 Học lại từ đầu
-          </button>
-          
+          {/* Back — Text Button (important action, keep readable) */}
           <button type="button" className="quiz-v2-header-btn" onClick={onBack}>
-            ← Đổi bộ đề
+            ← Đổi đề
           </button>
         </div>
       </div>
@@ -512,6 +557,67 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           style={{ width: `${splitSettings.enabled ? partProgressPercent : progressPercent}%` }}
         />
       </div>
+
+      {/* Navigation Bar: CỐT LÕI & ĐỘT PHÁ (Minigames) */}
+      <QuizModeBar
+        activeMode={activeMode}
+        onChangeMode={(mode) => setActiveMode(mode)}
+        mistakeCount={mistakeCount}
+        onOpenQuestionGrid={() => setShowQuestionGrid(true)}
+      />
+
+      {/* Active Game / View Mode Rendering */}
+      {activeMode === 'time_attack' && (
+        <TimeAttackGame
+          setId={setId || 'default'}
+          setTitle={setTitle}
+          questions={
+            splitSettings.enabled && currentPart
+              ? questions.slice(currentPart.startIndex, currentPart.endIndex + 1)
+              : questions
+          }
+          onBackToStudy={() => setActiveMode('study')}
+          onOpenMistakes={() => setActiveMode('mistake_buster')}
+        />
+      )}
+
+      {activeMode === 'survival_tower' && (
+        <SurvivalTowerGame
+          setId={setId || 'default'}
+          setTitle={setTitle}
+          questions={
+            splitSettings.enabled && currentPart
+              ? questions.slice(currentPart.startIndex, currentPart.endIndex + 1)
+              : questions
+          }
+          onBackToStudy={() => setActiveMode('study')}
+          onOpenMistakes={() => setActiveMode('mistake_buster')}
+        />
+      )}
+
+      {activeMode === 'true_false' && (
+        <TrueFalseGame
+          setId={setId || 'default'}
+          setTitle={setTitle}
+          questions={
+            splitSettings.enabled && currentPart
+              ? questions.slice(currentPart.startIndex, currentPart.endIndex + 1)
+              : questions
+          }
+          onBackToStudy={() => setActiveMode('study')}
+          onOpenMistakes={() => setActiveMode('mistake_buster')}
+        />
+      )}
+
+      {activeMode === 'mistake_buster' && (
+        <MistakeBusterView
+          setId={setId || 'default'}
+          setTitle={setTitle}
+          allQuestions={questions}
+          onBackToStudy={() => setActiveMode('study')}
+          onMistakesUpdated={() => setMistakeCount(setId ? getMistakeQuestionIds(setId).length : 0)}
+        />
+      )}
 
       {/* Quick Question List Grid */}
       {showQuestionGrid && (
@@ -593,7 +699,8 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         </div>
       )}
 
-      {/* Main Content — Centered Card */}
+      {/* Main Content — Centered Card (Study Mode) */}
+      {activeMode === 'study' && (
       <div className="quiz-v2-content-center">
         <div
           ref={questionCardRef}
@@ -738,6 +845,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           </div>
         </div>
       </div>
+      )}
 
       {/* Part Complete Celebration Modal */}
       {showPartCompleteModal && currentPart && (
