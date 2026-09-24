@@ -21,14 +21,81 @@ interface SurvivalTowerGameProps {
   onOpenMistakes: () => void;
 }
 
+const TOTAL_FLOORS = 50;
+
+// Emoji Avatars available for the player
+const AVATARS = [
+  { id: 'climber', emoji: '🧗', name: 'Nhà leo núi' },
+  { id: 'hero', emoji: '🦸', name: 'Siêu anh hùng' },
+  { id: 'ninja', emoji: '🥷', name: 'Ninja' },
+  { id: 'wizard', emoji: '🧙‍♂️', name: 'Pháp sư' },
+  { id: 'cat', emoji: '🐱', name: 'Mèo dũng cảm' },
+  { id: 'robot', emoji: '🤖', name: 'Chiến binh Mech' },
+];
+
+// Zone styling helper for 50 floors
+function getZoneInfo(floor: number) {
+  if (floor === 50) {
+    return {
+      name: 'Đỉnh Tháp Huyền Thoại',
+      tag: '👑 THÁP ĐỈNH',
+      badgeClass: 'badge-apex',
+      color: '#f59e0b',
+      icon: '👑',
+    };
+  }
+  if (floor >= 41) {
+    return {
+      name: 'Vực Hỏa Ngục',
+      tag: '🌋 HỎA NGỤC',
+      badgeClass: 'badge-lava',
+      color: '#ef4444',
+      icon: '🔥',
+    };
+  }
+  if (floor >= 31) {
+    return {
+      name: 'Tầng Lôi Điện',
+      tag: '⚡ LÔI ĐIỆN',
+      badgeClass: 'badge-storm',
+      color: '#a855f7',
+      icon: '⚡',
+    };
+  }
+  if (floor >= 21) {
+    return {
+      name: 'Vương Triều Pha Lê',
+      tag: '💎 PHA LÊ',
+      badgeClass: 'badge-crystal',
+      color: '#06b6d4',
+      icon: '💎',
+    };
+  }
+  if (floor >= 11) {
+    return {
+      name: 'Rừng Rậm Cổ Thụ',
+      tag: '🌲 CỔ THỤ',
+      badgeClass: 'badge-forest',
+      color: '#10b981',
+      icon: '🌿',
+    };
+  }
+  return {
+    name: 'Chân Tháp Thạch Bi',
+    tag: '🧱 CHÂN THÁP',
+    badgeClass: 'badge-stone',
+    color: '#64748b',
+    icon: '🗿',
+  };
+}
+
 export default function SurvivalTowerGame({
   setId,
   questions,
   onBackToStudy,
   onOpenMistakes,
 }: SurvivalTowerGameProps) {
-  const maxFloors = Math.min(questions.length, 50);
-
+  // Game progress states
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentFloor, setCurrentFloor] = useState(1);
   const [lives, setLives] = useState(3);
@@ -37,6 +104,16 @@ export default function SurvivalTowerGame({
   const [checkpointFloor, setCheckpointFloor] = useState(1);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isVictory, setIsVictory] = useState(false);
+  const [streak, setStreak] = useState(0);
+
+  // Avatar & Visual states
+  const [avatar, setAvatar] = useState('🧗');
+  const [characterState, setCharacterState] = useState<'idle' | 'climbing' | 'falling'>('idle');
+  const [actionFeedback, setActionFeedback] = useState<{
+    type: 'correct' | 'wrong' | 'timeout';
+    message: string;
+    subtext?: string;
+  } | null>(null);
 
   // Lifelines availability
   const [used5050, setUsed5050] = useState(false);
@@ -44,19 +121,35 @@ export default function SurvivalTowerGame({
   const [usedSwap, setUsedSwap] = useState(false);
   const [hiddenOptions, setHiddenOptions] = useState<string[]>([]);
 
-  // Current deck of questions
+  // Current deck of 50 questions
   const [deck, setDeck] = useState<Question[]>([]);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [isAnswering, setIsAnswering] = useState(false);
 
+  // Mobile drawer state
+  const [showMobileTower, setShowMobileTower] = useState(false);
+
   const floorTimerRef = useRef<number | null>(null);
+  const activeFloorRef = useRef<HTMLDivElement | null>(null);
+  const towerScrollRef = useRef<HTMLDivElement | null>(null);
   const highScore = getGameHighScore(setId, 'tower');
+
+  // Build deck with exactly 50 questions (repeating/shuffling if question set has fewer than 50)
+  const prepareDeck = useCallback(() => {
+    if (questions.length === 0) return [];
+    let pool = [...questions].sort(() => Math.random() - 0.5);
+    while (pool.length < TOTAL_FLOORS) {
+      const extra = [...questions].sort(() => Math.random() - 0.5);
+      pool = [...pool, ...extra];
+    }
+    return pool.slice(0, TOTAL_FLOORS);
+  }, [questions]);
 
   // Start new tower expedition
   const startNewRun = useCallback(
     (fromCheckpoint = 1) => {
-      const shuffled = [...questions].sort(() => Math.random() - 0.5);
-      setDeck(shuffled);
+      const newDeck = prepareDeck();
+      setDeck(newDeck);
       setCurrentFloor(fromCheckpoint);
       setCheckpointFloor(fromCheckpoint);
       setLives(3);
@@ -68,13 +161,33 @@ export default function SurvivalTowerGame({
       setHiddenOptions([]);
       setSelectedKey(null);
       setIsAnswering(false);
+      setCharacterState('idle');
+      setActionFeedback(null);
+      setStreak(0);
       setIsGameOver(false);
       setIsVictory(false);
       setIsPlaying(true);
       playClickSound();
     },
-    [questions]
+    [prepareDeck]
   );
+
+  // Scroll active floor into view in the tower viewport
+  const scrollToActiveFloor = useCallback(() => {
+    if (activeFloorRef.current) {
+      activeFloorRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isPlaying) {
+      const timer = setTimeout(scrollToActiveFloor, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [currentFloor, isPlaying, scrollToActiveFloor]);
 
   // Per-floor countdown timer
   useEffect(() => {
@@ -95,7 +208,7 @@ export default function SurvivalTowerGame({
     };
   }, [isPlaying, isGameOver, isVictory, isFrozen, currentFloor]);
 
-  // Handle timeout (counts as wrong answer)
+  // Handle timeout (counts as wrong answer -> falls 2 floors!)
   useEffect(() => {
     if (isPlaying && floorTime === 0 && !isGameOver && !isVictory && !isAnswering) {
       handleTimeout();
@@ -104,33 +217,47 @@ export default function SurvivalTowerGame({
 
   const currentQ = deck[currentFloor - 1] || null;
 
-  // Handle Timeout
+  // Handle Timeout: Drop 2 floors and lose 1 life
   const handleTimeout = () => {
     playWrongSound();
     if (currentQ) saveMistakeQuestion(setId, currentQ.id);
 
-    const nextLives = lives - 1;
-    setLives(nextLives);
+    setIsAnswering(true);
+    setCharacterState('falling');
+    setStreak(0);
 
-    if (nextLives <= 0) {
-      finishGame(false);
-    } else {
-      // Retry or advance
-      setFloorTime(25);
-      setIsFrozen(false);
-      setHiddenOptions([]);
-      if (currentFloor < maxFloors) {
-        setCurrentFloor((prev) => prev + 1);
+    const nextLives = lives - 1;
+    const targetFloor = Math.max(1, currentFloor - 2);
+
+    setActionFeedback({
+      type: 'timeout',
+      message: `⏱️ HẾT GIỜ! RỚT 2 TẦNG!`,
+      subtext: `Tụt từ Tầng ${currentFloor} xuống Tầng ${targetFloor} (-1 ❤️)`,
+    });
+
+    setTimeout(() => {
+      setLives(nextLives);
+      setIsAnswering(false);
+      setCharacterState('idle');
+      setActionFeedback(null);
+
+      if (nextLives <= 0) {
+        finishGame(false, targetFloor);
+      } else {
+        setFloorTime(25);
+        setIsFrozen(false);
+        setHiddenOptions([]);
+        setCurrentFloor(targetFloor);
       }
-    }
+    }, 850);
   };
 
-  const finishGame = (victory: boolean) => {
+  const finishGame = (victory: boolean, finalFloor: number) => {
     setIsGameOver(true);
     setIsPlaying(false);
     setIsVictory(victory);
 
-    saveGameHighScore(setId, 'tower', currentFloor, currentFloor);
+    saveGameHighScore(setId, 'tower', finalFloor, finalFloor);
 
     if (victory) {
       playVictoryFanfare();
@@ -150,52 +277,82 @@ export default function SurvivalTowerGame({
       const isCorrect = chosenKey.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
 
       if (isCorrect) {
+        // Correct answer: Climb +1 floor
         playCorrectSound(currentFloor);
+        setCharacterState('climbing');
+        setStreak((s) => s + 1);
 
-        // Checkpoint update every 10 floors
-        if (currentFloor % 10 === 0 && currentFloor < maxFloors) {
+        const isLastFloor = currentFloor >= TOTAL_FLOORS;
+        const nextFloor = isLastFloor ? TOTAL_FLOORS : currentFloor + 1;
+
+        // Checkpoint update every 10 floors (10, 20, 30, 40)
+        if (currentFloor % 10 === 0 && currentFloor < TOTAL_FLOORS) {
           setCheckpointFloor(currentFloor + 1);
         }
 
+        setActionFeedback({
+          type: 'correct',
+          message: isLastFloor
+            ? '🏆 CHINH PHỤC ĐỈNH THÁP 50 TẦNG!'
+            : `🎉 CHÍNH XÁC! LEO LÊN TẦNG ${nextFloor} ⬆️`,
+          subtext: isLastFloor
+            ? 'Bạn đã trở thành Nhà Vô Địch Tối Thượng!'
+            : streak >= 2
+            ? `🔥 Chuỗi leo ${streak + 1} tầng liên tiếp!`
+            : 'Vượt qua thử thách thành công!',
+        });
+
         setTimeout(() => {
           setSelectedKey(null);
           setIsAnswering(false);
+          setCharacterState('idle');
           setHiddenOptions([]);
           setIsFrozen(false);
           setFloorTime(25);
+          setActionFeedback(null);
 
-          if (currentFloor >= maxFloors) {
-            finishGame(true);
+          if (isLastFloor) {
+            finishGame(true, TOTAL_FLOORS);
           } else {
-            setCurrentFloor((prev) => prev + 1);
+            setCurrentFloor(nextFloor);
           }
-        }, 320);
+        }, 700);
       } else {
-        // Wrong answer
+        // Wrong answer: Drop 2 floors and lose 1 heart!
         playWrongSound();
-        saveMistakeQuestion(setId, currentQ.id);
+        if (currentQ) saveMistakeQuestion(setId, currentQ.id);
+
+        setCharacterState('falling');
+        setStreak(0);
 
         const nextLives = lives - 1;
-        setLives(nextLives);
+        const targetFloor = Math.max(1, currentFloor - 2);
+
+        setActionFeedback({
+          type: 'wrong',
+          message: `💥 SAI RỒI! RỚT 2 TẦNG! ⬇️⬇️`,
+          subtext: `Tụt từ Tầng ${currentFloor} xuống Tầng ${targetFloor} (-1 ❤️)`,
+        });
 
         setTimeout(() => {
           setSelectedKey(null);
           setIsAnswering(false);
+          setCharacterState('idle');
+          setActionFeedback(null);
+          setLives(nextLives);
 
           if (nextLives <= 0) {
-            finishGame(false);
+            finishGame(false, targetFloor);
           } else {
             setHiddenOptions([]);
             setIsFrozen(false);
             setFloorTime(25);
-            if (currentFloor < maxFloors) {
-              setCurrentFloor((prev) => prev + 1);
-            }
+            setCurrentFloor(targetFloor);
           }
-        }, 320);
+        }, 850);
       }
     },
-    [isPlaying, isGameOver, isVictory, isAnswering, currentQ, currentFloor, maxFloors, lives, setId]
+    [isPlaying, isGameOver, isVictory, isAnswering, currentQ, currentFloor, streak, lives, setId]
   );
 
   // Lifeline 1: 50:50
@@ -209,7 +366,6 @@ export default function SurvivalTowerGame({
       .map((o) => o.key.toUpperCase())
       .filter((k) => k !== correctKey);
 
-    // Pick 2 random incorrect keys to hide
     const shuffledIncorrect = [...incorrectKeys].sort(() => Math.random() - 0.5);
     setHiddenOptions(shuffledIncorrect.slice(0, 2));
   };
@@ -230,7 +386,6 @@ export default function SurvivalTowerGame({
     setUsedSwap(true);
     setHiddenOptions([]);
 
-    // Pick another random question from remaining pool
     const unusedQuestions = questions.filter((q) => q.id !== currentQ.id);
     if (unusedQuestions.length > 0) {
       const replacement = unusedQuestions[Math.floor(Math.random() * unusedQuestions.length)];
@@ -275,43 +430,95 @@ export default function SurvivalTowerGame({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isPlaying, isGameOver, isVictory, hiddenOptions, handleSelectOption, startNewRun]);
 
+  // Array of 50 floors for rendering top-down: 50, 49, ..., 1
+  const floorRows = Array.from({ length: TOTAL_FLOORS }, (_, i) => TOTAL_FLOORS - i);
+  const currentZone = getZoneInfo(currentFloor);
+
   // 1. Splash Screen
   if (!isPlaying && !isGameOver && !isVictory) {
     return (
-      <div className="game-card-surface game-splash-box">
-        <div className="game-splash-header">
-          <div className="game-icon-orb orb-purple">👑</div>
-          <h2 className="game-splash-title">Leo Tháp Sinh Tồn</h2>
-          <p className="game-splash-subtitle">
-            Chinh phục {maxFloors} tầng tháp câu hỏi với 3 Trái tim sinh mạng và 3 Quyền trợ giúp tối thượng!
+      <div className="game-card-surface tower-splash-card">
+        <div className="tower-splash-hero">
+          <div className="tower-splash-emojis">
+            <span className="splash-castle-emoji">🏰</span>
+            <span className="splash-climber-emoji">{avatar}</span>
+            <span className="splash-apex-crown">👑</span>
+          </div>
+          <h1 className="tower-splash-title">LEO THÁP 50 TẦNG</h1>
+          <p className="tower-splash-tagline">
+            Đúng leo 1 tầng ⬆️ · Sai rớt 2 tầng ⬇️⬇️ · Chinh phục đỉnh tháp quang vinh!
           </p>
         </div>
 
-        <div className="game-rule-cards">
-          <div className="game-rule-card">
-            <span className="rule-badge rule-red">3 Trái Tim ❤️</span>
-            <strong>Sinh mạng hữu hạn</strong>
-            <p>Mỗi câu trả lời sai bị mất 1 tim. Hết tim là dừng cuộc chơi!</p>
-          </div>
-          <div className="game-rule-card">
-            <span className="rule-badge rule-purple">Mốc an toàn</span>
-            <strong>Cứu cánh tầng 10, 20...</strong>
-            <p>Vượt qua mỗi 10 tầng sẽ lưu điểm hồi sinh an toàn</p>
-          </div>
-          <div className="game-rule-card">
-            <span className="rule-badge rule-green">3 Quyền trợ giúp</span>
-            <strong>50:50 · Đóng băng · Đổi câu</strong>
-            <p>Sử dụng khôn ngoan khi gặp các câu bẫy khó</p>
+        {/* Avatar Selection */}
+        <div className="tower-avatar-picker-section">
+          <div className="avatar-picker-title">CHỌN NHÂN VẬT CỦA BẠN:</div>
+          <div className="avatar-picker-list">
+            {AVATARS.map((av) => (
+              <button
+                key={av.id}
+                type="button"
+                className={`avatar-option-btn ${avatar === av.emoji ? 'is-selected' : ''}`}
+                onClick={() => {
+                  setAvatar(av.emoji);
+                  playClickSound();
+                }}
+              >
+                <span className="avatar-emoji-display">{av.emoji}</span>
+                <span className="avatar-name-display">{av.name}</span>
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="game-best-record-strip">
-          <span>🏆 Kỷ lục tầng cao nhất: <strong>Tầng {highScore.score || 0} / {maxFloors}</strong></span>
+        {/* Rule Cards */}
+        <div className="tower-rule-grid">
+          <div className="tower-rule-item item-climb">
+            <div className="rule-item-icon">⬆️</div>
+            <div className="rule-item-body">
+              <strong>Đúng: Leo +1 Tầng</strong>
+              <p>Mỗi câu trả lời đúng đưa nhân vật leo lên 1 tầng cao hơn</p>
+            </div>
+          </div>
+
+          <div className="tower-rule-item item-fall">
+            <div className="rule-item-icon">⬇️</div>
+            <div className="rule-item-body">
+              <strong>Sai: Rớt -2 Tầng + Mất 1 ❤️</strong>
+              <p>Trả lời sai hoặc hết giờ sẽ trượt dốc 2 tầng và mất 1 sinh mạng!</p>
+            </div>
+          </div>
+
+          <div className="tower-rule-item item-checkpoint">
+            <div className="rule-item-icon">⛺</div>
+            <div className="rule-item-body">
+              <strong>Trạm an toàn Tầng 10, 20, 30, 40</strong>
+              <p>Vượt qua các mốc này sẽ mở điểm hồi sinh khi không may rơi đài</p>
+            </div>
+          </div>
+
+          <div className="tower-rule-item item-apex">
+            <div className="rule-item-icon">👑</div>
+            <div className="rule-item-body">
+              <strong>Đỉnh Tháp Tầng 50</strong>
+              <p>Đạt Tầng 50 để mở khoá Vương miện chiến thắng tối thượng!</p>
+            </div>
+          </div>
         </div>
 
-        <div className="game-splash-actions">
-          <button type="button" className="game-btn-primary game-btn-large" onClick={() => startNewRun(1)}>
-            👑 BẮT ĐẦU LEO THÁP (Space)
+        {/* High Score Banner */}
+        <div className="tower-highscore-strip">
+          <span>🏆 Kỷ lục cao nhất của bạn: <strong>Tầng {highScore.score || 0} / 50</strong></span>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="tower-splash-actions">
+          <button
+            type="button"
+            className="tower-btn-start game-btn-large"
+            onClick={() => startNewRun(1)}
+          >
+            {avatar} BẮT ĐẦU LEO THÁP NGAY (Space)
           </button>
           <button type="button" className="game-btn-ghost" onClick={onBackToStudy}>
             ← Quay lại học chuẩn
@@ -324,40 +531,60 @@ export default function SurvivalTowerGame({
   // 2. Victory / Game Over Screen
   if (isGameOver || isVictory) {
     return (
-      <div className="game-card-surface game-result-box">
-        <div className="game-result-crown">
-          {isVictory ? '🏆 HOÀN THÀNH ĐỈNH THÁP!' : '💀 BẠN ĐÃ RƠI ĐÀI!'}
+      <div className="game-card-surface tower-result-card">
+        <div className="tower-result-emojis">
+          {isVictory ? (
+            <div className="victory-emoji-banner">
+              <span className="trophy-sparkle">✨</span>
+              <span className="victory-avatar">{avatar}</span>
+              <span className="trophy-crown">👑</span>
+              <span className="trophy-cup">🏆</span>
+            </div>
+          ) : (
+            <div className="defeat-emoji-banner">
+              <span className="defeat-skull">💀</span>
+              <span className="defeat-avatar">{avatar}</span>
+              <span className="defeat-splash">💥</span>
+            </div>
+          )}
         </div>
-        <h2 className="game-result-score">
-          Tầng {currentFloor} / {maxFloors}
+
+        <h2 className="tower-result-heading">
+          {isVictory ? 'ĐỈNH THÁP HUYỀN THOẠI ĐÃ BỊ CHINH PHỤC!' : 'BẠN ĐÃ RƠI KHỎI THÁP!'}
         </h2>
-        <p className="game-result-subtext">
+
+        <div className="tower-result-floor-badge">
+          <span>{isVictory ? '👑 ĐẠT ĐỈNH TỐI CAO' : 'DỪNG CHÂN TẠI'}</span>
+          <strong>TẦNG {currentFloor} / 50</strong>
+        </div>
+
+        <p className="tower-result-message">
           {isVictory
-            ? `Xuất sắc! Bạn đã vượt qua toàn bộ ${maxFloors} tầng hiểm trở của bộ đề!`
+            ? `Tuyệt đỉnh thần sầu! Bạn đã xuất sắc leo qua 50 tầng tháp cam go và trở thành Huyền Thoại!`
             : checkpointFloor > 1
-            ? `Bạn có thể hồi sinh từ mốc an toàn Tầng ${checkpointFloor} để tiếp tục leo!`
-            : 'Đừng nản chí! Hãy thử lại để chinh phục các tầng cao hơn.'}
+            ? `Bạn có điểm lưu an toàn tại Tầng ${checkpointFloor}. Hãy tiếp tục hành trình!`
+            : 'Đừng bỏ cuộc! Hãy tôi luyện và leo lại để bứt phá kỷ lục mới!'}
         </p>
 
-        <div className="game-result-actions">
+        <div className="tower-result-actions">
           {checkpointFloor > 1 && !isVictory && (
             <button
               type="button"
-              className="game-btn-primary"
+              className="tower-btn-start"
               onClick={() => startNewRun(checkpointFloor)}
             >
-              🔄 Hồi sinh tại Tầng {checkpointFloor}
+              🔄 Hồi sinh tại Trạm Tầng {checkpointFloor}
             </button>
           )}
           <button
             type="button"
-            className={checkpointFloor > 1 && !isVictory ? 'game-btn-secondary' : 'game-btn-primary'}
+            className={checkpointFloor > 1 && !isVictory ? 'game-btn-secondary' : 'tower-btn-start'}
             onClick={() => startNewRun(1)}
           >
             🏰 Leo tháp từ đầu (Tầng 1)
           </button>
           <button type="button" className="game-btn-secondary" onClick={onOpenMistakes}>
-            🛡️ Xem lại các câu bị sai
+            🛡️ Ôn lại câu sai
           </button>
           <button type="button" className="game-btn-ghost" onClick={onBackToStudy}>
             ← Về trắc nghiệm chuẩn
@@ -371,117 +598,251 @@ export default function SurvivalTowerGame({
   if (!currentQ) return null;
 
   return (
-    <div className="game-gameplay-container">
-      {/* Tower HUD Bar */}
-      <div className="game-hud-bar game-hud-tower">
-        {/* Floor Indicator */}
-        <div className="tower-floor-badge">
-          <span className="tower-icon">🏰</span>
-          <div>
-            <span className="tower-floor-num">TẦNG {currentFloor}</span>
-            <span className="tower-floor-max"> / {maxFloors}</span>
-          </div>
+    <div className="tower-game-wrapper">
+      {/* Mobile Top Progress Strip */}
+      <div className="tower-mobile-strip">
+        <div className="mobile-strip-left">
+          <span className="mobile-avatar">{avatar}</span>
+          <span className="mobile-floor-text">Tầng {currentFloor}/50</span>
+          <span className={`mobile-zone-pill ${currentZone.badgeClass}`}>{currentZone.tag}</span>
         </div>
+        <button
+          type="button"
+          className="mobile-view-tower-btn"
+          onClick={() => setShowMobileTower(!showMobileTower)}
+        >
+          🏰 {showMobileTower ? 'Ẩn tháp' : 'Xem tháp'}
+        </button>
+      </div>
 
-        {/* Lives (Hearts) */}
-        <div className="tower-lives-box" title={`Còn lại ${lives} mạng`}>
-          {[1, 2, 3].map((heartIndex) => (
-            <span
-              key={heartIndex}
-              className={`tower-heart ${heartIndex <= lives ? 'heart-alive' : 'heart-lost'}`}
+      <div className="survival-tower-arena">
+        {/* Left Column: Visual 50-Floor Tower */}
+        <aside className={`tower-side-pane ${showMobileTower ? 'mobile-visible' : ''}`}>
+          <div className="tower-pane-header">
+            <div className="tower-pane-title">
+              <span className="tower-castle-icon">🏰</span>
+              <div>
+                <strong>THÁP 50 TẦNG</strong>
+                <div className="tower-height-stat">Độ cao: {Math.round((currentFloor / 50) * 100)}%</div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="tower-locate-btn"
+              onClick={scrollToActiveFloor}
+              title="Cuộn tới vị trí nhân vật"
             >
-              {heartIndex <= lives ? '❤️' : '🖤'}
-            </span>
-          ))}
-        </div>
+              🎯 Vị trí
+            </button>
+          </div>
 
-        {/* Floor Timer */}
-        <div className={`tower-timer-pill ${floorTime <= 5 ? 'timer-danger' : ''}`}>
-          {isFrozen ? '❄️ 15s' : `⏱️ ${floorTime}s`}
-        </div>
-      </div>
+          {/* Vertical scrollable tower floors */}
+          <div className="tower-viewport" ref={towerScrollRef}>
+            <div className="tower-ladder-rail" />
 
-      {/* Lifeline Buttons */}
-      <div className="tower-lifelines-strip">
-        <span className="lifelines-label">Trợ giúp:</span>
-        <button
-          type="button"
-          className={`lifeline-btn ${used5050 ? 'is-used' : ''}`}
-          disabled={used5050 || isAnswering}
-          onClick={useLifeline5050}
-          title="Ẩn 2 đáp án sai ngẫu nhiên"
-        >
-          🛡️ 50:50 {used5050 && '✓'}
-        </button>
+            {floorRows.map((floorNum) => {
+              const isCurrent = floorNum === currentFloor;
+              const isCleared = floorNum < currentFloor;
+              const isCheckpoint = [10, 20, 30, 40].includes(floorNum);
+              const isApex = floorNum === 50;
+              const zone = getZoneInfo(floorNum);
 
-        <button
-          type="button"
-          className={`lifeline-btn ${usedFreeze ? 'is-used' : ''}`}
-          disabled={usedFreeze || isAnswering}
-          onClick={useLifelineFreeze}
-          title="Đóng băng thời gian thêm 15 giây"
-        >
-          ❄️ Đóng băng {usedFreeze && '✓'}
-        </button>
+              let rowClass = 'tower-floor-row';
+              if (isCurrent) rowClass += ' is-current';
+              if (isCleared) rowClass += ' is-cleared';
+              if (isCheckpoint) rowClass += ' is-checkpoint';
+              if (isApex) rowClass += ' is-apex';
 
-        <button
-          type="button"
-          className={`lifeline-btn ${usedSwap ? 'is-used' : ''}`}
-          disabled={usedSwap || isAnswering}
-          onClick={useLifelineSwap}
-          title="Đổi câu hỏi này sang câu hỏi khác"
-        >
-          🔄 Đổi câu {usedSwap && '✓'}
-        </button>
-      </div>
-
-      {/* Question Card */}
-      <div className="game-question-card">
-        <div className="game-q-counter">
-          <span>Thử thách Tầng #{currentFloor}</span>
-          <span className="game-q-hint-key">Phím tắt: A · B · C · D</span>
-        </div>
-
-        <div className="game-q-text">{currentQ.text}</div>
-
-        <div className="game-q-options">
-          {currentQ.options.map((opt) => {
-            const isHidden = hiddenOptions.includes(opt.key.toUpperCase());
-            const isSelected = selectedKey === opt.key;
-            const isCorrectAnswer = opt.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
-
-            if (isHidden) {
               return (
-                <div key={opt.key} className="game-q-opt-hidden">
-                  <span className="opt-key-circle">{opt.key}</span>
-                  <span className="opt-label-text opt-eliminated">(Đã loại trừ 50:50)</span>
+                <div
+                  key={floorNum}
+                  ref={isCurrent ? activeFloorRef : null}
+                  className={`${rowClass} ${zone.badgeClass}`}
+                  data-floor={floorNum}
+                >
+                  {/* Floor number & badge */}
+                  <div className="floor-num-tag">
+                    <span className="floor-num-digits">{floorNum}</span>
+                    {isApex && <span className="floor-apex-icon">👑</span>}
+                    {isCheckpoint && !isApex && <span className="floor-camp-icon">⛺</span>}
+                  </div>
+
+                  {/* Floor Ledge & Platform */}
+                  <div className="floor-platform">
+                    {isCurrent && (
+                      <div
+                        className={`tower-climber-token ${
+                          characterState === 'climbing'
+                            ? 'is-climbing'
+                            : characterState === 'falling'
+                            ? 'is-falling'
+                            : 'is-idle'
+                        }`}
+                      >
+                        <span className="climber-avatar-emoji">{avatar}</span>
+                        <span className="climber-nametag">BẠN Ở ĐÂY</span>
+                        {characterState === 'climbing' && <span className="climb-particles">✨</span>}
+                        {characterState === 'falling' && <span className="fall-particles">💥</span>}
+                      </div>
+                    )}
+
+                    {!isCurrent && isCleared && (
+                      <span className="floor-cleared-star" title="Đã vượt qua">⭐</span>
+                    )}
+
+                    {!isCurrent && !isCleared && isCheckpoint && (
+                      <span className="floor-checkpoint-tag">Trạm an toàn</span>
+                    )}
+
+                    {!isCurrent && !isCleared && !isCheckpoint && (
+                      <span className="floor-empty-dash" />
+                    )}
+                  </div>
                 </div>
               );
-            }
+            })}
+          </div>
+        </aside>
 
-            let optStateClass = '';
-            if (isAnswering) {
-              if (isSelected) {
-                optStateClass = isCorrectAnswer ? 'opt-flash-correct' : 'opt-flash-wrong';
-              } else if (isCorrectAnswer) {
-                optStateClass = 'opt-flash-correct';
-              }
-            }
+        {/* Right Column: Battle & Question Arena */}
+        <main className="tower-battle-pane">
+          {/* HUD Bar */}
+          <div className="game-hud-bar tower-hud-bar">
+            {/* Floor & Zone */}
+            <div className="tower-hud-floor-box">
+              <span className="hud-castle-icon">{currentZone.icon}</span>
+              <div>
+                <div className="hud-floor-title">TẦNG {currentFloor} / 50</div>
+                <div className="hud-zone-sub">{currentZone.name}</div>
+              </div>
+            </div>
 
-            return (
-              <button
-                key={opt.key}
-                type="button"
-                className={`game-q-opt-btn ${optStateClass}`}
-                disabled={isAnswering}
-                onClick={() => handleSelectOption(opt.key)}
-              >
-                <span className="opt-key-circle">{opt.key}</span>
-                <span className="opt-label-text">{opt.text}</span>
-              </button>
-            );
-          })}
-        </div>
+            {/* Rule reminder tag */}
+            <div className="tower-penalty-tag">
+              <span className="tag-up">Đúng: +1 ⬆️</span>
+              <span className="tag-down">Sai: -2 ⬇️</span>
+            </div>
+
+            {/* Streak if active */}
+            {streak >= 2 && (
+              <div className="tower-streak-pill">
+                🔥 x{streak} Combo!
+              </div>
+            )}
+
+            {/* Lives */}
+            <div className="tower-lives-box" title={`Còn lại ${lives} sinh mạng`}>
+              {[1, 2, 3].map((heartIndex) => (
+                <span
+                  key={heartIndex}
+                  className={`tower-heart ${heartIndex <= lives ? 'heart-alive' : 'heart-lost'}`}
+                >
+                  {heartIndex <= lives ? '❤️' : '🖤'}
+                </span>
+              ))}
+            </div>
+
+            {/* Timer */}
+            <div className={`tower-timer-pill ${floorTime <= 6 ? 'timer-danger' : ''}`}>
+              {isFrozen ? '❄️ 15s' : `⏱️ ${floorTime}s`}
+            </div>
+          </div>
+
+          {/* Lifelines Strip */}
+          <div className="tower-lifelines-strip">
+            <span className="lifelines-label">Trợ giúp:</span>
+            <button
+              type="button"
+              className={`lifeline-btn ${used5050 ? 'is-used' : ''}`}
+              disabled={used5050 || isAnswering}
+              onClick={useLifeline5050}
+              title="Ẩn 2 đáp án sai ngẫu nhiên"
+            >
+              🛡️ 50:50 {used5050 && '✓'}
+            </button>
+
+            <button
+              type="button"
+              className={`lifeline-btn ${usedFreeze ? 'is-used' : ''}`}
+              disabled={usedFreeze || isAnswering}
+              onClick={useLifelineFreeze}
+              title="Đóng băng thời gian thêm 15 giây"
+            >
+              ❄️ Đóng băng {usedFreeze && '✓'}
+            </button>
+
+            <button
+              type="button"
+              className={`lifeline-btn ${usedSwap ? 'is-used' : ''}`}
+              disabled={usedSwap || isAnswering}
+              onClick={useLifelineSwap}
+              title="Đổi câu hỏi này sang câu hỏi khác"
+            >
+              🔄 Đổi câu {usedSwap && '✓'}
+            </button>
+          </div>
+
+          {/* Action Feedback Banner (Climb / Fall banner) */}
+          {actionFeedback && (
+            <div className={`tower-action-banner banner-${actionFeedback.type}`}>
+              <div className="action-banner-main">{actionFeedback.message}</div>
+              {actionFeedback.subtext && (
+                <div className="action-banner-sub">{actionFeedback.subtext}</div>
+              )}
+            </div>
+          )}
+
+          {/* Question Card */}
+          <div className="game-question-card tower-q-card">
+            <div className="game-q-counter">
+              <span className="q-counter-floor">Thử thách Tầng #{currentFloor}</span>
+              <span className="game-q-hint-key">Phím tắt: A · B · C · D</span>
+            </div>
+
+            <div className="game-q-text">{currentQ.text}</div>
+
+            <div className="game-q-options">
+              {currentQ.options.map((opt) => {
+                const isHidden = hiddenOptions.includes(opt.key.toUpperCase());
+                const isSelected = selectedKey === opt.key;
+                const isCorrectAnswer =
+                  opt.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+
+                if (isHidden) {
+                  return (
+                    <div key={opt.key} className="game-q-opt-hidden">
+                      <span className="opt-key-circle">{opt.key}</span>
+                      <span className="opt-label-text opt-eliminated">(Đã loại trừ 50:50)</span>
+                    </div>
+                  );
+                }
+
+                let optStateClass = '';
+                if (isAnswering) {
+                  if (isSelected) {
+                    optStateClass = isCorrectAnswer ? 'opt-flash-correct' : 'opt-flash-wrong';
+                  } else if (isCorrectAnswer) {
+                    optStateClass = 'opt-flash-correct';
+                  }
+                }
+
+                return (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    className={`game-q-opt-btn ${optStateClass}`}
+                    disabled={isAnswering}
+                    onClick={() => handleSelectOption(opt.key)}
+                  >
+                    <span className="opt-key-circle">{opt.key}</span>
+                    <span className="opt-label-text">{opt.text}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );

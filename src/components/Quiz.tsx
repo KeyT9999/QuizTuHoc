@@ -114,6 +114,9 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
   const questionCardRef = useRef<HTMLDivElement>(null);
 
+  // Question IDs that have answers revealed via "Xem đáp án"
+  const [revealedIds, setRevealedIds] = useState<number[]>([]);
+
   // Sync to localStorage
   useEffect(() => {
     localStorage.setItem(storageKeyIndex, currentIndex.toString());
@@ -148,6 +151,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     : selectedAnswer !== undefined;
   const isMastered = question ? masteredIds.includes(question.id) : false;
   const uncertainSet = new Set(MLN_RESEARCH_UNCERTAIN[setId ?? ''] ?? []);
+  const isRevealed = question ? revealedIds.includes(question.id) : false;
 
   // Progress stats
   const progressPercent = questions.length > 0 ? Math.round((masteredIds.length / questions.length) * 100) : 0;
@@ -212,6 +216,15 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
       prev.includes(questionId) ? prev.filter((id) => id !== questionId) : [...prev, questionId]
     );
   };
+
+  const handleToggleReveal = useCallback(() => {
+    if (!question || isAnswered) return;
+    setRevealedIds((prev) =>
+      prev.includes(question.id)
+        ? prev.filter((id) => id !== question.id)
+        : [...prev, question.id]
+    );
+  }, [question, isAnswered]);
 
   const triggerSlide = (direction: 'next' | 'prev') => {
     setSlideDirection(direction);
@@ -279,6 +292,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   };
 
   const handleResetProgress = () => {
+    setRevealedIds([]);
     if (splitSettings.enabled && currentPart) {
       const resetChoice = window.confirm(
         `Bạn muốn học lại từ đầu?\n\n• Nhấn OK: Đặt lại toàn bộ đề thi (${questions.length} câu).\n• Nhấn Hủy (Cancel): Chỉ đặt lại tiến trình của riêng ${currentPart.name} (${currentPart.totalCount} câu).`
@@ -329,6 +343,23 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
       const key = e.key.toLowerCase();
 
+      // Toggle question grid
+      if (key === 'g') {
+        e.preventDefault();
+        setShowQuestionGrid((prev) => !prev);
+        return;
+      }
+
+      // If a modal is open, ignore subsequent card shortcuts
+      if (showQuestionGrid || isSplitModalOpen || showPartCompleteModal) return;
+
+      // Space: Toggle reveal correct answer (green highlight)
+      if (e.key === ' ' || e.code === 'Space') {
+        e.preventDefault();
+        handleToggleReveal();
+        return;
+      }
+
       // Option selection: A/B/C/D or 1/2/3/4
       const optionKeys: Record<string, string> = {
         a: 'A',
@@ -372,19 +403,14 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         toggleMastered(question.id);
         return;
       }
-
-      // Toggle question grid
-      if (key === 'g') {
-        e.preventDefault();
-        setShowQuestionGrid((prev) => !prev);
-        return;
-      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [
+    activeMode,
     question,
+    handleToggleReveal,
     handleSelectOption,
     handleNext,
     handlePrev,
@@ -392,6 +418,9 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
     isMultipleChoice,
     isAnswered,
     selectedAnswer,
+    showQuestionGrid,
+    isSplitModalOpen,
+    showPartCompleteModal,
   ]);
 
   // Questions displayed in Grid Modal
@@ -756,6 +785,10 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
                 if (isCorrect) optClass += ' correct';
                 else if (isSelected) optClass += ' incorrect';
                 else optClass += ' dimmed';
+              } else if (isRevealed && !isUnresolved) {
+                if (isCorrect) optClass += ' correct';
+                else if (isSelected) optClass += ' incorrect';
+                else optClass += ' dimmed';
               }
 
               return (
@@ -766,10 +799,10 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
                 >
                   <span className="quiz-v2-option-key">{opt.key}</span>
                   <span className="quiz-v2-option-text">{opt.text}</span>
-                  {isAnswered && !isUnresolved && isCorrect && (
+                  {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                     <span className="quiz-v2-option-icon correct-icon">✓</span>
                   )}
-                  {isAnswered && !isUnresolved && isSelected && !isCorrect && (
+                  {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
                     <span className="quiz-v2-option-icon incorrect-icon">✗</span>
                   )}
                 </div>
@@ -778,17 +811,23 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           </div>
 
           {/* Feedback */}
-          {isAnswered && (
+          {(isAnswered || isRevealed) && (
             <div className="quiz-v2-feedback">
               {isUnresolved ? (
                 <span className="quiz-v2-feedback-warning">
                   ⚠ Chưa có đáp án nghiên cứu chắc chắn cho câu này.
                 </span>
-              ) : selectedAnswer === question.correctAnswer ? (
-                <span className="quiz-v2-feedback-correct">✓ Đáp án chính xác!</span>
+              ) : isAnswered ? (
+                selectedAnswer === question.correctAnswer ? (
+                  <span className="quiz-v2-feedback-correct">✓ Đáp án chính xác!</span>
+                ) : (
+                  <span className="quiz-v2-feedback-incorrect">
+                    ✗ Sai! Đáp án đúng là {question.correctAnswer}
+                  </span>
+                )
               ) : (
-                <span className="quiz-v2-feedback-incorrect">
-                  ✗ Sai! Đáp án đúng là {question.correctAnswer}
+                <span className="quiz-v2-feedback-correct">
+                  💡 Đáp án đúng là: <strong>{question.correctAnswer}</strong>
                 </span>
               )}
             </div>
@@ -808,6 +847,29 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
               title="Phím tắt: ←"
             >
               ← Câu trước
+            </button>
+
+            <button
+              type="button"
+              className={`quiz-v2-btn reveal-btn ${isRevealed ? 'active' : ''} ${isAnswered ? 'answered' : ''}`}
+              onClick={(e) => {
+                e.currentTarget.blur();
+                handleToggleReveal();
+              }}
+              disabled={isAnswered}
+              title={
+                isAnswered
+                  ? 'Đã có kết quả đáp án cho câu này'
+                  : isRevealed
+                  ? 'Ẩn đáp án đúng · Phím tắt: Space (Dấu cách)'
+                  : 'Xem đáp án đúng · Phím tắt: Space (Dấu cách)'
+              }
+            >
+              <span className="reveal-btn-icon">{isAnswered ? '✓' : isRevealed ? '🙈' : '👁️'}</span>
+              <span className="reveal-btn-text">
+                {isAnswered ? 'Đã có đáp án' : isRevealed ? 'Ẩn đáp án' : 'Xem đáp án'}
+              </span>
+              {!isAnswered && <kbd className="reveal-btn-kbd">Space</kbd>}
             </button>
 
             {isMultipleChoice && !isAnswered && (
@@ -841,7 +903,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
           {/* Keyboard Hint */}
           <div className="quiz-v2-keyboard-hint">
-            💡 Phím tắt: <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> chọn đáp án · <kbd>←</kbd> <kbd>→</kbd> chuyển câu · <kbd>M</kbd> đánh dấu · <kbd>G</kbd> danh sách
+            💡 Phím tắt: <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> chọn đáp án · <kbd className="hint-kbd-space">Space</kbd> xem đáp án · <kbd>←</kbd> <kbd>→</kbd> chuyển câu · <kbd>M</kbd> đánh dấu · <kbd>G</kbd> danh sách
           </div>
         </div>
       </div>
