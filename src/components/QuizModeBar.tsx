@@ -3,6 +3,7 @@ import { isSoundEnabled, setSoundEnabled } from '../utils/gameStorage';
 
 export type QuizPlayMode =
   | 'study' // Trắc nghiệm chuẩn
+  | 'mock_exam' // Thi thử FE
   | 'time_attack' // Đấu trí 60s
   | 'survival_tower' // Leo tháp sinh tồn
   | 'true_false' // Đúng hay Sai 5s
@@ -65,6 +66,16 @@ export default function QuizModeBar({
         >
           {mistakeCount > 0 ? `${mistakeCount}` : '0'}
         </span>
+      </button>
+
+      <button
+        type="button"
+        className={`quiz-mode-pill-btn ${activeMode === 'mock_exam' ? 'is-active is-exam' : ''}`}
+        onClick={() => onChangeMode('mock_exam')}
+      >
+        <span className="quiz-mode-icon">🎓</span>
+        <span className="quiz-mode-text">Thi thử FE</span>
+        <span className="quiz-mode-badge badge-exam">FE</span>
       </button>
 
       {/* Separator */}

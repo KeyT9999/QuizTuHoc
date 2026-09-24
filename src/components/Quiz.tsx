@@ -13,6 +13,7 @@ import TimeAttackGame from './games/TimeAttackGame';
 import SurvivalTowerGame from './games/SurvivalTowerGame';
 import TrueFalseGame from './games/TrueFalseGame';
 import MistakeBusterView from './games/MistakeBusterView';
+import MockExamView from './games/MockExamView';
 import { getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
 
 interface QuizProps {
@@ -644,6 +645,17 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           setTitle={setTitle}
           allQuestions={questions}
           onBackToStudy={() => setActiveMode('study')}
+          onMistakesUpdated={() => setMistakeCount(setId ? getMistakeQuestionIds(setId).length : 0)}
+        />
+      )}
+
+      {activeMode === 'mock_exam' && (
+        <MockExamView
+          setId={setId || 'default'}
+          setTitle={setTitle}
+          allQuestions={questions}
+          onBackToStudy={() => setActiveMode('study')}
+          onOpenMistakes={() => setActiveMode('mistake_buster')}
           onMistakesUpdated={() => setMistakeCount(setId ? getMistakeQuestionIds(setId).length : 0)}
         />
       )}
