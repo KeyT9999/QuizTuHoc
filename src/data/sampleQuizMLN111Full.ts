@@ -3813,4 +3813,256 @@ B. Vì thế giới quan triết học như thế nào sẽ quy định các th�
 C. Vì triết học bao giờ cũng là thành phần quan trọng, đóng vai trò là nhân tố cốt lõi trong các thế giới quan khác
 D. Vì triết học luôn luôn ảnh hưởng và chi phối một cách tự giác đối với các loại thế giới quan
 BCD
+
+Đâu là biểu hiện thứ hai cùa hiện tượng tha hóa con người?
+A. Quan hệ giữa người với người dẫn mất đạo đức và nhân cách.
+B. Quan hệ giữa người với người bị thay thế bởi quan hệ giữa người và vật.
+C. Quan hệ giữa người với người bị thay thế bởi tiền với tiền.
+D. Quan hệ giữa người với người ngày càng biến chất và vụ lợi.
+B
+
+Lý luận hình thái kinh tế - xã hội là cơ sờ khoa học để:
+A. Giài thích đầy đủ mọi hiện tượng xã hội
+B. Giải thích chính xác và đầy đủ mọi hiện tượng xã hội
+C. Xác lập phương pháp luận khoa học chung nhất để giải thích các hiện tượng xã hội
+D. Xác lập phương pháp luận chung nhất ở tầm "duy nhất khoa học" cho mọi quá trình nghiên cứu
+C
+
+Điên vào chỗ trống: "... là một phạm trù triết học dùng để chỉ thực tại khách quan được đem lại cho con ngưởi trong cảm giác, được cảm giác của chúng ta chép lại, chụp lại, phản ánh, và tồn tại không lệ thuộc vào cảm giác"
+A. Vật chất
+B. Ý thức
+C. Năng lực
+D. Thế giới
+A
+
+"Triết học" là thuật ngữ được sử dụng lần đầu tiên trong trường phái nào?
+A. Socrates
+B. Heraclitus
+C. Thales
+D. C. Mac
+A
+
+Những phát minh nào của khoa học tự nhiên đã ảnh hưởng đến sự phát triển của chủ nghĩa duy vật biện chứng?
+A. Định luật bảo toàn và chuyển hóa năng lượng
+B. Thuyết tế bào
+C. Thuyết tiến hóa của Charles Darwin
+D. Lý thuyết về tương đối của Albert Einstein
+ABC
+
+Thế giới quan duy vật biện chứng bao gồm:
+A. Tri thức khoa học, niềm tin khoa học và lý tưởng cách mạng
+B. Tri thức khoa học, tiềm tin khoa học và hệ giá trị cộng đồng
+C. Tri thức khoa học, tình cảm khoa học và lý tưởng khoa học
+D. Tri thức khoa học, niềm tin khoa học và lý tưởng khoa học
+A
+
+Cái bàn cái ghế là vật chất. Đây là quan niệm của các nhà triết học thời kỳ nào?
+A. Duy vật chất phác thời cổ đại
+B. Duy tâm chất phác thời cổ đại
+C. Duy vật trung đại
+D. Duy tâm trung đại
+A
+
+Phép biện chứng là phương pháp nghiên cứu, khái quát thế giới thành hệ thống các nguyên lý, quy luật là phép biện chứng gì?
+A. Biện chứng chủ quan
+B. Biện chứng khách quan
+C. Siêu hình học
+D. Ý muốn con người
+A
+
+Quan điểm toàn diện đặt ra yêu cầu phải xem xét tất cả các mối liên hệ của sự vật để làm gì?
+A. Chống quan điểm siêu hình
+B. Chống quan điểm duy tâm
+C. Chống quan điểm chủ nghĩa chiết trung và thuyết ngụy biện
+D. Đề phòng cho chúng ta khỏi phạm sai lầm và sự cứng nhắc
+D
+
+“Phát triển diễn ra theo còn đường tròn khép kín, là sự lặp lại đơn thuần cái cũ”. Luận điểm này thuộc lập trường triết học nào?
+A. Quan điểm duy vật biện chứng
+B. Quan điểm siêu hình
+C. Quan điểm biện chứng duy tâm
+D. Quan điểm duy tâm khách quan
+B
+
+Con chó, con mèo có ý thức không?
+A. Có. Vì nó được con người dạy
+B. Không. Vì nó không được dạy
+C. Có. Vì nó được rèn luyện qua quá trình tiếp xúc với con người
+D. Không. Vì nó chỉ có bản năng
+D
+
+Nhận định nào sau đây SAI khi khẳng định về tính thống nhất vật chất của thế giới?
+A. Thế giới vật chất không do ai sinh ra và cũng không tự mất đi
+B. Thế giới vật chất tồn tại khách quan, có trước và độc lập với ý thức
+C. Chỉ có một thế giới duy nhất và thống nhất là thế giới vật chất
+D. Đa số bộ phận của thế giới có mối quan hệ vật chất thống nhất với nhau
+D
+
+Tính quần chúng của tôn giáo cho thấy điều gì?
+A. Tôn giáo là một hiện tượng cứu rỗi dành cho những người yếu thế trong xã hội
+B. Tôn giáo là một hiện tượng xã hội phổ biến ở tất cả các quốc gia, dân tộc và châu lục
+C. Tôn giáo tồn tại trong suốt hàng nghìn năm lịch sử và được quần chúng nhân dân xây dựng và phát triển
+D. Tôn giáo là một hiện tượng tâm linh, tín ngưỡng của các dân tộc, cộng đồng
+B
+
+Vì sao lại nói kiểu nhà nước vô sản là kiểu nhà nước "đặc biệt" ?
+A. Là nhà nước của số đông thống trị số ít
+B. Là nhà nước của giai cấp công nhân và nông dân cùng làm chủ
+C. Là nhà nước hiếm hoi đứng về nhân dân lao động
+D. Là nhà nước gắn liền với lợi ích của giai cấp bị bóc lột
+A
+
+Yếu tố nào là cơ sở cho mọi liên hệ?
+A. Tính thống nhất vật chất của xã hội
+B. Tính thống nhất giữa tôn giáo và xã hội
+C. Tính thống nhất vật chất của thế giới
+D. Tính chất xã hội và tôn giáo
+C
+
+Ai là đại diện tiêu biểu cho trường phái nhị nguyên luận?
+A. Descarters
+B. Socrates
+C. Heraclitus
+D. Thales
+A
+
+Lựa chọn cụm từ đúng điền vào chỗ trống. "Trong tính . . . của nó, bản chất con người là . . . những quan hệ xã hội" (C. Mác và Ph. Ăngghen. Toàn tập, t.13, tr.11)
+A. Hiện thực; tổng hòa
+B. Xã hội; tổng hợp
+C. Cụ thể; tổng thể
+D. Tự nhiên; tổng số
+A
+
+Đâu là cơ sở chủ yếu nhất cho sự ra đời của triết học Mác?
+A. Thực tiễn cách mạng của giai cấp vô sản
+B. Nguồn gốc lý luận
+C. Tiền đề khoa học tự nhiên
+D. Nhân tố chủ quan của C.Mác và Ph.Ăngghen
+A
+
+Nguyên nhân trực tiếp dẫn tới sự xuất hiện nhà nước là do đâu?
+A. Do giai cấp thống trị trong xã hội mong muốn.
+B. Do một đấng siêu nhiên yêu cầu.
+C. Do mâu thuẫn giai cấp trong xã hội gay gắt không thể điều hòa được.
+D. Do lực lượng sản xuất và quan hệ sản xuất đã phát triển.
+C
+
+Thuật ngữ lý luận nhận thức có nguồn gốc từ trong ngôn ngữ nào?
+A. Ngôn ngữ Hy Lạp cổ
+B. Ngôn ngữ Anh
+C. Ngôn ngữ Nhật
+D. Ngôn ngữ Phạn cổ
+A
+
+Những yếu tố nào đã thúc đẩy sự ra đời của triết học Mác trong bối cảnh Cách mạng công nghiệp ở Châu Âu?
+A. Sự tăng trưởng nhanh chóng của tầng lớp trung lưu với quyền lực kinh tế ngày càng lớn
+B. Sự phát triển mạnh mẽ của lực lượng sản xuất và các mâu thuẫn xã hội gia tăng
+C. Sự cần thiết phải có một lý thuyết mới để soi sáng vai trò của giai cấp tư sản
+D. Sự xuất hiện của giai cấp vô sản như một lực lượng chính trị - xã hội độc lập
+BD
+
+Nguyên nhân sâu xa của sự xuất hiện giai cấp là gì?
+A. Là sự phát triển của lực lượng sản xuất
+B. Là sự phát triển của quan hệ sản xuất
+C. Là sự phát triển của công cụ lao động
+D. Là sự phát triển của phân công lao động xã hội
+A
+
+Nhận thức kinh nghiệm là nhận thức dựa trên sự quan sát trực tiếp các sự vật hiện tượng hay các thí nghiệm, thực nghiệm khoa học.Vì vậy, kết quả của nhận thức kinh nghiệm là những tri thức nào sau đây ?
+A. Những tri thức kinh nghiệm thông thái
+B. Những tri thức kinh nghiệm thông thường hoặc tri thức thực nghiệm khoa học
+C. Thuần túy là những tri thức kinh nghiệm thông thường
+D. Những tri thức mang tính trực quan bề ngoài không bản chất
+B
+
+Thuật ngữ “triết gia” đầu tiên xuất hiện được dùng để chỉ người nghiên cứu về
+A. Bản chất của sự vật
+B. Bản chất của thế giới
+C. Bản chất của con người
+D. Bản chất của thực tại khách quan
+A
+
+Những hoạt động tâm lý diễn ra bên ngoài sự kiểm soát của ý thức, góp phần giảm bớt sự quá tải của đầu óc khi cổng việc lặp lại nhiều lần mà vẫn đảm bảo độ chính xác cao gọi là gì?
+A. Tiềm thức
+B. Vô thức
+C. Tự ý thức
+D. Trí tuệ nhân tạo
+A
+
+Nguyên lý là thuật ngữ đa nghĩa khá bất định có nguồn gốc từ tiếng nào?
+A. Hy Lạp
+B. Trung Quốc
+C. Nga
+D. Việt Nam
+A
+
+Những người theo thuyết khả tri luận cho rằng: nhận thức là một quá trình không ngừng đi sâu khám phá về bản chất sự vật. Từ quá trình đó, vật tự nó sẽ buộc phải biến thành:
+A. Vật cho ta
+B. Vật tự thân
+C. Vạn vật bất biến
+D. Tự ta ý thức về vật chất
+A
+
+Đâu là quan hệ cơ bản và chủ yếu nhất quyết định trực tiếp đến địa vị kinh tế - xã hội của các giai cấp?
+A. Quan hệ sở hữu về tư liệu sản xuất
+B. Quan hệ tổ chức, quản lý sản xuất
+C. Quan hệ phân phối của cả xã hội
+D. Quan hệ phân chia sản xuất trong xã hội
+A
+
+Chọn hai đáp án đúng nhất: Sau khi trở thành giai cấp thông trị xã hội, giai cấp tư sản nhanh chóng củng cố quyền lực đề làm gì?
+A. Duy trì áp bức giai cấp
+B. Áp bức dân tộc
+C. Xây dựng xã hội
+D. Xóa bò áp bức
+AB
+
+Quy luật về mỗi quan hệ giữa cơ sở hạ tầng và kiến trúc thượng tầng là cơ sở đúng đắn cho việc xác định mối quan hệ nào?
+A. Kinh tế và chính trị
+B. Văn hoa và chính trị
+C. Con người và tự nhiên
+D. Văn hoá và tôn giáo
+A
+
+Hoàn thiện câu nói sau. Theo C. Mác "Triết học không treo lơ lững ở ngoài thế giới, cũng như bộ óc không tồn tại bên ngoài ... "
+A. Con người
+B. Bộ não
+C. Ý thức
+D. Thế giới vật chất
+A
+
+Từ nội dung của nguyên lý về mối liên hệ phổ biến, phép biện chứng khái quát thành nguyên tắc gì?
+A. Toàn diện
+B. Khách quan
+C. Đa dạng
+D. Hoài nghi
+A
+
+Khi quan hệ áp bức bóc lột dần dần thay thế cho quan hệ bình đằng giữa người với người, nền dân chủ công xã bị thay thế bằng gì?
+A. Dân chủ đại nghị
+B. Dân chủ cộng sản
+C. Độc tài
+D. Hòa bình
+C
+
+Khẳng định nào sau đây đúng với quan niệm của V.I.Lênin về phạm trù vật chất?
+A. Vật chất là cái tồn tại hiện thực bên ngoài ý thức và không lệ thuộc vào ý thức
+B. Vật chất là cái không bao giờ tác động đến các giác quan của con người
+C. Vật chất là cái có thể tác động đến các giác quan của con người nhưng không đem lại cho con người cảm giác
+D. Vật chất là cái tồn tại hiện thực bên trong ý thức và lệ thuộc vào ý thức
+A
+
+Tính duy vật nhất quán trong triết học Mác - Lênin khi bàn về sự khác biệt giữa con người và các động vật khác là:
+A. Nền tàng của sản xuất vật chất
+B. Nền tàng của đấu tranh chính trị
+C. Nên tàng của khoa học
+D. Nền tàng của hệ tư tường
+A
+
+Lý luận nhận thức là một bộ phận của triết học, nó nghiên cứu vấn đề gì trong triết học? Chọn 2 đáp án đúng.
+A. Nghiên cứu bản chất của nhận thức, những hình thức và các giai đoạn của nhận thức
+B. Con đường đề đạt chân lý, tiêu chuẩn của chân lý
+C. Cách thuc, biện pháp để hiện thực hóa tư duy vào trong thực tiễn
+D. Tranh biện một cách hiệu quả nhất
+AB
 `;

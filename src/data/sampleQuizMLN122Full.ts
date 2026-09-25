@@ -3454,4 +3454,213 @@ B. Tìm kiếm tỷ suất lợi nhuận độc quyền
 C. Giúp đỡ các nước nhập khẩu tư bản phát triển độc lập
 D. Giải quyết tình trạng tư bản thừa tương đối trong nước
 A
+
+Những đóng góp to lớn của kinh tế chính trị cổ điển Anh vào lý luận kinh tế chính trị của nhân loại đó là
+A. Rút ra kết luận giá trị là do hao phí lao động tạo ra
+B. Rút ra được bản chất bóc lột của chủ nghĩa tư bản
+C. Khái quát đúng mục đích của chủ nghĩa tư bản là lợi nhuận
+D. Luận giải về nhiều phạm trù kinh tế như giá trị, sản phẩm rồng, tư bản, tiền lương
+A
+
+Để sản xuất ra 1000 đối dép, công ty đầu tư 100000 USD cho nguyên liệu, vật liệu, 5000 USD cho hao mòn máy móc. Công ty đó trả 5000 USD cho công nhân, trình độ bốc lột đạt 200%. Tính giá trị (W) của 10000 đối dép công ty sản xuất ra?
+A. W= 120000 USD
+B. W110000 USD
+C. W 115000 USD
+D. W= 100000 USD
+A
+
+Đại Hội X của Đảng chỉ rõ mục tiêu đầy mạnh công nghiệp hoá, hiện đại hoá cần
+A. Gắn với phát triển kinh tế tri thức; coi kinh tế tri thức là yếu tố quan trọng của nền kinh tế và của công nghiệp hóa, hiện đại hóa
+B. Gắn với nền kinh tế thị trường định hướng tư bản chủ nghĩa
+C. Gắn với nền kinh tế khép kín
+D. Gắn với nền kinh tế thị trường, thực hiện chiến lược hàng xuất khẩu
+A
+
+Những nhân tố nào ảnh hưởng đến quy mô của tích lũy tư bản?
+A. Cường độ lao động; trình độ bóc lột sức lao động; sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiễu dùng, quy mô của tư bản ứng trước
+B. Trình độ năng suất lao động; trình độ bóc lột sức lao động ; sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiêu dùng, quy mô của tư bản ứng trước
+C. Sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiêu dùng; quy mô của tư bản ứng trước, trình độ bóc lột sức lao động
+D. Trình độ năng suất lao động; trình độ bóc lột sức lao động; sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiêu dùng
+B
+
+Nguồn gốc của tích lũy tư bản là
+A. Giá trị của hàng hóa
+B. Giá trị thặng dư
+C. Giá trị của hàng hóa sức lao động
+B
+
+Cuộc khủng hoảng nào đã làm phá sản doanh nghiệp vừa và nhỏ, các doanh nghiệp lớn còn tồn tại dẫn tới hình thành các doanh nghiệp độc quyền đầu tiên?
+A. Khủng hoàng kinh tế năm 1873
+B. Khủng hoàng kinh tế năm 1928
+C. Khùng hoàng kinh tế năm 1973
+D. Khủng hoàng kinh tế năm 2021
+A
+
+Nhận thức của Đảng "Kinh tế thị trường định hướng xã hội chủ nghĩa là mô hình kinh tế tổng quát của thời kỳ quá độ lên chủ nghĩa xã hội ở nước ta" được khẳng định chính thức tại Đại hội nào?
+A. Đại hội VIII (1996)
+B. Đại hội IX (2001)
+C. Đại hội X (2006)
+D. Đại hội XI (2011)
+B
+
+Theo giáo trình, trong nền kinh tế thị trường định hướng xã hội chủ nghĩa ở Việt Nam, các doanh nghiệp nhà nước chỉ tập trung đầu tư vào những ngành kinh tế như thế nào?
+A. Tất cả các ngành, các lĩnh vực sản xuất và dịch vụ trong nền kinh tế quốc dân nhằm đảm bảo vai trò quản lý toàn diện và tuyệt đối của Nhà nước.
+B. Những ngành kinh tế mũi nhọn có khả năng quay vòng vốn nhanh và đem lại tỷ suất sinh lời cao nhất nhằm tối đa hóa lợi nhuận cho ngân sách.
+C. Những ngành kinh tế then chốt vừa chi phối nền kinh tế, vừa đảm bảo an ninh, quốc phòng và phục vụ lợi ích công cộng.
+D. Những ngành kinh tế chuyên sản xuất hàng tiêu dùng thiết yếu và cung ứng dịch vụ hằng ngày nhằm đáp ứng trực tiếp nhu cầu đời sống của nhân dân.
+C
+
+Loại tiền nào có giá trị danh nghĩa (sức mua) vượt xa giá trị thực của vật liệu làm ra nó?
+A. Tiền vàng
+B. Tiền tượng trưng
+C. Tiền ghi nợ
+D. Tiền điện tử
+B
+
+Tỷ suất giá trị thặng dư phản ánh điều gì?
+A. Trình độ khai thác sức lao động làm thuê
+B. Quy mô giá trị thặng dư mà chủ sở hữu tư liệu sản xuất thu được
+C. Tổng số lượng tư bản khả biến được đưa vào sản xuất
+D. Lượng giá trị thặng dư bằng tiền mà nhà tư bản thu được
+A
+
+Theo giáo trình kinh tế chính trị Mác - Lênin, trong nền kinh tế thị trường định hướng xã hội chủ nghĩa ở Việt Nam, hình thức phân phối nào phản ánh tính định hướng xã hội chủ nghĩa của nền kinh tế?
+A. Phân phối hoàn toàn theo nhu cầu của mỗi cá nhân không xét đến đóng góp
+B. Phân phối ngang bằng nhau cho mọi thành viên trong xã hội
+C. Phân phối theo lao động, hiệu quả kinh tế và theo phúc lợi xã hội
+D. Phân phối hoàn toàn theo cơ chế cung - cầu của thị trường tự do
+C
+
+Theo giáo trình, môn Kinh tế chính trị Mác - Lênin là môn khoa học có tính chất gì?
+A. Lịch sử
+B. Logic
+C. Biện chứng
+D. Thời đại
+A
+
+Theo giáo trình, mục đích của cạnh tranh giữa các ngành trong nền kinh tế thị trường là gì?
+A. Tìm nơi sản xuất có lợi nhất
+B. Tìm nơi phân phối có lợi nhất
+C. Tìm nơi đầu tư có lợi nhất
+D. Tìm nơi tiêu thụ có lợi nhất
+C
+
+Nền kinh tế thị trường là nèn kinh tế hàng hóa phát triển ở trình độ như thế nào?
+A. Trình độ thô sơ.
+B. Đa dạng, phong phú.
+C. Phát triển.
+D. Trình độ cao.
+D
+
+Theo giáo trình, nội dung hoàn thiện thể chế để phát triển đồng bộ các yếu tố thị trường và các loại thị trường gồm những yêu cầu nào?
+A. Đảm bảo các yếu tố thị trường được phát triển đồng bộ
+B. Đảm bảo các loại thị trường vận hành thông suốt và liên kết với nhau
+C. Giới hạn vai trò của thị trường nước ngoài
+D. Tập trung thể chế chỉ vào thị trường giá cả
+AB
+
+Theo giáo trình, yếu tố nào sau đây KHÔNG thuộc các nhân tố ảnh hưởng đến quan hệ lợi ích kinh tế ở Việt Nam?
+A. Trình độ phát triển của lực lượng sản xuất
+B. Quan hệ giữa người lao động và người sử dụng lao động
+C. Chính sách phân phối thu nhập của nhà nước
+D. Hội nhập kinh tế quốc tế
+B
+
+Theo giáo trình, đâu là các công cụ chủ yếu để Nhà nước quản lý vĩ mô nền kinh tế thị trường định hướng xã hội chủ nghĩa?
+A. Kế hoạch, pháp luật, công cụ tài chính - tiền tệ, công cụ điều tiết kinh tế đối ngoại
+B. Hệ thống pháp luật đồng bộ, cơ chế tự điều tiết của thị trường và quy định hành chính xã hội
+C. Các chính sách thuế vĩ mô, trợ cấp kinh tế cùng các thành phần kinh tế tư nhân và tập thể
+D. Quản lý hành chính và mệnh lệnh trực tiếp từ trung ương đến địa phương
+A
+
+Khi phân chia theo các lĩnh vực cốt lõi của xã hội, thể chế được phân loại thành những nhóm nào? (Chọn 2 đáp án)
+A. Thể chế an sinh
+B. Thể chế văn hoá
+C. Thể chế chính trị
+D. Thể chế kinh tế
+CD
+
+Theo V.I. Lênin, đâu là một trong những nguyên nhân hình thành độc quyền trong chủ nghĩa tư bản?
+A. Do sự ra đời và can thiệp trực tiếp của nhà nước
+B. Do cạnh tranh tự do dẫn đến tích tụ và tập trung sản xuất
+C. Do sự đoàn kết của giai cấp công nhân
+D. Do quá trình toàn cầu hoá kinh tế
+B
+
+Theo C. Mác, phạm trù nào được quan niệm là con đẻ của toàn bộ tư bản ứng trước, mang hình thái chuyển hóa là lợi nhuận?
+A. Giá trị thặng dư
+B. Lợi nhuận siêu ngạch
+C. Tỷ suất lợi nhuận
+D. Chi phí sản xuất tư bản chủ nghĩa
+A
+
+Theo C. Mác, nội dung và hình thức của sở hữu được quyết định trực tiếp bởi yếu tố nào?
+A. Ý chí chủ quan của giai cấp thống trị
+B. Truyền thống văn hoá lâu đời
+C. Trình độ phát triển của lực lượng sản xuất
+D. Hệ thống pháp luật của nhà nước
+C
+
+Theo C. Mác, lao động cụ thể phản ánh tính chất nào của lao động sản xuất hàng hóa?
+A. Tính chất xã hội
+B. Tính chất tư nhân
+C. Tính chất quốc tế
+D. Tính chất kế hoạch
+B
+
+Theo giáo trình, một trong những nhiệm vụ chủ yếu để hoàn thiện thể chế kinh tế thị trường định hướng xã hội chủ nghĩa ở Việt Nam là gì?
+A. Hoàn thiện thể chế về sở hữu và phát triển các thành phần kinh tế
+B. Giảm vai trò quản lý của Nhà nước tập trung phát triển kinh tế tư nhân
+C. Quay trở về cơ chế kế hoạch hoá tập trung quan liêu bao cấp
+D. Chuyển đổi có lộ trình theo kinh tế thị trường tự do kiểu Mỹ
+A
+
+Theo lý luận của C. Mác, quan hệ cung - cầu trong nền kinh tế thị trường được điều tiết chủ yếu ở khâu nào của quá trình tái sản xuất xã hội?
+A. Sản xuất
+B. Phân phối
+C. Trao đổi
+D. Tiêu dùng
+C
+
+Theo giáo trình, đặc điểm chung của mọi nền kinh tế thị trường về vai trò của Nhà nước là gì?
+A. Nhà nước trực tiếp quản lý toàn bộ hoạt động sản xuất kinh doanh
+B. Nhà nước không can thiệp vào nền kinh tế
+C. Nhà nước quản lý vĩ mô thông qua hệ thống pháp luật và công cụ chính sách
+D. Nhà nước chỉ tập trung vào quản lý văn hóa - giáo dục
+C
+
+Những tác động tiêu cực của độc quyền đối với nền kinh tế thị trường đó là gì? (chọn nhiều đáp án)
+A. Làm cho cạnh tranh khong hoan hao gay thiệt hai cho nguoi tieu dung va xã hội
+B. Kim hãm sự tiến bộ của khoa học kỹ thuật từ đó kìm hãm sự phát triển kinh tế
+C. Gây ra hiện tượng phân hóa giàu nghèo
+D. Gây ra chiến tranh
+ABC
+
+Mục đích xuyên suốt của kinh tế chính trị Mác - Lênin là gì? (lựa chọn ba đáp án)
+A. Hướng đến việc thúc đẩy sự giàu có.
+B. Hướng tới xác lập vị thế kinh tế trong văn hóa xã hội.
+C. Cung cấp cơ sở khoa học góp phần thúc đầy trình độ văn minh.
+D. Phát triển toàn diện của xã hội.
+ACD
+
+Tại sao việc phát triển kinh tế thị trường định hướng xã hội chủ nghĩa ở Việt Nam là tất yếu khách quan? Chọn 2 đáp án.
+A. Kinh tế thị trường có thế tự hình thành khi có các điều kiện khách quan.
+B. Kinh tế thị trường tư bản chủ nghĩa là mô hình tối ưu nhất cho mọi quốc gia.
+C. Kinh tế thị trường là động lực thúc đấy lực lượng sản xuất phát triến nhanh và hiệu quả.
+D. Kinh tế thị trường giúp Việt Nam độc lập hoàn toàn khỏi các quy luật của thị trường toàn cầu.
+AC
+
+Chế độ tham dự của tư bản tài chính được thiết lập do đâu?
+A. Số cổ phiếu khống chế
+B. Lợi nhuận
+C. Lợi tức
+D. Quyền lực chính trị
+A
+
+Việc mua bán sức lao động và mua bán nô lệ khác nhau ở đặc điểm nào?
+A. Bán nô lệ là bán con người, còn bán sức lao động là bán khả năng lao động của con người
+B. Bán sức lao động thì người lao động là người bán, còn bán nô lệ thì nô lệ bị người khác bán
+C. A và B đều đúng.
+D. A và B đều sai.
+C
 `;
