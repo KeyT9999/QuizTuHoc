@@ -45,6 +45,13 @@ export const DEFAULT_COURSES: Course[] = [
     badge: '4 bộ đề',
   },
   {
+    id: 'jpd123',
+    code: 'JPD123',
+    name: 'Tiếng Nhật JPD123',
+    description: 'Bộ đề luyện tập tiếng Nhật JPD123 với các câu hỏi trắc nghiệm đọc hiểu và ngữ pháp.',
+    badge: '1 bộ đề',
+  },
+  {
     id: 'cchn',
     code: 'CCHN',
     name: 'Quản trị Thương hiệu & CSKH',

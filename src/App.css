@@ -2849,6 +2849,38 @@
   margin-bottom: 24px;
 }
 
+.quiz-v2-free-response {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 18px 0 24px;
+}
+
+.quiz-v2-free-response label {
+  color: #5f6368;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.quiz-v2-free-response textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  border: 1px solid #c7cbd1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #202124;
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.quiz-v2-free-response textarea:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.14);
+  outline: none;
+}
+
 .quiz-v2-option {
   display: flex;
   align-items: flex-start;
@@ -6901,4 +6933,3 @@
     justify-content: space-between;
   }
 }
-

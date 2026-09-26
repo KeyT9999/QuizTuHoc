@@ -146,7 +146,10 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
   const selectedAnswer = question ? answers[question.id] : undefined;
   const isUnresolved = question?.correctAnswer === '?';
   const isMultipleChoice = !isUnresolved && (question?.correctAnswer.length ?? 0) > 1;
-  const isAnswered = isUnresolved
+  const isFreeResponse = question?.freeResponse === true;
+  const isAnswered = isFreeResponse
+    ? Boolean(selectedAnswer?.trim())
+    : isUnresolved
     ? selectedAnswer !== undefined
     : isMultipleChoice
     ? (question ? submittedIds.includes(question.id) : false)
@@ -202,7 +205,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         }
       }
     },
-    [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds]
+    [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds, setId]
   );
 
   const handleCheckMultiple = useCallback(() => {
@@ -786,42 +789,60 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           {/* Question Text */}
           <div className="quiz-v2-q-text">{question.text}</div>
 
-          {/* Options */}
-          <div className="quiz-v2-options">
-            {question.options.map((opt) => {
-              const isSelected = selectedAnswer?.includes(opt.key) ?? false;
-              const isCorrect = question.correctAnswer.includes(opt.key);
+          {/* Options / Free response */}
+          {isFreeResponse ? (
+            <div className="quiz-v2-free-response">
+              <label htmlFor={`quiz-free-response-${question.id}`}>
+                Nhập câu trả lời vào các ô trống:
+              </label>
+              <textarea
+                id={`quiz-free-response-${question.id}`}
+                value={selectedAnswer ?? ''}
+                onChange={(event) =>
+                  setAnswers((previous) => ({ ...previous, [question.id]: event.target.value }))
+                }
+                placeholder="Nhập câu trả lời của bạn..."
+                disabled={isAnswered && !isFreeResponse}
+                rows={3}
+              />
+            </div>
+          ) : (
+            <div className="quiz-v2-options">
+              {question.options.map((opt) => {
+                const isSelected = selectedAnswer?.includes(opt.key) ?? false;
+                const isCorrect = question.correctAnswer.includes(opt.key);
 
-              let optClass = 'quiz-v2-option';
-              if (isSelected && !isAnswered) optClass += ' selected';
-              if (isAnswered && !isUnresolved) {
-                if (isCorrect) optClass += ' correct';
-                else if (isSelected) optClass += ' incorrect';
-                else optClass += ' dimmed';
-              } else if (isRevealed && !isUnresolved) {
-                if (isCorrect) optClass += ' correct';
-                else if (isSelected) optClass += ' incorrect';
-                else optClass += ' dimmed';
-              }
+                let optClass = 'quiz-v2-option';
+                if (isSelected && !isAnswered) optClass += ' selected';
+                if (isAnswered && !isUnresolved) {
+                  if (isCorrect) optClass += ' correct';
+                  else if (isSelected) optClass += ' incorrect';
+                  else optClass += ' dimmed';
+                } else if (isRevealed && !isUnresolved) {
+                  if (isCorrect) optClass += ' correct';
+                  else if (isSelected) optClass += ' incorrect';
+                  else optClass += ' dimmed';
+                }
 
-              return (
-                <div
-                  key={opt.key}
-                  className={optClass}
-                  onClick={() => handleSelectOption(opt.key)}
-                >
-                  <span className="quiz-v2-option-key">{opt.key}</span>
-                  <span className="quiz-v2-option-text">{opt.text}</span>
-                  {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
-                    <span className="quiz-v2-option-icon correct-icon">✓</span>
-                  )}
-                  {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
-                    <span className="quiz-v2-option-icon incorrect-icon">✗</span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                return (
+                  <div
+                    key={opt.key}
+                    className={optClass}
+                    onClick={() => handleSelectOption(opt.key)}
+                  >
+                    <span className="quiz-v2-option-key">{opt.key}</span>
+                    <span className="quiz-v2-option-text">{opt.text}</span>
+                    {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
+                      <span className="quiz-v2-option-icon correct-icon">✓</span>
+                    )}
+                    {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
+                      <span className="quiz-v2-option-icon incorrect-icon">✗</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
 
           {/* Feedback */}
           {(isAnswered || isRevealed) && (

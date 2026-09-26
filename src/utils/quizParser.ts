@@ -8,6 +8,7 @@ export interface Question {
   text: string;
   options: QuizOption[];
   correctAnswer: string;
+  freeResponse?: boolean;
 }
 
 export function parseQuizText(rawText: string): Question[] {
@@ -24,6 +25,8 @@ export function parseQuizText(rawText: string): Question[] {
       .split('\n')
       .map((l) => l.trim())
       .filter((l) => l.length > 0);
+    const freeResponse = lines[0]?.toLowerCase() === '[free-response]';
+    if (freeResponse) lines = lines.slice(1);
 
     // Accept answers appended to the final option, such as
     // "D. link() . A" or "D. link() . B, C".
@@ -55,12 +58,27 @@ export function parseQuizText(rawText: string): Question[] {
 
     if (ansMatch[1] === '?') {
       const contentLines = lines.slice(0, lines.length - 1);
+
+      if (freeResponse) {
+        const text = contentLines.join(' ').trim();
+        if (text) {
+          questions.push({
+            id: questions.length + 1,
+            text,
+            options: [],
+            correctAnswer: '?',
+            freeResponse: true,
+          });
+        }
+        continue;
+      }
+
       const options: QuizOption[] = [];
       const seenKeys = new Set<string>();
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-F])[.:)-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-F])[.)-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (options.length === 0 && key !== 'A') {
@@ -126,7 +144,7 @@ export function parseQuizText(rawText: string): Question[] {
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-F])[.:)-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-F])[.)-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (options.length === 0 && key !== 'A') {

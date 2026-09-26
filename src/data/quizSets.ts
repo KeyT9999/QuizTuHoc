@@ -33,6 +33,7 @@ import { SAMPLE_QUIZ_MLN111_SU25_BL5_FE } from './sampleQuizMLN111SU25BL5FE';
 import { SAMPLE_QUIZ_MLN122_FULL } from './sampleQuizMLN122Full';
 import { SAMPLE_QUIZ_MLN122_FA23_FEB5 } from './sampleQuizMLN122FA23FEB5';
 import { SAMPLE_QUIZ_MLN122_SP26_C2FE } from './sampleQuizMLN122SP26C2FE';
+import { SAMPLE_QUIZ_JPD123_PT1 } from './sampleQuizJPD123PT1';
 import { SAMPLE_QUIZ_MLN122_SU25_B5_1 } from './sampleQuizMLN122SU25B51';
 import { SAMPLE_QUIZ_MLN122_SU26_FE_C1 } from './sampleQuizMLN122SU26C1FE';
 import { SAMPLE_QUIZ_MLN122_SU26_RE } from './sampleQuizMLN122SU26RE';
@@ -404,5 +405,14 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MLN122',
     badge: 'Đề chuẩn 60 câu',
     rawText: SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330,
+  },
+  {
+    id: 'jpd123_pt1',
+    courseId: 'jpd123',
+    title: 'PT1',
+    description: 'Bộ 35 câu hỏi chữ tiếng Nhật JPD123 PT1 (đã loại 1 ảnh trùng).',
+    category: 'Môn JPD123',
+    badge: 'JPD123 PT1 - 35 câu',
+    rawText: SAMPLE_QUIZ_JPD123_PT1,
   },
 ];
