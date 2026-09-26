@@ -159,7 +159,7 @@ C. Phải có hoạt động thực tiễn của con người
 D. Phải có điều kiện vật chất bảo đảm
 C
 
-Ai là người khẳng định "cái sự hiển nhiên là trước hết con người cần phải ăn, uống, ở và mặ động, trước khi có thể đấu tranh để giành quyền thống trị, trước khi có thể hoạt động chính tr học...".
+Ai là người khẳng định "Cái sự thật hiển nhiên là trước hết con người cần phải ăn, uống, ở và mặc, trước khi có thể hoạt động chính trị, khoa học, nghệ thuật, tôn giáo...".
 A. C.Mác
 B. Ph.Ăngghen
 C. Platon
