@@ -45,35 +45,44 @@ export default function MistakeBusterView({
 
       if (isCorrect) {
         playCorrectSound();
-        // Remove from mistake bank
-        removeMistakeQuestion(setId, currentQ.id);
-        const updated = mistakeIds.filter((id) => id !== currentQ.id);
-        setMistakeIds(updated);
-        onMistakesUpdated();
       } else {
         playWrongSound();
       }
     },
-    [currentQ, showExplanation, setId, mistakeIds, onMistakesUpdated]
+    [currentQ, showExplanation]
   );
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
+    if (!currentQ || !selectedKey) return;
+
+    const isCorrect = selectedKey.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
     setSelectedKey(null);
     setShowExplanation(false);
+
+    if (isCorrect) {
+      // Keep the answered question visible until the user explicitly continues.
+      const updated = mistakeIds.filter((id) => id !== currentQ.id);
+      removeMistakeQuestion(setId, currentQ.id);
+      setMistakeIds(updated);
+      onMistakesUpdated();
+      setCurrentIndex((prev) => (updated.length === 0 ? 0 : Math.min(prev, updated.length - 1)));
+      return;
+    }
+
     if (currentIndex < mistakeQuestions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
       setCurrentIndex(0);
     }
-  };
+  }, [currentQ, selectedKey, mistakeIds, setId, onMistakesUpdated, currentIndex, mistakeQuestions.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setSelectedKey(null);
     setShowExplanation(false);
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
     }
-  };
+  }, [currentIndex]);
 
   const handleClearAll = () => {
     if (window.confirm('Bạn có chắc chắn muốn làm sạch toàn bộ danh sách câu sai của đề này?')) {
@@ -108,7 +117,7 @@ export default function MistakeBusterView({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showExplanation, handleSelectOption]);
+  }, [showExplanation, handleSelectOption, handleNext, handlePrev]);
 
   // Clean state (no mistakes left!)
   if (mistakeQuestions.length === 0) {
@@ -192,7 +201,7 @@ export default function MistakeBusterView({
         {showExplanation && (
           <div className={`mistake-feedback-box ${isCorrect ? 'fb-correct' : 'fb-wrong'}`}>
             <div className="fb-headline">
-              {isCorrect ? '🎉 Chính xác! Đã loại bỏ câu này khỏi sổ lỗi.' : '❌ Vẫn chưa đúng! Hãy ghi nhớ đáp án.'}
+              {isCorrect ? '🎉 Chính xác! Bấm “Câu tiếp theo” để loại bỏ câu này khỏi sổ lỗi.' : '❌ Vẫn chưa đúng! Hãy ghi nhớ đáp án.'}
             </div>
             <div className="fb-details">
               Đáp án chuẩn: <strong>{currentQ.correctAnswer}</strong>
