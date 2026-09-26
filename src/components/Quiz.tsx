@@ -786,8 +786,6 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           {/* Question Text */}
           <div className="quiz-v2-q-text">{question.text}</div>
 
-          <AskAI question={question} />
-
           {/* Options */}
           <div className="quiz-v2-options">
             {question.options.map((opt) => {
@@ -847,6 +845,8 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
               )}
             </div>
           )}
+
+          <AskAI question={question} />
 
           {/* Action Bar */}
           <div className="quiz-v2-actions">

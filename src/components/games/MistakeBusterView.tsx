@@ -169,8 +169,6 @@ export default function MistakeBusterView({
 
         <div className="game-q-text">{currentQ.text}</div>
 
-        <AskAI question={currentQ} />
-
         <div className="game-q-options">
           {currentQ.options.map((opt) => {
             const isSelected = selectedKey === opt.key;
@@ -222,6 +220,8 @@ export default function MistakeBusterView({
             </div>
           </div>
         )}
+
+        <AskAI question={currentQ} />
       </div>
     </div>
   );

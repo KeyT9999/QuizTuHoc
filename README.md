@@ -4,7 +4,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 ## Cấu hình tính năng Hỏi AI
 
-Tính năng Hỏi AI gọi xKiro từ API route phía server, nên API key không được đưa vào mã frontend. Khi chạy local, tạo file `.env.local` từ `.env.example` và điền:
+Tính năng Hỏi AI gọi xKiro từ API route phía server, nên API key không được đưa vào mã frontend. Khi chạy local bằng `npm run dev`, tạo file `.env` hoặc `.env.local` từ `.env.example` và điền:
 
 ```env
 XKIRO_API_KEY=your_xkiro_api_key_here
