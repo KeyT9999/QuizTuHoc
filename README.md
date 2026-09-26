@@ -2,6 +2,17 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
+## Cấu hình tính năng Hỏi AI
+
+Tính năng Hỏi AI gọi xKiro từ API route phía server, nên API key không được đưa vào mã frontend. Khi chạy local, tạo file `.env.local` từ `.env.example` và điền:
+
+```env
+XKIRO_API_KEY=your_xkiro_api_key_here
+XKIRO_MODEL=qwen/qwen3.5-397b-a17b:free
+```
+
+Trên Vercel, thêm `XKIRO_API_KEY` trong **Project Settings → Environment Variables**, rồi redeploy. `XKIRO_MODEL` là biến tùy chọn; nếu bỏ trống, ứng dụng dùng model mặc định ở trên.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)

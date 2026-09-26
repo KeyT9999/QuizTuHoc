@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import type { Question } from '../../utils/quizParser';
+import AskAI from '../AskAI';
 import {
   getMistakeQuestionIds,
   removeMistakeQuestion,
@@ -167,6 +168,8 @@ export default function MistakeBusterView({
         </div>
 
         <div className="game-q-text">{currentQ.text}</div>
+
+        <AskAI question={currentQ} />
 
         <div className="game-q-options">
           {currentQ.options.map((opt) => {

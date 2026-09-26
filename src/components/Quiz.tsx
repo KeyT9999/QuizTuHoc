@@ -14,6 +14,7 @@ import SurvivalTowerGame from './games/SurvivalTowerGame';
 import TrueFalseGame from './games/TrueFalseGame';
 import MistakeBusterView from './games/MistakeBusterView';
 import MockExamView from './games/MockExamView';
+import AskAI from './AskAI';
 import { getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
 
 interface QuizProps {
@@ -784,6 +785,8 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
 
           {/* Question Text */}
           <div className="quiz-v2-q-text">{question.text}</div>
+
+          <AskAI question={question} />
 
           {/* Options */}
           <div className="quiz-v2-options">
