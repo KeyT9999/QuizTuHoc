@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { Question } from '../utils/quizParser';
 
 interface AskAIProps {
@@ -20,8 +20,10 @@ export default function AskAI({ question }: AskAIProps) {
   const [isLoading, setIsLoading] = useState(false);
   const panelId = useId();
   const inputId = `${panelId}-input`;
+  const requestVersion = useRef(0);
 
   useEffect(() => {
+    requestVersion.current += 1;
     setIsOpen(false);
     setPrompt('');
     setAnswer('');
@@ -29,10 +31,10 @@ export default function AskAI({ question }: AskAIProps) {
     setIsLoading(false);
   }, [question.id]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const askAI = async (customPrompt: string) => {
     if (isLoading) return;
 
+    const currentRequestVersion = ++requestVersion.current;
     setIsOpen(true);
     setIsLoading(true);
     setAnswer('');
@@ -45,7 +47,8 @@ export default function AskAI({ question }: AskAIProps) {
         body: JSON.stringify({
           question: question.text,
           options: question.options,
-          prompt: prompt.trim(),
+          correctAnswer: question.correctAnswer,
+          prompt: customPrompt,
         }),
       });
 
@@ -54,11 +57,35 @@ export default function AskAI({ question }: AskAIProps) {
         throw new Error(payload?.error?.message || 'Không thể nhận câu trả lời từ AI.');
       }
 
-      setAnswer(payload.answer);
+      if (currentRequestVersion === requestVersion.current) {
+        setAnswer(payload.answer);
+      }
     } catch (requestError: unknown) {
-      setError(requestError instanceof Error ? requestError.message : 'Không thể nhận câu trả lời từ AI.');
+      if (currentRequestVersion === requestVersion.current) {
+        setError(requestError instanceof Error ? requestError.message : 'Không thể nhận câu trả lời từ AI.');
+      }
     } finally {
-      setIsLoading(false);
+      if (currentRequestVersion === requestVersion.current) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    void askAI(prompt.trim());
+  };
+
+  const handleToggle = () => {
+    if (isOpen) {
+      setIsOpen(false);
+      return;
+    }
+
+    setIsOpen(true);
+    setError('');
+    if (!answer && !isLoading) {
+      void askAI('');
     }
   };
 
@@ -69,10 +96,7 @@ export default function AskAI({ question }: AskAIProps) {
         className={`ask-ai-toggle ${isOpen ? 'is-open' : ''}`}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        onClick={() => {
-          setIsOpen((previous) => !previous);
-          setError('');
-        }}
+        onClick={handleToggle}
       >
         <span aria-hidden="true">🤖</span>
         <span>Hỏi AI</span>
@@ -83,7 +107,7 @@ export default function AskAI({ question }: AskAIProps) {
           <div className="ask-ai-panel-header">
             <div>
               <strong id={`${panelId}-title`}>Hỏi AI về câu này</strong>
-              <span>AI sẽ giải thích bằng tiếng Việt dựa trên câu hỏi và các lựa chọn.</span>
+              <span>AI sẽ tự chọn đáp án đúng và giải thích bằng tiếng Việt.</span>
             </div>
             {answer && (
               <button
@@ -101,20 +125,20 @@ export default function AskAI({ question }: AskAIProps) {
 
           <form className="ask-ai-form" onSubmit={handleSubmit}>
             <label htmlFor={inputId}>
-              Bạn muốn AI giải thích gì? <span>(không bắt buộc)</span>
+              Yêu cầu bổ sung cho AI <span>(không bắt buộc)</span>
             </label>
             <textarea
               id={inputId}
               value={prompt}
               onChange={(event) => setPrompt(event.target.value)}
-              placeholder="Ví dụ: Vì sao đáp án B đúng?"
+              placeholder="Ví dụ: Giải thích kỹ hơn vì sao đáp án B đúng"
               maxLength={1000}
               rows={2}
             />
             <div className="ask-ai-form-footer">
               <span>{prompt.length}/1000</span>
               <button type="submit" className="ask-ai-submit" disabled={isLoading}>
-                {isLoading ? 'Đang hỏi AI…' : 'Gửi cho AI'}
+                {isLoading ? 'Đang hỏi AI…' : 'Hỏi lại AI'}
               </button>
             </div>
           </form>
