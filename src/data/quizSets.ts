@@ -34,6 +34,13 @@ import { SAMPLE_QUIZ_MLN122_FULL } from './sampleQuizMLN122Full';
 import { SAMPLE_QUIZ_MLN122_FA23_FEB5 } from './sampleQuizMLN122FA23FEB5';
 import { SAMPLE_QUIZ_MLN122_SP26_C2FE } from './sampleQuizMLN122SP26C2FE';
 import { SAMPLE_QUIZ_JPD123_PT1 } from './sampleQuizJPD123PT1';
+import {
+  SAMPLE_QUIZ_JPD123_FA25_RE_MC,
+  SAMPLE_QUIZ_JPD123_SP26_C1FE,
+  SAMPLE_QUIZ_JPD123_SP26_C2FE,
+  SAMPLE_QUIZ_JPD123_SU26_FE,
+  SAMPLE_QUIZ_JPD123_SU26_RE,
+} from './sampleQuizJPD123More';
 import { SAMPLE_QUIZ_MLN122_SU25_B5_1 } from './sampleQuizMLN122SU25B51';
 import { SAMPLE_QUIZ_MLN122_SU26_FE_C1 } from './sampleQuizMLN122SU26C1FE';
 import { SAMPLE_QUIZ_MLN122_SU26_RE } from './sampleQuizMLN122SU26RE';
@@ -414,5 +421,50 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn JPD123',
     badge: 'JPD123 PT1 - 35 câu',
     rawText: SAMPLE_QUIZ_JPD123_PT1,
+  },
+  {
+    id: 'jpd123_fa25_re_mc',
+    courseId: 'jpd123',
+    title: 'JPD123 - FA25 - RE - MC',
+    description: 'Bộ 30 câu hỏi tiếng Nhật FA25 RE MC dạng chữ.',
+    category: 'Môn JPD123',
+    badge: 'FA25 RE MC - 30 câu',
+    rawText: SAMPLE_QUIZ_JPD123_FA25_RE_MC,
+  },
+  {
+    id: 'jpd123_sp26_c1fe',
+    courseId: 'jpd123',
+    title: 'JPD123 - SP26 - C1FE',
+    description: 'Bộ 30 câu hỏi tiếng Nhật SP26 C1FE dạng chữ.',
+    category: 'Môn JPD123',
+    badge: 'SP26 C1FE - 30 câu',
+    rawText: SAMPLE_QUIZ_JPD123_SP26_C1FE,
+  },
+  {
+    id: 'jpd123_sp26_c2fe',
+    courseId: 'jpd123',
+    title: 'JPD123 - SP26 - C2FE',
+    description: 'Bộ 31 câu hỏi tiếng Nhật SP26 C2FE dạng chữ.',
+    category: 'Môn JPD123',
+    badge: 'SP26 C2FE - 31 câu',
+    rawText: SAMPLE_QUIZ_JPD123_SP26_C2FE,
+  },
+  {
+    id: 'jpd123_su26_fe',
+    courseId: 'jpd123',
+    title: 'JPD123 - SU26 - FE',
+    description: 'Bộ 30 câu hỏi tiếng Nhật SU26 FE dạng chữ.',
+    category: 'Môn JPD123',
+    badge: 'SU26 FE - 30 câu',
+    rawText: SAMPLE_QUIZ_JPD123_SU26_FE,
+  },
+  {
+    id: 'jpd123_su26_re',
+    courseId: 'jpd123',
+    title: 'JPD123 - SU26 - RE',
+    description: 'Bộ 30 câu hỏi tiếng Nhật SU26 RE dạng chữ.',
+    category: 'Môn JPD123',
+    badge: 'SU26 RE - 30 câu',
+    rawText: SAMPLE_QUIZ_JPD123_SU26_RE,
   },
 ];

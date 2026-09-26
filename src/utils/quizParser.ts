@@ -51,9 +51,28 @@ export function parseQuizText(rawText: string): Question[] {
 
     // Answer line is the last line
     const lastLine = lines[lines.length - 1];
+    const freeResponseAnswer = freeResponse
+      ? lastLine.match(/^\[answer\]\s*(.+)$/i)
+      : null;
 
     // Extract answer letter (A, B, C, D) even if followed by explanation/parentheses: e.g. "D (Kiểu hỏi khác...)"
     const ansMatch = lastLine.match(/^(\?|[A-F](?:\s*,?\s*[A-F]){0,3})(?:\s*\(.*|\s+.*)?$/i);
+    if (!ansMatch && !freeResponseAnswer) continue;
+
+    if (freeResponse && freeResponseAnswer) {
+      const text = lines.slice(0, lines.length - 1).join(' ').trim();
+      if (text) {
+        questions.push({
+          id: questions.length + 1,
+          text,
+          options: [],
+          correctAnswer: freeResponseAnswer[1].trim(),
+          freeResponse: true,
+        });
+      }
+      continue;
+    }
+
     if (!ansMatch) continue;
 
     if (ansMatch[1] === '?') {
