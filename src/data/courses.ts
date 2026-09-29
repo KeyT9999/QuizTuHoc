@@ -20,7 +20,7 @@ export const DEFAULT_COURSES: Course[] = [
     id: 'mln122',
     code: 'MLN122',
     name: 'Kinh tế chính trị Mác - Lênin',
-    description: 'Gồm ngân hàng tổng hợp 510 câu, 6 bộ đề thi và 1 quiz Chương I; tổng 919 câu hỏi trắc nghiệm chuẩn tiếng Việt.',
+    description: 'Gồm ngân hàng tổng hợp 510 câu, 6 bộ đề thi và 1 quiz Chương I-VI (393 câu không trùng); tổng 1.263 câu hỏi.',
     badge: '8 quiz',
   },
   {

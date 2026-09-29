@@ -418,9 +418,9 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     id: 'mln122_quiz_thay_cho',
     courseId: 'mln122',
     title: 'Quiz thầy cho',
-    description: '49 câu trắc nghiệm Kinh tế chính trị Mác - Lênin tham khảo Chương I.',
+    description: '393 câu hỏi không trùng (trắc nghiệm và trả lời ngắn) tổng hợp từ tài liệu tham khảo Chương I-VI.',
     category: 'Môn MLN122',
-    badge: 'Chương I - 49 câu',
+    badge: 'Chương I-VI - 393 câu',
     rawText: SAMPLE_QUIZ_MLN122_QUIZ_THAY_CHO,
   },
   {
