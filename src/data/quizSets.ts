@@ -45,6 +45,7 @@ import { SAMPLE_QUIZ_MLN122_SU25_B5_1 } from './sampleQuizMLN122SU25B51';
 import { SAMPLE_QUIZ_MLN122_SU26_FE_C1 } from './sampleQuizMLN122SU26C1FE';
 import { SAMPLE_QUIZ_MLN122_SU26_RE } from './sampleQuizMLN122SU26RE';
 import { SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330 } from './sampleQuizMLN122SU25FEC14330';
+import { SAMPLE_QUIZ_MLN122_QUIZ_THAY_CHO } from './sampleQuizMLN122QuizThayCho';
 
 export interface QuizSetInfo {
   id: string;
@@ -412,6 +413,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MLN122',
     badge: 'Đề chuẩn 60 câu',
     rawText: SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330,
+  },
+  {
+    id: 'mln122_quiz_thay_cho',
+    courseId: 'mln122',
+    title: 'Quiz thầy cho',
+    description: '49 câu trắc nghiệm Kinh tế chính trị Mác - Lênin tham khảo Chương I.',
+    category: 'Môn MLN122',
+    badge: 'Chương I - 49 câu',
+    rawText: SAMPLE_QUIZ_MLN122_QUIZ_THAY_CHO,
   },
   {
     id: 'jpd123_pt1',
