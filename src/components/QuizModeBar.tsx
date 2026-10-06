@@ -14,6 +14,8 @@ interface QuizModeBarProps {
   onChangeMode: (mode: QuizPlayMode) => void;
   mistakeCount: number;
   onOpenQuestionGrid: () => void;
+  onOpenKnowledgeGroups?: () => void;
+  knowledgeGroupsLabel?: string;
 }
 
 export default function QuizModeBar({
@@ -21,6 +23,8 @@ export default function QuizModeBar({
   onChangeMode,
   mistakeCount,
   onOpenQuestionGrid,
+  onOpenKnowledgeGroups,
+  knowledgeGroupsLabel = 'Học theo nhóm',
 }: QuizModeBarProps) {
   const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
 
@@ -51,6 +55,18 @@ export default function QuizModeBar({
         <span className="quiz-mode-icon">📋</span>
         <span className="quiz-mode-text">Danh sách câu</span>
       </button>
+
+      {onOpenKnowledgeGroups && (
+        <button
+          type="button"
+          className="quiz-mode-pill-btn knowledge-groups-mode-btn"
+          onClick={onOpenKnowledgeGroups}
+          title="Chọn một trong 16 nhóm kiến thức MLN111"
+        >
+          <span className="quiz-mode-icon">📚</span>
+          <span className="quiz-mode-text">{knowledgeGroupsLabel}</span>
+        </button>
+      )}
 
       <button
         type="button"

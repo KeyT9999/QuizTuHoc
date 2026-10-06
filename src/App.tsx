@@ -7,12 +7,17 @@ import Quiz from './components/Quiz';
 import ImageQuiz from './components/ImageQuiz';
 import Result from './components/Result';
 import Flashcard from './components/Flashcard';
+import KnowledgeGroupPicker from './components/KnowledgeGroupPicker';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
 import { DEFAULT_COURSES, type Course } from './data/courses';
 import { DEFAULT_QUIZ_SETS, type QuizSetInfo } from './data/quizSets';
 import { FLASHCARD_SETS, type FlashcardSet } from './data/flashcardData';
 import { MLN_RESEARCH_ANSWER_KEYS } from './data/mlnResearchAnswerKeys';
+import {
+  getMln111QuestionsForGroup,
+  MLN111_KNOWLEDGE_GROUPS,
+} from './data/mln111KnowledgeGroups';
 import {
   loadCustomCourses,
   saveCustomCourses,
@@ -41,6 +46,8 @@ export default function App() {
   const [currentFlashcardSet, setCurrentFlashcardSet] = useState<FlashcardSet>(FLASHCARD_SETS[0]);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isResultView, setIsResultView] = useState(false);
+  const [knowledgeGroupId, setKnowledgeGroupId] = useState<string | null>(null);
+  const [isKnowledgeGroupPickerOpen, setIsKnowledgeGroupPickerOpen] = useState(false);
 
   // Derive active course and quiz set from current route
   const activeCourse = useMemo(() => {
@@ -73,6 +80,11 @@ export default function App() {
     }
     return [];
   }, [activeSet]);
+
+  const knowledgeGroupQuestions = useMemo(() => {
+    if (activeSet?.id !== 'mln111_full' || !knowledgeGroupId) return parsedQuestions;
+    return getMln111QuestionsForGroup(parsedQuestions, knowledgeGroupId);
+  }, [activeSet, knowledgeGroupId, parsedQuestions]);
 
   // Điều hướng chọn môn học
   const handleSelectCourse = (course: Course) => {
@@ -107,6 +119,8 @@ export default function App() {
     const courseId = setInfo.courseId || activeCourse?.id || 'pmg201c';
     setIsResultView(false);
     setAnswers({});
+    setKnowledgeGroupId(null);
+    setIsKnowledgeGroupPickerOpen(false);
     navigate(`/course/${courseId}/${setInfo.id}`);
   };
 
@@ -177,6 +191,8 @@ export default function App() {
   // Điều hướng quay lại danh sách đề thi của môn
   const handleBackToCourseDetail = () => {
     setIsResultView(false);
+    setKnowledgeGroupId(null);
+    setIsKnowledgeGroupPickerOpen(false);
     if (activeCourse) {
       navigate(`/course/${activeCourse.id}`);
     } else {
@@ -234,21 +250,46 @@ export default function App() {
         {/* 4. Màn hình kết quả làm bài */}
         {route.type === 'quiz' && isResultView && (
           <Result
-            questions={parsedQuestions}
+            questions={knowledgeGroupQuestions}
             answers={answers}
             onRetry={handleRetry}
             onNewQuiz={handleBackToCourseDetail}
           />
         )}
 
-        {/* 5. Màn hình làm bài trắc nghiệm văn bản (chuẩn PMG) */}
-        {route.type === 'quiz' && !isResultView && activeSet && activeSet.kind !== 'image' && (
-          <Quiz
-            setId={activeSet.id}
-            setTitle={activeSet.title}
+        {route.type === 'quiz' && !isResultView && activeSet?.id === 'mln111_full' && isKnowledgeGroupPickerOpen && (
+          <KnowledgeGroupPicker
             questions={parsedQuestions}
+            onSelectGroup={(groupId) => {
+              setKnowledgeGroupId(groupId);
+              setAnswers({});
+              setIsResultView(false);
+              setIsKnowledgeGroupPickerOpen(false);
+            }}
+            onBack={() => setIsKnowledgeGroupPickerOpen(false)}
+          />
+        )}
+
+        {/* 5. Màn hình làm bài trắc nghiệm văn bản (chuẩn PMG) */}
+        {route.type === 'quiz' && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen && (
+          <Quiz
+            key={knowledgeGroupId ? `${activeSet.id}_group_${knowledgeGroupId}` : activeSet.id}
+            setId={knowledgeGroupId ? `${activeSet.id}_group_${knowledgeGroupId}` : activeSet.id}
+            setTitle={knowledgeGroupId
+              ? `MLN111 · Nhóm ${String(MLN111_KNOWLEDGE_GROUPS.find((group) => group.id === knowledgeGroupId)?.number ?? knowledgeGroupId).padStart(2, '0')}`
+              : activeSet.title}
+            questions={activeSet.id === 'mln111_full' && knowledgeGroupId
+              ? knowledgeGroupQuestions
+              : parsedQuestions}
             onFinish={handleFinishQuiz}
-            onBack={handleBackToCourseDetail}
+            onBack={knowledgeGroupId
+              ? () => setIsKnowledgeGroupPickerOpen(true)
+              : handleBackToCourseDetail}
+            onBackLabel={knowledgeGroupId ? '← Chọn nhóm' : undefined}
+            onOpenKnowledgeGroups={activeSet.id === 'mln111_full'
+              ? () => setIsKnowledgeGroupPickerOpen(true)
+              : undefined}
+            knowledgeGroupsLabel={knowledgeGroupId ? 'Đổi nhóm' : undefined}
           />
         )}
 

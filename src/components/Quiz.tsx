@@ -23,9 +23,21 @@ interface QuizProps {
   questions: Question[];
   onFinish: (answers: Record<number, string>) => void;
   onBack: () => void;
+  onOpenKnowledgeGroups?: () => void;
+  onBackLabel?: string;
+  knowledgeGroupsLabel?: string;
 }
 
-export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: QuizProps) {
+export default function Quiz({
+  setId,
+  setTitle,
+  questions,
+  onFinish,
+  onBack,
+  onOpenKnowledgeGroups,
+  onBackLabel = '← Đổi đề',
+  knowledgeGroupsLabel,
+}: QuizProps) {
   const storageKeyIndex = setId ? `keyt_quiz_index_${setId}` : 'keyt_quiz_index';
   const storageKeyAnswers = setId ? `keyt_quiz_answers_${setId}` : 'keyt_quiz_answers';
   const storageKeyMastered = setId ? `keyt_quiz_mastered_${setId}` : 'keyt_quiz_mastered';
@@ -579,7 +591,7 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
           
           {/* Back — Text Button (important action, keep readable) */}
           <button type="button" className="quiz-v2-header-btn" onClick={onBack}>
-            ← Đổi đề
+            {onBackLabel}
           </button>
         </div>
       </div>
@@ -598,6 +610,8 @@ export default function Quiz({ setId, setTitle, questions, onFinish, onBack }: Q
         onChangeMode={(mode) => setActiveMode(mode)}
         mistakeCount={mistakeCount}
         onOpenQuestionGrid={() => setShowQuestionGrid(true)}
+        onOpenKnowledgeGroups={onOpenKnowledgeGroups}
+        knowledgeGroupsLabel={knowledgeGroupsLabel}
       />
 
       {/* Active Game / View Mode Rendering */}
