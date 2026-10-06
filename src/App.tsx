@@ -72,8 +72,26 @@ export default function App() {
   ]);
 
   const [currentFlashcardSet, setCurrentFlashcardSet] = useState<FlashcardSet>(FLASHCARD_SETS[0]);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [isResultView, setIsResultView] = useState(false);
+  const [answers, setAnswers] = useState<Record<number, string>>(() => {
+    try {
+      const search = new URLSearchParams(window.location.search);
+      if (search.get('result') === 'true' && route.type === 'quiz') {
+        const key = `keyt_quiz_answers_${route.setId}`;
+        const raw = localStorage.getItem(key);
+        if (raw) return JSON.parse(raw);
+      }
+    } catch {
+      // ignore
+    }
+    return {};
+  });
+  const [isResultView, setIsResultView] = useState<boolean>(() => {
+    try {
+      return new URLSearchParams(window.location.search).get('result') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [knowledgeGroupId, setKnowledgeGroupId] = useState<string | null>(null);
   const [isKnowledgeGroupPickerOpen, setIsKnowledgeGroupPickerOpen] = useState(false);
 
@@ -208,11 +226,25 @@ export default function App() {
   const handleFinishQuiz = (userAnswers: Record<number, string>) => {
     setAnswers(userAnswers);
     setIsResultView(true);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('result', 'true');
+      window.history.replaceState({}, '', url.toString());
+    } catch {
+      // ignore
+    }
   };
 
   const handleRetry = () => {
     setAnswers({});
     setIsResultView(false);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('result');
+      window.history.replaceState({}, '', url.toString());
+    } catch {
+      // ignore
+    }
   };
 
   // Điều hướng quay lại danh sách môn học
@@ -225,6 +257,13 @@ export default function App() {
     setIsResultView(false);
     setKnowledgeGroupId(null);
     setIsKnowledgeGroupPickerOpen(false);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('result');
+      window.history.replaceState({}, '', url.toString());
+    } catch {
+      // ignore
+    }
     if (activeCourse) {
       navigate(`/course/${activeCourse.id}`);
     } else {
@@ -286,6 +325,12 @@ export default function App() {
             answers={answers}
             onRetry={handleRetry}
             onNewQuiz={handleBackToCourseDetail}
+            setTitle={knowledgeGroupId && knowledgeGroupConfig
+              ? `${knowledgeGroupConfig.courseLabel} · Nhóm ${String(knowledgeGroupConfig.groups.find((group) => group.id === knowledgeGroupId)?.number ?? knowledgeGroupId).padStart(2, '0')}`
+              : activeSet?.title}
+            courseTitle={activeCourse?.name}
+            courseCode={activeCourse?.code}
+            setId={activeSet?.id}
           />
         )}
 
