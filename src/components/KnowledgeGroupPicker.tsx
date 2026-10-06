@@ -1,26 +1,38 @@
 import { useMemo } from 'react';
 import type { Question } from '../utils/quizParser';
-import { getMln111KnowledgeGroupId, MLN111_KNOWLEDGE_GROUPS } from '../data/mln111KnowledgeGroups';
+
+interface KnowledgeGroupDefinition {
+  id: string;
+  number: number;
+  title: string;
+  summary: string;
+}
 
 interface KnowledgeGroupPickerProps {
   questions: Question[];
   onSelectGroup: (groupId: string) => void;
   onBack: () => void;
+  groups: KnowledgeGroupDefinition[];
+  getGroupId: (question: Question) => string;
+  courseLabel: string;
 }
 
 export default function KnowledgeGroupPicker({
   questions,
   onSelectGroup,
   onBack,
+  groups,
+  getGroupId,
+  courseLabel,
 }: KnowledgeGroupPickerProps) {
   const questionCounts = useMemo(() => {
     const counts = new Map<string, number>();
     for (const question of questions) {
-      const groupId = getMln111KnowledgeGroupId(question);
+      const groupId = getGroupId(question);
       counts.set(groupId, (counts.get(groupId) ?? 0) + 1);
     }
     return counts;
-  }, [questions]);
+  }, [getGroupId, questions]);
 
   return (
     <div className="tesla-container knowledge-groups-page">
@@ -38,7 +50,7 @@ export default function KnowledgeGroupPicker({
 
       <main className="tesla-main-content">
         <section className="knowledge-groups-heading" aria-labelledby="knowledge-groups-title">
-          <span className="knowledge-groups-eyebrow">MLN111 · HỌC THEO CHỦ ĐỀ</span>
+          <span className="knowledge-groups-eyebrow">{courseLabel} · HỌC THEO CHỦ ĐỀ</span>
           <h1 id="knowledge-groups-title">Chọn nhóm kiến thức</h1>
           <p>
             Chọn một chủ đề để tập trung ôn từng phần trong bộ đề tổng hợp.
@@ -52,8 +64,8 @@ export default function KnowledgeGroupPicker({
           </div>
         </section>
 
-        <div className="knowledge-groups-grid" aria-label="Danh sách 16 nhóm kiến thức">
-          {MLN111_KNOWLEDGE_GROUPS.map((group) => {
+        <div className="knowledge-groups-grid" aria-label={`Danh sách ${groups.length} nhóm kiến thức ${courseLabel}`}>
+          {groups.map((group) => {
             const count = questionCounts.get(group.id) ?? 0;
 
             return (

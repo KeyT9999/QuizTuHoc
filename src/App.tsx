@@ -15,9 +15,15 @@ import { DEFAULT_QUIZ_SETS, type QuizSetInfo } from './data/quizSets';
 import { FLASHCARD_SETS, type FlashcardSet } from './data/flashcardData';
 import { MLN_RESEARCH_ANSWER_KEYS } from './data/mlnResearchAnswerKeys';
 import {
+  getMln111KnowledgeGroupId,
   getMln111QuestionsForGroup,
   MLN111_KNOWLEDGE_GROUPS,
 } from './data/mln111KnowledgeGroups';
+import {
+  getMln122KnowledgeGroupId,
+  getMln122QuestionsForGroup,
+  MLN122_KNOWLEDGE_GROUPS,
+} from './data/mln122KnowledgeGroups';
 import {
   loadCustomCourses,
   saveCustomCourses,
@@ -28,6 +34,28 @@ import {
 } from './utils/courseStorage';
 import { useAppRouter } from './utils/router';
 import './App.css';
+
+interface KnowledgeGroupConfig {
+  courseLabel: string;
+  groups: Array<{ id: string; number: number; title: string; summary: string }>;
+  getGroupId: (question: Question) => string;
+  filterQuestions: (questions: Question[], groupId: string) => Question[];
+}
+
+const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
+  mln111_full: {
+    courseLabel: 'MLN111',
+    groups: MLN111_KNOWLEDGE_GROUPS,
+    getGroupId: getMln111KnowledgeGroupId,
+    filterQuestions: getMln111QuestionsForGroup,
+  },
+  mln122_full: {
+    courseLabel: 'MLN122',
+    groups: MLN122_KNOWLEDGE_GROUPS,
+    getGroupId: getMln122KnowledgeGroupId,
+    filterQuestions: getMln122QuestionsForGroup,
+  },
+};
 
 export default function App() {
   const { route, navigate } = useAppRouter();
@@ -64,6 +92,10 @@ export default function App() {
     return null;
   }, [route, quizSets]);
 
+  const knowledgeGroupConfig = activeSet
+    ? KNOWLEDGE_GROUP_CONFIGS[activeSet.id]
+    : undefined;
+
   const parsedQuestions = useMemo(() => {
     if (activeSet && activeSet.kind !== 'image') {
       const parsed = parseQuizText(activeSet.rawText);
@@ -82,9 +114,9 @@ export default function App() {
   }, [activeSet]);
 
   const knowledgeGroupQuestions = useMemo(() => {
-    if (activeSet?.id !== 'mln111_full' || !knowledgeGroupId) return parsedQuestions;
-    return getMln111QuestionsForGroup(parsedQuestions, knowledgeGroupId);
-  }, [activeSet, knowledgeGroupId, parsedQuestions]);
+    if (!knowledgeGroupId || !knowledgeGroupConfig) return parsedQuestions;
+    return knowledgeGroupConfig.filterQuestions(parsedQuestions, knowledgeGroupId);
+  }, [knowledgeGroupConfig, knowledgeGroupId, parsedQuestions]);
 
   // Điều hướng chọn môn học
   const handleSelectCourse = (course: Course) => {
@@ -257,9 +289,12 @@ export default function App() {
           />
         )}
 
-        {route.type === 'quiz' && !isResultView && activeSet?.id === 'mln111_full' && isKnowledgeGroupPickerOpen && (
+        {route.type === 'quiz' && !isResultView && knowledgeGroupConfig && isKnowledgeGroupPickerOpen && (
           <KnowledgeGroupPicker
             questions={parsedQuestions}
+            groups={knowledgeGroupConfig.groups}
+            getGroupId={knowledgeGroupConfig.getGroupId}
+            courseLabel={knowledgeGroupConfig.courseLabel}
             onSelectGroup={(groupId) => {
               setKnowledgeGroupId(groupId);
               setAnswers({});
@@ -275,10 +310,10 @@ export default function App() {
           <Quiz
             key={knowledgeGroupId ? `${activeSet.id}_group_${knowledgeGroupId}` : activeSet.id}
             setId={knowledgeGroupId ? `${activeSet.id}_group_${knowledgeGroupId}` : activeSet.id}
-            setTitle={knowledgeGroupId
-              ? `MLN111 · Nhóm ${String(MLN111_KNOWLEDGE_GROUPS.find((group) => group.id === knowledgeGroupId)?.number ?? knowledgeGroupId).padStart(2, '0')}`
+            setTitle={knowledgeGroupId && knowledgeGroupConfig
+              ? `${knowledgeGroupConfig.courseLabel} · Nhóm ${String(knowledgeGroupConfig.groups.find((group) => group.id === knowledgeGroupId)?.number ?? knowledgeGroupId).padStart(2, '0')}`
               : activeSet.title}
-            questions={activeSet.id === 'mln111_full' && knowledgeGroupId
+            questions={knowledgeGroupConfig && knowledgeGroupId
               ? knowledgeGroupQuestions
               : parsedQuestions}
             onFinish={handleFinishQuiz}
@@ -286,7 +321,7 @@ export default function App() {
               ? () => setIsKnowledgeGroupPickerOpen(true)
               : handleBackToCourseDetail}
             onBackLabel={knowledgeGroupId ? '← Chọn nhóm' : undefined}
-            onOpenKnowledgeGroups={activeSet.id === 'mln111_full'
+            onOpenKnowledgeGroups={knowledgeGroupConfig
               ? () => setIsKnowledgeGroupPickerOpen(true)
               : undefined}
             knowledgeGroupsLabel={knowledgeGroupId ? 'Đổi nhóm' : undefined}

@@ -61,7 +61,7 @@ export default function QuizModeBar({
           type="button"
           className="quiz-mode-pill-btn knowledge-groups-mode-btn"
           onClick={onOpenKnowledgeGroups}
-          title="Chọn một trong 16 nhóm kiến thức MLN111"
+          title="Chọn một trong 16 nhóm kiến thức"
         >
           <span className="quiz-mode-icon">📚</span>
           <span className="quiz-mode-text">{knowledgeGroupsLabel}</span>
