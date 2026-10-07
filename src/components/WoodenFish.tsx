@@ -10,14 +10,21 @@ interface FloatingItem {
 }
 
 const BLESSINGS = [
-  '+1 Công đức 🪷',
-  '+1 Cầu qua môn 🎓',
-  '+1 Tịnh tâm an lạc 🌿',
-  '+1 May mắn ngập tràn 🍀',
+  '+1 Pass môn 🎓',
+  '+1 Vía thủ khoa 🥇',
+  '+1 Học đâu nhớ đó 🧠',
+  '+1 Không lo rớt môn 🛡️',
+  '+1 Bắt trúng đề thi 🎯',
+  '+1 Vía GPA 4.0 🌟',
+  '+1 Điểm A+ rực rỡ 💯',
+  '+1 Đề trúng tủ 📚',
   '+1 Trí tuệ hanh thông 💡',
+  '+1 Sự nghiệp thăng tiến 🚀',
+  '+1 Đỗ FE vẻ vang 🏆',
+  '+1 Lương nghìn đô 💼',
+  '+1 Công đức vô lượng 🪷',
+  '+1 Vía qua môn êm đẹp ✨',
   '+1 Tâm bất biến 🧘',
-  '+1 Vạn sự như ý ✨',
-  '+1 Điểm A+ rực rỡ 🎯',
 ];
 
 interface WoodenFishProps {
@@ -656,12 +663,11 @@ export default function WoodenFish({
                   aria-label="Chọn lời nguyện khi gõ mõ"
                 >
                   <option value="random">🎲 Ngẫu nhiên lời chúc</option>
-                  <option value="+1 Công đức 🪷">+1 Công đức 🪷</option>
-                  <option value="+1 Cầu qua môn 🎓">+1 Cầu qua môn 🎓</option>
-                  <option value="+1 Tịnh tâm an lạc 🌿">+1 Tịnh tâm an lạc 🌿</option>
-                  <option value="+1 May mắn ngập tràn 🍀">+1 May mắn ngập tràn 🍀</option>
-                  <option value="+1 Trí tuệ hanh thông 💡">+1 Trí tuệ hanh thông 💡</option>
-                  <option value="+1 Điểm A+ rực rỡ 🎯">+1 Điểm A+ rực rỡ 🎯</option>
+                  {BLESSINGS.map((mantra) => (
+                    <option key={mantra} value={mantra}>
+                      {mantra}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
