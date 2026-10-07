@@ -111,49 +111,52 @@ export default function TrueFalseGame({
 
   const currentItem = statements[cardIndex] || null;
 
+  // Handle user answering True or False
+  const handleAnswer = useCallback(
+    (userChoseTrue: boolean | null) => {
+      if (!isPlaying || isGameOver || feedback !== null || !currentItem) return;
+
+      const isCorrect = userChoseTrue !== null && userChoseTrue === currentItem.isActuallyTrue;
+
+      if (isCorrect) {
+        const nextStreak = streak + 1;
+        setStreak(nextStreak);
+        setMaxStreak((prev) => Math.max(prev, nextStreak));
+        setCorrectCount((prev) => prev + 1);
+        setScore((prev) => prev + 50 * (nextStreak >= 5 ? 2 : 1));
+        setFeedback('correct');
+        playCorrectSound(nextStreak);
+      } else {
+        setStreak(0);
+        setFeedback('wrong');
+        playWrongSound();
+        saveMistakeQuestion(setId, currentItem.question.id);
+      }
+
+      setTimeout(() => {
+        setFeedback(null);
+        setSecondsLeft(5);
+
+        if (cardIndex < statements.length - 1) {
+          setCardIndex((prev) => prev + 1);
+        } else {
+          // End game
+          setIsGameOver(true);
+          setIsPlaying(false);
+          saveGameHighScore(setId, 'true_false', score + (isCorrect ? 50 : 0), maxStreak);
+          playVictoryFanfare();
+        }
+      }, 380);
+    },
+    [isPlaying, isGameOver, feedback, currentItem, streak, setId, cardIndex, statements.length, score, maxStreak]
+  );
+
   // Timeout handler (treated as wrong)
   useEffect(() => {
     if (isPlaying && secondsLeft === 0 && !isGameOver && feedback === null) {
       handleAnswer(null);
     }
-  }, [secondsLeft, isPlaying, isGameOver, feedback]);
-
-  // Handle user answering True or False
-  const handleAnswer = (userChoseTrue: boolean | null) => {
-    if (!isPlaying || isGameOver || feedback !== null || !currentItem) return;
-
-    const isCorrect = userChoseTrue !== null && userChoseTrue === currentItem.isActuallyTrue;
-
-    if (isCorrect) {
-      const nextStreak = streak + 1;
-      setStreak(nextStreak);
-      setMaxStreak((prev) => Math.max(prev, nextStreak));
-      setCorrectCount((prev) => prev + 1);
-      setScore((prev) => prev + 50 * (nextStreak >= 5 ? 2 : 1));
-      setFeedback('correct');
-      playCorrectSound(nextStreak);
-    } else {
-      setStreak(0);
-      setFeedback('wrong');
-      playWrongSound();
-      saveMistakeQuestion(setId, currentItem.question.id);
-    }
-
-    setTimeout(() => {
-      setFeedback(null);
-      setSecondsLeft(5);
-
-      if (cardIndex < statements.length - 1) {
-        setCardIndex((prev) => prev + 1);
-      } else {
-        // End game
-        setIsGameOver(true);
-        setIsPlaying(false);
-        saveGameHighScore(setId, 'true_false', score + (isCorrect ? 50 : 0), maxStreak);
-        playVictoryFanfare();
-      }
-    }, 380);
-  };
+  }, [secondsLeft, isPlaying, isGameOver, feedback, handleAnswer]);
 
   // Keyboard shortcut listener: 1/ArrowLeft = TRUE, 2/ArrowRight = FALSE
   useEffect(() => {

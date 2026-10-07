@@ -208,17 +208,27 @@ export default function SurvivalTowerGame({
     };
   }, [isPlaying, isGameOver, isVictory, isFrozen, currentFloor]);
 
-  // Handle timeout (counts as wrong answer -> falls 2 floors!)
-  useEffect(() => {
-    if (isPlaying && floorTime === 0 && !isGameOver && !isVictory && !isAnswering) {
-      handleTimeout();
-    }
-  }, [floorTime, isPlaying, isGameOver, isVictory, isAnswering]);
-
   const currentQ = deck[currentFloor - 1] || null;
 
+  const finishGame = useCallback(
+    (victory: boolean, finalFloor: number) => {
+      setIsGameOver(true);
+      setIsPlaying(false);
+      setIsVictory(victory);
+
+      saveGameHighScore(setId, 'tower', finalFloor, finalFloor);
+
+      if (victory) {
+        playVictoryFanfare();
+      } else {
+        playWrongSound();
+      }
+    },
+    [setId]
+  );
+
   // Handle Timeout: Drop 2 floors and lose 1 life
-  const handleTimeout = () => {
+  const handleTimeout = useCallback(() => {
     playWrongSound();
     if (currentQ) saveMistakeQuestion(setId, currentQ.id);
 
@@ -250,21 +260,14 @@ export default function SurvivalTowerGame({
         setCurrentFloor(targetFloor);
       }
     }, 850);
-  };
+  }, [currentQ, setId, lives, currentFloor, finishGame]);
 
-  const finishGame = (victory: boolean, finalFloor: number) => {
-    setIsGameOver(true);
-    setIsPlaying(false);
-    setIsVictory(victory);
-
-    saveGameHighScore(setId, 'tower', finalFloor, finalFloor);
-
-    if (victory) {
-      playVictoryFanfare();
-    } else {
-      playWrongSound();
+  // Handle timeout (counts as wrong answer -> falls 2 floors!)
+  useEffect(() => {
+    if (isPlaying && floorTime === 0 && !isGameOver && !isVictory && !isAnswering) {
+      handleTimeout();
     }
-  };
+  }, [floorTime, isPlaying, isGameOver, isVictory, isAnswering, handleTimeout]);
 
   // Handle answer choice
   const handleSelectOption = useCallback(
@@ -352,7 +355,7 @@ export default function SurvivalTowerGame({
         }, 850);
       }
     },
-    [isPlaying, isGameOver, isVictory, isAnswering, currentQ, currentFloor, streak, lives, setId]
+    [isPlaying, isGameOver, isVictory, isAnswering, currentQ, currentFloor, streak, lives, setId, finishGame]
   );
 
   // Lifeline 1: 50:50

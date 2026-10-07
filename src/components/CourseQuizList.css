@@ -1,0 +1,1084 @@
+/* ==========================================================================
+   MODERN LEARNING DASHBOARD — COURSE DETAIL / EXAM SETS
+   Style: Clean, Modern, Youthful, Student Exam Prep (SaaS / Notion / Linear)
+   ========================================================================== */
+
+:root {
+  --course-primary: #4f46e5;
+  --course-primary-hover: #4338ca;
+  --course-primary-soft: #eef2ff;
+  --course-primary-border: #c7d2fe;
+
+  --course-bg: #f8fafc;
+  --course-card-bg: #ffffff;
+  --course-border: #e2e8f0;
+  --course-border-hover: #cbd5e1;
+
+  --course-text-main: #0f172a;
+  --course-text-muted: #64748b;
+  --course-text-sub: #94a3b8;
+
+  --course-radius-sm: 8px;
+  --course-radius-md: 12px;
+  --course-radius-lg: 16px;
+  --course-radius-pill: 999px;
+}
+
+/* Page Wrapper */
+.course-quiz-dashboard {
+  min-height: 100vh;
+  background-color: var(--course-bg);
+  background-image:
+    radial-gradient(circle at 12% 0%, rgba(79, 70, 229, 0.05), transparent 32rem),
+    radial-gradient(circle at 88% 20%, rgba(59, 130, 246, 0.04), transparent 30rem);
+  color: var(--course-text-main);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   1. NAVBAR
+   ========================================================================== */
+.course-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  height: 64px;
+}
+
+.course-nav-inner {
+  max-width: 1240px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.course-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Back Button */
+.course-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--course-radius-pill);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  text-decoration: none;
+}
+
+.course-back-btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  transform: translateX(-2px);
+}
+
+.course-back-btn:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.course-back-arrow {
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+.course-back-btn:hover .course-back-arrow {
+  transform: translateX(-2px);
+}
+
+/* Brand Logo */
+.course-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.course-logo-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.course-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-brand-name {
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  color: #0f172a;
+  line-height: 1.15;
+}
+
+.course-brand-subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+/* Nav Menu Items */
+.course-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748b;
+  border-radius: var(--course-radius-pill);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  border: none;
+  background: transparent;
+}
+
+.course-nav-item:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.course-nav-item.active {
+  background-color: #e0e7ff;
+  color: #4338ca;
+  font-weight: 700;
+}
+
+.course-nav-item svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+/* User Avatar Menu */
+.course-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px 3px 3px;
+  border-radius: var(--course-radius-pill);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  user-select: none;
+}
+
+.course-user-menu:hover {
+  background-color: #f1f5f9;
+}
+
+.course-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+.course-user-chevron {
+  color: #64748b;
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   2. MAIN CONTAINER
+   ========================================================================== */
+.course-main-content {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+  flex: 1;
+}
+
+/* ==========================================================================
+   3. COURSE HERO
+   ========================================================================== */
+.course-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.course-hero-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex: 1;
+  max-width: 800px;
+}
+
+.course-hero-icon-box {
+  width: 80px;
+  height: 80px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #fdf2f8 0%, #ede9fe 100%);
+  border: 1px solid #fae8ff;
+  display: grid;
+  place-items: center;
+  color: #8b5cf6;
+  box-shadow: 0 8px 24px -4px rgba(139, 92, 246, 0.18), inset 0 1px 1px #ffffff;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.course-hero-icon-box svg {
+  width: 38px;
+  height: 38px;
+}
+
+.course-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.course-hero-badge {
+  align-self: flex-start;
+  padding: 4px 12px;
+  background-color: #e0e7ff;
+  color: #4338ca;
+  border-radius: var(--course-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: 1px solid #c7d2fe;
+}
+
+.course-hero-title {
+  font-size: 32px;
+  font-weight: 850;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.6px;
+}
+
+.course-hero-desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0;
+  max-width: 680px;
+}
+
+.course-hero-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.course-hero-illustration {
+  width: 290px;
+  height: auto;
+  max-height: 180px;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.05));
+  transition: transform 0.3s ease;
+}
+
+.course-hero-illustration:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* ==========================================================================
+   4. COURSE STATS
+   ========================================================================== */
+.course-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.course-stat-card {
+  background: var(--course-card-bg);
+  border: 1px solid var(--course-border);
+  border-radius: var(--course-radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.course-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -2px rgba(15, 23, 42, 0.06);
+  border-color: var(--course-border-hover);
+}
+
+.course-stat-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.course-stat-icon-wrap.purple {
+  background-color: #f5f3ff;
+  color: #7c3aed;
+  border: 1px solid #ede9fe;
+}
+
+.course-stat-icon-wrap.blue {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.course-stat-icon-wrap.ring-box {
+  background-color: #f8fafc;
+  color: #4f46e5;
+  border: 1px solid #e2e8f0;
+}
+
+.course-stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-stat-number {
+  font-size: 26px;
+  font-weight: 850;
+  color: #0f172a;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.course-stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   5. SEARCH + SORT TOOLBAR
+   ========================================================================== */
+.exam-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.exam-search-box {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.exam-search-icon {
+  position: absolute;
+  left: 16px;
+  color: #94a3b8;
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+}
+
+.exam-search-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 42px 0 46px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background-color: #ffffff;
+  font-size: 14.5px;
+  color: #0f172a;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.exam-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.exam-search-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.exam-search-clear {
+  position: absolute;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 18px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.exam-search-clear:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.exam-sort-container {
+  position: relative;
+}
+
+.exam-sort-btn {
+  height: 48px;
+  padding: 0 18px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  white-space: nowrap;
+}
+
+.exam-sort-btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.exam-sort-btn:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.exam-sort-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.exam-sort-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
+  min-width: 210px;
+  padding: 6px;
+  z-index: 40;
+  animation: dropdownFadeIn 0.15s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.exam-sort-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #334155;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.exam-sort-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.exam-sort-item.active {
+  background-color: #e0e7ff;
+  color: #4338ca;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   6. EXAM CARDS GRID
+   ========================================================================== */
+.exam-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.exam-card {
+  background-color: var(--course-card-bg);
+  border: 1px solid var(--course-border);
+  border-left: 4px solid var(--card-border-left, #6366f1);
+  border-radius: var(--course-radius-lg);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.exam-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
+  border-color: var(--course-border-hover);
+}
+
+.exam-card:focus-visible {
+  outline: 2px solid var(--card-accent, #6366f1);
+  outline-offset: 2px;
+}
+
+.exam-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.exam-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--course-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  background-color: var(--card-badge-bg);
+  color: var(--card-badge-text);
+  border: 1px solid var(--card-badge-border);
+  letter-spacing: 0.2px;
+}
+
+.exam-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exam-delete-btn {
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  display: grid;
+  place-items: center;
+}
+
+.exam-delete-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.exam-open-icon {
+  color: #94a3b8;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.exam-card:hover .exam-open-icon {
+  color: var(--card-accent, #6366f1);
+  transform: translate(2px, -2px);
+}
+
+.exam-title {
+  font-size: 18.5px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 3px 0;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+.exam-subject-sub {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0 0 10px 0;
+}
+
+.exam-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0 0 18px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 40px;
+}
+
+/* Progress Section */
+.exam-progress-wrap {
+  margin-bottom: 18px;
+}
+
+.exam-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.exam-progress-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.exam-progress-val {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.exam-progress-track {
+  height: 6px;
+  background-color: #f1f5f9;
+  border-radius: var(--course-radius-pill);
+  overflow: hidden;
+}
+
+.exam-progress-fill {
+  height: 100%;
+  border-radius: var(--course-radius-pill);
+  background-color: var(--card-accent, #6366f1);
+  transition: width 0.35s ease;
+}
+
+/* Card Bottom Row */
+.exam-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.exam-stats-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exam-stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.exam-stat-pill svg {
+  width: 15px;
+  height: 15px;
+  color: var(--card-accent, #6366f1);
+  flex-shrink: 0;
+}
+
+.exam-stat-num {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 13.5px;
+}
+
+.exam-cta-btn {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 11px;
+  background-color: var(--card-btn-bg, #4f46e5);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.exam-cta-btn:hover {
+  background-color: var(--card-btn-hover, #4338ca);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.exam-cta-btn:focus-visible {
+  outline: 2px solid var(--card-accent, #6366f1);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   7. ADD QUIZ SET CARD
+   ========================================================================== */
+.exam-add-card {
+  background-color: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--course-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 260px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.exam-add-card:hover {
+  border-color: #6366f1;
+  background-color: #fbfbfe;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(99, 102, 241, 0.12);
+}
+
+.exam-add-card:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.exam-add-top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exam-add-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #e0e7ff;
+  color: #4338ca;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.exam-add-card:hover .exam-add-icon-box {
+  transform: scale(1.08) rotate(90deg);
+}
+
+.exam-add-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #6366f1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.exam-add-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.exam-add-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0;
+}
+
+.exam-add-btn {
+  align-self: flex-start;
+  height: 40px;
+  padding: 0 16px;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.exam-add-card:hover .exam-add-btn {
+  background-color: #e0e7ff;
+  border-color: #c7d2fe;
+  color: #4338ca;
+}
+
+/* ==========================================================================
+   8. EMPTY STATES
+   ========================================================================== */
+.exam-empty-state {
+  grid-column: 1 / -1;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--course-radius-lg);
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.exam-empty-icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+}
+
+.exam-empty-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.exam-empty-desc {
+  font-size: 14px;
+  color: #64748b;
+  max-width: 440px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.exam-empty-btn {
+  margin-top: 8px;
+  height: 40px;
+  padding: 0 16px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.exam-empty-btn:hover {
+  background-color: #4338ca;
+}
+
+/* ==========================================================================
+   9. FOOTER
+   ========================================================================== */
+.course-footer {
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  background-color: #ffffff;
+  padding: 24px 0;
+  margin-top: auto;
+}
+
+.course-footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.course-footer-links {
+  display: flex;
+  gap: 18px;
+}
+
+.course-footer-links a {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.course-footer-links a:hover {
+  color: #0f172a;
+}
+
+/* ==========================================================================
+   10. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .course-hero-illustration {
+    width: 230px;
+  }
+
+  .course-hero-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 860px) {
+  .course-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .course-hero-right {
+    display: none;
+  }
+
+  .course-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .exam-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .course-nav-links .course-nav-item:not(.active) {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .course-main-content {
+    padding: 20px 16px 48px;
+  }
+
+  .course-nav-inner {
+    padding: 0 16px;
+  }
+
+  .course-back-btn span:not(.course-back-arrow) {
+    display: none;
+  }
+
+  .course-hero-left {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .course-hero-icon-box {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+
+  .course-hero-title {
+    font-size: 24px;
+  }
+
+  .exam-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .exam-sort-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .exam-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .exam-stats-group {
+    justify-content: space-between;
+  }
+
+  .exam-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .course-footer-inner {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
