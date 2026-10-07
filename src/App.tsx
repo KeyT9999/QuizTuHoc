@@ -33,6 +33,7 @@ import {
   deleteCustomQuizSet,
 } from './utils/courseStorage';
 import { useAppRouter } from './utils/router';
+import WoodenFish from './components/WoodenFish';
 import './App.css';
 
 interface KnowledgeGroupConfig {
@@ -412,6 +413,9 @@ export default function App() {
         onClose={() => setIsCreateCourseOpen(false)}
         onCreateCourse={handleCreateCourse}
       />
+
+      {/* Widget Gõ Mõ Tịnh Tâm & Cầu May */}
+      <WoodenFish />
     </div>
   );
 }

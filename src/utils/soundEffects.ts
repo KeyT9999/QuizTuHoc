@@ -155,3 +155,129 @@ export function playVictoryFanfare(): void {
     // ignore
   }
 }
+
+export type WoodFishTone = 'warm' | 'deep' | 'crisp';
+
+/**
+ * Realistic Acoustic Wooden Fish (Mõ Gỗ) Sound Synthesis via Web Audio API.
+ * Combines cavity resonance, wood overtones, low-end body thump, and mallet contact click.
+ */
+export function playWoodFishSound(tone: WoodFishTone = 'warm', force = true): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+
+    // Pitch tuning per tone variant
+    let baseFreq = 680; // Standard warm woodfish
+    if (tone === 'deep') baseFreq = 520; // Deep temple wooden fish
+    if (tone === 'crisp') baseFreq = 840; // Small crisp wooden block
+
+    // Subtle humanization (+- 1.5% pitch variation for realistic tactile feel)
+    const pitchJitter = 1 + (Math.random() - 0.5) * 0.03;
+    const freq = baseFreq * pitchJitter;
+
+    // Master volume node for this strike
+    const masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0.42, now);
+    masterGain.connect(ctx.destination);
+
+    // 1. Primary Cavity Resonance (Hollow air body)
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'sine';
+    // Initial attack pitch dip
+    osc1.frequency.setValueAtTime(freq * 1.15, now);
+    osc1.frequency.exponentialRampToValueAtTime(freq, now + 0.009);
+
+    gain1.gain.setValueAtTime(0.85, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.19);
+    osc1.connect(gain1);
+    gain1.connect(masterGain);
+
+    // 2. Wood Shell Overtone (Acoustic timbre)
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(freq * 1.72, now);
+    gain2.gain.setValueAtTime(0.35, now);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+    osc2.connect(gain2);
+    gain2.connect(masterGain);
+
+    // 3. Low-End Body Thump (Thump depth)
+    const osc3 = ctx.createOscillator();
+    const gain3 = ctx.createGain();
+    osc3.type = 'triangle';
+    osc3.frequency.setValueAtTime(freq * 0.45, now);
+    gain3.gain.setValueAtTime(0.4, now);
+    gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+    osc3.connect(gain3);
+    gain3.connect(masterGain);
+
+    // 4. Initial Mallet Striker Impact (Crisp contact click)
+    const clickOsc = ctx.createOscillator();
+    const clickGain = ctx.createGain();
+    const clickFilter = ctx.createBiquadFilter();
+    clickFilter.type = 'bandpass';
+    clickFilter.frequency.setValueAtTime(2400, now);
+    clickFilter.Q.setValueAtTime(2.2, now);
+
+    clickOsc.type = 'triangle';
+    clickOsc.frequency.setValueAtTime(1600, now);
+    clickOsc.frequency.exponentialRampToValueAtTime(350, now + 0.012);
+
+    clickGain.gain.setValueAtTime(0.48, now);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.016);
+
+    clickOsc.connect(clickFilter);
+    clickFilter.connect(clickGain);
+    clickGain.connect(masterGain);
+
+    // Start all components
+    osc1.start(now);
+    osc2.start(now);
+    osc3.start(now);
+    clickOsc.start(now);
+
+    // Clean up
+    const stopTime = now + 0.22;
+    osc1.stop(stopTime);
+    osc2.stop(stopTime);
+    osc3.stop(stopTime);
+    clickOsc.stop(now + 0.02);
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Small Bell Chime sound (Tiếng chuông bát nhỏ đi kèm nếu muốn)
+ */
+export function playTempleBellSound(force = true): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1046.5, now); // C6
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 1.25);
+  } catch {
+    // ignore
+  }
+}
+

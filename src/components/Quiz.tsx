@@ -367,6 +367,13 @@ export default function Quiz({
         return;
       }
 
+      // Open Wooden Fish (Gõ Mõ)
+      if (key === 'w') {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent('open-woodfish-modal'));
+        return;
+      }
+
       // If a modal is open, ignore subsequent card shortcuts
       if (showQuestionGrid || isSplitModalOpen || showPartCompleteModal) return;
 
@@ -553,6 +560,16 @@ export default function Quiz({
         )}
 
         <div className="quiz-v2-header-right">
+          {/* Wooden Fish (Gõ Mõ Cầu May) — Icon Button */}
+          <button
+            type="button"
+            className="quiz-v2-header-icon-btn"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-woodfish-modal'))}
+            title="Gõ Mõ Cầu May & Tịnh Tâm (Phím tắt: W)"
+          >
+            🪷
+          </button>
+
           {/* Split Mode Config — Icon Button */}
           <button
             type="button"

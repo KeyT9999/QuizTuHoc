@@ -1,0 +1,584 @@
+/* ==========================================================================
+   WOODEN FISH (GÕ MÕ TỊCH TÂM & CẦU MAY) — STYLES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. FLOATING MINI WIDGET (Bên phải, ở trên giữa giữa)
+   -------------------------------------------------------------------------- */
+.woodfish-float-container {
+  position: fixed;
+  top: 38%;
+  right: 28px;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  user-select: none;
+  pointer-events: auto;
+}
+
+/* Floating Action Button (Mini Mõ) */
+.woodfish-float-bubble {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #78350f 0%, #451a03 100%);
+  border: 2.5px solid #f59e0b;
+  box-shadow: 
+    0 8px 24px rgba(120, 53, 15, 0.38),
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 2px 4px rgba(254, 240, 138, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  outline: none;
+  padding: 0;
+}
+
+.woodfish-float-bubble:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 
+    0 12px 28px rgba(217, 119, 6, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 2px 6px rgba(254, 240, 138, 0.45);
+}
+
+.woodfish-float-bubble:active,
+.woodfish-float-bubble.is-pressed {
+  transform: scale(0.92) translateY(2px);
+}
+
+.woodfish-bubble-svg {
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+/* Badge số công đức nhỏ */
+.woodfish-float-badge {
+  position: absolute;
+  top: -6px;
+  left: -8px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 1.5px solid #ffffff;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* Nút mở rộng (Maximize / Chánh điện) */
+.woodfish-float-expand-btn {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #78350f;
+  border: 1.5px solid #d97706;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s;
+  cursor: pointer;
+}
+
+.woodfish-float-expand-btn:hover {
+  transform: scale(1.2);
+  background-color: #fef3c7;
+}
+
+/* Tooltip gợi ý gõ */
+.woodfish-float-hint {
+  margin-bottom: 8px;
+  background: rgba(15, 23, 42, 0.88);
+  color: #fef08a;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  animation: woodfishFadeIn 0.3s ease;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   2. FULL MODAL CHÁNH ĐIỆN (Gõ Mõ Phóng To)
+   -------------------------------------------------------------------------- */
+.woodfish-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 5, 2, 0.78);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: woodfishFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.woodfish-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: radial-gradient(circle at 50% 15%, #2a1208 0%, #150803 65%, #0d0401 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.35);
+  border-radius: 28px;
+  padding: 28px 24px 24px;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    0 0 80px rgba(217, 119, 6, 0.15),
+    inset 0 1px 2px rgba(254, 240, 138, 0.3);
+  color: #fef3c7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Aura hào quang sau mõ */
+.woodfish-temple-halo {
+  position: absolute;
+  top: 140px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.08) 45%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Header Modal */
+.woodfish-modal-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  z-index: 2;
+}
+
+.woodfish-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 19px;
+  font-weight: 800;
+  color: #fef08a;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.woodfish-modal-title-icon {
+  font-size: 22px;
+}
+
+.woodfish-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #fde68a;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.woodfish-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #fca5a5;
+  transform: rotate(90deg);
+}
+
+/* Stats Ribbon (Công đức & Combo) */
+.woodfish-stats-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+  z-index: 2;
+}
+
+.woodfish-merit-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.woodfish-merit-num {
+  font-size: 32px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #fef08a 0%, #f59e0b 60%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+  line-height: 1;
+}
+
+.woodfish-merit-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #fcd34d;
+  opacity: 0.85;
+  margin-top: 3px;
+}
+
+.woodfish-combo-pill {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.25));
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  color: #fef08a;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: woodfishPulse 1.2s infinite ease-in-out;
+}
+
+/* --------------------------------------------------------------------------
+   3. KHU VỰC VẼ CÁI MÕ (MAIN INTERACTIVE STAGE)
+   -------------------------------------------------------------------------- */
+.woodfish-stage {
+  position: relative;
+  width: 320px;
+  height: 270px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  touch-action: manipulation;
+}
+
+.woodfish-main-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform 0.08s ease-out;
+}
+
+/* Hiệu ứng mõ co giãn khi gõ (Squash & Stretch) */
+.woodfish-body-group {
+  transform-origin: 160px 175px;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.woodfish-stage.is-struck .woodfish-body-group {
+  transform: scale(1.05, 0.93) translateY(6px);
+}
+
+/* Cây dùi gõ mõ (Mallet Animation) */
+.woodfish-mallet-group {
+  transform-origin: 275px 50px;
+  transition: transform 0.15s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.woodfish-stage.is-struck .woodfish-mallet-group {
+  animation: woodfishMalletStrike 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes woodfishMalletStrike {
+  0% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(-32deg) translateY(14px) translateX(-12px);
+  }
+  60% {
+    transform: rotate(-18deg) translateY(4px);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Vòng sóng âm thanh tỏa ra (Ripple Shockwave) */
+.woodfish-ripple-ring {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  margin-top: -40px;
+  margin-left: -40px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(254, 240, 138, 0.85);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.8);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.woodfish-stage.is-struck .woodfish-ripple-ring {
+  animation: woodfishRippleExpand 0.45s ease-out forwards;
+}
+
+@keyframes woodfishRippleExpand {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. CHỮ BAY LÊN (FLOATING MERIT PARTICLES)
+   -------------------------------------------------------------------------- */
+.woodfish-float-text-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 10;
+}
+
+.woodfish-floating-item {
+  position: absolute;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fef08a;
+  text-shadow: 
+    0 2px 10px rgba(245, 158, 11, 0.75),
+    0 0 4px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  animation: woodfishFloatUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes woodfishFloatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1.15);
+  }
+  80% {
+    opacity: 0.85;
+    transform: translateY(-45px) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-70px) scale(0.9);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. BỘ ĐIỀU KHIỂN & CÀI ĐẶT (CONTROLS & SETTINGS)
+   -------------------------------------------------------------------------- */
+.woodfish-controls-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+
+.woodfish-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.woodfish-control-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fde68a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Segmented Buttons (Âm sắc & Lời chúc) */
+.woodfish-seg-group {
+  display: flex;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.woodfish-seg-btn {
+  background: transparent;
+  border: none;
+  color: #d1d5db;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.woodfish-seg-btn:hover {
+  color: #ffffff;
+}
+
+.woodfish-seg-btn.is-active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Toggle Switch (Tự động gõ) */
+.woodfish-auto-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.woodfish-toggle-track {
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  position: relative;
+  transition: background 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.woodfish-toggle-track.is-on {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #34d399;
+}
+
+.woodfish-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.woodfish-toggle-track.is-on .woodfish-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* Lựa chọn lời cầu */
+.woodfish-mantra-select {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fef08a;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 4px 8px;
+  outline: none;
+  cursor: pointer;
+  max-width: 190px;
+}
+
+.woodfish-mantra-select option {
+  background: #1c0a03;
+  color: #fef08a;
+}
+
+/* Footer gợi ý phím tắt */
+.woodfish-modal-footer {
+  margin-top: 14px;
+  font-size: 11.5px;
+  color: #fcd34d;
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.woodfish-kbd {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-family: inherit;
+  font-weight: 700;
+  color: #fef08a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Keyframes tiện ích */
+@keyframes woodfishFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes woodfishPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* Phù hợp màn hình nhỏ */
+@media (max-width: 480px) {
+  .woodfish-float-container {
+    top: 42%;
+    right: 12px;
+    transform: translateY(-50%);
+  }
+  .woodfish-stage {
+    width: 280px;
+    height: 240px;
+  }
+  .woodfish-modal-card {
+    padding: 20px 16px 18px;
+  }
+  .woodfish-controls-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
