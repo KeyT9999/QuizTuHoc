@@ -700,7 +700,7 @@ C. 1617
 D. 1618
 A (Kiểu hỏi khác:
 
-Ai là người đầu tiên đưa ra khái niệm "kinh tế- chính trị"?
+Đại hội X của Đảng chỉ rõ mục tiêu đẩy mạnh công nghiệp hóa, hiện đại hóa cần:
 A. Gắn với phát triển kinh tế tri thức; coi kinh tế tri thức là yếu tố quan trọng của nền kinh tế và của công nghiệp hóa, hiện đại hóa
 B. Gắn với nền kinh tế thị trường định hướng tư bản chủ nghĩa
 C. Gắn với nền kinh tế khép kín
