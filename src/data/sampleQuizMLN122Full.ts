@@ -105,9 +105,9 @@ A. Từ nửa cuối thế kỷ XIX đến đầu thế kỷ XX
 B. Từ nửa đầu thế kỷ XIX đến cuối thế kỷ XIX
 C. Từ nửa đầu thế kỷ XX đề nữa cuối thế kỷ XX
 D. Từ nửa cuối thế kỷ XIX đến nửa cuối thế kỷ XX
-A (Kiểu hỏi khác:
+A (Kiểu hỏi khác: Cách mạng công nghiệp lần thứ hai diễn ra trong thời gian nào?)
 
-Cách mạng công nghiệp lần thứ hai diễn ra trong thời gian nào?
+Những đóng góp to lớn của kinh tế chính trị cổ điển Anh vào lý luận kinh tế chính trị của nhân loại đó là
 A. Rút ra kết luận giá trị là do hao phí lao động tạo ra
 B. Rút ra được bản chất bóc lột của chủ nghĩa tư bản
 C. Khái quát đúng mục đích của chủ nghĩa tư bản là lợi nhuận
@@ -215,9 +215,9 @@ A. Ba nguyên nhân
 B. Bốn nguyên nhân
 C. Năm nguyên nhân
 D. Sáu nguyên nhân
-B (1. Tích tụ và tập trung tư bản 2. Phân công lao động xã hội
+B (1. Tích tụ và tập trung tư bản 2. Phân công lao động xã hội 3. Mâu thuẫn giai cấp 4. Xu hướng quốc tế hóa và cạnh tranh quốc tế)
 
-3. Mâu thuẫn giai cấp 4. Xu hướng quốc tế hóa và cạnh tranh quốc tế) Tiền công thực tế là
+Tiền công thực tế là
 A. Tiền công được biểu hiện bằng số lượng hàng hóa tiêu dùng và dịch vụ mà công nhân mua được bằng tiền công danh nghĩa của mình
 B. Tiền công được biểu hiện bằng số lượng hàng hóa tiêu dùng và dịch vụ mà công nhân mua được bằng tiền công thực tế của mình
 C. Tiền công được biểu hiện bằng số tư liệu sản xuất và tiêu dùng và dịch vụ mà công nhân mua được bằng tiền công thực tế của mình
@@ -460,9 +460,9 @@ A. Thu hút vốn đầu tư nước ngoài, thu hút công nghệ hiện đại
 B. Học hỏi kinh nghiệm quản lý tiên tiến của thế giới
 C. Khai thác thị trường thế giới để tiêu thụ các sản phẩm mà nước ta có nhiều lợi thế và khả năng cạnh tranh cao
 D. Tất cả các phương án trên
-D (Kiểu hỏi khác:
+D (Kiểu hỏi khác: Đâu không phải là mục đích của hội nhập kinh tế quốc tế? -> Đầu tư tư bản trực tiếp thu lợi nhuận ở nước ngoài)
 
-Đâu không phải là mục đích của hội nhập kinh tế quốc tế? -> Đầu tư tư bản trực tiếp thu lợi nhuận ở nước ngoài) Quan điểm nào dưới đây không phải là đặc trưng chủ yếu của quá trình công nghiệp hóa, hiện đại hóa ở Việt Nam?
+Quan điểm nào dưới đây không phải là đặc trưng chủ yếu của quá trình công nghiệp hóa, hiện đại hóa ở Việt Nam?
 A. Công nghiệp hóa, hiện đại hóa gắn liền với phát triển công nghiệp nặng
 B. Công nghiệp hóa, hiện đại hóa trong điều kiện nền kinh tế thị trường, định hướng xã hội chủ nghĩa
 C. Công nghiệp hóa, hiện đại hóa trong bối cảnh toàn cầu hóa kinh tế quốc tế
