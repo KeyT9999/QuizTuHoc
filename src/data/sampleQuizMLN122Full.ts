@@ -1181,9 +1181,9 @@ A. Từ đầu thập niên 50 của thế kỷ XX đến cuối thế kỷ XX
 B. Từ đầu thập niên 60 của thế kỷ XX đến cuối thế kỷ XX
 C. Từ đầu thập niên 70 của thế kỷ XX đến cuối thế kỷ XX
 D. Từ đầu thập niên 80 của thế kỷ XX đến cuối thế kỷ XX
-B (Kiểu hỏi khác:
+B (Kiểu hỏi khác: Cách mạng công nghiệp lần thứ ba diễn ra trong thời gian nào?)
 
-Cách mạng công nghiệp lần thứ ba diễn ra trong thời gian nào?
+Những nhân tố nào ảnh hưởng đến quy mô của tích lũy tư bản?
 A. Cường độ lao động; trình độ bóc lột sức lao động; sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiêu dùng, quy mô của tư bản ứng trước
 B. Trình độ năng suất lao động; trình độ bóc lột sức lao động ; sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiêu dùng, quy mô của tư bản ứng trước
 C. Sự chênh lệch ngày càng tăng giữa tư bản sử dụng và tư bản đã tiêu dùng; quy mô của tư bản ứng trước, trình độ bóc lột sức lao động
