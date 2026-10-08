@@ -2163,9 +2163,9 @@ A. G= c + p + m
 B. G= c + v + P
 C. G= k + v + m
 D. G= c + v + m
-D (Kiểu hỏi tương tự:
+D (Kiểu hỏi tương tự: Gọi W là giá trị hàng hóa, vậy công thức tính giá trị hàng hóa là gì?)
 
-Gọi W là giá trị hàng hóa, vậy công thức tính giá trị hàng hóa là gì?
+Cuộc khủng hoảng nào đã làm phá sản doanh nghiệp vừa và nhỏ, các doanh nghiệp lớn còn tồn tại dẫn tới hình thành các doanh nghiệp độc quyền đầu tiên?
 A. Khủng hoảng kinh tế năm 1873
 B. Khủng hoảng kinh tế năm 1928
 C. Khùng hoàng kinh tế năm 1973
