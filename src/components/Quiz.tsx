@@ -16,6 +16,7 @@ import MistakeBusterView from './games/MistakeBusterView';
 import MockExamView from './games/MockExamView';
 import AskAI from './AskAI';
 import { getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
+import { playCorrectSound, playWrongSound } from '../utils/soundEffects';
 
 interface QuizProps {
   setId?: string;
@@ -203,6 +204,11 @@ export default function Quiz({
       const newAnswers = { ...answers, [question.id]: answer };
       setAnswers(newAnswers);
 
+      if (!isUnresolved && !isMultipleChoice) {
+        if (answer === question.correctAnswer) playCorrectSound();
+        else playWrongSound();
+      }
+
       if (
         !isUnresolved &&
         !isMultipleChoice &&
@@ -223,7 +229,11 @@ export default function Quiz({
   const handleCheckMultiple = useCallback(() => {
     if (!question || !selectedAnswer || isAnswered) return;
     setSubmittedIds((prev) => [...prev, question.id]);
-    if (selectedAnswer === question.correctAnswer && !masteredIds.includes(question.id)) {
+    const isCorrect = selectedAnswer === question.correctAnswer;
+    if (isCorrect) playCorrectSound();
+    else playWrongSound();
+
+    if (isCorrect && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
     }
   }, [selectedAnswer, isAnswered, question, masteredIds]);
