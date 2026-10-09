@@ -856,9 +856,11 @@ export default function Quiz({
                 }
 
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={opt.key}
                     className={optClass}
+                    aria-label={`${opt.key}. ${opt.text}${isSelected ? '. Đã chọn' : ''}`}
                     onClick={() => handleSelectOption(opt.key)}
                   >
                     <span className="quiz-v2-option-key">{opt.key}</span>
@@ -869,7 +871,7 @@ export default function Quiz({
                     {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
                       <span className="quiz-v2-option-icon incorrect-icon">✗</span>
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>
