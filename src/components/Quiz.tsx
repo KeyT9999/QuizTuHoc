@@ -17,6 +17,19 @@ import MockExamView from './games/MockExamView';
 import AskAI from './AskAI';
 import { getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
 import { playCorrectSound, playWrongSound } from '../utils/soundEffects';
+import StudyMilestoneRain from './StudyMilestoneRain';
+
+const ACTIVE_STUDY_SECONDS_KEY = 'keyt_active_study_seconds';
+const STUDY_MILESTONE_SECONDS = 30 * 60;
+
+function readActiveStudySeconds(): number {
+  try {
+    const saved = Number(window.sessionStorage.getItem(ACTIVE_STUDY_SECONDS_KEY));
+    return Number.isFinite(saved) && saved > 0 ? Math.floor(saved) : 0;
+  } catch {
+    return 0;
+  }
+}
 
 interface QuizProps {
   setId?: string;
@@ -128,6 +141,15 @@ export default function Quiz({
   const [gridFilter, setGridFilter] = useState<'part' | 'all'>('part');
   const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
   const questionCardRef = useRef<HTMLDivElement>(null);
+  const activeStudySecondsRef = useRef<number | null>(null);
+  if (activeStudySecondsRef.current === null) {
+    activeStudySecondsRef.current = readActiveStudySeconds();
+  }
+  const accountedStudyMilestonesRef = useRef(
+    Math.floor((activeStudySecondsRef.current ?? 0) / STUDY_MILESTONE_SECONDS)
+  );
+  const [showStudyRain, setShowStudyRain] = useState(false);
+  const closeStudyRain = useCallback(() => setShowStudyRain(false), []);
 
   // Question IDs that have answers revealed via "Xem đáp án"
   const [revealedIds, setRevealedIds] = useState<number[]>([]);
@@ -152,6 +174,30 @@ export default function Quiz({
   useEffect(() => {
     saveQuizSplitSettings(setId, splitSettings);
   }, [splitSettings, setId]);
+
+  useEffect(() => {
+    if (questions.length === 0) return;
+
+    const intervalId = window.setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+
+      const elapsedSeconds = (activeStudySecondsRef.current ?? 0) + 1;
+      activeStudySecondsRef.current = elapsedSeconds;
+      try {
+        window.sessionStorage.setItem(ACTIVE_STUDY_SECONDS_KEY, String(elapsedSeconds));
+      } catch {
+        // Keep the in-memory timer working when storage is unavailable.
+      }
+
+      const reachedMilestone = Math.floor(elapsedSeconds / STUDY_MILESTONE_SECONDS);
+      if (reachedMilestone > accountedStudyMilestonesRef.current) {
+        accountedStudyMilestonesRef.current = reachedMilestone;
+        setShowStudyRain(true);
+      }
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [questions.length]);
 
   // Safe question derivation
   const question = questions[currentIndex] || questions[0];
@@ -1065,6 +1111,7 @@ export default function Quiz({
         questions={questions}
         onApply={handleApplySplitSettings}
       />
+      {showStudyRain && <StudyMilestoneRain onClose={closeStudyRain} />}
     </div>
   );
 }
