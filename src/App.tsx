@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import CourseSelector from './components/CourseSelector';
 import CourseQuizList from './components/CourseQuizList';
 import CreateCourseModal from './components/CreateCourseModal';
@@ -66,6 +66,26 @@ function getKnowledgeGroupIdFromUrl(setId: string): string | null {
   return config?.groups.some((group) => group.id === groupId) ? groupId : null;
 }
 
+function isKnowledgeGroupPickerRequestedFromUrl(setId: string): boolean {
+  return Boolean(KNOWLEDGE_GROUP_CONFIGS[setId])
+    && new URLSearchParams(window.location.search).get('groupPicker') === 'true';
+}
+
+function updateKnowledgeGroupUrlState(groupId: string | null, pickerOpen: boolean): void {
+  try {
+    const url = new URL(window.location.href);
+    if (groupId) url.searchParams.set('group', groupId);
+    else url.searchParams.delete('group');
+
+    if (pickerOpen) url.searchParams.set('groupPicker', 'true');
+    else url.searchParams.delete('groupPicker');
+
+    window.history.replaceState({}, '', url.toString());
+  } catch {
+    // Keep the current screen state if the browser rejects the URL update.
+  }
+}
+
 export default function App() {
   const { route, navigate } = useAppRouter();
 
@@ -106,7 +126,9 @@ export default function App() {
   const [knowledgeGroupId, setKnowledgeGroupId] = useState<string | null>(() =>
     route.type === 'quiz' ? getKnowledgeGroupIdFromUrl(route.setId) : null
   );
-  const [isKnowledgeGroupPickerOpen, setIsKnowledgeGroupPickerOpen] = useState(false);
+  const [isKnowledgeGroupPickerOpen, setIsKnowledgeGroupPickerOpen] = useState<boolean>(() =>
+    route.type === 'quiz' && isKnowledgeGroupPickerRequestedFromUrl(route.setId)
+  );
 
   // Derive active course and quiz set from current route
   const activeCourse = useMemo(() => {
@@ -131,8 +153,11 @@ export default function App() {
     const nextGroupId = route.type === 'quiz' && activeSet
       ? getKnowledgeGroupIdFromUrl(activeSet.id)
       : null;
+    const shouldOpenPicker = route.type === 'quiz' && activeSet
+      ? isKnowledgeGroupPickerRequestedFromUrl(activeSet.id)
+      : false;
     setKnowledgeGroupId(nextGroupId);
-    setIsKnowledgeGroupPickerOpen(false);
+    setIsKnowledgeGroupPickerOpen(shouldOpenPicker);
   }, [activeSet, route]);
 
   const parsedQuestions = useMemo(() => {
@@ -156,6 +181,16 @@ export default function App() {
     if (!knowledgeGroupId || !knowledgeGroupConfig) return parsedQuestions;
     return knowledgeGroupConfig.filterQuestions(parsedQuestions, knowledgeGroupId);
   }, [knowledgeGroupConfig, knowledgeGroupId, parsedQuestions]);
+
+  const openKnowledgeGroupPicker = () => {
+    updateKnowledgeGroupUrlState(knowledgeGroupId, true);
+    setIsKnowledgeGroupPickerOpen(true);
+  };
+
+  const closeKnowledgeGroupPicker = () => {
+    updateKnowledgeGroupUrlState(knowledgeGroupId, false);
+    setIsKnowledgeGroupPickerOpen(false);
+  };
 
   // Điều hướng chọn môn học
   const handleSelectCourse = (course: Course) => {
@@ -363,18 +398,12 @@ export default function App() {
             courseLabel={knowledgeGroupConfig.courseLabel}
             onSelectGroup={(groupId) => {
               setKnowledgeGroupId(groupId);
-              try {
-                const url = new URL(window.location.href);
-                url.searchParams.set('group', groupId);
-                window.history.replaceState({}, '', url.toString());
-              } catch {
-                // Ignore URL update failures; the selected group remains active for this session.
-              }
+              updateKnowledgeGroupUrlState(groupId, false);
               setAnswers({});
               setIsResultView(false);
               setIsKnowledgeGroupPickerOpen(false);
             }}
-            onBack={() => setIsKnowledgeGroupPickerOpen(false)}
+            onBack={closeKnowledgeGroupPicker}
           />
         )}
 
@@ -391,11 +420,11 @@ export default function App() {
               : parsedQuestions}
             onFinish={handleFinishQuiz}
             onBack={knowledgeGroupId
-              ? () => setIsKnowledgeGroupPickerOpen(true)
+              ? openKnowledgeGroupPicker
               : handleBackToCourseDetail}
             onBackLabel={knowledgeGroupId ? '← Chọn nhóm' : undefined}
             onOpenKnowledgeGroups={knowledgeGroupConfig
-              ? () => setIsKnowledgeGroupPickerOpen(true)
+              ? openKnowledgeGroupPicker
               : undefined}
             knowledgeGroupsLabel={knowledgeGroupId ? 'Đổi nhóm' : undefined}
           />
