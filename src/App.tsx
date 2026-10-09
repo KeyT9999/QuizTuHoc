@@ -58,6 +58,14 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
   },
 };
 
+function getKnowledgeGroupIdFromUrl(setId: string): string | null {
+  const groupId = new URLSearchParams(window.location.search).get('group');
+  if (!groupId) return null;
+
+  const config = KNOWLEDGE_GROUP_CONFIGS[setId];
+  return config?.groups.some((group) => group.id === groupId) ? groupId : null;
+}
+
 export default function App() {
   const { route, navigate } = useAppRouter();
 
@@ -77,7 +85,9 @@ export default function App() {
     try {
       const search = new URLSearchParams(window.location.search);
       if (search.get('result') === 'true' && route.type === 'quiz') {
-        const key = `keyt_quiz_answers_${route.setId}`;
+        const groupId = getKnowledgeGroupIdFromUrl(route.setId);
+        const setKey = groupId ? `${route.setId}_group_${groupId}` : route.setId;
+        const key = `keyt_quiz_answers_${setKey}`;
         const raw = localStorage.getItem(key);
         if (raw) return JSON.parse(raw);
       }
@@ -93,7 +103,9 @@ export default function App() {
       return false;
     }
   });
-  const [knowledgeGroupId, setKnowledgeGroupId] = useState<string | null>(null);
+  const [knowledgeGroupId, setKnowledgeGroupId] = useState<string | null>(() =>
+    route.type === 'quiz' ? getKnowledgeGroupIdFromUrl(route.setId) : null
+  );
   const [isKnowledgeGroupPickerOpen, setIsKnowledgeGroupPickerOpen] = useState(false);
 
   // Derive active course and quiz set from current route
@@ -114,6 +126,14 @@ export default function App() {
   const knowledgeGroupConfig = activeSet
     ? KNOWLEDGE_GROUP_CONFIGS[activeSet.id]
     : undefined;
+
+  useEffect(() => {
+    const nextGroupId = route.type === 'quiz' && activeSet
+      ? getKnowledgeGroupIdFromUrl(activeSet.id)
+      : null;
+    setKnowledgeGroupId(nextGroupId);
+    setIsKnowledgeGroupPickerOpen(false);
+  }, [activeSet, route]);
 
   const parsedQuestions = useMemo(() => {
     if (activeSet && activeSet.kind !== 'image') {
@@ -343,6 +363,13 @@ export default function App() {
             courseLabel={knowledgeGroupConfig.courseLabel}
             onSelectGroup={(groupId) => {
               setKnowledgeGroupId(groupId);
+              try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('group', groupId);
+                window.history.replaceState({}, '', url.toString());
+              } catch {
+                // Ignore URL update failures; the selected group remains active for this session.
+              }
               setAnswers({});
               setIsResultView(false);
               setIsKnowledgeGroupPickerOpen(false);
