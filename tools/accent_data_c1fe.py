@@ -208,7 +208,7 @@ C1FE_ACCENTED = [
             "C": "Vừa tất nhiên vừa ngẫu nhiên",
             "D": "Không phải tất nhiên và cũng không phải ngẫu nhiên"
         },
-        "ans": "A"
+        "ans": "C"
     },
     {
         "qNum": 20,

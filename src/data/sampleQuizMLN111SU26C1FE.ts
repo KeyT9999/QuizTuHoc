@@ -130,7 +130,7 @@ A. Ngẫu nhiên
 B. Tất nhiên
 C. Vừa tất nhiên vừa ngẫu nhiên
 D. Không phải tất nhiên và cũng không phải ngẫu nhiên
-A
+C
 
 Nguồn gốc tự nhiên của ý thức bao gồm yếu tố nào?
 A. Thế giới vật chất của con người
