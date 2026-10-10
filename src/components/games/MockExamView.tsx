@@ -46,6 +46,7 @@ export default function MockExamView({
   const [totalTimeSeconds, setTotalTimeSeconds] = useState(0);
   const [autoSubmitted, setAutoSubmitted] = useState(false);
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
+  const [revealedQuestionId, setRevealedQuestionId] = useState<number | null>(null);
 
   const timerRef = useRef<number | null>(null);
 
@@ -74,6 +75,7 @@ export default function MockExamView({
       setCurrentIndex(0);
       setUserAnswers({});
       setFlaggedIds([]);
+      setRevealedQuestionId(null);
       const timeInSec = Math.max(1, mMinutes) * 60;
       setTimeLeft(timeInSec);
       setTotalTimeSeconds(timeInSec);
@@ -203,6 +205,24 @@ export default function MockExamView({
     const handleKeyDown = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      if (e.code === 'Space' || e.key === ' ') {
+        if (e.target instanceof HTMLElement && e.target.closest('button, a, [contenteditable="true"]')) {
+          return;
+        }
+
+        e.preventDefault();
+        if (e.repeat) return;
+
+        const currentQ = examQuestions[currentIndex];
+        const correctAnswer = currentQ?.correctAnswer.trim().toUpperCase();
+        if (!currentQ || !correctAnswer || correctAnswer === '?') return;
+
+        setRevealedQuestionId((previousId) =>
+          previousId === currentQ.id ? null : currentQ.id
+        );
+        return;
+      }
 
       const key = e.key.toLowerCase();
 
@@ -452,6 +472,10 @@ export default function MockExamView({
     ).length;
     const isCurrentFlagged = currentQ ? flaggedIds.includes(currentQ.id) : false;
     const currentAnswer = currentQ ? userAnswers[currentQ.id] : undefined;
+    const correctAnswer = currentQ?.correctAnswer.trim().toUpperCase() ?? '';
+    const isAnswerRevealed = currentQ?.id === revealedQuestionId
+      && correctAnswer !== ''
+      && correctAnswer !== '?';
     const isTimeUrgent = timeLeft <= 60;
     const isTimeWarning = timeLeft <= 300 && !isTimeUrgent;
 
@@ -516,10 +540,11 @@ export default function MockExamView({
             <div className="exam-options">
               {currentQ?.options.map((opt) => {
                 const isSelected = currentAnswer?.includes(opt.key) ?? false;
+                const isRevealedCorrect = isAnswerRevealed && correctAnswer.includes(opt.key);
                 return (
                   <div
                     key={opt.key}
-                    className={`exam-option ${isSelected ? 'selected' : ''}`}
+                    className={`exam-option ${isSelected ? 'selected' : ''} ${isRevealedCorrect ? 'revealed-correct' : ''}`}
                     onClick={() => handleSelectOption(opt.key)}
                   >
                     <span className="exam-option-key">{opt.key}</span>
@@ -531,6 +556,12 @@ export default function MockExamView({
                 );
               })}
             </div>
+
+            {isAnswerRevealed && (
+              <div className="exam-answer-reveal" role="status">
+                ✓ Đáp án đúng: {correctAnswer}
+              </div>
+            )}
 
             {/* Action buttons inside card */}
             <div className="exam-card-actions">
