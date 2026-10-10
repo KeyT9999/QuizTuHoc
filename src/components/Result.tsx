@@ -18,6 +18,7 @@ export interface ResultProps {
   answers: Record<number, string>;
   onRetry: () => void;
   onNewQuiz: () => void;
+  onChooseAnotherKnowledgeGroup?: () => void;
   setTitle?: string;
   courseTitle?: string;
   courseCode?: string;
@@ -114,6 +115,7 @@ export default function Result({
   answers,
   onRetry,
   onNewQuiz,
+  onChooseAnotherKnowledgeGroup,
   setTitle,
   courseTitle,
   courseCode,
@@ -622,6 +624,16 @@ export default function Result({
               >
                 Đổi đề thi khác
               </button>
+
+              {onChooseAnotherKnowledgeGroup && (
+                <button
+                  type="button"
+                  className="result-btn result-btn-primary"
+                  onClick={onChooseAnotherKnowledgeGroup}
+                >
+                  📚 Học Nhóm Khác
+                </button>
+              )}
             </div>
           </div>
         </section>

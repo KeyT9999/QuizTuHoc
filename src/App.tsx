@@ -71,7 +71,11 @@ function isKnowledgeGroupPickerRequestedFromUrl(setId: string): boolean {
     && new URLSearchParams(window.location.search).get('groupPicker') === 'true';
 }
 
-function updateKnowledgeGroupUrlState(groupId: string | null, pickerOpen: boolean): void {
+function updateKnowledgeGroupUrlState(
+  groupId: string | null,
+  pickerOpen: boolean,
+  clearResult = false
+): void {
   try {
     const url = new URL(window.location.href);
     if (groupId) url.searchParams.set('group', groupId);
@@ -79,6 +83,7 @@ function updateKnowledgeGroupUrlState(groupId: string | null, pickerOpen: boolea
 
     if (pickerOpen) url.searchParams.set('groupPicker', 'true');
     else url.searchParams.delete('groupPicker');
+    if (clearResult) url.searchParams.delete('result');
 
     window.history.replaceState({}, '', url.toString());
   } catch {
@@ -190,6 +195,14 @@ export default function App() {
   const closeKnowledgeGroupPicker = () => {
     updateKnowledgeGroupUrlState(knowledgeGroupId, false);
     setIsKnowledgeGroupPickerOpen(false);
+  };
+
+  const handleChooseAnotherKnowledgeGroup = () => {
+    updateKnowledgeGroupUrlState(null, true, true);
+    setKnowledgeGroupId(null);
+    setAnswers({});
+    setIsResultView(false);
+    setIsKnowledgeGroupPickerOpen(true);
   };
 
   // Điều hướng chọn môn học
@@ -381,6 +394,9 @@ export default function App() {
             answers={answers}
             onRetry={handleRetry}
             onNewQuiz={handleBackToCourseDetail}
+            onChooseAnotherKnowledgeGroup={knowledgeGroupId && knowledgeGroupConfig
+              ? handleChooseAnotherKnowledgeGroup
+              : undefined}
             setTitle={knowledgeGroupId && knowledgeGroupConfig
               ? `${knowledgeGroupConfig.courseLabel} · Nhóm ${String(knowledgeGroupConfig.groups.find((group) => group.id === knowledgeGroupId)?.number ?? knowledgeGroupId).padStart(2, '0')}`
               : activeSet?.title}
