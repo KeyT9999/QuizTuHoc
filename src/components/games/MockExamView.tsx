@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import type { Question } from '../../utils/quizParser';
 import { saveMistakeQuestion } from '../../utils/gameStorage';
+import { loadMockExamHistory, saveMockExamAttempt } from '../../utils/mockExamStorage';
+import MockExamHistoryPanel from './MockExamHistoryPanel';
 import {
   playClickSound,
   playCorrectSound,
@@ -47,8 +49,10 @@ export default function MockExamView({
   const [autoSubmitted, setAutoSubmitted] = useState(false);
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
   const [revealedQuestionId, setRevealedQuestionId] = useState<number | null>(null);
+  const [attemptHistory, setAttemptHistory] = useState(() => loadMockExamHistory(setId));
 
   const timerRef = useRef<number | null>(null);
+  const submittedRef = useRef(false);
 
   // Helper to format time MM:SS
   const formatTime = (seconds: number) => {
@@ -81,6 +85,7 @@ export default function MockExamView({
       setTotalTimeSeconds(timeInSec);
       setAutoSubmitted(false);
       setReviewFilter('all');
+      submittedRef.current = false;
       setPhase('testing');
       playClickSound();
     },
@@ -140,7 +145,7 @@ export default function MockExamView({
   // Submit Exam
   const submitExam = useCallback(
     (isAuto = false) => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (submittedRef.current) return;
 
       if (!isAuto) {
         const answeredCount = Object.keys(userAnswers).filter(
@@ -161,26 +166,62 @@ export default function MockExamView({
         setAutoSubmitted(true);
       }
 
+      if (timerRef.current) clearInterval(timerRef.current);
+      submittedRef.current = true;
+
       // Record mistakes to mistake bank
       let correct = 0;
+      let incorrect = 0;
+      let skipped = 0;
+      const incorrectQuestionIds: number[] = [];
+      const skippedQuestionIds: number[] = [];
       examQuestions.forEach((q) => {
         const userAns = userAnswers[q.id];
-        const isCorrect = userAns && userAns.toUpperCase() === q.correctAnswer.trim().toUpperCase();
+        const isSkipped = !userAns || userAns.trim() === '';
+        const isCorrect = !isSkipped && userAns.toUpperCase() === q.correctAnswer.trim().toUpperCase();
         if (isCorrect) {
           correct += 1;
         } else {
+          if (isSkipped) {
+            skipped += 1;
+            skippedQuestionIds.push(q.id);
+          } else {
+            incorrect += 1;
+            incorrectQuestionIds.push(q.id);
+          }
           // Save to mistake bank
           saveMistakeQuestion(setId, q.id);
         }
       });
 
+      const questionCount = examQuestions.length;
+      const score = questionCount > 0 ? Number(((correct / questionCount) * 10).toFixed(1)) : 0;
+      const percent = questionCount > 0 ? Math.round((correct / questionCount) * 100) : 0;
+      const timeSpentSeconds = Math.max(0, totalTimeSeconds - timeLeft);
+      const attempt = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        completedAt: new Date().toISOString(),
+        questionCount,
+        durationSeconds: totalTimeSeconds,
+        timeSpentSeconds,
+        correct,
+        incorrect,
+        skipped,
+        score,
+        percent,
+        incorrectQuestionIds,
+        skippedQuestionIds,
+      };
+      if (saveMockExamAttempt(setId, attempt)) {
+        setAttemptHistory((previous) => [attempt, ...previous.filter((saved) => saved.id !== attempt.id)].slice(0, 20));
+      }
+
       onMistakesUpdated();
 
       // Sound effect
-      const finalScore = examQuestions.length > 0 ? (correct / examQuestions.length) * 10 : 0;
-      if (finalScore >= 8.0) {
+      if (score >= 8.0) {
         playVictoryFanfare();
-      } else if (finalScore >= 5.0) {
+      } else if (score >= 5.0) {
         playCorrectSound();
       } else {
         playWrongSound();
@@ -188,7 +229,7 @@ export default function MockExamView({
 
       setPhase('result');
     },
-    [userAnswers, examQuestions, setId, onMistakesUpdated]
+    [userAnswers, examQuestions, setId, onMistakesUpdated, totalTimeSeconds, timeLeft]
   );
 
   // Auto-submit when time reaches 0
@@ -457,6 +498,8 @@ export default function MockExamView({
               🚀 Bắt đầu làm bài
             </button>
           </div>
+
+          <MockExamHistoryPanel attempts={attemptHistory} questions={allQuestions} />
         </div>
       </div>
     );

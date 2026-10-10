@@ -9,6 +9,7 @@ interface KnowledgeGroupDefinition {
 }
 
 interface KnowledgeGroupPickerProps {
+  setId: string;
   questions: Question[];
   onSelectGroup: (groupId: string) => void;
   onBack: () => void;
@@ -18,6 +19,7 @@ interface KnowledgeGroupPickerProps {
 }
 
 export default function KnowledgeGroupPicker({
+  setId,
   questions,
   onSelectGroup,
   onBack,
@@ -25,14 +27,43 @@ export default function KnowledgeGroupPicker({
   getGroupId,
   courseLabel,
 }: KnowledgeGroupPickerProps) {
-  const questionCounts = useMemo(() => {
-    const counts = new Map<string, number>();
+  const groupProgress = useMemo(() => {
+    const groupedQuestions = new Map<string, Question[]>();
     for (const question of questions) {
       const groupId = getGroupId(question);
-      counts.set(groupId, (counts.get(groupId) ?? 0) + 1);
+      const groupQuestions = groupedQuestions.get(groupId) ?? [];
+      groupQuestions.push(question);
+      groupedQuestions.set(groupId, groupQuestions);
     }
-    return counts;
-  }, [getGroupId, questions]);
+
+    return new Map(groups.map((group) => {
+      const groupQuestions = groupedQuestions.get(group.id) ?? [];
+      let masteredIds = new Set<number>();
+
+      try {
+        const saved = localStorage.getItem(`keyt_quiz_mastered_${setId}_group_${group.id}`);
+        const parsed: unknown = saved ? JSON.parse(saved) : [];
+        if (Array.isArray(parsed)) {
+          masteredIds = new Set(parsed.filter((id): id is number => Number.isSafeInteger(id)));
+        }
+      } catch {
+        // Treat unavailable or malformed progress as not started.
+      }
+
+      const count = groupQuestions.length;
+      const mastered = groupQuestions.filter((question) => masteredIds.has(question.id)).length;
+      const percent = count > 0 ? Math.min(100, Math.round((mastered / count) * 100)) : 0;
+      const status = count === 0
+        ? 'Chưa có câu hỏi'
+        : mastered === 0
+          ? 'Chưa học'
+          : mastered >= count
+            ? 'Đã học'
+            : 'Đang học';
+
+      return [group.id, { count, mastered, percent, status }];
+    }));
+  }, [getGroupId, groups, questions, setId]);
 
   return (
     <div className="tesla-container knowledge-groups-page">
@@ -66,7 +97,12 @@ export default function KnowledgeGroupPicker({
 
         <div className="knowledge-groups-grid" aria-label={`Danh sách ${groups.length} nhóm kiến thức ${courseLabel}`}>
           {groups.map((group) => {
-            const count = questionCounts.get(group.id) ?? 0;
+            const progress = groupProgress.get(group.id) ?? {
+              count: 0,
+              mastered: 0,
+              percent: 0,
+              status: 'Chưa có câu hỏi',
+            };
 
             return (
               <button
@@ -74,14 +110,33 @@ export default function KnowledgeGroupPicker({
                 type="button"
                 className="knowledge-group-card"
                 onClick={() => onSelectGroup(group.id)}
-                disabled={count === 0}
-                aria-label={`Học nhóm ${group.number}: ${group.title}, ${count} câu hỏi`}
+                disabled={progress.count === 0}
+                aria-label={`Học nhóm ${group.number}: ${group.title}, ${progress.count} câu hỏi, ${progress.mastered} câu đã học, ${progress.percent}% hoàn thành, ${progress.status}`}
               >
-                <span className="knowledge-group-number">NHÓM {String(group.number).padStart(2, '0')}</span>
+                <span className="knowledge-group-card-heading">
+                  <span className="knowledge-group-number">NHÓM {String(group.number).padStart(2, '0')}</span>
+                  <span className={`knowledge-group-status ${progress.percent === 100 ? 'complete' : progress.percent > 0 ? 'in-progress' : ''}`}>
+                    {progress.status}
+                  </span>
+                </span>
                 <span className="knowledge-group-title">{group.title}</span>
                 <span className="knowledge-group-summary">{group.summary}</span>
+                <span className="knowledge-group-progress-copy">
+                  <span>{progress.mastered}/{progress.count} câu đã học</span>
+                  <span>{progress.percent}%</span>
+                </span>
+                <span
+                  className="knowledge-group-progress-track"
+                  role="progressbar"
+                  aria-label={`Tiến độ nhóm ${group.number}`}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={progress.percent}
+                >
+                  <span style={{ width: `${progress.percent}%` }} />
+                </span>
                 <span className="knowledge-group-footer">
-                  <span>{count} câu hỏi</span>
+                  <span>{progress.count} câu hỏi</span>
                   <span className="knowledge-group-action">Bắt đầu học <span aria-hidden="true">→</span></span>
                 </span>
               </button>

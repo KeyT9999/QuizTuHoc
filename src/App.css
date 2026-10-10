@@ -6034,6 +6034,166 @@
   gap: 12px;
 }
 
+.mock-exam-history {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid #e8edf5;
+}
+
+.mock-exam-history-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mock-exam-history-heading h3,
+.mock-exam-history-weak h4 {
+  margin: 0;
+  color: #172033;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.mock-exam-history-heading p,
+.mock-exam-history-weak-caption {
+  margin: 5px 0 0;
+  color: #718096;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.mock-exam-history-count {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.mock-exam-history-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 14px;
+}
+
+.mock-exam-history-attempts,
+.mock-exam-history-weak {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+.mock-exam-history-attempts {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 292px;
+  overflow-y: auto;
+}
+
+.mock-exam-history-attempt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid #edf0f5;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.mock-exam-history-attempt-date {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  color: #334155;
+  font-size: 11px;
+}
+
+.mock-exam-history-attempt-date time {
+  font-weight: 750;
+}
+
+.mock-exam-history-attempt-date span,
+.mock-exam-history-time {
+  color: #7b8495;
+  font-size: 10px;
+}
+
+.mock-exam-history-score {
+  color: #4f46e5;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.mock-exam-history-score small {
+  margin-left: 2px;
+  color: #7b8495;
+  font-size: 10px;
+}
+
+.mock-exam-history-time {
+  white-space: nowrap;
+}
+
+.mock-exam-history-weak h4 {
+  font-size: 14px;
+}
+
+.mock-exam-history-weak ol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 230px;
+  margin: 12px 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.mock-exam-history-weak li {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 10px;
+  border-left: 3px solid #f59e0b;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.mock-exam-history-weak li > span {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.mock-exam-history-weak li small {
+  color: #9a6700;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mock-exam-history-empty {
+  margin: 0;
+  padding: 14px;
+  border: 1px dashed #d9e0eb;
+  border-radius: 12px;
+  color: #718096;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 /* --- Buttons Common --- */
 .mock-exam-btn {
   display: inline-flex;
@@ -6963,6 +7123,26 @@
   .header-left {
     justify-content: space-between;
   }
+
+  .mock-exam-setup-card {
+    padding: 24px 18px;
+  }
+
+  .mock-exam-history-heading {
+    flex-direction: column;
+  }
+
+  .mock-exam-history-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .mock-exam-history-attempt {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .mock-exam-history-time {
+    grid-column: 1 / -1;
+  }
 }
 
 /* MLN111 knowledge-group study */
@@ -7062,11 +7242,39 @@
   opacity: 0.58;
 }
 
+.knowledge-group-card-heading {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .knowledge-group-number {
   color: #4f46e5;
   font-size: 10px;
   font-weight: 850;
   letter-spacing: 0.9px;
+}
+
+.knowledge-group-status {
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.knowledge-group-status.in-progress {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.knowledge-group-status.complete {
+  background: #dcfce7;
+  color: #15803d;
 }
 
 .knowledge-group-title {
@@ -7082,6 +7290,35 @@
   color: #747887;
   font-size: 12px;
   line-height: 1.55;
+}
+
+.knowledge-group-progress-copy {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+  color: #596174;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.knowledge-group-progress-track {
+  width: 100%;
+  height: 6px;
+  display: block;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf0f7;
+}
+
+.knowledge-group-progress-track > span {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4f46e5, #10b981);
+  transition: width 0.25s ease;
 }
 
 .knowledge-group-footer {

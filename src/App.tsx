@@ -408,6 +408,7 @@ export default function App() {
 
         {route.type === 'quiz' && !isResultView && knowledgeGroupConfig && isKnowledgeGroupPickerOpen && (
           <KnowledgeGroupPicker
+            setId={activeSet?.id ?? route.setId}
             questions={parsedQuestions}
             groups={knowledgeGroupConfig.groups}
             getGroupId={knowledgeGroupConfig.getGroupId}
