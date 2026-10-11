@@ -15,7 +15,7 @@ import TrueFalseGame from './games/TrueFalseGame';
 import MistakeBusterView from './games/MistakeBusterView';
 import MockExamView from './games/MockExamView';
 import AskAI from './AskAI';
-import { getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
+import { clearMistakes, getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
 import { playCorrectSound, playWrongSound } from '../utils/soundEffects';
 import StudyMilestoneRain from './StudyMilestoneRain';
 
@@ -56,6 +56,7 @@ export default function Quiz({
   const storageKeyAnswers = setId ? `keyt_quiz_answers_${setId}` : 'keyt_quiz_answers';
   const storageKeyMastered = setId ? `keyt_quiz_mastered_${setId}` : 'keyt_quiz_mastered';
   const storageKeySubmitted = setId ? `keyt_quiz_submitted_${setId}` : 'keyt_quiz_submitted';
+  const isKnowledgeGroupMode = Boolean(knowledgeGroupsLabel);
 
   // Load split settings
   const [splitSettings, setSplitSettings] = useState<QuizSplitSettings>(() => {
@@ -365,12 +366,36 @@ export default function Quiz({
   };
 
   const handleResetProgress = () => {
-    setRevealedIds([]);
+    if (isKnowledgeGroupMode) {
+      const groupName = setTitle || 'nhóm đang học';
+      if (!window.confirm(
+        `Bạn có chắc muốn làm lại từ đầu ${groupName}? Tiến độ, câu trả lời và danh sách câu sai của nhóm này sẽ được xóa.`
+      )) return;
+
+      setRevealedIds([]);
+      setCurrentIndex(0);
+      setAnswers({});
+      setMasteredIds([]);
+      setSubmittedIds([]);
+      setMistakeCount(0);
+      setActiveMode('study');
+      setShowQuestionGrid(false);
+      setShowPartCompleteModal(false);
+      setSplitSettings((previous) => ({ ...previous, currentPart: 0 }));
+      localStorage.removeItem(storageKeyIndex);
+      localStorage.removeItem(storageKeyAnswers);
+      localStorage.removeItem(storageKeyMastered);
+      localStorage.removeItem(storageKeySubmitted);
+      if (setId) clearMistakes(setId);
+      return;
+    }
+
     if (splitSettings.enabled && currentPart) {
       const resetChoice = window.confirm(
         `Bạn muốn học lại từ đầu?\n\n• Nhấn OK: Đặt lại toàn bộ đề thi (${questions.length} câu).\n• Nhấn Hủy (Cancel): Chỉ đặt lại tiến trình của riêng ${currentPart.name} (${currentPart.totalCount} câu).`
       );
 
+      setRevealedIds([]);
       if (resetChoice) {
         // Reset all
         setCurrentIndex(0);
@@ -395,6 +420,7 @@ export default function Quiz({
       }
     } else {
       if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) {
+        setRevealedIds([]);
         setCurrentIndex(0);
         setAnswers({});
         setMasteredIds([]);
@@ -652,15 +678,27 @@ export default function Quiz({
             </span>
           </button>
 
-          {/* Reset Progress — Icon Button */}
-          <button 
-            type="button" 
-            className="quiz-v2-header-icon-btn" 
-            onClick={handleResetProgress}
-            title="Học lại từ đầu"
-          >
-            🔄
-          </button>
+          {/* Reset Progress */}
+          {isKnowledgeGroupMode ? (
+            <button
+              type="button"
+              className="quiz-v2-header-btn quiz-v2-reset-group-btn"
+              onClick={handleResetProgress}
+              title={`Làm lại từ đầu ${setTitle || 'nhóm đang học'}`}
+            >
+              🔄 Làm lại nhóm
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="quiz-v2-header-icon-btn"
+              onClick={handleResetProgress}
+              title="Học lại từ đầu"
+              aria-label="Học lại từ đầu"
+            >
+              🔄
+            </button>
+          )}
           
           {/* Back — Text Button (important action, keep readable) */}
           <button type="button" className="quiz-v2-header-btn" onClick={onBack}>

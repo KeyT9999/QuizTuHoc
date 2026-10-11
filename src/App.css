@@ -2246,6 +2246,11 @@
   white-space: nowrap;
 }
 
+.quiz-v2-header-right .quiz-v2-reset-group-btn {
+  flex: 0 1 auto;
+  margin-left: 0;
+}
+
 .quiz-v2-header-btn:hover {
   background: rgba(255, 255, 255, 0.16);
   border-color: rgba(255, 255, 255, 0.2);
@@ -7596,6 +7601,7 @@
 
   .quiz-v2-header-right {
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 4px;
   }
 
