@@ -8,6 +8,9 @@ import {
 } from '../../utils/gameStorage';
 import { playClickSound, playCorrectSound, playWrongSound } from '../../utils/soundEffects';
 
+const normalizeAnswer = (answer: string) =>
+  answer.trim().toUpperCase().replace(/[^A-F]/g, '').split('').sort().join('');
+
 interface MistakeBusterViewProps {
   setId: string;
   setTitle?: string;
@@ -24,7 +27,7 @@ export default function MistakeBusterView({
 }: MistakeBusterViewProps) {
   const [mistakeIds, setMistakeIds] = useState<number[]>(() => getMistakeQuestionIds(setId));
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
 
   // Filter questions that are in mistakeIds
@@ -33,16 +36,30 @@ export default function MistakeBusterView({
   }, [allQuestions, mistakeIds]);
 
   const currentQ = mistakeQuestions[currentIndex] || null;
+  const isMultipleChoice = Boolean(
+    currentQ && currentQ.correctAnswer.trim() !== '?' && normalizeAnswer(currentQ.correctAnswer).length > 1
+  );
 
   // Handle Answer
   const handleSelectOption = useCallback(
     (key: string) => {
       if (!currentQ || showExplanation) return;
 
-      setSelectedKey(key);
+      if (isMultipleChoice) {
+        const normalizedKey = key.toUpperCase();
+        setSelectedAnswer((previous) =>
+          previous.includes(normalizedKey)
+            ? previous.replace(normalizedKey, '')
+            : [...previous, normalizedKey].sort().join('')
+        );
+        playClickSound();
+        return;
+      }
+
+      setSelectedAnswer(key.toUpperCase());
       setShowExplanation(true);
 
-      const isCorrect = key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+      const isCorrect = normalizeAnswer(key) === normalizeAnswer(currentQ.correctAnswer);
 
       if (isCorrect) {
         playCorrectSound();
@@ -50,14 +67,25 @@ export default function MistakeBusterView({
         playWrongSound();
       }
     },
-    [currentQ, showExplanation]
+    [currentQ, isMultipleChoice, showExplanation]
   );
 
-  const handleNext = useCallback(() => {
-    if (!currentQ || !selectedKey) return;
+  const handleCheckAnswer = useCallback(() => {
+    if (!currentQ || !isMultipleChoice || !selectedAnswer || showExplanation) return;
 
-    const isCorrect = selectedKey.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
-    setSelectedKey(null);
+    setShowExplanation(true);
+    if (normalizeAnswer(selectedAnswer) === normalizeAnswer(currentQ.correctAnswer)) {
+      playCorrectSound();
+    } else {
+      playWrongSound();
+    }
+  }, [currentQ, isMultipleChoice, selectedAnswer, showExplanation]);
+
+  const handleNext = useCallback(() => {
+    if (!currentQ || !selectedAnswer || !showExplanation) return;
+
+    const isCorrect = normalizeAnswer(selectedAnswer) === normalizeAnswer(currentQ.correctAnswer);
+    setSelectedAnswer('');
     setShowExplanation(false);
 
     if (isCorrect) {
@@ -75,10 +103,10 @@ export default function MistakeBusterView({
     } else {
       setCurrentIndex(0);
     }
-  }, [currentQ, selectedKey, mistakeIds, setId, onMistakesUpdated, currentIndex, mistakeQuestions.length]);
+  }, [currentQ, selectedAnswer, showExplanation, mistakeIds, setId, onMistakesUpdated, currentIndex, mistakeQuestions.length]);
 
   const handlePrev = useCallback(() => {
-    setSelectedKey(null);
+    setSelectedAnswer('');
     setShowExplanation(false);
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
@@ -144,7 +172,8 @@ export default function MistakeBusterView({
   if (!currentQ) return null;
 
   const isAnswered = showExplanation;
-  const isCorrect = selectedKey?.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+  const normalizedCorrectAnswer = normalizeAnswer(currentQ.correctAnswer);
+  const isCorrect = normalizeAnswer(selectedAnswer) === normalizedCorrectAnswer;
 
   return (
     <div className="game-gameplay-container">
@@ -164,15 +193,20 @@ export default function MistakeBusterView({
       <div className="game-question-card">
         <div className="game-q-counter">
           <span>Câu hỏi gốc #{currentQ.id}</span>
-          <span className="game-q-hint-key">Chọn đúng sẽ tự động xóa câu này khỏi danh sách sai!</span>
+          <span className="game-q-hint-key">
+            {isMultipleChoice
+              ? 'Câu này có nhiều đáp án đúng. Chọn tất cả đáp án rồi kiểm tra.'
+              : 'Chọn đúng sẽ tự động xóa câu này khỏi danh sách sai!'}
+          </span>
         </div>
 
         <div className="game-q-text">{currentQ.text}</div>
 
         <div className="game-q-options">
           {currentQ.options.map((opt) => {
-            const isSelected = selectedKey === opt.key;
-            const isCorrectAnswer = opt.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+            const normalizedKey = opt.key.toUpperCase();
+            const isSelected = selectedAnswer.includes(normalizedKey);
+            const isCorrectAnswer = normalizedCorrectAnswer.includes(normalizedKey);
 
             let optClass = 'game-q-opt-btn';
             if (isAnswered) {
@@ -181,6 +215,8 @@ export default function MistakeBusterView({
               } else if (isSelected) {
                 optClass += ' opt-flash-wrong';
               }
+            } else if (isSelected) {
+              optClass += ' selected';
             }
 
             return (
@@ -188,6 +224,7 @@ export default function MistakeBusterView({
                 key={opt.key}
                 type="button"
                 className={optClass}
+                aria-pressed={isSelected}
                 disabled={isAnswered}
                 onClick={() => handleSelectOption(opt.key)}
               >
@@ -198,6 +235,22 @@ export default function MistakeBusterView({
           })}
         </div>
 
+        {isMultipleChoice && !isAnswered && (
+          <div className="mistake-check-actions">
+            <span aria-live="polite">
+              Đã chọn: <strong>{selectedAnswer ? selectedAnswer.split('').join(', ') : 'chưa có đáp án'}</strong>
+            </span>
+            <button
+              type="button"
+              className="game-btn-primary"
+              onClick={handleCheckAnswer}
+              disabled={!selectedAnswer}
+            >
+              Kiểm tra đáp án
+            </button>
+          </div>
+        )}
+
         {/* Feedback & Explanation */}
         {showExplanation && (
           <div className={`mistake-feedback-box ${isCorrect ? 'fb-correct' : 'fb-wrong'}`}>
@@ -205,12 +258,15 @@ export default function MistakeBusterView({
               {isCorrect ? '🎉 Chính xác! Bấm “Câu tiếp theo” để loại bỏ câu này khỏi sổ lỗi.' : '❌ Vẫn chưa đúng! Hãy ghi nhớ đáp án.'}
             </div>
             <div className="fb-details">
-              Đáp án chuẩn: <strong>{currentQ.correctAnswer}</strong>
-              {currentQ.options.find((o) => o.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase()) && (
-                <div className="fb-explanation-text">
-                  💡 <em>Chi tiết: {currentQ.options.find((o) => o.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase())?.text}</em>
-                </div>
-              )}
+              {isMultipleChoice ? 'Các đáp án chuẩn: ' : 'Đáp án chuẩn: '}
+              <strong>{currentQ.correctAnswer}</strong>
+              {currentQ.options
+                .filter((option) => normalizedCorrectAnswer.includes(option.key.toUpperCase()))
+                .map((option) => (
+                  <div className="fb-explanation-text" key={option.key}>
+                    💡 <em>{option.key}: {option.text}</em>
+                  </div>
+                ))}
             </div>
 
             <div className="fb-actions">

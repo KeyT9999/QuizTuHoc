@@ -4699,6 +4699,17 @@
   transform: translateY(-1px);
 }
 
+.game-q-opt-btn.selected {
+  background: #eef2ff;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.12);
+}
+
+.game-q-opt-btn.selected .opt-key-circle {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
 .opt-key-circle {
   width: 32px;
   height: 32px;
@@ -5755,6 +5766,27 @@
   font-size: 13.5px;
   margin-bottom: 14px;
   line-height: 1.5;
+}
+
+.mistake-check-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid #c7d2fe;
+  border-radius: 14px;
+  background: #f8faff;
+  color: #334155;
+  font-size: 14px;
+}
+
+.mistake-check-actions .game-btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
 }
 
 .fb-explanation-text {
@@ -7894,6 +7926,18 @@
   }
 
   .fb-actions .game-btn-primary {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .mistake-check-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mistake-check-actions .game-btn-primary {
     width: 100%;
     min-height: 48px;
     padding: 12px;
