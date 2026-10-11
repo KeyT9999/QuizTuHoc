@@ -202,6 +202,8 @@ export default function MistakeBusterView({
 
         <div className="game-q-text">{currentQ.text}</div>
 
+        <AskAI question={currentQ} />
+
         <div className="game-q-options">
           {currentQ.options.map((opt) => {
             const normalizedKey = opt.key.toUpperCase();
@@ -277,7 +279,6 @@ export default function MistakeBusterView({
           </div>
         )}
 
-        <AskAI question={currentQ} />
       </div>
     </div>
   );

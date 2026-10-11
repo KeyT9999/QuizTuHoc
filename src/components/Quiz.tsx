@@ -876,6 +876,8 @@ export default function Quiz({
           {/* Question Text */}
           <div className="quiz-v2-q-text">{question.text}</div>
 
+          <AskAI question={question} />
+
           {/* Options / Free response */}
           {isFreeResponse ? (
             <div className="quiz-v2-free-response">
@@ -955,8 +957,6 @@ export default function Quiz({
               )}
             </div>
           )}
-
-          <AskAI question={question} />
 
           {/* Action Bar */}
           <div className="quiz-v2-actions">
