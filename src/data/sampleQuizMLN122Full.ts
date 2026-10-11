@@ -2204,9 +2204,9 @@ A. Hai giai đoạn
 B. Ba giai đoạn
 C. Bốn giai đoạn
 D. Năm giai đoạn
-B (Kiểu hỏi khác: Tuần hoàn tư bản là sự vận động của tư bản lần lượt trải qua ba giai đoạn dưới hình thái nào?
+B (Kiểu hỏi khác: Tuần hoàn tư bản là sự vận động của tư bản lần lượt trải qua ba giai đoạn dưới hình thái nào? => Tư bản tiền tệ, tư bản sản xuất và tư bản hàng hóa)
 
-=>tư bản tiền tệ, tư bản sản xuất và tư bản hàng hóa) Điền vào chỗ trống để hoàn thành câu sau: "...đẻ ra tập trung sản xuất và sự tập trung sản xuất này, khi phát triễn tới một mức độ nhất định, lại dẫn tới độc quyền"
+Điền vào chỗ trống để hoàn thành câu sau: "...đẻ ra tập trung sản xuất và sự tập trung sản xuất này, khi phát triễn tới một mức độ nhất định, lại dẫn tới độc quyền"
 A. Tự do cạnh tranh
 B. Độc quyền
 C. Tư băn
