@@ -1,0 +1,2704 @@
+/* ==========================================================================
+   THEME LEARNING MODES SYSTEM — KEYT MULTI-THEME LEARNING SYSTEM
+   Covers all 7 secondary learning modes:
+   1. Question List (Danh sách câu)
+   2. Grouped Learning (Học theo nhóm)
+   3. Mistake Review (Từ hay sai)
+   4. Mock Exam FE (Thi thử FE)
+   5. 60-Second Challenge (Đấu trí 60s)
+   6. Tower Climb 50 (Leo tháp 50)
+   7. True/False 5s Blitz (Đúng/Sai 5s)
+   Across Themes:
+   - HỒN VIỆT (Vietnam Heritage)
+   - HỌC VIỆN MA PHÁP (Fantasy RPG)
+   - PHÒNG HỌC COZY NIGHT (Lofi Anime)
+   - Classic / Default baseline
+   ========================================================================== */
+
+/* ==========================================================================
+   0. QUESTION LIST (BASE / DEFAULT STYLES)
+   ========================================================================== */
+.theme-qlist-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+  position: relative;
+  min-height: 70vh;
+}
+
+.theme-qlist-watermark {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.theme-qlist-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 1;
+}
+
+.theme-qlist-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #4f46e5;
+  margin-bottom: 8px;
+}
+
+.theme-qlist-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px;
+  letter-spacing: -0.5px;
+}
+
+.theme-qlist-desc {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 580px;
+}
+
+.theme-qlist-stats-pill {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 20px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.theme-qlist-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.theme-qlist-stat-item .stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.theme-qlist-stat-item .stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.theme-qlist-stat-item .val-mastered {
+  color: #16a34a;
+}
+
+.theme-qlist-stat-item .val-answered {
+  color: #2563eb;
+}
+
+.theme-qlist-stat-sep {
+  width: 1px;
+  height: 28px;
+  background: #e2e8f0;
+}
+
+/* Toolbar */
+.theme-qlist-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.theme-qlist-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+  max-width: 440px;
+}
+
+.theme-qlist-search-wrap .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  opacity: 0.6;
+}
+
+.theme-qlist-search-input {
+  width: 100%;
+  padding: 11px 40px 11px 38px;
+  font-size: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.theme-qlist-search-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.theme-qlist-clear-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #94a3b8;
+  padding: 4px;
+}
+
+.theme-qlist-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-qlist-tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-qlist-tab:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.theme-qlist-tab.is-active {
+  background: #4f46e5;
+  color: #ffffff;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* Question Grid */
+.theme-qlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.theme-qlist-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  text-align: left;
+}
+
+.theme-qlist-card:hover {
+  transform: translateY(-2px);
+  border-color: #94a3b8;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.theme-qlist-card.is-current-active {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px #4f46e5, 0 8px 20px rgba(79, 70, 229, 0.15);
+}
+
+.theme-qlist-card.is-mastered {
+  border-left: 4px solid #16a34a;
+}
+
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-q-index {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.q-num-badge {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 3px 10px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  color: #334155;
+}
+
+.card-mastered-indicator {
+  font-size: 11px;
+  font-weight: 700;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.card-answered-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2563eb;
+  background: #dbeafe;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.card-q-text {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-options-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.card-opt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 8px;
+  max-width: 100%;
+}
+
+.card-opt-chip .opt-key {
+  font-weight: 800;
+  color: #4f46e5;
+  font-size: 11px;
+}
+
+.card-opt-chip .opt-txt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+  color: #64748b;
+}
+
+.card-opt-chip.opt-more {
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+  border-top: 1px dashed #f1f5f9;
+}
+
+.card-action-hint {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4f46e5;
+  transition: transform 0.2s ease;
+}
+
+.theme-qlist-card:hover .card-action-hint {
+  transform: translateX(3px);
+}
+
+.theme-qlist-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px dashed #cbd5e1;
+}
+
+.theme-qlist-empty .empty-icon {
+  font-size: 44px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.theme-qlist-empty h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.theme-qlist-empty p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.theme-qlist-reset-btn {
+  background: #4f46e5;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   1. THEME A — HỒN VIỆT (VIETNAM HERITAGE)
+   Palette: Red (#8B1E1E / #991B1B), Antique Gold (#C99A43 / #D97706),
+   Ivory (#FFF8EB / #FEF3C7), Dark Text (#29231F / #1F1916)
+   ========================================================================== */
+
+/* --- Mode 1: Question List — Hồn Việt --- */
+.theme-qlist-container.theme-hon-viet,
+[data-theme="hon-viet"] .theme-qlist-container {
+  background: transparent;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-hero,
+[data-theme="hon-viet"] .theme-qlist-hero {
+  background: linear-gradient(135deg, #fffdf8 0%, #fef8ee 100%);
+  border: 1.5px solid rgba(201, 154, 67, 0.45);
+  box-shadow: 0 8px 28px rgba(139, 30, 30, 0.08), inset 0 0 0 1px rgba(255, 248, 235, 0.8);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-eyebrow,
+[data-theme="hon-viet"] .theme-qlist-eyebrow {
+  color: #8b1e1e;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-title,
+[data-theme="hon-viet"] .theme-qlist-title {
+  color: #5b1717;
+  font-family: inherit;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-desc,
+[data-theme="hon-viet"] .theme-qlist-desc {
+  color: #6d5b4a;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-stats-pill,
+[data-theme="hon-viet"] .theme-qlist-stats-pill {
+  background: #fbf3e4;
+  border: 1px solid rgba(201, 154, 67, 0.5);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-stat-item .stat-label,
+[data-theme="hon-viet"] .theme-qlist-stat-item .stat-label {
+  color: #7c6853;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-stat-item .stat-value,
+[data-theme="hon-viet"] .theme-qlist-stat-item .stat-value {
+  color: #5b1717;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-stat-item .val-mastered,
+[data-theme="hon-viet"] .theme-qlist-stat-item .val-mastered {
+  color: #b45309;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-stat-item .val-answered,
+[data-theme="hon-viet"] .theme-qlist-stat-item .val-answered {
+  color: #8b1e1e;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-search-input,
+[data-theme="hon-viet"] .theme-qlist-search-input {
+  background: #fffdf8;
+  border-color: rgba(201, 154, 67, 0.5);
+  color: #29231f;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-search-input:focus,
+[data-theme="hon-viet"] .theme-qlist-search-input:focus {
+  border-color: #8b1e1e;
+  box-shadow: 0 0 0 3px rgba(139, 30, 30, 0.15);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-tab,
+[data-theme="hon-viet"] .theme-qlist-tab {
+  background: #fffdf8;
+  border-color: rgba(201, 154, 67, 0.4);
+  color: #6d5b4a;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-tab:hover,
+[data-theme="hon-viet"] .theme-qlist-tab:hover {
+  background: #fbf3e4;
+  color: #8b1e1e;
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-tab.is-active,
+[data-theme="hon-viet"] .theme-qlist-tab.is-active {
+  background: linear-gradient(135deg, #8b1e1e 0%, #a82828 100%);
+  border-color: #8b1e1e;
+  color: #fff8eb;
+  box-shadow: 0 4px 14px rgba(139, 30, 30, 0.3);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-card,
+[data-theme="hon-viet"] .theme-qlist-card {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.35);
+  box-shadow: 0 4px 16px rgba(139, 30, 30, 0.04);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-card:hover,
+[data-theme="hon-viet"] .theme-qlist-card:hover {
+  border-color: #c99a43;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139, 30, 30, 0.12);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-card.is-current-active,
+[data-theme="hon-viet"] .theme-qlist-card.is-current-active {
+  border-color: #8b1e1e;
+  box-shadow: 0 0 0 2px #8b1e1e, 0 8px 20px rgba(139, 30, 30, 0.2);
+}
+
+.theme-qlist-container.theme-hon-viet .theme-qlist-card.is-mastered,
+[data-theme="hon-viet"] .theme-qlist-card.is-mastered {
+  border-left: 4px solid #c99a43;
+}
+
+.theme-qlist-container.theme-hon-viet .q-num-badge,
+[data-theme="hon-viet"] .q-num-badge {
+  background: #fbf3e4;
+  color: #8b1e1e;
+  border: 1px solid rgba(201, 154, 67, 0.4);
+}
+
+.theme-qlist-container.theme-hon-viet .card-mastered-indicator,
+[data-theme="hon-viet"] .card-mastered-indicator {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.theme-qlist-container.theme-hon-viet .card-answered-badge,
+[data-theme="hon-viet"] .card-answered-badge {
+  background: #fee2e2;
+  color: #8b1e1e;
+  border: 1px solid #fecaca;
+}
+
+.theme-qlist-container.theme-hon-viet .card-q-text,
+[data-theme="hon-viet"] .card-q-text {
+  color: #29231f;
+}
+
+.theme-qlist-container.theme-hon-viet .card-opt-chip,
+[data-theme="hon-viet"] .card-opt-chip {
+  background: #fbf3e4;
+  border-color: rgba(201, 154, 67, 0.3);
+}
+
+.theme-qlist-container.theme-hon-viet .card-opt-chip .opt-key,
+[data-theme="hon-viet"] .card-opt-chip .opt-key {
+  color: #8b1e1e;
+}
+
+.theme-qlist-container.theme-hon-viet .card-action-hint,
+[data-theme="hon-viet"] .card-action-hint {
+  color: #8b1e1e;
+}
+
+/* --- Mode 2: Grouped Learning — Hồn Việt --- */
+.knowledge-groups-page.theme-hon-viet,
+[data-theme="hon-viet"] .knowledge-groups-page {
+  background: transparent;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-groups-heading h1,
+[data-theme="hon-viet"] .knowledge-groups-heading h1 {
+  color: #5b1717;
+  font-weight: 900;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-groups-eyebrow,
+[data-theme="hon-viet"] .knowledge-groups-eyebrow {
+  color: #8b1e1e;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-groups-note,
+[data-theme="hon-viet"] .knowledge-groups-note {
+  background: #fffdf8;
+  border: 1px solid rgba(201, 154, 67, 0.4);
+  color: #5c4738;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-card,
+[data-theme="hon-viet"] .knowledge-group-card {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.4);
+  box-shadow: 0 6px 20px rgba(139, 30, 30, 0.05);
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-card:hover:not(:disabled),
+[data-theme="hon-viet"] .knowledge-group-card:hover:not(:disabled) {
+  border-color: #8b1e1e;
+  box-shadow: 0 10px 28px rgba(139, 30, 30, 0.15);
+  transform: translateY(-2px);
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-number,
+[data-theme="hon-viet"] .knowledge-group-number {
+  color: #8b1e1e;
+  font-weight: 800;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-title,
+[data-theme="hon-viet"] .knowledge-group-title {
+  color: #29231f;
+  font-weight: 800;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-summary,
+[data-theme="hon-viet"] .knowledge-group-summary {
+  color: #6d5b4a;
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-progress-track span,
+[data-theme="hon-viet"] .knowledge-group-progress-track span {
+  background: linear-gradient(90deg, #c99a43 0%, #8b1e1e 100%);
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-group-action,
+[data-theme="hon-viet"] .knowledge-group-action {
+  color: #8b1e1e;
+  font-weight: 800;
+}
+
+/* --- Mode 3: Mistake Review (Từ hay sai) — Hồn Việt --- */
+.game-card-surface.theme-hon-viet,
+[data-theme="hon-viet"] .game-card-surface {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.45);
+  box-shadow: 0 16px 40px rgba(139, 30, 30, 0.08);
+}
+
+.theme-hon-viet .game-icon-orb.orb-green {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #b45309;
+}
+
+.theme-hon-viet .game-splash-title,
+[data-theme="hon-viet"] .game-splash-title {
+  color: #5b1717;
+}
+
+.theme-hon-viet .game-splash-subtitle,
+[data-theme="hon-viet"] .game-splash-subtitle {
+  color: #6d5b4a;
+}
+
+.theme-hon-viet .game-hud-mistakes {
+  background: #fffdf8;
+  border: 1px solid rgba(201, 154, 67, 0.4);
+  border-radius: 16px;
+  padding: 12px 20px;
+}
+
+.theme-hon-viet .mistake-counter-pill {
+  color: #8b1e1e;
+  font-weight: 800;
+}
+
+.theme-hon-viet .game-question-card,
+[data-theme="hon-viet"] .game-question-card {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.45);
+  box-shadow: 0 8px 30px rgba(139, 30, 30, 0.07);
+}
+
+.theme-hon-viet .game-q-text,
+[data-theme="hon-viet"] .game-q-text {
+  color: #29231f;
+  font-weight: 700;
+}
+
+.theme-hon-viet .game-q-opt-btn,
+[data-theme="hon-viet"] .game-q-opt-btn {
+  background: #fbf6ec;
+  border: 1.5px solid rgba(201, 154, 67, 0.4);
+  color: #29231f;
+}
+
+.theme-hon-viet .game-q-opt-btn:hover:not(:disabled),
+[data-theme="hon-viet"] .game-q-opt-btn:hover:not(:disabled) {
+  border-color: #8b1e1e;
+  background: #fef0db;
+}
+
+.theme-hon-viet .game-q-opt-btn.opt-flash-correct,
+[data-theme="hon-viet"] .game-q-opt-btn.opt-flash-correct {
+  background: #dcfce7 !important;
+  border-color: #16a34a !important;
+  color: #14532d !important;
+}
+
+.theme-hon-viet .game-q-opt-btn.opt-flash-wrong,
+[data-theme="hon-viet"] .game-q-opt-btn.opt-flash-wrong {
+  background: #fee2e2 !important;
+  border-color: #8b1e1e !important;
+  color: #7f1d1d !important;
+}
+
+/* --- Mode 4: Mock Exam FE (Thi thử FE) — Hồn Việt --- */
+.mock-exam-container.theme-hon-viet,
+[data-theme="hon-viet"] .mock-exam-container {
+  color: #29231f;
+}
+
+.theme-hon-viet .mock-exam-setup-card,
+[data-theme="hon-viet"] .mock-exam-setup-card {
+  background: #fffdf8;
+  border: 2px solid rgba(201, 154, 67, 0.5);
+  box-shadow: 0 16px 45px rgba(139, 30, 30, 0.08);
+}
+
+.theme-hon-viet .mock-exam-badge-tag,
+[data-theme="hon-viet"] .mock-exam-badge-tag {
+  background: linear-gradient(135deg, #8b1e1e 0%, #c99a43 100%);
+  color: #fff8eb;
+}
+
+.theme-hon-viet .mock-exam-title,
+[data-theme="hon-viet"] .mock-exam-title {
+  color: #5b1717;
+}
+
+.theme-hon-viet .mock-exam-desc,
+[data-theme="hon-viet"] .mock-exam-desc {
+  color: #6d5b4a;
+}
+
+.theme-hon-viet .mock-exam-number-input,
+[data-theme="hon-viet"] .mock-exam-number-input {
+  background: #fbf3e4;
+  border-color: rgba(201, 154, 67, 0.5);
+  color: #5b1717;
+}
+
+.theme-hon-viet .mock-exam-number-input:focus,
+[data-theme="hon-viet"] .mock-exam-number-input:focus {
+  border-color: #8b1e1e;
+  background: #fffdf8;
+}
+
+.theme-hon-viet .mock-exam-btn.primary,
+[data-theme="hon-viet"] .mock-exam-btn.primary {
+  background: linear-gradient(135deg, #8b1e1e 0%, #a82828 100%);
+  border: 1px solid #c99a43;
+  color: #fff8eb;
+  box-shadow: 0 6px 20px rgba(139, 30, 30, 0.3);
+}
+
+.theme-hon-viet .mock-exam-btn.primary:hover,
+[data-theme="hon-viet"] .mock-exam-btn.primary:hover {
+  background: linear-gradient(135deg, #741616 0%, #902121 100%);
+}
+
+.theme-hon-viet .mock-exam-header-bar,
+[data-theme="hon-viet"] .mock-exam-header-bar {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.45);
+  box-shadow: 0 4px 20px rgba(139, 30, 30, 0.05);
+}
+
+.theme-hon-viet .header-exam-badge,
+[data-theme="hon-viet"] .header-exam-badge {
+  background: #8b1e1e;
+  color: #fff8eb;
+}
+
+.theme-hon-viet .exam-q-box,
+[data-theme="hon-viet"] .exam-q-box,
+.theme-hon-viet .exam-navigator-box,
+[data-theme="hon-viet"] .exam-navigator-box,
+.theme-hon-viet .mock-exam-result-card,
+[data-theme="hon-viet"] .mock-exam-result-card {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.4);
+  box-shadow: 0 8px 30px rgba(139, 30, 30, 0.06);
+}
+
+.theme-hon-viet .exam-option-item,
+[data-theme="hon-viet"] .exam-option-item {
+  background: #fbf6ec;
+  border-color: rgba(201, 154, 67, 0.35);
+  color: #29231f;
+}
+
+.theme-hon-viet .exam-option-item:hover,
+[data-theme="hon-viet"] .exam-option-item:hover {
+  border-color: #8b1e1e;
+  background: #fef0db;
+}
+
+.theme-hon-viet .exam-option-item.is-selected,
+[data-theme="hon-viet"] .exam-option-item.is-selected {
+  background: #fde8e8;
+  border-color: #8b1e1e;
+  box-shadow: 0 0 0 2px rgba(139, 30, 30, 0.2);
+}
+
+.theme-hon-viet .nav-dot-btn.is-active,
+[data-theme="hon-viet"] .nav-dot-btn.is-active {
+  border-color: #8b1e1e;
+  box-shadow: 0 0 0 2px #8b1e1e;
+}
+
+.theme-hon-viet .nav-dot-btn.is-answered,
+[data-theme="hon-viet"] .nav-dot-btn.is-answered {
+  background: #8b1e1e;
+  color: #fff8eb;
+}
+
+/* --- Mode 5: 60-Second Challenge — Hồn Việt --- */
+.theme-hon-viet .game-icon-orb.orb-orange {
+  background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+  color: #8b1e1e;
+}
+
+.theme-hon-viet .game-hud-score-value,
+[data-theme="hon-viet"] .game-hud-score-value {
+  color: #8b1e1e;
+}
+
+.theme-hon-viet .game-hud-streak-box,
+[data-theme="hon-viet"] .game-hud-streak-box {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.5);
+}
+
+.theme-hon-viet .streak-count,
+[data-theme="hon-viet"] .streak-count {
+  color: #8b1e1e;
+}
+
+.theme-hon-viet .game-hud-time-fill.timer-neon,
+[data-theme="hon-viet"] .game-hud-time-fill.timer-neon {
+  background: linear-gradient(90deg, #c99a43 0%, #8b1e1e 100%);
+}
+
+.theme-hon-viet .game-result-crown,
+[data-theme="hon-viet"] .game-result-crown {
+  color: #c99a43;
+}
+
+.theme-hon-viet .game-result-score,
+[data-theme="hon-viet"] .game-result-score {
+  color: #5b1717;
+}
+
+.theme-hon-viet .game-btn-primary,
+[data-theme="hon-viet"] .game-btn-primary {
+  background: linear-gradient(135deg, #8b1e1e 0%, #a82828 100%);
+  border: 1px solid #c99a43;
+  color: #fff8eb;
+  box-shadow: 0 6px 20px rgba(139, 30, 30, 0.25);
+}
+
+.theme-hon-viet .game-btn-primary:hover,
+[data-theme="hon-viet"] .game-btn-primary:hover {
+  background: linear-gradient(135deg, #741616 0%, #902121 100%);
+}
+
+/* --- Mode 6: Leo Tháp 50 — Hồn Việt --- */
+.tower-splash-card.theme-hon-viet,
+[data-theme="hon-viet"] .tower-splash-card {
+  background: #fffdf8;
+  border: 2px solid rgba(201, 154, 67, 0.5);
+  box-shadow: 0 16px 45px rgba(139, 30, 30, 0.08);
+}
+
+.theme-hon-viet .tower-splash-title,
+[data-theme="hon-viet"] .tower-splash-title {
+  color: #5b1717;
+}
+
+.theme-hon-viet .tower-splash-tagline,
+[data-theme="hon-viet"] .tower-splash-tagline {
+  color: #6d5b4a;
+}
+
+.theme-hon-viet .avatar-pick-card,
+[data-theme="hon-viet"] .avatar-pick-card {
+  background: #fbf3e4;
+  border-color: rgba(201, 154, 67, 0.4);
+}
+
+.theme-hon-viet .avatar-pick-card.is-selected,
+[data-theme="hon-viet"] .avatar-pick-card.is-selected {
+  border-color: #8b1e1e;
+  background: #fff8eb;
+  box-shadow: 0 0 0 2px #8b1e1e;
+}
+
+.theme-hon-viet .tower-btn-start,
+[data-theme="hon-viet"] .tower-btn-start {
+  background: linear-gradient(135deg, #8b1e1e 0%, #a82828 100%);
+  border: 1px solid #c99a43;
+  color: #fff8eb;
+  box-shadow: 0 8px 25px rgba(139, 30, 30, 0.3);
+}
+
+.theme-hon-viet .tower-btn-start:hover,
+[data-theme="hon-viet"] .tower-btn-start:hover {
+  background: linear-gradient(135deg, #741616 0%, #902121 100%);
+}
+
+.tower-game-wrapper.theme-hon-viet .tower-side-pane,
+[data-theme="hon-viet"] .tower-side-pane {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.4);
+}
+
+.tower-game-wrapper.theme-hon-viet .tower-battle-pane,
+[data-theme="hon-viet"] .tower-battle-pane {
+  background: #fffdf8;
+  border: 1.5px solid rgba(201, 154, 67, 0.4);
+  box-shadow: 0 8px 30px rgba(139, 30, 30, 0.05);
+}
+
+.tower-game-wrapper.theme-hon-viet .tower-floor-row.is-current,
+[data-theme="hon-viet"] .tower-floor-row.is-current {
+  background: linear-gradient(90deg, #fee2e2 0%, #fef3c7 100%);
+  border-color: #8b1e1e;
+}
+
+.tower-game-wrapper.theme-hon-viet .tower-opt-btn,
+[data-theme="hon-viet"] .tower-opt-btn {
+  background: #fbf6ec;
+  border: 1.5px solid rgba(201, 154, 67, 0.4);
+  color: #29231f;
+}
+
+.tower-game-wrapper.theme-hon-viet .tower-opt-btn:hover:not(:disabled),
+[data-theme="hon-viet"] .tower-opt-btn:hover:not(:disabled) {
+  border-color: #8b1e1e;
+  background: #fef0db;
+}
+
+.tower-result-card.theme-hon-viet,
+[data-theme="hon-viet"] .tower-result-card {
+  background: #fffdf8;
+  border: 2px solid rgba(201, 154, 67, 0.5);
+}
+
+.theme-hon-viet .tower-result-heading,
+[data-theme="hon-viet"] .tower-result-heading {
+  color: #5b1717;
+}
+
+/* --- Mode 7: Đúng/Sai 5s Blitz — Hồn Việt --- */
+.theme-hon-viet .game-icon-orb.orb-neon {
+  background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+  color: #8b1e1e;
+}
+
+.theme-hon-viet .truefalse-context-box,
+[data-theme="hon-viet"] .truefalse-context-box {
+  background: #fbf3e4;
+  border: 1px solid rgba(201, 154, 67, 0.4);
+}
+
+.theme-hon-viet .truefalse-label,
+[data-theme="hon-viet"] .truefalse-label {
+  color: #8b1e1e;
+  font-weight: 800;
+}
+
+.theme-hon-viet .truefalse-question-text,
+[data-theme="hon-viet"] .truefalse-question-text {
+  color: #29231f;
+}
+
+.theme-hon-viet .truefalse-statement-box,
+[data-theme="hon-viet"] .truefalse-statement-box {
+  background: #fffdf8;
+  border: 1.5px dashed rgba(139, 30, 30, 0.4);
+}
+
+.theme-hon-viet .truefalse-statement-text,
+[data-theme="hon-viet"] .truefalse-statement-text {
+  color: #5b1717;
+  font-weight: 800;
+}
+
+.theme-hon-viet .tf-btn.tf-btn-true,
+[data-theme="hon-viet"] .tf-btn.tf-btn-true {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  border: 1.5px solid #86efac;
+  color: #f0fdf4;
+}
+
+.theme-hon-viet .tf-btn.tf-btn-false,
+[data-theme="hon-viet"] .tf-btn.tf-btn-false {
+  background: linear-gradient(135deg, #8b1e1e 0%, #741616 100%);
+  border: 1.5px solid #fca5a5;
+  color: #fff8eb;
+}
+
+/* Watermarks */
+.dongson-exam-watermark,
+.dongson-tower-watermark,
+.dongson-tf-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px;
+  height: 440px;
+  color: #c99a43;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ==========================================================================
+   2. THEME B — HỌC VIỆN MA PHÁP (FANTASY RPG)
+   Palette: Ancient parchment cards (#FAF5EB / #F4ECE1),
+   Obsidian & dark emerald glass (#0A1912 / #062217 / rgba(10, 25, 18, 0.95)),
+   Deep royal purple (#7E22CE / #9333EA), Gold filigree (#D97706 / #F59E0B / #FDE68A),
+   Magical cyan/blue glow (#06B6D4 / #38BDF8 / #60A5FA).
+   ========================================================================== */
+
+/* --- Mode 1: Question List — Fantasy RPG --- */
+.theme-qlist-container.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .theme-qlist-container {
+  background: transparent;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-hero,
+[data-theme="fantasy-academy"] .theme-qlist-hero {
+  background: linear-gradient(135deg, rgba(10, 25, 18, 0.95) 0%, rgba(13, 33, 24, 0.92) 100%);
+  border: 1.5px solid rgba(217, 119, 6, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(217, 119, 6, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-eyebrow,
+[data-theme="fantasy-academy"] .theme-qlist-eyebrow {
+  color: #fbbf24;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-title,
+[data-theme="fantasy-academy"] .theme-qlist-title {
+  color: #fef3c7;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-desc,
+[data-theme="fantasy-academy"] .theme-qlist-desc {
+  color: #a7f3d0;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-stats-pill,
+[data-theme="fantasy-academy"] .theme-qlist-stats-pill {
+  background: rgba(6, 78, 59, 0.6);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 12px rgba(6, 78, 59, 0.4);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-stat-item .stat-label,
+[data-theme="fantasy-academy"] .theme-qlist-stat-item .stat-label {
+  color: #6ee7b7;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-stat-item .stat-value,
+[data-theme="fantasy-academy"] .theme-qlist-stat-item .stat-value {
+  color: #fef3c7;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-stat-item .val-mastered,
+[data-theme="fantasy-academy"] .theme-qlist-stat-item .val-mastered {
+  color: #34d399;
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-stat-item .val-answered,
+[data-theme="fantasy-academy"] .theme-qlist-stat-item .val-answered {
+  color: #38bdf8;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-stat-sep,
+[data-theme="fantasy-academy"] .theme-qlist-stat-sep {
+  background: rgba(245, 158, 11, 0.3);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-search-input,
+[data-theme="fantasy-academy"] .theme-qlist-search-input {
+  background: rgba(10, 25, 18, 0.9);
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+  color: #fef3c7;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-search-input:focus,
+[data-theme="fantasy-academy"] .theme-qlist-search-input:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-tab,
+[data-theme="fantasy-academy"] .theme-qlist-tab {
+  background: rgba(10, 25, 18, 0.8);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  color: #d1fae5;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-tab:hover,
+[data-theme="fantasy-academy"] .theme-qlist-tab:hover {
+  background: rgba(16, 185, 129, 0.2);
+  color: #fde68a;
+  border-color: #f59e0b;
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-tab.is-active,
+[data-theme="fantasy-academy"] .theme-qlist-tab.is-active {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  border-color: #fde68a;
+  color: #fffbeb;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-card,
+[data-theme="fantasy-academy"] .theme-qlist-card {
+  background: #faf5eb;
+  border: 1.5px solid #d97706;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), inset 0 0 15px rgba(217, 119, 6, 0.08);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-card:hover,
+[data-theme="fantasy-academy"] .theme-qlist-card:hover {
+  border-color: #b45309;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 0 15px rgba(245, 158, 11, 0.25);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-card.is-current-active,
+[data-theme="fantasy-academy"] .theme-qlist-card.is-current-active {
+  border-color: #d97706;
+  box-shadow: 0 0 0 2px #d97706, 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+.theme-qlist-container.theme-fantasy-academy .theme-qlist-card.is-mastered,
+[data-theme="fantasy-academy"] .theme-qlist-card.is-mastered {
+  border-left: 4px solid #059669;
+}
+
+.theme-qlist-container.theme-fantasy-academy .q-num-badge,
+[data-theme="fantasy-academy"] .q-num-badge {
+  background: #f4ece1;
+  color: #78350f;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+}
+
+.theme-qlist-container.theme-fantasy-academy .card-mastered-indicator,
+[data-theme="fantasy-academy"] .card-mastered-indicator {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.theme-qlist-container.theme-fantasy-academy .card-answered-badge,
+[data-theme="fantasy-academy"] .card-answered-badge {
+  background: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #a5b4fc;
+}
+
+.theme-qlist-container.theme-fantasy-academy .card-q-text,
+[data-theme="fantasy-academy"] .card-q-text {
+  color: #292524;
+}
+
+.theme-qlist-container.theme-fantasy-academy .card-opt-chip,
+[data-theme="fantasy-academy"] .card-opt-chip {
+  background: #f4ece1;
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.theme-qlist-container.theme-fantasy-academy .card-opt-chip .opt-key,
+[data-theme="fantasy-academy"] .card-opt-chip .opt-key {
+  color: #b45309;
+}
+
+.theme-qlist-container.theme-fantasy-academy .card-action-hint,
+[data-theme="fantasy-academy"] .card-action-hint {
+  color: #b45309;
+}
+
+/* --- Mode 2: Grouped Learning — Fantasy RPG --- */
+.knowledge-groups-page.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .knowledge-groups-page {
+  background: transparent;
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-groups-heading h1,
+[data-theme="fantasy-academy"] .knowledge-groups-heading h1 {
+  color: #fef3c7;
+  text-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-groups-eyebrow,
+[data-theme="fantasy-academy"] .knowledge-groups-eyebrow {
+  color: #fbbf24;
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-groups-note,
+[data-theme="fantasy-academy"] .knowledge-groups-note {
+  background: rgba(10, 25, 18, 0.9);
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  color: #a7f3d0;
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-card,
+[data-theme="fantasy-academy"] .knowledge-group-card {
+  background: #faf5eb;
+  border: 1.5px solid #d97706;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(217, 119, 6, 0.08);
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-card:hover:not(:disabled),
+[data-theme="fantasy-academy"] .knowledge-group-card:hover:not(:disabled) {
+  border-color: #b45309;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 158, 11, 0.3);
+  transform: translateY(-3px);
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-number,
+[data-theme="fantasy-academy"] .knowledge-group-number {
+  color: #b45309;
+  font-weight: 800;
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-title,
+[data-theme="fantasy-academy"] .knowledge-group-title {
+  color: #1c1917;
+  font-weight: 800;
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-summary,
+[data-theme="fantasy-academy"] .knowledge-group-summary {
+  color: #57534e;
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-progress-track span,
+[data-theme="fantasy-academy"] .knowledge-group-progress-track span {
+  background: linear-gradient(90deg, #d97706 0%, #059669 100%);
+  box-shadow: 0 0 8px rgba(5, 150, 105, 0.5);
+}
+
+.knowledge-groups-page.theme-fantasy-academy .knowledge-group-action,
+[data-theme="fantasy-academy"] .knowledge-group-action {
+  color: #b45309;
+  font-weight: 800;
+}
+
+/* --- Mode 3: Mistake Review — Fantasy RPG --- */
+.game-card-surface.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .game-card-surface {
+  background: #faf5eb;
+  border: 2px solid #d97706;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4), inset 0 0 25px rgba(217, 119, 6, 0.1);
+}
+
+.theme-fantasy-academy .game-splash-title,
+[data-theme="fantasy-academy"] .game-splash-title {
+  color: #292524;
+}
+
+.theme-fantasy-academy .game-hud-mistakes {
+  background: rgba(10, 25, 18, 0.9);
+  border: 1px solid rgba(217, 119, 6, 0.5);
+  border-radius: 16px;
+  padding: 12px 20px;
+}
+
+.theme-fantasy-academy .mistake-counter-pill {
+  color: #fde68a;
+  font-weight: 800;
+}
+
+.theme-fantasy-academy .game-question-card,
+[data-theme="fantasy-academy"] .game-question-card {
+  background: #faf5eb;
+  border: 2px solid #d97706;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+}
+
+.theme-fantasy-academy .game-q-text,
+[data-theme="fantasy-academy"] .game-q-text {
+  color: #1c1917;
+  font-weight: 700;
+}
+
+.theme-fantasy-academy .game-q-opt-btn,
+[data-theme="fantasy-academy"] .game-q-opt-btn {
+  background: #f4ece1;
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+  color: #292524;
+}
+
+.theme-fantasy-academy .game-q-opt-btn:hover:not(:disabled),
+[data-theme="fantasy-academy"] .game-q-opt-btn:hover:not(:disabled) {
+  border-color: #b45309;
+  background: #fef3c7;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+/* --- Mode 4: Mock Exam FE — Fantasy RPG --- */
+.mock-exam-container.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .mock-exam-container {
+  color: #fef3c7;
+}
+
+.theme-fantasy-academy .mock-exam-setup-card,
+[data-theme="fantasy-academy"] .mock-exam-setup-card {
+  background: #faf5eb;
+  border: 2px solid #d97706;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  color: #292524;
+}
+
+.theme-fantasy-academy .mock-exam-badge-tag,
+[data-theme="fantasy-academy"] .mock-exam-badge-tag {
+  background: linear-gradient(135deg, #b45309 0%, #059669 100%);
+  color: #fffbeb;
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.4);
+}
+
+.theme-fantasy-academy .mock-exam-title,
+[data-theme="fantasy-academy"] .mock-exam-title {
+  color: #292524;
+}
+
+.theme-fantasy-academy .mock-exam-desc,
+[data-theme="fantasy-academy"] .mock-exam-desc {
+  color: #57534e;
+}
+
+.theme-fantasy-academy .mock-exam-number-input,
+[data-theme="fantasy-academy"] .mock-exam-number-input {
+  background: #f4ece1;
+  border-color: rgba(217, 119, 6, 0.5);
+  color: #292524;
+}
+
+.theme-fantasy-academy .mock-exam-number-input:focus,
+[data-theme="fantasy-academy"] .mock-exam-number-input:focus {
+  border-color: #b45309;
+  background: #ffffff;
+}
+
+.theme-fantasy-academy .mock-exam-btn.primary,
+[data-theme="fantasy-academy"] .mock-exam-btn.primary {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  border: 1px solid #fde68a;
+  color: #fffbeb;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+}
+
+.theme-fantasy-academy .mock-exam-btn.primary:hover,
+[data-theme="fantasy-academy"] .mock-exam-btn.primary:hover {
+  background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+}
+
+.theme-fantasy-academy .mock-exam-header-bar,
+[data-theme="fantasy-academy"] .mock-exam-header-bar {
+  background: rgba(10, 25, 18, 0.95);
+  border: 1.5px solid rgba(217, 119, 6, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+}
+
+.theme-fantasy-academy .header-exam-badge,
+[data-theme="fantasy-academy"] .header-exam-badge {
+  background: #d97706;
+  color: #fffbeb;
+}
+
+.theme-fantasy-academy .header-set-title,
+[data-theme="fantasy-academy"] .header-set-title {
+  color: #fef3c7;
+}
+
+.theme-fantasy-academy .header-progress-text,
+[data-theme="fantasy-academy"] .header-progress-text {
+  color: #a7f3d0;
+}
+
+.theme-fantasy-academy .exam-q-box,
+[data-theme="fantasy-academy"] .exam-q-box,
+.theme-fantasy-academy .exam-navigator-box,
+[data-theme="fantasy-academy"] .exam-navigator-box,
+.theme-fantasy-academy .mock-exam-result-card,
+[data-theme="fantasy-academy"] .mock-exam-result-card {
+  background: #faf5eb;
+  border: 1.5px solid #d97706;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  color: #292524;
+}
+
+.theme-fantasy-academy .exam-q-content,
+[data-theme="fantasy-academy"] .exam-q-content {
+  color: #1c1917;
+}
+
+.theme-fantasy-academy .exam-option-item,
+[data-theme="fantasy-academy"] .exam-option-item {
+  background: #f4ece1;
+  border-color: rgba(217, 119, 6, 0.4);
+  color: #292524;
+}
+
+.theme-fantasy-academy .exam-option-item:hover,
+[data-theme="fantasy-academy"] .exam-option-item:hover {
+  border-color: #b45309;
+  background: #fef3c7;
+}
+
+.theme-fantasy-academy .exam-option-item.is-selected,
+[data-theme="fantasy-academy"] .exam-option-item.is-selected {
+  background: #fef08a;
+  border-color: #b45309;
+  box-shadow: 0 0 0 2px rgba(180, 83, 9, 0.3);
+}
+
+.theme-fantasy-academy .nav-dot-btn.is-answered,
+[data-theme="fantasy-academy"] .nav-dot-btn.is-answered {
+  background: #d97706;
+  color: #fffbeb;
+}
+
+/* --- Mode 5: 60-Second Challenge — Fantasy RPG --- */
+.theme-fantasy-academy .game-hud-score-value,
+[data-theme="fantasy-academy"] .game-hud-score-value {
+  color: #b45309;
+}
+
+.theme-fantasy-academy .game-hud-time-fill.timer-neon,
+[data-theme="fantasy-academy"] .game-hud-time-fill.timer-neon {
+  background: linear-gradient(90deg, #d97706 0%, #38bdf8 100%);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.theme-fantasy-academy .game-btn-primary,
+[data-theme="fantasy-academy"] .game-btn-primary {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  border: 1px solid #fde68a;
+  color: #fffbeb;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35);
+}
+
+.theme-fantasy-academy .game-btn-primary:hover,
+[data-theme="fantasy-academy"] .game-btn-primary:hover {
+  background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+}
+
+/* --- Mode 6: Leo Tháp 50 — Fantasy RPG --- */
+.tower-splash-card.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .tower-splash-card {
+  background: #faf5eb;
+  border: 2px solid #d97706;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+.theme-fantasy-academy .tower-splash-title,
+[data-theme="fantasy-academy"] .tower-splash-title {
+  color: #292524;
+}
+
+.theme-fantasy-academy .tower-btn-start,
+[data-theme="fantasy-academy"] .tower-btn-start {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  border: 1px solid #fde68a;
+  color: #fffbeb;
+  box-shadow: 0 8px 25px rgba(217, 119, 6, 0.4);
+}
+
+.theme-fantasy-academy .tower-btn-start:hover,
+[data-theme="fantasy-academy"] .tower-btn-start:hover {
+  background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+}
+
+.tower-game-wrapper.theme-fantasy-academy .tower-side-pane,
+[data-theme="fantasy-academy"] .tower-side-pane {
+  background: rgba(10, 25, 18, 0.95);
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+  color: #fef3c7;
+}
+
+.tower-game-wrapper.theme-fantasy-academy .tower-battle-pane,
+[data-theme="fantasy-academy"] .tower-battle-pane {
+  background: #faf5eb;
+  border: 1.5px solid #d97706;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  color: #292524;
+}
+
+.tower-game-wrapper.theme-fantasy-academy .tower-opt-btn,
+[data-theme="fantasy-academy"] .tower-opt-btn {
+  background: #f4ece1;
+  border: 1.5px solid rgba(217, 119, 6, 0.4);
+  color: #292524;
+}
+
+.tower-game-wrapper.theme-fantasy-academy .tower-opt-btn:hover:not(:disabled),
+[data-theme="fantasy-academy"] .tower-opt-btn:hover:not(:disabled) {
+  border-color: #b45309;
+  background: #fef3c7;
+}
+
+.tower-result-card.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .tower-result-card {
+  background: #faf5eb;
+  border: 2px solid #d97706;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* --- Mode 7: Đúng/Sai 5s — Fantasy RPG --- */
+.theme-fantasy-academy .truefalse-context-box,
+[data-theme="fantasy-academy"] .truefalse-context-box {
+  background: #f4ece1;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+}
+
+.theme-fantasy-academy .truefalse-label,
+[data-theme="fantasy-academy"] .truefalse-label {
+  color: #b45309;
+  font-weight: 800;
+}
+
+.theme-fantasy-academy .truefalse-statement-box,
+[data-theme="fantasy-academy"] .truefalse-statement-box {
+  background: #faf5eb;
+  border: 1.5px dashed #b45309;
+}
+
+.theme-fantasy-academy .truefalse-statement-text,
+[data-theme="fantasy-academy"] .truefalse-statement-text {
+  color: #78350f;
+  font-weight: 800;
+}
+
+
+/* ==========================================================================
+   3. THEME C — PHÒNG HỌC COZY NIGHT (LOFI ANIME)
+   Palette: Dark navy & deep violet glassmorphism (rgba(15, 23, 42, 0.88)),
+   Lavender & soft indigo glow (#818CF8 / #C084FC / #A5B4FC),
+   Soft cyan accents (#38BDF8), Warm amber accents (#FBBF24),
+   Frosted cards (backdrop-filter: blur(16px)).
+   ========================================================================== */
+
+/* --- Mode 1: Question List — Cozy Night --- */
+.theme-qlist-container.theme-cozy-night,
+[data-theme="cozy-night"] .theme-qlist-container {
+  background: transparent;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-hero,
+[data-theme="cozy-night"] .theme-qlist-hero {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(99, 102, 241, 0.15);
+  backdrop-filter: blur(16px);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-eyebrow,
+[data-theme="cozy-night"] .theme-qlist-eyebrow {
+  color: #a5b4fc;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-title,
+[data-theme="cozy-night"] .theme-qlist-title {
+  color: #f1f5f9;
+  text-shadow: 0 0 12px rgba(129, 140, 248, 0.4);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-desc,
+[data-theme="cozy-night"] .theme-qlist-desc {
+  color: #94a3b8;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-stats-pill,
+[data-theme="cozy-night"] .theme-qlist-stats-pill {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .stat-label,
+[data-theme="cozy-night"] .theme-qlist-stat-item .stat-label {
+  color: #94a3b8;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .stat-value,
+[data-theme="cozy-night"] .theme-qlist-stat-item .stat-value {
+  color: #f8fafc;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .val-mastered,
+[data-theme="cozy-night"] .theme-qlist-stat-item .val-mastered {
+  color: #34d399;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .val-answered,
+[data-theme="cozy-night"] .theme-qlist-stat-item .val-answered {
+  color: #818cf8;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-stat-sep,
+[data-theme="cozy-night"] .theme-qlist-stat-sep {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-search-input,
+[data-theme="cozy-night"] .theme-qlist-search-input {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #f1f5f9;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-search-input:focus,
+[data-theme="cozy-night"] .theme-qlist-search-input:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-tab,
+[data-theme="cozy-night"] .theme-qlist-tab {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: #94a3b8;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-tab:hover,
+[data-theme="cozy-night"] .theme-qlist-tab:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #f1f5f9;
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-tab.is-active,
+[data-theme="cozy-night"] .theme-qlist-tab.is-active {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  border-color: #818cf8;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-card,
+[data-theme="cozy-night"] .theme-qlist-card {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1.5px solid rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(14px);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-card:hover,
+[data-theme="cozy-night"] .theme-qlist-card:hover {
+  border-color: #818cf8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 15px rgba(129, 140, 248, 0.2);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-card.is-current-active,
+[data-theme="cozy-night"] .theme-qlist-card.is-current-active {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 2px #818cf8, 0 0 18px rgba(129, 140, 248, 0.35);
+}
+
+.theme-qlist-container.theme-cozy-night .theme-qlist-card.is-mastered,
+[data-theme="cozy-night"] .theme-qlist-card.is-mastered {
+  border-left: 4px solid #10b981;
+}
+
+.theme-qlist-container.theme-cozy-night .q-num-badge,
+[data-theme="cozy-night"] .q-num-badge {
+  background: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.theme-qlist-container.theme-cozy-night .card-mastered-indicator,
+[data-theme="cozy-night"] .card-mastered-indicator {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.theme-qlist-container.theme-cozy-night .card-answered-badge,
+[data-theme="cozy-night"] .card-answered-badge {
+  background: rgba(99, 102, 241, 0.25);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+.theme-qlist-container.theme-cozy-night .card-q-text,
+[data-theme="cozy-night"] .card-q-text {
+  color: #f1f5f9;
+}
+
+.theme-qlist-container.theme-cozy-night .card-opt-chip,
+[data-theme="cozy-night"] .card-opt-chip {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.theme-qlist-container.theme-cozy-night .card-opt-chip .opt-key,
+[data-theme="cozy-night"] .card-opt-chip .opt-key {
+  color: #a5b4fc;
+}
+
+.theme-qlist-container.theme-cozy-night .card-opt-chip .opt-txt,
+[data-theme="cozy-night"] .card-opt-chip .opt-txt {
+  color: #cbd5e1;
+}
+
+.theme-qlist-container.theme-cozy-night .card-action-hint,
+[data-theme="cozy-night"] .card-action-hint {
+  color: #818cf8;
+}
+
+/* --- Mode 2: Grouped Learning — Cozy Night --- */
+.knowledge-groups-page.theme-cozy-night,
+[data-theme="cozy-night"] .knowledge-groups-page {
+  background: transparent;
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-groups-heading h1,
+[data-theme="cozy-night"] .knowledge-groups-heading h1 {
+  color: #f1f5f9;
+  text-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-groups-eyebrow,
+[data-theme="cozy-night"] .knowledge-groups-eyebrow {
+  color: #a5b4fc;
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-groups-note,
+[data-theme="cozy-night"] .knowledge-groups-note {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #94a3b8;
+  backdrop-filter: blur(14px);
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-card,
+[data-theme="cozy-night"] .knowledge-group-card {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-card:hover:not(:disabled),
+[data-theme="cozy-night"] .knowledge-group-card:hover:not(:disabled) {
+  border-color: #818cf8;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 18px rgba(129, 140, 248, 0.25);
+  transform: translateY(-2px);
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-number,
+[data-theme="cozy-night"] .knowledge-group-number {
+  color: #a5b4fc;
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-title,
+[data-theme="cozy-night"] .knowledge-group-title {
+  color: #f8fafc;
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-summary,
+[data-theme="cozy-night"] .knowledge-group-summary {
+  color: #94a3b8;
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-progress-copy,
+[data-theme="cozy-night"] .knowledge-group-progress-copy {
+  color: #cbd5e1;
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-progress-track span,
+[data-theme="cozy-night"] .knowledge-group-progress-track span {
+  background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+  box-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
+}
+
+.knowledge-groups-page.theme-cozy-night .knowledge-group-action,
+[data-theme="cozy-night"] .knowledge-group-action {
+  color: #818cf8;
+}
+
+/* --- Mode 3: Mistake Review — Cozy Night --- */
+.game-card-surface.theme-cozy-night,
+[data-theme="cozy-night"] .game-card-surface {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 25px rgba(99, 102, 241, 0.15);
+  backdrop-filter: blur(18px);
+}
+
+.theme-cozy-night .game-splash-title,
+[data-theme="cozy-night"] .game-splash-title {
+  color: #f1f5f9;
+}
+
+.theme-cozy-night .game-splash-subtitle,
+[data-theme="cozy-night"] .game-splash-subtitle {
+  color: #94a3b8;
+}
+
+.theme-cozy-night .game-hud-mistakes {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  padding: 12px 20px;
+  backdrop-filter: blur(14px);
+}
+
+.theme-cozy-night .mistake-counter-pill {
+  color: #c7d2fe;
+}
+
+.theme-cozy-night .game-question-card,
+[data-theme="cozy-night"] .game-question-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.theme-cozy-night .game-q-text,
+[data-theme="cozy-night"] .game-q-text {
+  color: #f8fafc;
+}
+
+.theme-cozy-night .game-q-opt-btn,
+[data-theme="cozy-night"] .game-q-opt-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1.5px solid rgba(99, 102, 241, 0.25);
+  color: #f1f5f9;
+}
+
+.theme-cozy-night .game-q-opt-btn:hover:not(:disabled),
+[data-theme="cozy-night"] .game-q-opt-btn:hover:not(:disabled) {
+  border-color: #818cf8;
+  background: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.2);
+}
+
+/* --- Mode 4: Mock Exam FE — Cozy Night --- */
+.mock-exam-container.theme-cozy-night,
+[data-theme="cozy-night"] .mock-exam-container {
+  color: #f1f5f9;
+}
+
+.theme-cozy-night .mock-exam-setup-card,
+[data-theme="cozy-night"] .mock-exam-setup-card {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+}
+
+.theme-cozy-night .mock-exam-badge-tag,
+[data-theme="cozy-night"] .mock-exam-badge-tag {
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(79, 70, 229, 0.4);
+}
+
+.theme-cozy-night .mock-exam-title,
+[data-theme="cozy-night"] .mock-exam-title {
+  color: #f8fafc;
+}
+
+.theme-cozy-night .mock-exam-desc,
+[data-theme="cozy-night"] .mock-exam-desc {
+  color: #94a3b8;
+}
+
+.theme-cozy-night .mock-exam-number-input,
+[data-theme="cozy-night"] .mock-exam-number-input {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(99, 102, 241, 0.35);
+  color: #f8fafc;
+}
+
+.theme-cozy-night .mock-exam-number-input:focus,
+[data-theme="cozy-night"] .mock-exam-number-input:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
+}
+
+.theme-cozy-night .mock-exam-btn.primary,
+[data-theme="cozy-night"] .mock-exam-btn.primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  border: 1px solid #818cf8;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.theme-cozy-night .mock-exam-btn.primary:hover,
+[data-theme="cozy-night"] .mock-exam-btn.primary:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+}
+
+.theme-cozy-night .mock-exam-header-bar,
+[data-theme="cozy-night"] .mock-exam-header-bar {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.theme-cozy-night .header-exam-badge,
+[data-theme="cozy-night"] .header-exam-badge {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+.theme-cozy-night .header-set-title,
+[data-theme="cozy-night"] .header-set-title {
+  color: #f1f5f9;
+}
+
+.theme-cozy-night .header-progress-text,
+[data-theme="cozy-night"] .header-progress-text {
+  color: #94a3b8;
+}
+
+.theme-cozy-night .exam-q-box,
+[data-theme="cozy-night"] .exam-q-box,
+.theme-cozy-night .exam-navigator-box,
+[data-theme="cozy-night"] .exam-navigator-box,
+.theme-cozy-night .mock-exam-result-card,
+[data-theme="cozy-night"] .mock-exam-result-card {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.theme-cozy-night .exam-q-content,
+[data-theme="cozy-night"] .exam-q-content {
+  color: #f8fafc;
+}
+
+.theme-cozy-night .exam-option-item,
+[data-theme="cozy-night"] .exam-option-item {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(99, 102, 241, 0.25);
+  color: #f1f5f9;
+}
+
+.theme-cozy-night .exam-option-item:hover,
+[data-theme="cozy-night"] .exam-option-item:hover {
+  border-color: #818cf8;
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.theme-cozy-night .exam-option-item.is-selected,
+[data-theme="cozy-night"] .exam-option-item.is-selected {
+  background: rgba(99, 102, 241, 0.35);
+  border-color: #818cf8;
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
+}
+
+.theme-cozy-night .nav-dot-btn.is-answered,
+[data-theme="cozy-night"] .nav-dot-btn.is-answered {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+/* --- Mode 5: 60-Second Challenge — Cozy Night --- */
+.theme-cozy-night .game-hud-score-value,
+[data-theme="cozy-night"] .game-hud-score-value {
+  color: #818cf8;
+}
+
+.theme-cozy-night .game-hud-streak-box,
+[data-theme="cozy-night"] .game-hud-streak-box {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+.theme-cozy-night .streak-count,
+[data-theme="cozy-night"] .streak-count {
+  color: #a5b4fc;
+}
+
+.theme-cozy-night .game-hud-time-fill.timer-neon,
+[data-theme="cozy-night"] .game-hud-time-fill.timer-neon {
+  background: linear-gradient(90deg, #6366f1 0%, #38bdf8 100%);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+.theme-cozy-night .game-btn-primary,
+[data-theme="cozy-night"] .game-btn-primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  border: 1px solid #818cf8;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+}
+
+.theme-cozy-night .game-btn-primary:hover,
+[data-theme="cozy-night"] .game-btn-primary:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+}
+
+/* --- Mode 6: Leo Tháp 50 — Cozy Night --- */
+.tower-splash-card.theme-cozy-night,
+[data-theme="cozy-night"] .tower-splash-card {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+}
+
+.theme-cozy-night .tower-splash-title,
+[data-theme="cozy-night"] .tower-splash-title {
+  color: #f8fafc;
+}
+
+.theme-cozy-night .tower-splash-tagline,
+[data-theme="cozy-night"] .tower-splash-tagline {
+  color: #94a3b8;
+}
+
+.theme-cozy-night .avatar-pick-card,
+[data-theme="cozy-night"] .avatar-pick-card {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(99, 102, 241, 0.25);
+}
+
+.theme-cozy-night .avatar-pick-card.is-selected,
+[data-theme="cozy-night"] .avatar-pick-card.is-selected {
+  border-color: #818cf8;
+  background: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.35);
+}
+
+.theme-cozy-night .tower-btn-start,
+[data-theme="cozy-night"] .tower-btn-start {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  border: 1px solid #818cf8;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.theme-cozy-night .tower-btn-start:hover,
+[data-theme="cozy-night"] .tower-btn-start:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+}
+
+.tower-game-wrapper.theme-cozy-night .tower-side-pane,
+[data-theme="cozy-night"] .tower-side-pane {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  backdrop-filter: blur(16px);
+}
+
+.tower-game-wrapper.theme-cozy-night .tower-battle-pane,
+[data-theme="cozy-night"] .tower-battle-pane {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+.tower-game-wrapper.theme-cozy-night .tower-opt-btn,
+[data-theme="cozy-night"] .tower-opt-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1.5px solid rgba(99, 102, 241, 0.25);
+  color: #f1f5f9;
+}
+
+.tower-game-wrapper.theme-cozy-night .tower-opt-btn:hover:not(:disabled),
+[data-theme="cozy-night"] .tower-opt-btn:hover:not(:disabled) {
+  border-color: #818cf8;
+  background: rgba(99, 102, 241, 0.25);
+}
+
+.tower-result-card.theme-cozy-night,
+[data-theme="cozy-night"] .tower-result-card {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+}
+
+/* --- Mode 7: Đúng/Sai 5s — Cozy Night --- */
+.theme-cozy-night .truefalse-context-box,
+[data-theme="cozy-night"] .truefalse-context-box {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.theme-cozy-night .truefalse-label,
+[data-theme="cozy-night"] .truefalse-label {
+  color: #a5b4fc;
+  font-weight: 800;
+}
+
+.theme-cozy-night .truefalse-question-text,
+[data-theme="cozy-night"] .truefalse-question-text {
+  color: #f1f5f9;
+}
+
+.theme-cozy-night .truefalse-statement-box,
+[data-theme="cozy-night"] .truefalse-statement-box {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px dashed rgba(129, 140, 248, 0.4);
+}
+
+.theme-cozy-night .truefalse-statement-text,
+[data-theme="cozy-night"] .truefalse-statement-text {
+  color: #e0e7ff;
+  font-weight: 800;
+}
+
+.theme-cozy-night .tf-btn.tf-btn-true,
+[data-theme="cozy-night"] .tf-btn.tf-btn-true {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.85) 0%, rgba(5, 150, 105, 0.9) 100%);
+  border: 1.5px solid #34d399;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(52, 211, 153, 0.35);
+}
+
+.theme-cozy-night .tf-btn.tf-btn-false,
+[data-theme="cozy-night"] .tf-btn.tf-btn-false {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.85) 0%, rgba(220, 38, 38, 0.9) 100%);
+  border: 1.5px solid #f87171;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(248, 113, 113, 0.35);
+}
+
+/* ==========================================================================
+   4. THEME: LIÊN HOA PHẬT QUỐC — ZEN SANCTUARY
+   Palette: Deep Temple Wood (#3B2014), Dark Walnut (#1E120D),
+   Antique Gold (#A77636 / #D8B36A), Warm Ivory (#FFF8EC),
+   Heritage Red (#7B3026), Jade Green (#365D52).
+   ========================================================================== */
+
+/* --- Mode 1: Question List — Liên Hoa Phật Quốc --- */
+.theme-qlist-container.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-container {
+  background: transparent;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-hero,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-hero {
+  background: #FFF8EC;
+  border: 2px solid #A77636;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(167, 118, 54, 0.08);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-eyebrow,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-eyebrow {
+  color: #A77636;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-title,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-title {
+  color: #3B2014;
+  font-family: var(--theme-font-heading, serif);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-desc,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-desc {
+  color: #6B5B4D;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-stats-pill,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-stats-pill {
+  background: #F7ECD6;
+  border: 1.5px solid rgba(167, 118, 54, 0.45);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-stat-item .stat-label,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-stat-item .stat-label {
+  color: #7A695A;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-stat-item .stat-value,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-stat-item .stat-value {
+  color: #3B2014;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-stat-item .val-mastered,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-stat-item .val-mastered {
+  color: #A77636;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-stat-item .val-answered,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-stat-item .val-answered {
+  color: #7B3026;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-stat-sep,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-stat-sep {
+  background: rgba(167, 118, 54, 0.3);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-search-input,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-search-input {
+  background: #FFF8EC;
+  border: 1.5px solid rgba(167, 118, 54, 0.5);
+  color: #28211C;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-search-input:focus,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-search-input:focus {
+  border-color: #D8B36A;
+  box-shadow: 0 0 12px rgba(216, 179, 106, 0.35);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-tab,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-tab {
+  background: #FFF8EC;
+  border-color: rgba(167, 118, 54, 0.4);
+  color: #6B5B4D;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-tab:hover,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-tab:hover {
+  background: #F7ECD6;
+  color: #A77636;
+  border-color: #A77636;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-tab.is-active,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-tab.is-active {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border-color: #D8B36A;
+  color: #FFF8EC;
+  box-shadow: 0 4px 14px rgba(123, 48, 38, 0.3);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-card,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-card {
+  background: #FFF8EC;
+  border: 1.5px solid #A77636;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-card:hover,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-card:hover {
+  border-color: #D8B36A;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 0 15px rgba(216, 179, 106, 0.25);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-card.is-current-active,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-card.is-current-active {
+  border-color: #D8B36A;
+  box-shadow: 0 0 0 2px #D8B36A, 0 0 16px rgba(216, 179, 106, 0.35);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .theme-qlist-card.is-mastered,
+[data-theme="lotus-zen-sanctuary"] .theme-qlist-card.is-mastered {
+  border-left: 4px solid #A77636;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .q-num-badge,
+[data-theme="lotus-zen-sanctuary"] .q-num-badge {
+  background: #F7ECD6;
+  color: #3B2014;
+  border: 1px solid rgba(167, 118, 54, 0.4);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .card-mastered-indicator,
+[data-theme="lotus-zen-sanctuary"] .card-mastered-indicator {
+  background: #FEF3C7;
+  color: #78350F;
+  border: 1px solid #FDE68A;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .card-answered-badge,
+[data-theme="lotus-zen-sanctuary"] .card-answered-badge {
+  background: #FEE2E2;
+  color: #7B3026;
+  border: 1px solid #FECACA;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .card-q-text,
+[data-theme="lotus-zen-sanctuary"] .card-q-text {
+  color: #28211C;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .card-opt-chip,
+[data-theme="lotus-zen-sanctuary"] .card-opt-chip {
+  background: #F7ECD6;
+  border-color: rgba(167, 118, 54, 0.3);
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .card-opt-chip .opt-key,
+[data-theme="lotus-zen-sanctuary"] .card-opt-chip .opt-key {
+  color: #A77636;
+}
+
+.theme-qlist-container.theme-lotus-zen-sanctuary .card-action-hint,
+[data-theme="lotus-zen-sanctuary"] .card-action-hint {
+  color: #A77636;
+}
+
+/* --- Mode 2: Grouped Learning — Liên Hoa Phật Quốc --- */
+.knowledge-groups-page.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .knowledge-groups-page {
+  background: transparent;
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-groups-heading h1,
+[data-theme="lotus-zen-sanctuary"] .knowledge-groups-heading h1 {
+  color: #D8B36A;
+  font-family: var(--theme-font-heading, serif);
+  text-shadow: 0 0 12px rgba(216, 179, 106, 0.35);
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-groups-eyebrow,
+[data-theme="lotus-zen-sanctuary"] .knowledge-groups-eyebrow {
+  color: #D8B36A;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-groups-note,
+[data-theme="lotus-zen-sanctuary"] .knowledge-groups-note {
+  background: #FFF8EC;
+  border: 1.5px solid rgba(167, 118, 54, 0.45);
+  color: #5C4738;
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-card,
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-card {
+  background: #FFF8EC;
+  border: 1.5px solid #A77636;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-card:hover:not(:disabled),
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-card:hover:not(:disabled) {
+  border-color: #D8B36A;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 18px rgba(216, 179, 106, 0.25);
+  transform: translateY(-3px);
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-number,
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-number {
+  color: #A77636;
+  font-weight: 800;
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-title,
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-title {
+  color: #28211C;
+  font-weight: 800;
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-summary,
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-summary {
+  color: #6B5B4D;
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-progress-track span,
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-progress-track span {
+  background: linear-gradient(90deg, #A77636 0%, #D8B36A 100%);
+  box-shadow: 0 0 8px rgba(216, 179, 106, 0.4);
+}
+
+.knowledge-groups-page.theme-lotus-zen-sanctuary .knowledge-group-action,
+[data-theme="lotus-zen-sanctuary"] .knowledge-group-action {
+  color: #A77636;
+  font-weight: 800;
+}
+
+/* --- Mode 3: Mistake Review — Liên Hoa Phật Quốc --- */
+.game-card-surface.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .game-card-surface {
+  background: #FFF8EC;
+  border: 2px solid #A77636;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
+}
+
+.theme-lotus-zen-sanctuary .game-splash-title,
+[data-theme="lotus-zen-sanctuary"] .game-splash-title {
+  color: #3B2014;
+  font-family: var(--theme-font-heading, serif);
+}
+
+.theme-lotus-zen-sanctuary .game-splash-subtitle,
+[data-theme="lotus-zen-sanctuary"] .game-splash-subtitle {
+  color: #6B5B4D;
+}
+
+.theme-lotus-zen-sanctuary .game-hud-mistakes {
+  background: #FFF8EC;
+  border: 1.5px solid rgba(167, 118, 54, 0.45);
+  border-radius: 16px;
+  padding: 12px 20px;
+}
+
+.theme-lotus-zen-sanctuary .mistake-counter-pill {
+  color: #A77636;
+  font-weight: 800;
+}
+
+.theme-lotus-zen-sanctuary .game-question-card,
+[data-theme="lotus-zen-sanctuary"] .game-question-card {
+  background: #FFF8EC;
+  border: 2px solid #A77636;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+}
+
+.theme-lotus-zen-sanctuary .game-q-text,
+[data-theme="lotus-zen-sanctuary"] .game-q-text {
+  color: #28211C;
+  font-weight: 700;
+}
+
+.theme-lotus-zen-sanctuary .game-q-opt-btn,
+[data-theme="lotus-zen-sanctuary"] .game-q-opt-btn {
+  background: #F7ECD6;
+  border: 1.5px solid rgba(167, 118, 54, 0.4);
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .game-q-opt-btn:hover:not(:disabled),
+[data-theme="lotus-zen-sanctuary"] .game-q-opt-btn:hover:not(:disabled) {
+  border-color: #D8B36A;
+  background: #FEF3C7;
+}
+
+/* --- Mode 4: Mock Exam FE — Liên Hoa Phật Quốc --- */
+.mock-exam-container.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-container {
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-setup-card,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-setup-card {
+  background: #FFF8EC;
+  border: 2px solid #A77636;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-badge-tag,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-badge-tag {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  color: #FFF8EC;
+  box-shadow: 0 0 10px rgba(167, 118, 54, 0.4);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-title,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-title {
+  color: #3B2014;
+  font-family: var(--theme-font-heading, serif);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-desc,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-desc {
+  color: #6B5B4D;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-number-input,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-number-input {
+  background: #F7ECD6;
+  border-color: rgba(167, 118, 54, 0.5);
+  color: #3B2014;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-number-input:focus,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-number-input:focus {
+  border-color: #D8B36A;
+  background: #FFFFFF;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-btn.primary,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-btn.primary {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1px solid #D8B36A;
+  color: #FFF8EC;
+  box-shadow: 0 6px 20px rgba(123, 48, 38, 0.35);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-header-bar,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-header-bar {
+  background: rgba(30, 18, 13, 0.95);
+  border: 1.5px solid rgba(167, 118, 54, 0.5);
+}
+
+.theme-lotus-zen-sanctuary .header-exam-badge,
+[data-theme="lotus-zen-sanctuary"] .header-exam-badge {
+  background: #A77636;
+  color: #FFF8EC;
+}
+
+.theme-lotus-zen-sanctuary .header-set-title,
+[data-theme="lotus-zen-sanctuary"] .header-set-title {
+  color: #D8B36A;
+}
+
+.theme-lotus-zen-sanctuary .header-progress-text,
+[data-theme="lotus-zen-sanctuary"] .header-progress-text {
+  color: #E7DDD0;
+}
+
+.theme-lotus-zen-sanctuary .exam-q-box,
+[data-theme="lotus-zen-sanctuary"] .exam-q-box,
+.theme-lotus-zen-sanctuary .exam-navigator-box,
+[data-theme="lotus-zen-sanctuary"] .exam-navigator-box,
+.theme-lotus-zen-sanctuary .mock-exam-result-card,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-result-card {
+  background: #FFF8EC;
+  border: 1.5px solid #A77636;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .exam-option-item,
+[data-theme="lotus-zen-sanctuary"] .exam-option-item {
+  background: #F7ECD6;
+  border-color: rgba(167, 118, 54, 0.4);
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .exam-option-item:hover,
+[data-theme="lotus-zen-sanctuary"] .exam-option-item:hover {
+  border-color: #D8B36A;
+  background: #FEF3C7;
+}
+
+.theme-lotus-zen-sanctuary .exam-option-item.is-selected,
+[data-theme="lotus-zen-sanctuary"] .exam-option-item.is-selected {
+  background: #FEF3C7;
+  border-color: #A77636;
+  box-shadow: 0 0 0 2px rgba(167, 118, 54, 0.3);
+}
+
+.theme-lotus-zen-sanctuary .nav-dot-btn.is-answered,
+[data-theme="lotus-zen-sanctuary"] .nav-dot-btn.is-answered {
+  background: #A77636;
+  color: #FFF8EC;
+}
+
+/* --- Mode 5: 60-Second Challenge — Liên Hoa Phật Quốc --- */
+.theme-lotus-zen-sanctuary .game-hud-score-value,
+[data-theme="lotus-zen-sanctuary"] .game-hud-score-value {
+  color: #A77636;
+}
+
+.theme-lotus-zen-sanctuary .game-hud-time-fill.timer-neon,
+[data-theme="lotus-zen-sanctuary"] .game-hud-time-fill.timer-neon {
+  background: linear-gradient(90deg, #A77636 0%, #D8B36A 100%);
+  box-shadow: 0 0 10px rgba(216, 179, 106, 0.5);
+}
+
+.theme-lotus-zen-sanctuary .game-btn-primary,
+[data-theme="lotus-zen-sanctuary"] .game-btn-primary {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1px solid #D8B36A;
+  color: #FFF8EC;
+  box-shadow: 0 6px 20px rgba(123, 48, 38, 0.3);
+}
+
+/* --- Mode 6: Leo Tháp 50 — Liên Hoa Phật Quốc --- */
+.tower-splash-card.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .tower-splash-card {
+  background: #FFF8EC;
+  border: 2px solid #A77636;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+.theme-lotus-zen-sanctuary .tower-splash-title,
+[data-theme="lotus-zen-sanctuary"] .tower-splash-title {
+  color: #3B2014;
+  font-family: var(--theme-font-heading, serif);
+}
+
+.theme-lotus-zen-sanctuary .tower-btn-start,
+[data-theme="lotus-zen-sanctuary"] .tower-btn-start {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1px solid #D8B36A;
+  color: #FFF8EC;
+  box-shadow: 0 8px 25px rgba(123, 48, 38, 0.35);
+}
+
+.tower-game-wrapper.theme-lotus-zen-sanctuary .tower-side-pane,
+[data-theme="lotus-zen-sanctuary"] .tower-side-pane {
+  background: rgba(30, 18, 13, 0.95);
+  border: 1.5px solid rgba(167, 118, 54, 0.45);
+  color: #FFF8EC;
+}
+
+.tower-game-wrapper.theme-lotus-zen-sanctuary .tower-battle-pane,
+[data-theme="lotus-zen-sanctuary"] .tower-battle-pane {
+  background: #FFF8EC;
+  border: 1.5px solid #A77636;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  color: #28211C;
+}
+
+.tower-game-wrapper.theme-lotus-zen-sanctuary .tower-opt-btn,
+[data-theme="lotus-zen-sanctuary"] .tower-opt-btn {
+  background: #F7ECD6;
+  border: 1.5px solid rgba(167, 118, 54, 0.4);
+  color: #28211C;
+}
+
+.tower-game-wrapper.theme-lotus-zen-sanctuary .tower-opt-btn:hover:not(:disabled),
+[data-theme="lotus-zen-sanctuary"] .tower-opt-btn:hover:not(:disabled) {
+  border-color: #D8B36A;
+  background: #FEF3C7;
+}
+
+.tower-result-card.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .tower-result-card {
+  background: #FFF8EC;
+  border: 2px solid #A77636;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* --- Mode 7: Đúng/Sai 5s — Liên Hoa Phật Quốc --- */
+.theme-lotus-zen-sanctuary .truefalse-context-box,
+[data-theme="lotus-zen-sanctuary"] .truefalse-context-box {
+  background: #F7ECD6;
+  border: 1px solid rgba(167, 118, 54, 0.4);
+}
+
+.theme-lotus-zen-sanctuary .truefalse-label,
+[data-theme="lotus-zen-sanctuary"] .truefalse-label {
+  color: #A77636;
+  font-weight: 800;
+}
+
+.theme-lotus-zen-sanctuary .truefalse-statement-box,
+[data-theme="lotus-zen-sanctuary"] .truefalse-statement-box {
+  background: #FFF8EC;
+  border: 1.5px dashed #A77636;
+}
+
+.theme-lotus-zen-sanctuary .truefalse-statement-text,
+[data-theme="lotus-zen-sanctuary"] .truefalse-statement-text {
+  color: #3B2014;
+  font-weight: 800;
+}
+
+.theme-lotus-zen-sanctuary .tf-btn.tf-btn-true,
+[data-theme="lotus-zen-sanctuary"] .tf-btn.tf-btn-true {
+  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
+  border: 1.5px solid #86EFAC;
+  color: #F0FDF4;
+}
+
+.theme-lotus-zen-sanctuary .tf-btn.tf-btn-false,
+[data-theme="lotus-zen-sanctuary"] .tf-btn.tf-btn-false {
+  background: linear-gradient(135deg, #7B3026 0%, #64251D 100%);
+  border: 1.5px solid #FCA5A5;
+  color: #FFF8EC;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE OPTIMIZATIONS ACROSS ALL THEMES
+   ========================================================================== */
+@media (max-width: 768px) {
+  .theme-qlist-hero {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .theme-qlist-stats-pill {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .theme-qlist-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-qlist-search-wrap {
+    max-width: 100%;
+  }
+
+  .theme-qlist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dongson-exam-watermark,
+  .dongson-tower-watermark,
+  .dongson-tf-watermark {
+    width: 260px;
+    height: 260px;
+  }
+}

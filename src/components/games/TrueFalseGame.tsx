@@ -11,6 +11,22 @@ import {
   playWrongSound,
   playVictoryFanfare,
 } from '../../utils/soundEffects';
+import { useTheme } from '../../context/ThemeContext';
+import ZenTempleWatermark from '../ZenTempleWatermark';
+
+function DongSonDrumSvg({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="currentColor" strokeWidth="3" opacity="0.4" />
+      <circle cx="200" cy="200" r="160" stroke="currentColor" strokeWidth="2" strokeDasharray="6 4" opacity="0.35" />
+      <circle cx="200" cy="200" r="125" stroke="currentColor" strokeWidth="2" opacity="0.3" />
+      <circle cx="200" cy="200" r="90" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.3" />
+      <circle cx="200" cy="200" r="45" stroke="currentColor" strokeWidth="2" opacity="0.35" />
+      <polygon points="200,165 208,192 235,200 208,208 200,235 192,208 165,200 192,192" fill="currentColor" opacity="0.35" />
+      <polygon points="200,172 205,195 228,200 205,205 200,228 195,205 172,200 195,195" fill="currentColor" opacity="0.25" transform="rotate(45 200 200)" />
+    </svg>
+  );
+}
 
 interface TrueFalseGameProps {
   setId: string;
@@ -32,6 +48,7 @@ export default function TrueFalseGame({
   onBackToStudy,
   onOpenMistakes,
 }: TrueFalseGameProps) {
+  const { theme } = useTheme();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);
@@ -184,26 +201,85 @@ export default function TrueFalseGame({
 
   // 1. Splash Screen
   if (!isPlaying && !isGameOver) {
+    const splashInfo = {
+      'hon-viet': {
+        orb: '🎯',
+        title: 'PHẢN XẠ NHANH 5S — ĐÚNG HAY SAI',
+        subtitle: 'Rèn luyện phản xạ phát hiện từ khóa bẫy! Hệ thống ghép ngẫu nhiên câu hỏi với một phương án — Bạn chỉ cần phán đoán Đúng hay Sai trong 5 giây!',
+        rule1Title: '5 Giây Khắc Cốt Ghi Tâm',
+        rule1Desc: 'Không cần đọc hết 4 phương án, chỉ tập trung vào 1 mệnh đề duy nhất',
+        rule2Title: 'Phím Tắt 1 & 2 Thần Tốc',
+        rule2Desc: 'Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI',
+        buttonText: '🎯 BẮT ĐẦU BLITZ 5S (Space)',
+      },
+      'fantasy-academy': {
+        orb: '⚡',
+        title: 'PHÁN QUYẾT MA PHÁP 5S (TRUE / FALSE)',
+        subtitle: 'Thẩm định chân lý cổ ngữ trước khi mana cạn kiệt! 5 giây để niệm chú Đúng hoặc Sai trước phong ấn bí thuật!',
+        rule1Title: '5 Giây Kích Hoạt Mana',
+        rule1Desc: 'Phân tích chân tướng ma thuật, nhạy bén phán quyết trong 5 giây',
+        rule2Title: 'Khắc Chú Phím 1 & 2',
+        rule2Desc: 'Phím [1]/[←] để Niệm Đúng · Phím [2]/[→] để Niệm Sai',
+        buttonText: '⚡ KHAI MỞ PHÁN QUYẾT 5S (Space)',
+      },
+      'cozy-night': {
+        orb: '🌙',
+        title: 'ĐÚNG HAY SAI 5 GIÂY — FOCUS NIGHT',
+        subtitle: 'Rèn luyện nhịp học tập tập trung tĩnh lặng, nhận diện câu hỏi nhanh như ánh chớp sao đêm trong 5 giây.',
+        rule1Title: '5s Nhịp Tim Tĩnh Lặng',
+        rule1Desc: 'Đọc lướt mệnh đề trọng tâm, rèn phản xạ chính xác tuyệt đối',
+        rule2Title: 'Chạm Nhẹ Phím 1 & 2',
+        rule2Desc: 'Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI',
+        buttonText: '🌙 BẮT ĐẦU LUYỆN 5S (Space)',
+      },
+      'lotus-zen-sanctuary': {
+        orb: '🪷',
+        title: '5 GIÂY QUYẾT ĐỊNH — KHOẢNH KHẮC GIÁC NGỘ',
+        subtitle: 'Rèn tâm nhạy bén và trực giác thấu suốt! Hệ thống ghép ngẫu nhiên câu hỏi với một phương án — Bạn chỉ cần định tâm phán đoán Đúng hay Sai trong 5 giây!',
+        rule1Title: '5 Giây Nhập Định',
+        rule1Desc: 'Tập trung tâm trí vào mệnh đề duy nhất, gạt bỏ mọi dao động',
+        rule2Title: 'Phím Tắt 1 & 2 Thần Tốc',
+        rule2Desc: 'Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI',
+        buttonText: '🪷 KHAI MỞ 5S ĐỊNH TÂM (Space)',
+      },
+      default: {
+        orb: '🎯',
+        title: 'Đúng Hay Sai 5 Giây',
+        subtitle: 'Rèn luyện phản xạ phát hiện từ khóa bẫy! Hệ thống ghép ngẫu nhiên câu hỏi với một phương án — Bạn chỉ cần phán đoán Đúng hay Sai trong 5 giây!',
+        rule1Title: 'Tốc độ cực nhanh',
+        rule1Desc: 'Không cần đọc hết 4 phương án, chỉ tập trung vào 1 mệnh đề duy nhất',
+        rule2Title: 'Điều khiển thần tốc',
+        rule2Desc: 'Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI',
+        buttonText: '🎯 BẮT ĐẦU BLITZ 5S (Space)',
+      },
+    };
+
+    const currentSplash = splashInfo[theme] || splashInfo.default;
+
     return (
-      <div className="game-card-surface game-splash-box">
+      <div className={`game-card-surface game-splash-box theme-${theme}`}>
+        {theme === 'hon-viet' && <DongSonDrumSvg className="dongson-tf-watermark" />}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-qlist-watermark" aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+            <ZenTempleWatermark size={500} opacity={0.045} color="#A77636" />
+          </div>
+        )}
         <div className="game-splash-header">
-          <div className="game-icon-orb orb-neon">🎯</div>
-          <h2 className="game-splash-title">Đúng Hay Sai 5 Giây</h2>
-          <p className="game-splash-subtitle">
-            Rèn luyện phản xạ phát hiện từ khóa bẫy! Hệ thống ghép ngẫu nhiên câu hỏi với một phương án — Bạn chỉ cần phán đoán Đúng hay Sai trong 5 giây!
-          </p>
+          <div className="game-icon-orb orb-neon">{currentSplash.orb}</div>
+          <h2 className="game-splash-title">{currentSplash.title}</h2>
+          <p className="game-splash-subtitle">{currentSplash.subtitle}</p>
         </div>
 
         <div className="game-rule-cards">
           <div className="game-rule-card">
             <span className="rule-badge rule-green">5 Giây / Câu</span>
-            <strong>Tốc độ cực nhanh</strong>
-            <p>Không cần đọc hết 4 phương án, chỉ tập trung vào 1 mệnh đề duy nhất</p>
+            <strong>{currentSplash.rule1Title}</strong>
+            <p>{currentSplash.rule1Desc}</p>
           </div>
           <div className="game-rule-card">
             <span className="rule-badge rule-purple">Phím tắt 1 & 2</span>
-            <strong>Điều khiển thần tốc</strong>
-            <p>Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI</p>
+            <strong>{currentSplash.rule2Title}</strong>
+            <p>{currentSplash.rule2Desc}</p>
           </div>
         </div>
 
@@ -213,7 +289,7 @@ export default function TrueFalseGame({
 
         <div className="game-splash-actions">
           <button type="button" className="game-btn-primary game-btn-large" onClick={startNewBlitz}>
-            🎯 BẮT ĐẦU BLITZ 5S (Space)
+            {currentSplash.buttonText}
           </button>
           <button type="button" className="game-btn-ghost" onClick={onBackToStudy}>
             ← Quay lại học chuẩn
@@ -225,9 +301,23 @@ export default function TrueFalseGame({
 
   // 2. Game Over
   if (isGameOver) {
+    const crownTitles = {
+      'hon-viet': '🏛️ BẢNG VÀNG QUANG VINH — HOÀN THÀNH 5S BLITZ!',
+      'fantasy-academy': '⚡ THẨM ĐỊNH HOÀN TẤT — DANH HIỆU ĐẠI TRIẾT GIA!',
+      'cozy-night': '🌙 HOÀN THÀNH PHIÊN TẬP TRUNG ĐÊM 5S!',
+      'lotus-zen-sanctuary': '🪷 CHỨNG ĐẮC TUỆ GIÁC — HOÀN THÀNH 5S ĐỊNH TÂM!',
+      default: '🎉 HOÀN THÀNH BLITZ!',
+    };
+
     return (
-      <div className="game-card-surface game-result-box">
-        <div className="game-result-crown">🎉 HOÀN THÀNH BLITZ!</div>
+      <div className={`game-card-surface game-result-box theme-${theme}`}>
+        {theme === 'hon-viet' && <DongSonDrumSvg className="dongson-tf-watermark" />}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-qlist-watermark" aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+            <ZenTempleWatermark size={500} opacity={0.045} color="#A77636" />
+          </div>
+        )}
+        <div className="game-result-crown">{crownTitles[theme] || '🎉 HOÀN THÀNH BLITZ!'}</div>
         <h2 className="game-result-score">{score.toLocaleString()} <span className="game-score-unit">điểm</span></h2>
 
         <div className="game-stats-grid">
@@ -264,7 +354,7 @@ export default function TrueFalseGame({
   if (!currentItem) return null;
 
   return (
-    <div className="game-gameplay-container">
+    <div className={`game-gameplay-container theme-${theme}`}>
       {/* HUD Bar */}
       <div className="game-hud-bar">
         <div className={`game-hud-timer-badge ${secondsLeft <= 2 ? 'timer-danger' : 'timer-normal'}`}>

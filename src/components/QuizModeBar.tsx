@@ -3,6 +3,7 @@ import { isSoundEnabled, setSoundEnabled } from '../utils/gameStorage';
 
 export type QuizPlayMode =
   | 'study' // Trắc nghiệm chuẩn
+  | 'question_list' // Danh sách câu hỏi
   | 'mock_exam' // Thi thử FE
   | 'time_attack' // Đấu trí 60s
   | 'survival_tower' // Leo tháp sinh tồn
@@ -48,25 +49,23 @@ export default function QuizModeBar({
 
       <button
         type="button"
-        className="quiz-mode-pill-btn"
-        onClick={onOpenQuestionGrid}
-        title="Mở lưới danh sách câu hỏi"
+        className={`quiz-mode-pill-btn ${activeMode === 'question_list' ? 'is-active' : ''}`}
+        onClick={() => onChangeMode('question_list')}
+        title="Xem danh sách toàn bộ câu hỏi"
       >
         <span className="quiz-mode-icon">📋</span>
         <span className="quiz-mode-text">Danh sách câu</span>
       </button>
 
-      {onOpenKnowledgeGroups && (
-        <button
-          type="button"
-          className="quiz-mode-pill-btn knowledge-groups-mode-btn"
-          onClick={onOpenKnowledgeGroups}
-          title="Chọn một trong 16 nhóm kiến thức"
-        >
-          <span className="quiz-mode-icon">📚</span>
-          <span className="quiz-mode-text">{knowledgeGroupsLabel}</span>
-        </button>
-      )}
+      <button
+        type="button"
+        className="quiz-mode-pill-btn knowledge-groups-mode-btn"
+        onClick={onOpenKnowledgeGroups || onOpenQuestionGrid}
+        title={onOpenKnowledgeGroups ? 'Chọn một trong 16 nhóm kiến thức' : 'Học theo nhóm câu hỏi'}
+      >
+        <span className="quiz-mode-icon">📚</span>
+        <span className="quiz-mode-text">{knowledgeGroupsLabel}</span>
+      </button>
 
       <button
         type="button"

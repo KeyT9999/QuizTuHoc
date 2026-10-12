@@ -34,6 +34,7 @@ import {
 } from './utils/courseStorage';
 import { useAppRouter } from './utils/router';
 import WoodenFish from './components/WoodenFish';
+import { useTheme } from './context/ThemeContext';
 import './App.css';
 
 interface KnowledgeGroupConfig {
@@ -93,6 +94,7 @@ function updateKnowledgeGroupUrlState(
 
 export default function App() {
   const { route, navigate } = useAppRouter();
+  const { theme } = useTheme();
 
   const [courses, setCourses] = useState<Course[]>(() => [
     ...DEFAULT_COURSES,
@@ -341,7 +343,7 @@ export default function App() {
   };
 
   return (
-    <div className="app">
+    <div className="app" data-theme={theme}>
       <main className="app-main">
         {/* 1. Màn hình danh sách môn học */}
         {route.type === 'course_list' && (

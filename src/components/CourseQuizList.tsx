@@ -3,6 +3,9 @@ import type { Course } from '../data/courses';
 import type { QuizSetInfo } from '../data/quizSets';
 import { getQuizSetProgress, calculateCourseProgress } from '../utils/courseStorage';
 import PassedBadge from './PassedBadge';
+import { useTheme } from '../context/ThemeContext';
+import ZenTempleWatermark from './ZenTempleWatermark';
+import LotusFlowerSvg from './LotusFlowerSvg';
 import './CourseQuizList.css';
 
 interface CourseQuizListProps {
@@ -60,8 +63,189 @@ const CARD_COLOR_THEMES = [
   },
 ];
 
+function getCardColorTheme(index: number, activeTheme: string) {
+  if (activeTheme === 'hon-viet') {
+    const HON_VIET_ACCENTS = [
+      {
+        accent: '#b91c1c',
+        borderLeft: '#d97706',
+        badgeBg: 'rgba(254, 243, 199, 0.85)',
+        badgeText: '#851015',
+        badgeBorder: 'rgba(217, 119, 6, 0.4)',
+        btnBg: '#991b1b',
+        btnHover: '#7f1d1d',
+      },
+      {
+        accent: '#d97706',
+        borderLeft: '#b91c1c',
+        badgeBg: 'rgba(254, 243, 199, 0.85)',
+        badgeText: '#92400e',
+        badgeBorder: 'rgba(217, 119, 6, 0.4)',
+        btnBg: '#991b1b',
+        btnHover: '#7f1d1d',
+      },
+      {
+        accent: '#047857',
+        borderLeft: '#d97706',
+        badgeBg: 'rgba(236, 253, 245, 0.85)',
+        badgeText: '#065f46',
+        badgeBorder: 'rgba(16, 185, 129, 0.4)',
+        btnBg: '#991b1b',
+        btnHover: '#7f1d1d',
+      },
+      {
+        accent: '#c2410c',
+        borderLeft: '#b91c1c',
+        badgeBg: 'rgba(255, 237, 213, 0.85)',
+        badgeText: '#9a3412',
+        badgeBorder: 'rgba(234, 88, 12, 0.4)',
+        btnBg: '#991b1b',
+        btnHover: '#7f1d1d',
+      },
+    ];
+    return HON_VIET_ACCENTS[index % HON_VIET_ACCENTS.length];
+  }
+
+  if (activeTheme === 'fantasy-academy') {
+    const FANTASY_ACCENTS = [
+      {
+        accent: '#f59e0b',
+        borderLeft: '#f59e0b',
+        badgeBg: 'rgba(217, 119, 6, 0.18)',
+        badgeText: '#fef3c7',
+        badgeBorder: 'rgba(217, 119, 6, 0.45)',
+        btnBg: '#d97706',
+        btnHover: '#b45309',
+      },
+      {
+        accent: '#10b981',
+        borderLeft: '#10b981',
+        badgeBg: 'rgba(16, 185, 129, 0.18)',
+        badgeText: '#a7f3d0',
+        badgeBorder: 'rgba(16, 185, 129, 0.45)',
+        btnBg: '#059669',
+        btnHover: '#047857',
+      },
+      {
+        accent: '#3b82f6',
+        borderLeft: '#3b82f6',
+        badgeBg: 'rgba(59, 130, 246, 0.18)',
+        badgeText: '#bfdbfe',
+        badgeBorder: 'rgba(59, 130, 246, 0.45)',
+        btnBg: '#2563eb',
+        btnHover: '#1d4ed8',
+      },
+      {
+        accent: '#ec4899',
+        borderLeft: '#ec4899',
+        badgeBg: 'rgba(236, 72, 153, 0.18)',
+        badgeText: '#fbcfe8',
+        badgeBorder: 'rgba(236, 72, 153, 0.45)',
+        btnBg: '#db2777',
+        btnHover: '#be185d',
+      },
+    ];
+    return FANTASY_ACCENTS[index % FANTASY_ACCENTS.length];
+  }
+
+  if (activeTheme === 'cozy-night') {
+    const COZY_ACCENTS = [
+      {
+        accent: '#38bdf8',
+        borderLeft: '#38bdf8',
+        badgeBg: 'rgba(56, 189, 248, 0.16)',
+        badgeText: '#bae6fd',
+        badgeBorder: 'rgba(56, 189, 248, 0.35)',
+        btnBg: '#0284c7',
+        btnHover: '#0369a1',
+      },
+      {
+        accent: '#818cf8',
+        borderLeft: '#818cf8',
+        badgeBg: 'rgba(129, 140, 248, 0.16)',
+        badgeText: '#e0e7ff',
+        badgeBorder: 'rgba(129, 140, 248, 0.35)',
+        btnBg: '#6366f1',
+        btnHover: '#4f46e5',
+      },
+      {
+        accent: '#f472b6',
+        borderLeft: '#f472b6',
+        badgeBg: 'rgba(244, 114, 182, 0.16)',
+        badgeText: '#fce7f3',
+        badgeBorder: 'rgba(244, 114, 182, 0.35)',
+        btnBg: '#db2777',
+        btnHover: '#be185d',
+      },
+      {
+        accent: '#34d399',
+        borderLeft: '#34d399',
+        badgeBg: 'rgba(52, 211, 153, 0.16)',
+        badgeText: '#d1fae5',
+        badgeBorder: 'rgba(52, 211, 153, 0.35)',
+        btnBg: '#059669',
+        btnHover: '#047857',
+      },
+    ];
+    return COZY_ACCENTS[index % COZY_ACCENTS.length];
+  }
+
+  if (activeTheme === 'lotus-zen-sanctuary') {
+    const LOTUS_ZEN_ACCENTS = [
+      {
+        accent: '#A77636',
+        borderLeft: '#A77636',
+        badgeBg: 'rgba(167, 118, 54, 0.18)',
+        badgeText: '#F7ECD6',
+        badgeBorder: 'rgba(167, 118, 54, 0.45)',
+        btnBg: '#A77636',
+        btnHover: '#8C5E22',
+      },
+      {
+        accent: '#42665C',
+        borderLeft: '#42665C',
+        badgeBg: 'rgba(66, 102, 92, 0.18)',
+        badgeText: '#A8D5C8',
+        badgeBorder: 'rgba(66, 102, 92, 0.45)',
+        btnBg: '#42665C',
+        btnHover: '#2E4C44',
+      },
+      {
+        accent: '#7B3026',
+        borderLeft: '#7B3026',
+        badgeBg: 'rgba(123, 48, 38, 0.18)',
+        badgeText: '#F5C6C0',
+        badgeBorder: 'rgba(123, 48, 38, 0.45)',
+        btnBg: '#7B3026',
+        btnHover: '#5E221B',
+      },
+      {
+        accent: '#D8B36A',
+        borderLeft: '#D8B36A',
+        badgeBg: 'rgba(216, 179, 106, 0.18)',
+        badgeText: '#FFF8EC',
+        badgeBorder: 'rgba(216, 179, 106, 0.45)',
+        btnBg: '#C29849',
+        btnHover: '#A77636',
+      },
+    ];
+    return LOTUS_ZEN_ACCENTS[index % LOTUS_ZEN_ACCENTS.length];
+  }
+
+  return CARD_COLOR_THEMES[index % CARD_COLOR_THEMES.length];
+}
+
 // Academic study illustration for hero right side
-function CourseHeroVisual() {
+function CourseHeroVisual({ theme }: { theme?: string }) {
+  if (theme === 'lotus-zen-sanctuary') {
+    return (
+      <div className="course-hero-lotus-visual" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '320px', height: '220px', position: 'relative' }}>
+        <div style={{ position: 'absolute', width: '220px', height: '220px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(216,179,106,0.25) 0%, rgba(167,118,54,0.06) 55%, transparent 70%)', filter: 'blur(10px)', animation: 'lotusGlowPulse 5s ease-in-out infinite' }} />
+        <LotusFlowerSvg size={160} glow={true} color="#D8B36A" />
+      </div>
+    );
+  }
+
   return (
     <svg
       className="course-hero-illustration"
@@ -267,6 +451,7 @@ export default function CourseQuizList({
   onCreateQuizSet,
   onDeleteQuizSet,
 }: CourseQuizListProps) {
+  const { theme: activeTheme, openThemeModal } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortType>('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -351,7 +536,12 @@ export default function CourseQuizList({
   const ringOffset = ringCircumference - (ringCircumference * Math.min(courseProgress.percent, 100)) / 100;
 
   return (
-    <div className="course-quiz-dashboard">
+    <div className={`course-quiz-dashboard theme-${activeTheme} course-${activeTheme}`}>
+      {activeTheme === 'lotus-zen-sanctuary' && (
+        <div className="course-theme-watermark" aria-hidden="true" style={{ position: 'absolute', top: 100, right: 20, opacity: 0.035, pointerEvents: 'none' }}>
+          <ZenTempleWatermark size={680} opacity={0.035} color="#A77636" />
+        </div>
+      )}
       {/* ====================================================================
           1. HEADER / NAVBAR
           ==================================================================== */}
@@ -419,6 +609,17 @@ export default function CourseQuizList({
               <span>Thống kê</span>
             </button>
 
+            {/* Global Theme Selector Button */}
+            <button
+              type="button"
+              className="global-theme-toggle-btn"
+              onClick={openThemeModal}
+              title="Đổi giao diện học tập"
+            >
+              <span>🎨</span>
+              <span>Giao diện</span>
+            </button>
+
             {/* Avatar / User Menu */}
             <div className="course-user-menu" title="Tài khoản cá nhân">
               <div className="course-user-avatar">V</div>
@@ -446,7 +647,17 @@ export default function CourseQuizList({
             </div>
 
             <div className="course-hero-info">
-              <span className="course-hero-badge">Môn {course.code}</span>
+              <span className="course-hero-badge">
+                {activeTheme === 'hon-viet'
+                  ? `🇻🇳 DI SẢN · MÔN ${course.code}`
+                  : activeTheme === 'fantasy-academy'
+                  ? `⚔️ BÍ TỊCH · PHÓ BẢN ${course.code}`
+                  : activeTheme === 'cozy-night'
+                  ? `☕ GÓC HỌC · MÔN ${course.code}`
+                  : activeTheme === 'lotus-zen-sanctuary'
+                  ? `🪷 TÀNG KINH CÁC · MÔN ${course.code}`
+                  : `Môn ${course.code}`}
+              </span>
               <h1 className="course-hero-title">{course.name}</h1>
               <p className="course-hero-desc">{course.description}</p>
             </div>
@@ -454,7 +665,7 @@ export default function CourseQuizList({
 
           {/* Right Visual (Academic study 3D-styled SVG illustration) */}
           <div className="course-hero-right">
-            <CourseHeroVisual />
+            <CourseHeroVisual theme={activeTheme} />
           </div>
         </section>
 
@@ -674,8 +885,8 @@ export default function CourseQuizList({
             const isCustom = set.id.startsWith('custom_') || set.category === 'Bộ đề tự tạo';
             const isPassed = Boolean((set as any).isPassed || (set as any).passed);
 
-            // Cycle through 4 color accents
-            const theme = CARD_COLOR_THEMES[index % CARD_COLOR_THEMES.length];
+            // Cycle through theme-adapted color accents
+            const cardTheme = getCardColorTheme(index, activeTheme);
 
             // Badge text (from set.badge or standard count)
             const badgeText = set.badge || (total > 0 ? `Đề chuẩn ${total} câu` : set.category || `Môn ${course.code}`);
@@ -685,13 +896,13 @@ export default function CourseQuizList({
                 key={set.id}
                 className="exam-card"
                 style={{
-                  '--card-accent': theme.accent,
-                  '--card-border-left': theme.borderLeft,
-                  '--card-badge-bg': theme.badgeBg,
-                  '--card-badge-text': theme.badgeText,
-                  '--card-badge-border': theme.badgeBorder,
-                  '--card-btn-bg': theme.btnBg,
-                  '--card-btn-hover': theme.btnHover,
+                  '--card-accent': cardTheme.accent,
+                  '--card-border-left': cardTheme.borderLeft,
+                  '--card-badge-bg': cardTheme.badgeBg,
+                  '--card-badge-text': cardTheme.badgeText,
+                  '--card-badge-border': cardTheme.badgeBorder,
+                  '--card-btn-bg': cardTheme.btnBg,
+                  '--card-btn-hover': cardTheme.btnHover,
                 } as React.CSSProperties}
                 onClick={() => onSelectSet(set)}
                 tabIndex={0}

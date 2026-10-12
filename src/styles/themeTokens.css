@@ -1,0 +1,1518 @@
+/* ==========================================================================
+   GLOBAL DESIGN TOKENS & MULTI-THEME ENGINE FOR KEYT
+   Supported Themes:
+     1. default (Modern Light / Classic PMG)
+     2. fantasy-academy (Gaming Dark / Thư Tịch Cổ Châu Âu)
+     3. cozy-night (Lofi Anime Dark / Phòng Học Đêm Ấm Cúng)
+     4. hon-viet (Vietnam Heritage / Hồn Việt Đỏ Son Vàng Kim)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DEFAULT THEME — MODERN LIGHT (Classic PMG)
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="default"] {
+  --theme-id: "default";
+  --theme-bg-body: #f8fafc;
+  --theme-bg-body-img: radial-gradient(circle at 12% 0%, rgba(79, 70, 229, 0.05), transparent 32rem),
+    radial-gradient(circle at 88% 20%, rgba(59, 130, 246, 0.04), transparent 30rem);
+  --theme-bg-surface: #ffffff;
+  --theme-bg-card: #ffffff;
+  --theme-bg-card-hover: #ffffff;
+  --theme-bg-header: rgba(255, 255, 255, 0.94);
+  --theme-bg-subtle: #f1f5f9;
+  --theme-bg-input: #ffffff;
+  --theme-border: #e2e8f0;
+  --theme-border-hover: #cbd5e1;
+  --theme-border-accent: #6366f1;
+  --theme-text-primary: #0f172a;
+  --theme-text-secondary: #475569;
+  --theme-text-muted: #64748b;
+  --theme-text-sub: #94a3b8;
+  --theme-accent-primary: #4f46e5;
+  --theme-accent-primary-hover: #4338ca;
+  --theme-accent-soft: #eef2ff;
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --theme-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --theme-shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.08);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* --------------------------------------------------------------------------
+   2. FANTASY ACADEMY — GAMING DARK (Thư Viện Ma Pháp & Hiệp Sĩ RPG)
+   -------------------------------------------------------------------------- */
+[data-theme="fantasy-academy"] {
+  --theme-id: "fantasy-academy";
+  --theme-bg-body: #07120c;
+  --theme-bg-body-img: 
+    linear-gradient(rgba(7, 18, 12, 0.82), rgba(7, 18, 12, 0.9)),
+    url('../assets/fantasy_library_bg.jpg');
+  --theme-bg-surface: rgba(13, 27, 20, 0.94);
+  --theme-bg-card: rgba(15, 33, 24, 0.92);
+  --theme-bg-card-hover: rgba(22, 46, 34, 0.97);
+  --theme-bg-header: rgba(8, 18, 13, 0.96);
+  --theme-bg-subtle: rgba(255, 255, 255, 0.06);
+  --theme-bg-input: rgba(10, 24, 17, 0.92);
+  --theme-border: rgba(217, 119, 6, 0.32);
+  --theme-border-hover: rgba(245, 158, 11, 0.65);
+  --theme-border-accent: #d97706;
+  --theme-text-primary: #fef3c7;
+  --theme-text-secondary: #e2e8f0;
+  --theme-text-muted: #94a3b8;
+  --theme-text-sub: #64748b;
+  --theme-accent-primary: #d97706;
+  --theme-accent-primary-hover: #f59e0b;
+  --theme-accent-soft: rgba(217, 119, 6, 0.16);
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --theme-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 16px rgba(217, 119, 6, 0.18);
+  --theme-shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 28px rgba(217, 119, 6, 0.28);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* --------------------------------------------------------------------------
+   3. COZY NIGHT — LOFI ANIME DARK (Phòng Học Đêm Ấm Cúng & Kính Mờ)
+   -------------------------------------------------------------------------- */
+[data-theme="cozy-night"] {
+  --theme-id: "cozy-night";
+  --theme-bg-body: #090d16;
+  --theme-bg-body-img:
+    linear-gradient(rgba(11, 15, 25, 0.76), rgba(11, 15, 25, 0.88)),
+    url('../assets/lofi_cozy_night.jpg');
+  --theme-bg-surface: rgba(17, 24, 39, 0.88);
+  --theme-bg-card: rgba(24, 33, 53, 0.85);
+  --theme-bg-card-hover: rgba(30, 42, 68, 0.94);
+  --theme-bg-header: rgba(15, 23, 42, 0.95);
+  --theme-bg-subtle: rgba(255, 255, 255, 0.06);
+  --theme-bg-input: rgba(15, 23, 42, 0.9);
+  --theme-border: rgba(255, 255, 255, 0.12);
+  --theme-border-hover: rgba(129, 140, 248, 0.5);
+  --theme-border-accent: #818cf8;
+  --theme-text-primary: #f1f5f9;
+  --theme-text-secondary: #cbd5e1;
+  --theme-text-muted: #94a3b8;
+  --theme-text-sub: #64748b;
+  --theme-accent-primary: #6366f1;
+  --theme-accent-primary-hover: #4f46e5;
+  --theme-accent-soft: rgba(99, 102, 241, 0.16);
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --theme-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(99, 102, 241, 0.18);
+  --theme-shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 28px rgba(99, 102, 241, 0.28);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* --------------------------------------------------------------------------
+   4. HỒN VIỆT — VIETNAM HERITAGE (Đỏ Son, Vàng Kim, Trống Đồng, Hoa Sen)
+   -------------------------------------------------------------------------- */
+[data-theme="hon-viet"] {
+  --theme-id: "hon-viet";
+  --theme-bg-body: #180406;
+  --theme-bg-body-img:
+    radial-gradient(circle at 50% 12%, rgba(245, 158, 11, 0.1), transparent 40%),
+    radial-gradient(circle at 10% 85%, rgba(185, 28, 28, 0.18), transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(185, 28, 28, 0.18), transparent 40%),
+    linear-gradient(180deg, #250508 0%, #180305 50%, #0e0203 100%);
+  --theme-bg-surface: #fbf8f2;
+  --theme-bg-card: rgba(255, 255, 255, 0.95);
+  --theme-bg-card-hover: #ffffff;
+  --theme-bg-header: linear-gradient(90deg, #70060a 0%, #8f0d12 40%, #5e0508 100%);
+  --theme-bg-subtle: #f8f1e8;
+  --theme-bg-input: #ffffff;
+  --theme-border: rgba(245, 158, 11, 0.38);
+  --theme-border-hover: #b91c1c;
+  --theme-border-accent: #b91c1c;
+  --theme-text-primary: #1c1917;
+  --theme-text-secondary: #44403c;
+  --theme-text-muted: #78716c;
+  --theme-text-sub: #a8a29e;
+  --theme-accent-primary: #b91c1c;
+  --theme-accent-primary-hover: #991b1b;
+  --theme-accent-soft: rgba(185, 28, 28, 0.12);
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.12);
+  --theme-shadow-md: 0 6px 20px rgba(120, 2, 6, 0.18), 0 0 12px rgba(245, 158, 11, 0.15);
+  --theme-shadow-lg: 0 12px 32px rgba(120, 2, 6, 0.28), 0 0 22px rgba(245, 158, 11, 0.22);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* ==========================================================================
+   GLOBAL THEME APPLICATION TO ROOT, BODY & CONTAINERS
+   ========================================================================== */
+html,
+body,
+#root {
+  background-color: var(--theme-bg-body) !important;
+  color: var(--theme-text-primary);
+  transition: background-color 0.25s ease, color 0.2s ease;
+}
+
+.app {
+  background-color: var(--theme-bg-body) !important;
+  background-image: var(--theme-bg-body-img) !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-attachment: fixed !important;
+  color: var(--theme-text-primary) !important;
+  min-height: 100vh;
+}
+
+.home-dashboard,
+.course-quiz-dashboard {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* ==========================================================================
+   GLOBAL NAVBAR STYLES
+   ========================================================================== */
+[data-theme="fantasy-academy"] .home-navbar,
+[data-theme="fantasy-academy"] .course-nav,
+[data-theme="cozy-night"] .home-navbar,
+[data-theme="cozy-night"] .course-nav {
+  background-color: var(--theme-bg-header) !important;
+  border-bottom: 1px solid var(--theme-border) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+[data-theme="hon-viet"] .home-navbar,
+[data-theme="hon-viet"] .course-nav {
+  background: var(--theme-bg-header) !important;
+  border-bottom: 2px solid rgba(245, 158, 11, 0.5) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="hon-viet"] .home-brand-name,
+[data-theme="hon-viet"] .course-brand-name {
+  color: #ffffff !important;
+}
+
+[data-theme="hon-viet"] .home-brand-subtitle,
+[data-theme="hon-viet"] .course-brand-subtitle {
+  color: #fde68a !important;
+}
+
+[data-theme="hon-viet"] .home-nav-item,
+[data-theme="hon-viet"] .course-nav-item,
+[data-theme="hon-viet"] .course-back-btn {
+  color: #fce7f3 !important;
+}
+
+[data-theme="hon-viet"] .home-nav-item:hover,
+[data-theme="hon-viet"] .course-nav-item:hover,
+[data-theme="hon-viet"] .course-back-btn:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="hon-viet"] .home-nav-item.active,
+[data-theme="hon-viet"] .course-nav-item.active {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  border-color: rgba(254, 240, 138, 0.4) !important;
+}
+
+/* Dark Theme Text adjustments for Navbar */
+[data-theme="fantasy-academy"] .home-brand-name,
+[data-theme="fantasy-academy"] .course-brand-name,
+[data-theme="cozy-night"] .home-brand-name,
+[data-theme="cozy-night"] .course-brand-name {
+  color: var(--theme-text-primary) !important;
+}
+
+[data-theme="fantasy-academy"] .home-nav-item,
+[data-theme="fantasy-academy"] .course-nav-item,
+[data-theme="fantasy-academy"] .course-back-btn,
+[data-theme="cozy-night"] .home-nav-item,
+[data-theme="cozy-night"] .course-nav-item,
+[data-theme="cozy-night"] .course-back-btn {
+  color: var(--theme-text-secondary) !important;
+}
+
+[data-theme="fantasy-academy"] .home-nav-item:hover,
+[data-theme="fantasy-academy"] .course-nav-item:hover,
+[data-theme="fantasy-academy"] .course-back-btn:hover,
+[data-theme="cozy-night"] .home-nav-item:hover,
+[data-theme="cozy-night"] .course-nav-item:hover,
+[data-theme="cozy-night"] .course-back-btn:hover {
+  color: var(--theme-text-primary) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="fantasy-academy"] .home-nav-item.active,
+[data-theme="fantasy-academy"] .course-nav-item.active,
+[data-theme="cozy-night"] .home-nav-item.active,
+[data-theme="cozy-night"] .course-nav-item.active {
+  color: #ffffff !important;
+  background: var(--theme-accent-primary) !important;
+}
+
+/* ==========================================================================
+   HERO SECTIONS
+   ========================================================================== */
+/* ==========================================================================
+   HERO SECTIONS & CARDS ARCHITECTURE (Tailored Themes)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HỒN VIỆT (Vietnam Heritage / Văn Miếu Thư Phòng & Sơn Mài)
+   -------------------------------------------------------------------------- */
+[data-theme="hon-viet"] .home-hero-eyebrow,
+[data-theme="hon-viet"] .course-hero-badge,
+.theme-hon-viet .home-hero-eyebrow,
+.theme-hon-viet .course-hero-badge {
+  background: rgba(245, 158, 11, 0.18) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.55) !important;
+  color: #fef08a !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7) !important;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="hon-viet"] .home-hero-title,
+[data-theme="hon-viet"] .course-hero-title,
+.theme-hon-viet .home-hero-title,
+.theme-hon-viet .course-hero-title {
+  color: #fffbeb !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.25) !important;
+}
+
+[data-theme="hon-viet"] .home-gradient-text,
+.theme-hon-viet .home-gradient-text {
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #fef9c3 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4)) !important;
+}
+
+[data-theme="hon-viet"] .home-hero-desc,
+[data-theme="hon-viet"] .course-hero-desc,
+.theme-hon-viet .home-hero-desc,
+.theme-hon-viet .course-hero-desc {
+  color: #fde68a !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+[data-theme="hon-viet"] .home-floating-grad-cap,
+.theme-hon-viet .home-floating-grad-cap {
+  background: linear-gradient(135deg, #fffcf5 0%, #fdf5e6 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(245, 158, 11, 0.25) !important;
+}
+
+/* Warm Giấy Dó / Sơn Mài Hoàng Triều Cards */
+[data-theme="hon-viet"] .subject-card,
+[data-theme="hon-viet"] .exam-card,
+.theme-hon-viet .subject-card,
+.theme-hon-viet .exam-card {
+  background: linear-gradient(155deg, #fffdf8 0%, #fdf6ea 60%, #faefe0 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(45, 4, 8, 0.28), 0 0 16px rgba(245, 158, 11, 0.12) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+}
+
+[data-theme="hon-viet"] .subject-card:hover,
+[data-theme="hon-viet"] .exam-card:hover,
+.theme-hon-viet .subject-card:hover,
+.theme-hon-viet .exam-card:hover {
+  border-color: #f59e0b !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 36px rgba(45, 4, 8, 0.38), 0 0 24px rgba(245, 158, 11, 0.28) !important;
+}
+
+[data-theme="hon-viet"] .subject-code-title,
+[data-theme="hon-viet"] .exam-title,
+.theme-hon-viet .subject-code-title,
+.theme-hon-viet .exam-title {
+  color: #2a0508 !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.4px !important;
+}
+
+[data-theme="hon-viet"] .subject-name-text,
+[data-theme="hon-viet"] .exam-subject-sub,
+.theme-hon-viet .subject-name-text,
+.theme-hon-viet .exam-subject-sub {
+  color: #851015 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="hon-viet"] .subject-desc-text,
+[data-theme="hon-viet"] .exam-desc,
+.theme-hon-viet .subject-desc-text,
+.theme-hon-viet .exam-desc {
+  color: #4a1d0f !important;
+  line-height: 1.55 !important;
+}
+
+[data-theme="hon-viet"] .subject-stat-value,
+[data-theme="hon-viet"] .exam-stat-num,
+[data-theme="hon-viet"] .exam-progress-val,
+[data-theme="hon-viet"] .course-stat-number,
+.theme-hon-viet .subject-stat-value,
+.theme-hon-viet .exam-stat-num,
+.theme-hon-viet .exam-progress-val,
+.theme-hon-viet .course-stat-number {
+  color: #7f1d1d !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="hon-viet"] .subject-stat-label,
+[data-theme="hon-viet"] .exam-stat-label,
+[data-theme="hon-viet"] .exam-progress-label,
+[data-theme="hon-viet"] .course-stat-label,
+.theme-hon-viet .subject-stat-label,
+.theme-hon-viet .exam-stat-label,
+.theme-hon-viet .exam-progress-label,
+.theme-hon-viet .course-stat-label {
+  color: #78350f !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="hon-viet"] .subject-stat-icon-wrap,
+[data-theme="hon-viet"] .exam-stat-pill,
+.theme-hon-viet .subject-stat-icon-wrap,
+.theme-hon-viet .exam-stat-pill {
+  background: rgba(254, 243, 199, 0.7) !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
+  color: #78350f !important;
+}
+
+[data-theme="hon-viet"] .subject-icon-box,
+.theme-hon-viet .subject-icon-box {
+  background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  color: #991b1b !important;
+  box-shadow: 0 2px 8px rgba(185, 28, 28, 0.15) !important;
+}
+
+[data-theme="hon-viet"] .subject-code-badge,
+[data-theme="hon-viet"] .exam-badge,
+.theme-hon-viet .subject-code-badge,
+.theme-hon-viet .exam-badge {
+  background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+  color: #851015 !important;
+  border: 1px solid rgba(217, 119, 6, 0.45) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="hon-viet"] .subject-cta-btn,
+[data-theme="hon-viet"] .exam-cta-btn,
+.theme-hon-viet .subject-cta-btn,
+.theme-hon-viet .exam-cta-btn {
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%) !important;
+  color: #fffbeb !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  box-shadow: 0 4px 14px rgba(153, 27, 27, 0.35) !important;
+}
+
+[data-theme="hon-viet"] .subject-cta-btn:hover,
+[data-theme="hon-viet"] .exam-cta-btn:hover,
+.theme-hon-viet .subject-cta-btn:hover,
+.theme-hon-viet .exam-cta-btn:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="hon-viet"] .course-stat-card,
+.theme-hon-viet .course-stat-card {
+  background: linear-gradient(155deg, #fffdf8 0%, #fdf6ea 60%, #faefe0 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(45, 4, 8, 0.22) !important;
+}
+
+[data-theme="hon-viet"] .course-stat-icon-wrap.purple,
+[data-theme="hon-viet"] .course-stat-icon-wrap.blue,
+[data-theme="hon-viet"] .course-stat-icon-wrap.ring-box,
+.theme-hon-viet .course-stat-icon-wrap.purple,
+.theme-hon-viet .course-stat-icon-wrap.blue,
+.theme-hon-viet .course-stat-icon-wrap.ring-box {
+  background: rgba(254, 243, 199, 0.8) !important;
+  border: 1px solid rgba(217, 119, 6, 0.4) !important;
+  color: #991b1b !important;
+}
+
+[data-theme="hon-viet"] .home-search-input,
+[data-theme="hon-viet"] .exam-search-input,
+.theme-hon-viet .home-search-input,
+.theme-hon-viet .exam-search-input {
+  background: #fffdfa !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  color: #2a0508 !important;
+}
+
+[data-theme="hon-viet"] .home-sort-btn,
+[data-theme="hon-viet"] .exam-sort-btn,
+.theme-hon-viet .home-sort-btn,
+.theme-hon-viet .exam-sort-btn {
+  background: #fffdfa !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  color: #2a0508 !important;
+}
+
+[data-theme="hon-viet"] .home-category-chip,
+.theme-hon-viet .home-category-chip {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.45) !important;
+  color: #fef08a !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="hon-viet"] .home-category-chip:hover,
+.theme-hon-viet .home-category-chip:hover {
+  background: rgba(245, 158, 11, 0.22) !important;
+  border-color: #f59e0b !important;
+  color: #ffffff !important;
+}
+
+[data-theme="hon-viet"] .home-category-chip.active,
+.theme-hon-viet .home-category-chip.active {
+  background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+  border-color: #f59e0b !important;
+  color: #fffbeb !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. FANTASY ACADEMY (Gaming Dark / Thư Viện Ma Pháp & Hiệp Sĩ RPG)
+   -------------------------------------------------------------------------- */
+[data-theme="fantasy-academy"] .home-hero-eyebrow,
+[data-theme="fantasy-academy"] .course-hero-badge,
+.theme-fantasy-academy .home-hero-eyebrow,
+.theme-fantasy-academy .course-hero-badge {
+  background: rgba(217, 119, 6, 0.18) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.5) !important;
+  color: #fef3c7 !important;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.4) !important;
+  box-shadow: 0 2px 10px rgba(217, 119, 6, 0.2) !important;
+}
+
+[data-theme="fantasy-academy"] .home-hero-title,
+[data-theme="fantasy-academy"] .course-hero-title,
+.theme-fantasy-academy .home-hero-title,
+.theme-fantasy-academy .course-hero-title {
+  color: #fef3c7 !important;
+  text-shadow: 0 0 16px rgba(245, 158, 11, 0.35) !important;
+}
+
+[data-theme="fantasy-academy"] .home-gradient-text,
+.theme-fantasy-academy .home-gradient-text {
+  background: linear-gradient(135deg, #fef3c7 0%, #f59e0b 50%, #d97706 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.4)) !important;
+}
+
+[data-theme="fantasy-academy"] .home-hero-desc,
+[data-theme="fantasy-academy"] .course-hero-desc,
+.theme-fantasy-academy .home-hero-desc,
+.theme-fantasy-academy .course-hero-desc {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="fantasy-academy"] .home-floating-grad-cap,
+.theme-fantasy-academy .home-floating-grad-cap {
+  background: rgba(13, 29, 21, 0.94) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.55) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(217, 119, 6, 0.25) !important;
+}
+
+/* Dark Obsidian Emerald Cards */
+[data-theme="fantasy-academy"] .subject-card,
+[data-theme="fantasy-academy"] .exam-card,
+.theme-fantasy-academy .subject-card,
+.theme-fantasy-academy .exam-card {
+  background: rgba(13, 29, 21, 0.94) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.42) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 0 16px rgba(217, 119, 6, 0.16) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+}
+
+[data-theme="fantasy-academy"] .subject-card:hover,
+[data-theme="fantasy-academy"] .exam-card:hover,
+.theme-fantasy-academy .subject-card:hover,
+.theme-fantasy-academy .exam-card:hover {
+  border-color: #f59e0b !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 28px rgba(245, 158, 11, 0.35) !important;
+}
+
+[data-theme="fantasy-academy"] .subject-code-title,
+[data-theme="fantasy-academy"] .exam-title,
+.theme-fantasy-academy .subject-code-title,
+.theme-fantasy-academy .exam-title {
+  color: #fef3c7 !important;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.25) !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-name-text,
+[data-theme="fantasy-academy"] .exam-subject-sub,
+.theme-fantasy-academy .subject-name-text,
+.theme-fantasy-academy .exam-subject-sub {
+  color: #fde68a !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-desc-text,
+[data-theme="fantasy-academy"] .exam-desc,
+.theme-fantasy-academy .subject-desc-text,
+.theme-fantasy-academy .exam-desc {
+  color: #cbd5e1 !important;
+  line-height: 1.55 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-stat-value,
+[data-theme="fantasy-academy"] .exam-stat-num,
+[data-theme="fantasy-academy"] .exam-progress-val,
+[data-theme="fantasy-academy"] .course-stat-number,
+.theme-fantasy-academy .subject-stat-value,
+.theme-fantasy-academy .exam-stat-num,
+.theme-fantasy-academy .exam-progress-val,
+.theme-fantasy-academy .course-stat-number {
+  color: #fef08a !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-stat-label,
+[data-theme="fantasy-academy"] .exam-stat-label,
+[data-theme="fantasy-academy"] .exam-progress-label,
+[data-theme="fantasy-academy"] .course-stat-label,
+.theme-fantasy-academy .subject-stat-label,
+.theme-fantasy-academy .exam-stat-label,
+.theme-fantasy-academy .exam-progress-label,
+.theme-fantasy-academy .course-stat-label {
+  color: #94a3b8 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-stat-icon-wrap,
+[data-theme="fantasy-academy"] .exam-stat-pill,
+.theme-fantasy-academy .subject-stat-icon-wrap,
+.theme-fantasy-academy .exam-stat-pill {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-icon-box,
+.theme-fantasy-academy .subject-icon-box {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.45) !important;
+  color: #fbbf24 !important;
+  box-shadow: inset 0 0 10px rgba(217, 119, 6, 0.12) !important;
+}
+
+[data-theme="fantasy-academy"] .subject-code-badge,
+[data-theme="fantasy-academy"] .exam-badge,
+.theme-fantasy-academy .subject-code-badge,
+.theme-fantasy-academy .exam-badge {
+  background: rgba(217, 119, 6, 0.18) !important;
+  color: #fef3c7 !important;
+  border: 1px solid rgba(245, 158, 11, 0.45) !important;
+}
+
+[data-theme="fantasy-academy"] .subject-cta-btn,
+[data-theme="fantasy-academy"] .exam-cta-btn,
+.theme-fantasy-academy .subject-cta-btn,
+.theme-fantasy-academy .exam-cta-btn {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4) !important;
+}
+
+[data-theme="fantasy-academy"] .subject-cta-btn:hover,
+[data-theme="fantasy-academy"] .exam-cta-btn:hover,
+.theme-fantasy-academy .subject-cta-btn:hover,
+.theme-fantasy-academy .exam-cta-btn:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  box-shadow: 0 6px 22px rgba(245, 158, 11, 0.6) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="fantasy-academy"] .course-stat-card,
+.theme-fantasy-academy .course-stat-card {
+  background: rgba(13, 29, 21, 0.94) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="fantasy-academy"] .course-stat-icon-wrap.purple,
+[data-theme="fantasy-academy"] .course-stat-icon-wrap.blue,
+[data-theme="fantasy-academy"] .course-stat-icon-wrap.ring-box,
+.theme-fantasy-academy .course-stat-icon-wrap.purple,
+.theme-fantasy-academy .course-stat-icon-wrap.blue,
+.theme-fantasy-academy .course-stat-icon-wrap.ring-box {
+  background: rgba(217, 119, 6, 0.16) !important;
+  border: 1px solid rgba(217, 119, 6, 0.4) !important;
+  color: #fbbf24 !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. COZY NIGHT (Lofi Anime Dark / Kính Mờ & Neon Đêm)
+   -------------------------------------------------------------------------- */
+[data-theme="cozy-night"] .home-hero-eyebrow,
+[data-theme="cozy-night"] .course-hero-badge,
+.theme-cozy-night .home-hero-eyebrow,
+.theme-cozy-night .course-hero-badge {
+  background: rgba(99, 102, 241, 0.18) !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.45) !important;
+  color: #c7d2fe !important;
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2) !important;
+}
+
+[data-theme="cozy-night"] .home-hero-title,
+[data-theme="cozy-night"] .course-hero-title,
+.theme-cozy-night .home-hero-title,
+.theme-cozy-night .course-hero-title {
+  color: #f8fafc !important;
+  text-shadow: 0 0 16px rgba(129, 140, 248, 0.35) !important;
+}
+
+[data-theme="cozy-night"] .home-gradient-text,
+.theme-cozy-night .home-gradient-text {
+  background: linear-gradient(135deg, #f8fafc 0%, #38bdf8 50%, #c084fc 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4)) !important;
+}
+
+[data-theme="cozy-night"] .home-hero-desc,
+[data-theme="cozy-night"] .course-hero-desc,
+.theme-cozy-night .home-hero-desc,
+.theme-cozy-night .course-hero-desc {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="cozy-night"] .home-floating-grad-cap,
+.theme-cozy-night .home-floating-grad-cap {
+  background: rgba(20, 28, 46, 0.88) !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 16px rgba(99, 102, 241, 0.25) !important;
+}
+
+/* Frosted Midnight Glass Cards */
+[data-theme="cozy-night"] .subject-card,
+[data-theme="cozy-night"] .exam-card,
+.theme-cozy-night .subject-card,
+.theme-cozy-night .exam-card {
+  background: rgba(20, 28, 46, 0.88) !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.32) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 16px rgba(99, 102, 241, 0.16) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+}
+
+[data-theme="cozy-night"] .subject-card:hover,
+[data-theme="cozy-night"] .exam-card:hover,
+.theme-cozy-night .subject-card:hover,
+.theme-cozy-night .exam-card:hover {
+  border-color: #38bdf8 !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 28px rgba(56, 189, 248, 0.32) !important;
+}
+
+[data-theme="cozy-night"] .subject-code-title,
+[data-theme="cozy-night"] .exam-title,
+.theme-cozy-night .subject-code-title,
+.theme-cozy-night .exam-title {
+  color: #f8fafc !important;
+  text-shadow: 0 0 10px rgba(129, 140, 248, 0.25) !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="cozy-night"] .subject-name-text,
+[data-theme="cozy-night"] .exam-subject-sub,
+.theme-cozy-night .subject-name-text,
+.theme-cozy-night .exam-subject-sub {
+  color: #c7d2fe !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="cozy-night"] .subject-desc-text,
+[data-theme="cozy-night"] .exam-desc,
+.theme-cozy-night .subject-desc-text,
+.theme-cozy-night .exam-desc {
+  color: #94a3b8 !important;
+  line-height: 1.55 !important;
+}
+
+[data-theme="cozy-night"] .subject-stat-value,
+[data-theme="cozy-night"] .exam-stat-num,
+[data-theme="cozy-night"] .exam-progress-val,
+[data-theme="cozy-night"] .course-stat-number,
+.theme-cozy-night .subject-stat-value,
+.theme-cozy-night .exam-stat-num,
+.theme-cozy-night .exam-progress-val,
+.theme-cozy-night .course-stat-number {
+  color: #38bdf8 !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="cozy-night"] .subject-stat-label,
+[data-theme="cozy-night"] .exam-stat-label,
+[data-theme="cozy-night"] .exam-progress-label,
+[data-theme="cozy-night"] .course-stat-label,
+.theme-cozy-night .subject-stat-label,
+.theme-cozy-night .exam-stat-label,
+.theme-cozy-night .exam-progress-label,
+.theme-cozy-night .course-stat-label {
+  color: #64748b !important;
+}
+
+[data-theme="cozy-night"] .subject-stat-icon-wrap,
+[data-theme="cozy-night"] .exam-stat-pill,
+.theme-cozy-night .subject-stat-icon-wrap,
+.theme-cozy-night .exam-stat-pill {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(129, 140, 248, 0.25) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="cozy-night"] .subject-icon-box,
+.theme-cozy-night .subject-icon-box {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15) !important;
+}
+
+[data-theme="cozy-night"] .subject-code-badge,
+[data-theme="cozy-night"] .exam-badge,
+.theme-cozy-night .subject-code-badge,
+.theme-cozy-night .exam-badge {
+  background: rgba(99, 102, 241, 0.18) !important;
+  color: #a5b4fc !important;
+  border: 1px solid rgba(129, 140, 248, 0.35) !important;
+}
+
+[data-theme="cozy-night"] .subject-cta-btn,
+[data-theme="cozy-night"] .exam-cta-btn,
+.theme-cozy-night .subject-cta-btn,
+.theme-cozy-night .exam-cta-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(165, 180, 252, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35) !important;
+}
+
+[data-theme="cozy-night"] .subject-cta-btn:hover,
+[data-theme="cozy-night"] .exam-cta-btn:hover,
+.theme-cozy-night .subject-cta-btn:hover,
+.theme-cozy-night .exam-cta-btn:hover {
+  background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%) !important;
+  box-shadow: 0 6px 22px rgba(99, 102, 241, 0.55) !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="cozy-night"] .course-stat-card,
+.theme-cozy-night .course-stat-card {
+  background: rgba(20, 28, 46, 0.88) !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-theme="cozy-night"] .course-stat-icon-wrap.purple,
+[data-theme="cozy-night"] .course-stat-icon-wrap.blue,
+[data-theme="cozy-night"] .course-stat-icon-wrap.ring-box,
+.theme-cozy-night .course-stat-icon-wrap.purple,
+.theme-cozy-night .course-stat-icon-wrap.blue,
+.theme-cozy-night .course-stat-icon-wrap.ring-box {
+  background: rgba(99, 102, 241, 0.15) !important;
+  border: 1px solid rgba(129, 140, 248, 0.3) !important;
+  color: #38bdf8 !important;
+}
+
+/* --------------------------------------------------------------------------
+   CREATE COURSE CARD & EMPTY STATES (All Themes)
+   -------------------------------------------------------------------------- */
+/* Hon Viet */
+[data-theme="hon-viet"] .subject-card-add,
+.theme-hon-viet .subject-card-add {
+  background: linear-gradient(155deg, #fffdf8 0%, #fdf6ea 60%, #faefe0 100%) !important;
+  border: 1.5px dashed rgba(217, 119, 6, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(45, 4, 8, 0.22) !important;
+}
+
+[data-theme="hon-viet"] .subject-card-add:hover,
+.theme-hon-viet .subject-card-add:hover {
+  border-color: #f59e0b !important;
+  background: #fffcf5 !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 14px 32px rgba(45, 4, 8, 0.32), 0 0 18px rgba(245, 158, 11, 0.2) !important;
+}
+
+[data-theme="hon-viet"] .add-info-text h3,
+.theme-hon-viet .add-info-text h3 {
+  color: #2a0508 !important;
+}
+
+[data-theme="hon-viet"] .add-info-text p,
+.theme-hon-viet .add-info-text p {
+  color: #4a1d0f !important;
+}
+
+[data-theme="hon-viet"] .add-icon-circle,
+.theme-hon-viet .add-icon-circle {
+  background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  color: #991b1b !important;
+}
+
+[data-theme="hon-viet"] .add-btn,
+.theme-hon-viet .add-btn {
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%) !important;
+  color: #fffbeb !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3) !important;
+}
+
+[data-theme="hon-viet"] .home-empty-state,
+.theme-hon-viet .home-empty-state {
+  background: linear-gradient(155deg, #fffdf8 0%, #fdf6ea 100%) !important;
+  border: 1.5px dashed rgba(217, 119, 6, 0.5) !important;
+  color: #4a1d0f !important;
+}
+
+[data-theme="hon-viet"] .home-empty-state h3,
+.theme-hon-viet .home-empty-state h3 {
+  color: #2a0508 !important;
+}
+
+/* Fantasy Academy */
+[data-theme="fantasy-academy"] .subject-card-add,
+.theme-fantasy-academy .subject-card-add {
+  background: rgba(13, 29, 21, 0.94) !important;
+  border: 1.5px dashed rgba(217, 119, 6, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="fantasy-academy"] .subject-card-add:hover,
+.theme-fantasy-academy .subject-card-add:hover {
+  border-color: #f59e0b !important;
+  background: rgba(18, 40, 29, 0.96) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(245, 158, 11, 0.28) !important;
+}
+
+[data-theme="fantasy-academy"] .add-info-text h3,
+.theme-fantasy-academy .add-info-text h3 {
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .add-info-text p,
+.theme-fantasy-academy .add-info-text p {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="fantasy-academy"] .add-icon-circle,
+.theme-fantasy-academy .add-icon-circle {
+  background: rgba(217, 119, 6, 0.16) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.45) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme="fantasy-academy"] .add-btn,
+.theme-fantasy-academy .add-btn {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35) !important;
+}
+
+[data-theme="fantasy-academy"] .home-empty-state,
+.theme-fantasy-academy .home-empty-state {
+  background: rgba(13, 29, 21, 0.94) !important;
+  border: 1.5px dashed rgba(217, 119, 6, 0.45) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="fantasy-academy"] .home-empty-state h3,
+.theme-fantasy-academy .home-empty-state h3 {
+  color: #fef3c7 !important;
+}
+
+/* Cozy Night */
+[data-theme="cozy-night"] .subject-card-add,
+.theme-cozy-night .subject-card-add {
+  background: rgba(20, 28, 46, 0.88) !important;
+  border: 1.5px dashed rgba(129, 140, 248, 0.4) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-theme="cozy-night"] .subject-card-add:hover,
+.theme-cozy-night .subject-card-add:hover {
+  border-color: #38bdf8 !important;
+  background: rgba(26, 38, 64, 0.94) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.28) !important;
+}
+
+[data-theme="cozy-night"] .add-info-text h3,
+.theme-cozy-night .add-info-text h3 {
+  color: #f8fafc !important;
+}
+
+[data-theme="cozy-night"] .add-info-text p,
+.theme-cozy-night .add-info-text p {
+  color: #94a3b8 !important;
+}
+
+[data-theme="cozy-night"] .add-icon-circle,
+.theme-cozy-night .add-icon-circle {
+  background: rgba(99, 102, 241, 0.18) !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.35) !important;
+  color: #38bdf8 !important;
+}
+
+[data-theme="cozy-night"] .add-btn,
+.theme-cozy-night .add-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(165, 180, 252, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
+}
+
+[data-theme="cozy-night"] .home-empty-state,
+.theme-cozy-night .home-empty-state {
+  background: rgba(20, 28, 46, 0.88) !important;
+  border: 1.5px dashed rgba(129, 140, 248, 0.4) !important;
+  color: #94a3b8 !important;
+}
+
+[data-theme="cozy-night"] .home-empty-state h3,
+.theme-cozy-night .home-empty-state h3 {
+  color: #f8fafc !important;
+}
+
+/* ==========================================================================
+   SEARCH BARS, CATEGORY FILTER CHIPS & DROPDOWNS
+   ========================================================================== */
+[data-theme="fantasy-academy"] .home-search-input,
+[data-theme="fantasy-academy"] .exam-search-input,
+[data-theme="cozy-night"] .home-search-input,
+[data-theme="cozy-night"] .exam-search-input {
+  background: var(--theme-bg-input) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+[data-theme="fantasy-academy"] .home-search-input:focus,
+[data-theme="fantasy-academy"] .exam-search-input:focus,
+[data-theme="cozy-night"] .home-search-input:focus,
+[data-theme="cozy-night"] .exam-search-input:focus {
+  border-color: var(--theme-border-accent) !important;
+  box-shadow: 0 0 0 3px var(--theme-accent-soft) !important;
+}
+
+[data-theme="fantasy-academy"] .home-sort-btn,
+[data-theme="fantasy-academy"] .exam-sort-btn,
+[data-theme="cozy-night"] .home-sort-btn,
+[data-theme="cozy-night"] .exam-sort-btn {
+  background: var(--theme-bg-input) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text-secondary) !important;
+}
+
+[data-theme="fantasy-academy"] .home-category-chip,
+[data-theme="fantasy-academy"] .exam-filter-chip,
+[data-theme="cozy-night"] .home-category-chip,
+[data-theme="cozy-night"] .exam-filter-chip {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text-secondary) !important;
+}
+
+[data-theme="fantasy-academy"] .home-category-chip.active,
+[data-theme="fantasy-academy"] .exam-filter-chip.active,
+[data-theme="cozy-night"] .home-category-chip.active,
+[data-theme="cozy-night"] .exam-filter-chip.active {
+  background: var(--theme-accent-primary) !important;
+  color: #ffffff !important;
+  border-color: var(--theme-accent-primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="fantasy-academy"] .home-sort-menu,
+[data-theme="fantasy-academy"] .exam-sort-dropdown,
+[data-theme="cozy-night"] .home-sort-menu,
+[data-theme="cozy-night"] .exam-sort-dropdown {
+  background: var(--theme-bg-surface) !important;
+  border-color: var(--theme-border) !important;
+  box-shadow: var(--theme-shadow-lg) !important;
+}
+
+[data-theme="fantasy-academy"] .home-sort-option,
+[data-theme="fantasy-academy"] .exam-sort-item,
+[data-theme="cozy-night"] .home-sort-option,
+[data-theme="cozy-night"] .exam-sort-item {
+  color: var(--theme-text-secondary) !important;
+}
+
+[data-theme="fantasy-academy"] .home-sort-option:hover,
+[data-theme="fantasy-academy"] .exam-sort-item:hover,
+[data-theme="cozy-night"] .home-sort-option:hover,
+[data-theme="cozy-night"] .exam-sort-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* ==========================================================================
+   RESULTS PAGE & OTHER ROUTE SURFACES
+   ========================================================================== */
+[data-theme="fantasy-academy"] .result-page,
+[data-theme="cozy-night"] .result-page,
+[data-theme="hon-viet"] .result-page {
+  background: transparent !important;
+}
+
+[data-theme="fantasy-academy"] .result-overview-card,
+[data-theme="fantasy-academy"] .result-question-card,
+[data-theme="cozy-night"] .result-overview-card,
+[data-theme="cozy-night"] .result-question-card {
+  background: var(--theme-bg-card) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* ==========================================================================
+   UNIVERSAL THEME SWITCHER BUTTON IN NAVBAR
+   ========================================================================== */
+.global-theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid var(--theme-border);
+  color: var(--theme-text-primary);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.global-theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--theme-border-accent);
+  transform: translateY(-1px);
+  box-shadow: var(--theme-shadow-sm);
+}
+
+[data-theme="hon-viet"] .global-theme-toggle-btn {
+  background: linear-gradient(135deg, #d97706, #b45309) !important;
+  border-color: #fef08a !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35) !important;
+}
+
+[data-theme="hon-viet"] .global-theme-toggle-btn:hover {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+}
+
+/* ==========================================================================
+   STANDARDIZED GLOBAL QUIZ HEADER — MULTI-THEME ENGINE
+   One Shared Structure — Multiple Unique Visual Styles
+   ========================================================================== */
+
+.shared-quiz-header-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shared-quiz-header-container .quiz-v2-header {
+  position: relative !important;
+  top: auto !important;
+  z-index: 10;
+}
+
+.shared-quiz-header-container .quiz-mode-hub {
+  position: relative !important;
+  top: auto !important;
+  z-index: 9;
+}
+
+.quiz-v2-part-select-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.15s ease;
+  user-select: none;
+}
+
+.quiz-v2-part-select-btn:hover {
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   1. FANTASY ACADEMY (Gaming Dark / European RPG)
+   -------------------------------------------------------------------------- */
+[data-theme="fantasy-academy"] .quiz-v2-header,
+.theme-fantasy-academy .quiz-v2-header {
+  background: linear-gradient(135deg, #07120c 0%, #0d251a 50%, #123324 100%) !important;
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.45) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(217, 119, 6, 0.18) !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-v2-title,
+.theme-fantasy-academy .quiz-v2-title {
+  color: #fef3c7 !important;
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+[data-theme="fantasy-academy"] .quiz-progress-ring-text,
+.theme-fantasy-academy .quiz-progress-ring-text {
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-progress-ring-label strong,
+.theme-fantasy-academy .quiz-progress-ring-label strong {
+  color: #fde68a !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-v2-part-selector,
+.theme-fantasy-academy .quiz-v2-part-selector {
+  background: rgba(13, 27, 20, 0.85) !important;
+  border-color: rgba(217, 119, 6, 0.4) !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-v2-part-nav-btn,
+.theme-fantasy-academy .quiz-v2-part-nav-btn {
+  color: #fde68a !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-v2-part-select,
+.theme-fantasy-academy .quiz-v2-part-select,
+[data-theme="fantasy-academy"] .quiz-v2-part-select-btn,
+.theme-fantasy-academy .quiz-v2-part-select-btn {
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-v2-header-btn,
+.theme-fantasy-academy .quiz-v2-header-btn,
+[data-theme="fantasy-academy"] .quiz-v2-header-icon-btn,
+.theme-fantasy-academy .quiz-v2-header-icon-btn {
+  background: rgba(217, 119, 6, 0.12) !important;
+  border-color: rgba(217, 119, 6, 0.35) !important;
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-v2-header-btn:hover,
+.theme-fantasy-academy .quiz-v2-header-btn:hover,
+[data-theme="fantasy-academy"] .quiz-v2-header-icon-btn:hover,
+.theme-fantasy-academy .quiz-v2-header-icon-btn:hover {
+  background: rgba(217, 119, 6, 0.28) !important;
+  border-color: #f59e0b !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3) !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-mode-hub,
+.theme-fantasy-academy .quiz-mode-hub {
+  background: rgba(8, 18, 13, 0.98) !important;
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.3) !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-mode-pill-btn,
+.theme-fantasy-academy .quiz-mode-pill-btn {
+  color: #94a3b8 !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-mode-pill-btn:hover,
+.theme-fantasy-academy .quiz-mode-pill-btn:hover {
+  background: rgba(217, 119, 6, 0.15) !important;
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .quiz-mode-pill-btn.is-active,
+.theme-fantasy-academy .quiz-mode-pill-btn.is-active {
+  background: rgba(217, 119, 6, 0.24) !important;
+  color: #fef3c7 !important;
+  border-color: #d97706 !important;
+  box-shadow: 0 0 12px rgba(217, 119, 6, 0.28) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. HON VIET (Vietnam Heritage / Hồn Việt Đỏ Son Vàng Kim)
+   -------------------------------------------------------------------------- */
+[data-theme="hon-viet"] .quiz-v2-header,
+.theme-hon-viet .quiz-v2-header {
+  background: linear-gradient(135deg, #4d0a0e 0%, #6b0c10 45%, #851015 100%) !important;
+  border-bottom: 1.5px solid rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 4px 24px rgba(77, 10, 14, 0.5), 0 0 18px rgba(245, 158, 11, 0.15) !important;
+}
+
+[data-theme="hon-viet"] .quiz-v2-title,
+.theme-hon-viet .quiz-v2-title {
+  color: #fef08a !important;
+  text-shadow: 0 0 10px rgba(254, 240, 138, 0.4);
+}
+
+[data-theme="hon-viet"] .quiz-progress-ring-text,
+.theme-hon-viet .quiz-progress-ring-text {
+  color: #fef08a !important;
+}
+
+[data-theme="hon-viet"] .quiz-progress-ring-label strong,
+.theme-hon-viet .quiz-progress-ring-label strong {
+  color: #fef9c3 !important;
+}
+
+[data-theme="hon-viet"] .quiz-v2-part-selector,
+.theme-hon-viet .quiz-v2-part-selector {
+  background: rgba(60, 8, 12, 0.85) !important;
+  border-color: rgba(245, 158, 11, 0.45) !important;
+}
+
+[data-theme="hon-viet"] .quiz-v2-part-nav-btn,
+.theme-hon-viet .quiz-v2-part-nav-btn {
+  color: #fef08a !important;
+}
+
+[data-theme="hon-viet"] .quiz-v2-part-select,
+.theme-hon-viet .quiz-v2-part-select,
+[data-theme="hon-viet"] .quiz-v2-part-select-btn,
+.theme-hon-viet .quiz-v2-part-select-btn {
+  color: #fef08a !important;
+}
+
+[data-theme="hon-viet"] .quiz-v2-header-btn,
+.theme-hon-viet .quiz-v2-header-btn,
+[data-theme="hon-viet"] .quiz-v2-header-icon-btn,
+.theme-hon-viet .quiz-v2-header-icon-btn {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #fef9c3 !important;
+}
+
+[data-theme="hon-viet"] .quiz-v2-header-btn:hover,
+.theme-hon-viet .quiz-v2-header-btn:hover,
+[data-theme="hon-viet"] .quiz-v2-header-icon-btn:hover,
+.theme-hon-viet .quiz-v2-header-icon-btn:hover {
+  background: rgba(245, 158, 11, 0.3) !important;
+  border-color: #fde047 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.35) !important;
+}
+
+[data-theme="hon-viet"] .quiz-mode-hub,
+.theme-hon-viet .quiz-mode-hub {
+  background: rgba(255, 251, 242, 0.98) !important;
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.28) !important;
+}
+
+[data-theme="hon-viet"] .quiz-mode-pill-btn,
+.theme-hon-viet .quiz-mode-pill-btn {
+  color: #78350f !important;
+}
+
+[data-theme="hon-viet"] .quiz-mode-pill-btn:hover,
+.theme-hon-viet .quiz-mode-pill-btn:hover {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+[data-theme="hon-viet"] .quiz-mode-pill-btn.is-active,
+.theme-hon-viet .quiz-mode-pill-btn.is-active {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2) !important;
+  color: #991b1b !important;
+  border-color: #fca5a5 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(185, 28, 28, 0.15) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. COZY NIGHT (Lofi Anime Dark)
+   -------------------------------------------------------------------------- */
+[data-theme="cozy-night"] .quiz-v2-header,
+.theme-cozy-night .quiz-v2-header {
+  background: linear-gradient(135deg, #090d16 0%, #0f172a 45%, #1e1b4b 100%) !important;
+  border-bottom: 1.5px solid rgba(99, 102, 241, 0.3) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.15) !important;
+}
+
+[data-theme="cozy-night"] .quiz-v2-title,
+.theme-cozy-night .quiz-v2-title {
+  color: #c7d2fe !important;
+  text-shadow: 0 0 8px rgba(129, 140, 248, 0.35);
+}
+
+[data-theme="cozy-night"] .quiz-progress-ring-text,
+.theme-cozy-night .quiz-progress-ring-text {
+  color: #c7d2fe !important;
+}
+
+[data-theme="cozy-night"] .quiz-progress-ring-label strong,
+.theme-cozy-night .quiz-progress-ring-label strong {
+  color: #e0e7ff !important;
+}
+
+[data-theme="cozy-night"] .quiz-v2-part-selector,
+.theme-cozy-night .quiz-v2-part-selector {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border-color: rgba(99, 102, 241, 0.35) !important;
+}
+
+[data-theme="cozy-night"] .quiz-v2-part-nav-btn,
+.theme-cozy-night .quiz-v2-part-nav-btn {
+  color: #c7d2fe !important;
+}
+
+[data-theme="cozy-night"] .quiz-v2-part-select,
+.theme-cozy-night .quiz-v2-part-select,
+[data-theme="cozy-night"] .quiz-v2-part-select-btn,
+.theme-cozy-night .quiz-v2-part-select-btn {
+  color: #e0e7ff !important;
+}
+
+[data-theme="cozy-night"] .quiz-v2-header-btn,
+.theme-cozy-night .quiz-v2-header-btn,
+[data-theme="cozy-night"] .quiz-v2-header-icon-btn,
+.theme-cozy-night .quiz-v2-header-icon-btn {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(99, 102, 241, 0.25) !important;
+  color: #e0e7ff !important;
+}
+
+[data-theme="cozy-night"] .quiz-v2-header-btn:hover,
+.theme-cozy-night .quiz-v2-header-btn:hover,
+[data-theme="cozy-night"] .quiz-v2-header-icon-btn:hover,
+.theme-cozy-night .quiz-v2-header-icon-btn:hover {
+  background: rgba(99, 102, 241, 0.25) !important;
+  border-color: #818cf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.3) !important;
+}
+
+[data-theme="cozy-night"] .quiz-mode-hub,
+.theme-cozy-night .quiz-mode-hub {
+  background: rgba(15, 23, 42, 0.96) !important;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="cozy-night"] .quiz-mode-pill-btn,
+.theme-cozy-night .quiz-mode-pill-btn {
+  color: #94a3b8 !important;
+}
+
+[data-theme="cozy-night"] .quiz-mode-pill-btn:hover,
+.theme-cozy-night .quiz-mode-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme="cozy-night"] .quiz-mode-pill-btn.is-active,
+.theme-cozy-night .quiz-mode-pill-btn.is-active {
+  background: rgba(99, 102, 241, 0.22) !important;
+  color: #a5b4fc !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.22) !important;
+}

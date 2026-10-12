@@ -9,6 +9,9 @@ import {
   playWrongSound,
   playVictoryFanfare,
 } from '../../utils/soundEffects';
+import { useTheme } from '../../context/ThemeContext';
+import DongSonDrumSvg from '../DongSonDrumSvg';
+import ZenTempleWatermark from '../ZenTempleWatermark';
 
 interface MockExamViewProps {
   setId: string;
@@ -30,6 +33,7 @@ export default function MockExamView({
   onOpenMistakes,
   onMistakesUpdated,
 }: MockExamViewProps) {
+  const { theme } = useTheme();
   // Phase
   const [phase, setPhase] = useState<ExamPhase>('setup');
 
@@ -371,14 +375,57 @@ export default function MockExamView({
   // RENDER PHASE 1: SETUP
   // ----------------------------------------------------
   if (phase === 'setup') {
+    const setupHeaders = {
+      'hon-viet': {
+        tag: '🏛️ TRƯỜNG THI HÀN LÂM · KHOA BẢNG',
+        title: 'TRƯỜNG THI FE KHẢO CỨU',
+        desc: 'Mô phỏng kỳ thi khảo thí trang trọng với thời gian đếm ngược thực tế. Bốc ngẫu nhiên câu hỏi từ ngân hàng đề, bảng vàng chấm điểm chuẩn 10 và xem lại phân tích đáp án chi tiết.',
+        startBtn: '📜 BẮT ĐẦU VÀO TRƯỜNG THI',
+      },
+      'fantasy-academy': {
+        tag: '⚡ THỬ THÁCH ĐẠI PHÁP SƯ · HỌC VIỆN MA PHÁP',
+        title: 'ĐẤU TRƯỜNG KHẢO HẠCH MA PHÁP',
+        desc: 'Bước vào đại sảnh khảo hạch ma thuật bí truyền dưới áp lực thời gian thực tế. Giải mã trọn vẹn bộ đề thi để ghi danh vào bảng vàng huyền thoại.',
+        startBtn: '⚡ BẮT ĐẦU KHẢO HẠCH MA PHÁP',
+      },
+      'cozy-night': {
+        tag: '🌙 PHÒNG THI THỬ BAN ĐÊM · LOFI FOCUS',
+        title: 'THI THỬ FE PHÒNG HỌC ĐÊM',
+        desc: 'Làm bài thi thử tập trung trong không gian lofi êm dịu, không áp lực xao nhãng. Xem ngay kết quả và phân tích chi tiết sau khi hoàn thành.',
+        startBtn: '☕ BẮT ĐẦU LÀM BÀI THI',
+      },
+      'lotus-zen-sanctuary': {
+        tag: '🪷 KHẢO TRƯỜNG THIỀN ĐỊNH · BẢNG VÀNG',
+        title: 'KHẢO TRƯỜNG FE LIÊN HOA',
+        desc: 'Mô phỏng kỳ khảo thí trang trọng trong không gian tĩnh tại. Bốc ngẫu nhiên câu hỏi từ ngân hàng đề, bảng vàng chấm điểm chuẩn 10 và xem lại phân tích đáp án tường minh.',
+        startBtn: '🪷 BẮT ĐẦU VÀO KHẢO TRƯỜNG',
+      },
+      default: {
+        tag: 'MÔ PHỎNG PHÒNG THI THẬT',
+        title: '🎓 THI THỬ FE',
+        desc: 'Làm bài trắc nghiệm với thời gian đếm ngược thực tế. Hệ thống sẽ bốc ngẫu nhiên các câu hỏi từ ngân hàng đề, chấm điểm theo thang điểm 10 và chỉ ra câu sai chi tiết sau khi nộp bài.',
+        startBtn: 'BẮT ĐẦU LÀM BÀI THI',
+      },
+    };
+    const currentSetup = setupHeaders[theme] || setupHeaders.default;
+
     return (
-      <div className="mock-exam-container">
+      <div className={`mock-exam-container theme-${theme}`}>
+        {theme === 'hon-viet' && (
+          <div className="theme-bg-watermark-exam" aria-hidden="true">
+            <DongSonDrumSvg size={580} opacity={0.035} color="#d97706" />
+          </div>
+        )}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-bg-watermark-exam" aria-hidden="true">
+            <ZenTempleWatermark size={580} opacity={0.045} color="#A77636" />
+          </div>
+        )}
+
         <div className="mock-exam-setup-card">
-          <div className="mock-exam-badge-tag">MÔ PHỎNG PHÒNG THI THẬT</div>
-          <h2 className="mock-exam-title">🎓 THI THỬ FE</h2>
-          <p className="mock-exam-desc">
-            Làm bài trắc nghiệm với thời gian đếm ngược thực tế. Hệ thống sẽ bốc ngẫu nhiên các câu hỏi từ ngân hàng đề, chấm điểm theo thang điểm 10 và chỉ ra câu sai chi tiết sau khi nộp bài.
-          </p>
+          <div className="mock-exam-badge-tag">{currentSetup.tag}</div>
+          <h2 className="mock-exam-title">{currentSetup.title}</h2>
+          <p className="mock-exam-desc">{currentSetup.desc}</p>
 
           <div className="mock-exam-config-grid">
             {/* Input 1: Question Count */}
@@ -522,12 +569,21 @@ export default function MockExamView({
     const isTimeUrgent = timeLeft <= 60;
     const isTimeWarning = timeLeft <= 300 && !isTimeUrgent;
 
+    const examBadges = {
+      'hon-viet': '🏛️ KHẢO THÍ FE',
+      'fantasy-academy': '⚡ KHẢO HẠCH FE',
+      'cozy-night': '🌙 THI ĐÊM FE',
+      'lotus-zen-sanctuary': '🪷 KHẢO THÍ FE',
+      default: 'THI THỬ FE',
+    };
+    const currentBadge = examBadges[theme] || examBadges.default;
+
     return (
-      <div className="mock-exam-container testing-mode">
+      <div className={`mock-exam-container testing-mode theme-${theme}`}>
         {/* Top Header Bar */}
         <div className="mock-exam-header-bar">
           <div className="header-left">
-            <span className="header-exam-badge">THI THỬ FE</span>
+            <span className="header-exam-badge">{currentBadge}</span>
             <span className="header-set-title">{setTitle || 'FINAL EXAM'}</span>
             <span className="header-progress-text">
               Đã làm: <strong>{answeredCount}</strong> / {examQuestions.length} câu
@@ -704,7 +760,17 @@ export default function MockExamView({
       : '❌ Chưa đạt';
 
   return (
-    <div className="mock-exam-container result-mode">
+    <div className={`mock-exam-container result-mode theme-${theme}`}>
+      {theme === 'hon-viet' && (
+        <div className="theme-bg-watermark-exam" aria-hidden="true">
+          <DongSonDrumSvg size={580} opacity={0.035} color="#d97706" />
+        </div>
+      )}
+      {theme === 'lotus-zen-sanctuary' && (
+        <div className="theme-bg-watermark-exam" aria-hidden="true">
+          <ZenTempleWatermark size={580} opacity={0.045} color="#A77636" />
+        </div>
+      )}
       {/* Score Summary Card */}
       <div className="mock-exam-score-card">
         {autoSubmitted && (

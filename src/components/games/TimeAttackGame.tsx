@@ -11,6 +11,9 @@ import {
   playWrongSound,
   playVictoryFanfare,
 } from '../../utils/soundEffects';
+import { useTheme } from '../../context/ThemeContext';
+import DongSonDrumSvg from '../DongSonDrumSvg';
+import ZenTempleWatermark from '../ZenTempleWatermark';
 
 interface TimeAttackGameProps {
   setId: string;
@@ -26,6 +29,7 @@ export default function TimeAttackGame({
   onBackToStudy,
   onOpenMistakes,
 }: TimeAttackGameProps) {
+  const { theme } = useTheme();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -210,14 +214,46 @@ export default function TimeAttackGame({
 
   // 1. Splash Screen before starting
   if (!isPlaying && !isGameOver) {
+    const splashInfo = {
+      'hon-viet': {
+        title: '⚡ ĐẤU TRÍ 60 GIÂY HÀO KHÍ',
+        desc: 'Chạy đua cùng thời gian! Trả lời thần tốc để tích lũy hào khí x3 điểm số và bảo toàn vinh quang khoa bảng.',
+      },
+      'fantasy-academy': {
+        title: '⚡ ĐẤU TRƯỜNG PHÁP LỰC 60S',
+        desc: 'Tích lũy ma lực thần tốc! Thi triển pháp thuật chuẩn xác để kích hoạt Mana Surge x3 và vượt qua giới hạn thời gian.',
+      },
+      'cozy-night': {
+        title: '⚡ ĐẤU TRÍ 60 GIÂY LOFI NIGHT',
+        desc: 'Trải nghiệm phản xạ nhanh trong không gian ánh đèn đêm ấm áp. Tích lũy chuỗi combo êm dịu bứt phá kỷ lục.',
+      },
+      'lotus-zen-sanctuary': {
+        title: '🪷 THỬ THÁCH TRÍ TUỆ — 60 GIÂY',
+        desc: 'Định tâm giữa dòng chảy thời gian! Khắc ghi từng chân lý, trả lời chuẩn xác để tích lũy công đức x3 và bứt phá giới hạn trí tuệ.',
+      },
+      default: {
+        title: 'Đấu Trí 60 Giây',
+        desc: 'Chạy đua cùng thời gian! Trả lời thật nhanh để tích combo x3 điểm số và kéo dài thời gian sống còn.',
+      },
+    };
+    const currentSplash = splashInfo[theme] || splashInfo.default;
+
     return (
-      <div className="game-card-surface game-splash-box">
+      <div className={`game-card-surface game-splash-box theme-${theme}`}>
+        {theme === 'hon-viet' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <DongSonDrumSvg size={520} opacity={0.035} color="#d97706" />
+          </div>
+        )}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <ZenTempleWatermark size={520} opacity={0.045} color="#A77636" />
+          </div>
+        )}
         <div className="game-splash-header">
           <div className="game-icon-orb orb-orange">⚡</div>
-          <h2 className="game-splash-title">Đấu Trí 60 Giây</h2>
-          <p className="game-splash-subtitle">
-            Chạy đua cùng thời gian! Trả lời thật nhanh để tích combo x3 điểm số và kéo dài thời gian sống còn.
-          </p>
+          <h2 className="game-splash-title">{currentSplash.title}</h2>
+          <p className="game-splash-subtitle">{currentSplash.desc}</p>
         </div>
 
         <div className="game-rule-cards">
@@ -259,9 +295,25 @@ export default function TimeAttackGame({
     const accuracy = totalAttempted > 0 ? Math.round((correctCount / totalAttempted) * 100) : 0;
 
     return (
-      <div className="game-card-surface game-result-box">
+      <div className={`game-card-surface game-result-box theme-${theme}`}>
+        {theme === 'hon-viet' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <DongSonDrumSvg size={520} opacity={0.035} color="#d97706" />
+          </div>
+        )}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <ZenTempleWatermark size={520} opacity={0.045} color="#A77636" />
+          </div>
+        )}
         <div className="game-result-crown">
-          {isNewRecord ? '🎉 KỶ LỤC MỚI!' : '⏱️ HẾT GIỜ!'}
+          {theme === 'lotus-zen-sanctuary'
+            ? isNewRecord
+              ? '🪷 CÔNG ĐỨC VIÊN MÃN — KỶ LỤC MỚI!'
+              : '🪷 THỜI KHẮC NHẬP ĐỊNH KẾT THÚC!'
+            : isNewRecord
+            ? '🎉 KỶ LỤC MỚI!'
+            : '⏱️ HẾT GIỜ!'}
         </div>
         <h2 className="game-result-score">{score.toLocaleString()} <span className="game-score-unit">điểm</span></h2>
 
@@ -305,7 +357,17 @@ export default function TimeAttackGame({
   const timerColorClass = timeLeft <= 10 ? 'timer-danger' : timeLeft <= 20 ? 'timer-warning' : 'timer-normal';
 
   return (
-    <div className="game-gameplay-container">
+    <div className={`game-gameplay-container theme-${theme}`}>
+      {theme === 'hon-viet' && (
+        <div className="theme-bg-watermark-small" aria-hidden="true">
+          <DongSonDrumSvg size={520} opacity={0.035} color="#d97706" />
+        </div>
+      )}
+      {theme === 'lotus-zen-sanctuary' && (
+        <div className="theme-bg-watermark-small" aria-hidden="true">
+          <ZenTempleWatermark size={520} opacity={0.045} color="#A77636" />
+        </div>
+      )}
       {/* Game HUD Bar */}
       <div className="game-hud-bar">
         {/* Timer */}

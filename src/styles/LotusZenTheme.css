@@ -1,0 +1,663 @@
+/* ==========================================================================
+   LIÊN HOA PHẬT QUỐC — ZEN SANCTUARY THEME SYSTEM
+   The Path of Wisdom · Vietnamese Buddhist Heritage × Cinematic 3D × Luxury UI/UX
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. GLOBAL TOKENS & DOCUMENT ATTRIBUTES
+   -------------------------------------------------------------------------- */
+[data-theme="lotus-zen-sanctuary"],
+.theme-lotus-zen-sanctuary {
+  --theme-id: "lotus-zen-sanctuary";
+  --theme-font-heading: 'Cinzel', 'Playfair Display', serif;
+  --theme-font-body: 'Be Vietnam Pro', -apple-system, sans-serif;
+
+  /* Color Palette */
+  --zen-temple-wood: #3B2014;
+  --zen-dark-walnut: #1E120D;
+  --zen-antique-gold: #A77636;
+  --zen-radiant-gold: #D8B36A;
+  --zen-warm-ivory: #FFF8EC;
+  --zen-soft-parchment: #F7ECD6;
+  --zen-heritage-red: #7B3026;
+  --zen-jade-green: #365D52;
+  --zen-deep-ink: #28211C;
+  --zen-soft-mist: #E7DDD0;
+
+  /* Theme Tokens */
+  --theme-bg-body: #1A0F0A;
+  --theme-surface-card: #FFF8EC;
+  --theme-border-gold: rgba(167, 118, 54, 0.45);
+  --theme-text-primary: #28211C;
+  --theme-text-muted: #6B5B4D;
+  --theme-accent-gold: #A77636;
+
+  background-color: #1A0F0A !important;
+  color: #28211C;
+  font-family: var(--theme-font-body);
+}
+
+/* --------------------------------------------------------------------------
+   2. HOMEPAGE & SUBJECT LIBRARY (CourseSelector)
+   -------------------------------------------------------------------------- */
+[data-theme="lotus-zen-sanctuary"] .home-dashboard,
+.home-lotus-zen-sanctuary {
+  background: radial-gradient(circle at 50% 0%, #3B2014 0%, #1A0F0A 75%, #120A07 100%) !important;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Atmosphere Pattern */
+.home-lotus-zen-sanctuary::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(rgba(216, 179, 106, 0.06) 1.5px, transparent 1.5px),
+    radial-gradient(rgba(167, 118, 54, 0.04) 1.5px, transparent 1.5px);
+  background-size: 36px 36px;
+  background-position: 0 0, 18px 18px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Navbar */
+[data-theme="lotus-zen-sanctuary"] .home-navbar,
+.home-lotus-zen-sanctuary .home-navbar,
+[data-theme="lotus-zen-sanctuary"] .course-nav,
+.course-lotus-zen-sanctuary .course-nav {
+  background: rgba(30, 18, 13, 0.94) !important;
+  border-bottom: 1.5px solid rgba(167, 118, 54, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 -1px 0 rgba(216, 179, 106, 0.2) !important;
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-brand-name,
+.home-lotus-zen-sanctuary .home-brand-name,
+[data-theme="lotus-zen-sanctuary"] .course-brand-name,
+.course-lotus-zen-sanctuary .course-brand-name {
+  color: #D8B36A !important;
+  font-family: var(--theme-font-heading);
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(216, 179, 106, 0.4);
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-brand-subtitle,
+.home-lotus-zen-sanctuary .home-brand-subtitle,
+[data-theme="lotus-zen-sanctuary"] .course-brand-subtitle,
+.course-lotus-zen-sanctuary .course-brand-subtitle {
+  color: #F7ECD6 !important;
+  opacity: 0.85;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-logo-box,
+.home-lotus-zen-sanctuary .home-logo-box,
+[data-theme="lotus-zen-sanctuary"] .course-logo-box,
+.course-lotus-zen-sanctuary .course-logo-box {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%) !important;
+  border: 1.5px solid #D8B36A !important;
+  color: #FFF8EC !important;
+  font-family: var(--theme-font-heading);
+  box-shadow: 0 0 12px rgba(216, 179, 106, 0.35);
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-nav-item,
+.home-lotus-zen-sanctuary .home-nav-item,
+[data-theme="lotus-zen-sanctuary"] .course-nav-item,
+.course-lotus-zen-sanctuary .course-nav-item,
+[data-theme="lotus-zen-sanctuary"] .course-back-btn,
+.course-lotus-zen-sanctuary .course-back-btn {
+  color: #E7DDD0 !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-nav-item:hover,
+.home-lotus-zen-sanctuary .home-nav-item:hover,
+[data-theme="lotus-zen-sanctuary"] .course-nav-item:hover,
+.course-lotus-zen-sanctuary .course-nav-item:hover,
+[data-theme="lotus-zen-sanctuary"] .course-back-btn:hover,
+.course-lotus-zen-sanctuary .course-back-btn:hover {
+  background: rgba(167, 118, 54, 0.2) !important;
+  color: #D8B36A !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-nav-item.active,
+.home-lotus-zen-sanctuary .home-nav-item.active,
+[data-theme="lotus-zen-sanctuary"] .course-nav-item.active,
+.course-lotus-zen-sanctuary .course-nav-item.active {
+  background: linear-gradient(135deg, rgba(167, 118, 54, 0.3) 0%, rgba(123, 48, 38, 0.35) 100%) !important;
+  color: #D8B36A !important;
+  border-bottom: 2px solid #D8B36A !important;
+}
+
+/* Hero Section */
+[data-theme="lotus-zen-sanctuary"] .home-hero-eyebrow,
+.home-lotus-zen-sanctuary .home-hero-eyebrow,
+[data-theme="lotus-zen-sanctuary"] .course-hero-badge,
+.course-lotus-zen-sanctuary .course-hero-badge {
+  background: rgba(167, 118, 54, 0.22) !important;
+  border: 1px solid rgba(216, 179, 106, 0.5) !important;
+  color: #D8B36A !important;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-hero-title,
+.home-lotus-zen-sanctuary .home-hero-title,
+[data-theme="lotus-zen-sanctuary"] .course-hero-title,
+.course-lotus-zen-sanctuary .course-hero-title {
+  color: #FFF8EC !important;
+  font-family: var(--theme-font-heading);
+  letter-spacing: -0.5px;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-gradient-text,
+.home-lotus-zen-sanctuary .home-gradient-text,
+[data-theme="lotus-zen-sanctuary"] .course-hero-code-gradient,
+.course-lotus-zen-sanctuary .course-hero-code-gradient {
+  background: linear-gradient(135deg, #FDE68A 0%, #D8B36A 50%, #A77636 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-hero-desc,
+.home-lotus-zen-sanctuary .home-hero-desc,
+[data-theme="lotus-zen-sanctuary"] .course-hero-desc,
+.course-lotus-zen-sanctuary .course-hero-desc {
+  color: #E7DDD0 !important;
+  line-height: 1.7;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-floating-grad-cap,
+.home-lotus-zen-sanctuary .home-floating-grad-cap {
+  background: linear-gradient(135deg, #3B2014 0%, #7B3026 100%) !important;
+  border: 2px solid #D8B36A !important;
+  box-shadow: 0 0 25px rgba(216, 179, 106, 0.4) !important;
+}
+
+/* Search Bar & Filter Chips */
+[data-theme="lotus-zen-sanctuary"] .home-search-input,
+.home-lotus-zen-sanctuary .home-search-input,
+[data-theme="lotus-zen-sanctuary"] .course-search-input,
+.course-lotus-zen-sanctuary .course-search-input {
+  background: rgba(30, 18, 13, 0.88) !important;
+  border: 1.5px solid rgba(167, 118, 54, 0.5) !important;
+  color: #FFF8EC !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-search-input:focus,
+.home-lotus-zen-sanctuary .home-search-input:focus,
+[data-theme="lotus-zen-sanctuary"] .course-search-input:focus,
+.course-lotus-zen-sanctuary .course-search-input:focus {
+  border-color: #D8B36A !important;
+  box-shadow: 0 0 14px rgba(216, 179, 106, 0.35) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-category-chip,
+.home-lotus-zen-sanctuary .home-category-chip,
+[data-theme="lotus-zen-sanctuary"] .home-sort-btn,
+.home-lotus-zen-sanctuary .home-sort-btn,
+[data-theme="lotus-zen-sanctuary"] .course-sort-btn,
+.course-lotus-zen-sanctuary .course-sort-btn {
+  background: rgba(42, 23, 15, 0.85) !important;
+  border: 1.2px solid rgba(167, 118, 54, 0.4) !important;
+  color: #E7DDD0 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-category-chip:hover,
+.home-lotus-zen-sanctuary .home-category-chip:hover,
+[data-theme="lotus-zen-sanctuary"] .home-sort-btn:hover,
+.home-lotus-zen-sanctuary .home-sort-btn:hover {
+  background: rgba(167, 118, 54, 0.25) !important;
+  border-color: #D8B36A !important;
+  color: #D8B36A !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-category-chip.active,
+.home-lotus-zen-sanctuary .home-category-chip.active {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%) !important;
+  border-color: #D8B36A !important;
+  color: #FFF8EC !important;
+  box-shadow: 0 4px 14px rgba(123, 48, 38, 0.4) !important;
+}
+
+/* Subject & Exam Cards */
+[data-theme="lotus-zen-sanctuary"] .subject-card,
+.home-lotus-zen-sanctuary .subject-card,
+[data-theme="lotus-zen-sanctuary"] .exam-card,
+.course-lotus-zen-sanctuary .exam-card {
+  background: #FFF8EC !important;
+  border: 1.8px solid #A77636 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 18px rgba(167, 118, 54, 0.08) !important;
+  color: #28211C !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-card:hover,
+.home-lotus-zen-sanctuary .subject-card:hover,
+[data-theme="lotus-zen-sanctuary"] .exam-card:hover,
+.course-lotus-zen-sanctuary .exam-card:hover {
+  border-color: #D8B36A !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 20px rgba(216, 179, 106, 0.3) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-code-title,
+.home-lotus-zen-sanctuary .subject-code-title,
+[data-theme="lotus-zen-sanctuary"] .exam-title,
+.course-lotus-zen-sanctuary .exam-title {
+  color: #3B2014 !important;
+  font-family: var(--theme-font-heading) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-name-text,
+.home-lotus-zen-sanctuary .subject-name-text,
+[data-theme="lotus-zen-sanctuary"] .exam-desc,
+.course-lotus-zen-sanctuary .exam-desc {
+  color: #28211C !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-desc-body,
+.home-lotus-zen-sanctuary .subject-desc-body {
+  color: #6B5B4D !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-btn-start,
+.home-lotus-zen-sanctuary .subject-btn-start,
+[data-theme="lotus-zen-sanctuary"] .exam-btn-start,
+.course-lotus-zen-sanctuary .exam-btn-start {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%) !important;
+  border: 1px solid #D8B36A !important;
+  color: #FFF8EC !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(123, 48, 38, 0.3) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-btn-start:hover,
+.home-lotus-zen-sanctuary .subject-btn-start:hover,
+[data-theme="lotus-zen-sanctuary"] .exam-btn-start:hover,
+.course-lotus-zen-sanctuary .exam-btn-start:hover {
+  background: linear-gradient(135deg, #64251D 0%, #8E632D 100%) !important;
+}
+
+/* Course Stats Cards */
+[data-theme="lotus-zen-sanctuary"] .course-stat-card,
+.course-lotus-zen-sanctuary .course-stat-card {
+  background: #FFF8EC !important;
+  border: 1.5px solid rgba(167, 118, 54, 0.4) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .course-stat-value,
+.course-lotus-zen-sanctuary .course-stat-value {
+  color: #3B2014 !important;
+  font-family: var(--theme-font-heading) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .course-stat-label,
+.course-lotus-zen-sanctuary .course-stat-label {
+  color: #6B5B4D !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .exam-sort-dropdown,
+.course-lotus-zen-sanctuary .exam-sort-dropdown {
+  background: #301B14 !important;
+  border: 1.5px solid #A77636 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .exam-sort-item,
+.course-lotus-zen-sanctuary .exam-sort-item {
+  color: #E7DDD0 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .exam-sort-item:hover,
+.course-lotus-zen-sanctuary .exam-sort-item:hover {
+  background: rgba(167, 118, 54, 0.25) !important;
+  color: #D8B36A !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .exam-sort-item.active,
+.course-lotus-zen-sanctuary .exam-sort-item.active {
+  background: rgba(123, 48, 38, 0.35) !important;
+  color: #D8B36A !important;
+  font-weight: 700 !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. CANONICAL SHARED QUIZ HEADER (Row 1 & Row 2)
+   -------------------------------------------------------------------------- */
+[data-theme="lotus-zen-sanctuary"] .shared-quiz-header-container,
+.theme-lotus-zen-sanctuary .shared-quiz-header-container {
+  background: transparent !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-header,
+.theme-lotus-zen-sanctuary .quiz-v2-header {
+  background: linear-gradient(135deg, rgba(30, 18, 13, 0.96) 0%, rgba(42, 23, 15, 0.94) 100%) !important;
+  border-bottom: 2px solid #A77636 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-title,
+.theme-lotus-zen-sanctuary .quiz-v2-title {
+  color: #D8B36A !important;
+  font-family: var(--theme-font-heading) !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 10px rgba(216, 179, 106, 0.35) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-progress-ring-text,
+.theme-lotus-zen-sanctuary .quiz-progress-ring-text {
+  color: #D8B36A !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-progress-ring-label strong,
+.theme-lotus-zen-sanctuary .quiz-progress-ring-label strong {
+  color: #FFF8EC !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-progress-ring-fill,
+.theme-lotus-zen-sanctuary .quiz-progress-ring-fill {
+  stroke: #D8B36A !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-part-selector,
+.theme-lotus-zen-sanctuary .quiz-v2-part-selector {
+  background: rgba(18, 10, 7, 0.8) !important;
+  border-color: rgba(167, 118, 54, 0.4) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-header-btn,
+.theme-lotus-zen-sanctuary .quiz-v2-header-btn {
+  background: rgba(167, 118, 54, 0.18) !important;
+  border-color: rgba(167, 118, 54, 0.45) !important;
+  color: #FFF8EC !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-header-btn:hover,
+.theme-lotus-zen-sanctuary .quiz-v2-header-btn:hover {
+  background: rgba(167, 118, 54, 0.35) !important;
+  border-color: #D8B36A !important;
+  color: #D8B36A !important;
+}
+
+/* Row 2: Mode Navigation Bar */
+[data-theme="lotus-zen-sanctuary"] .quiz-mode-hub,
+.theme-lotus-zen-sanctuary .quiz-mode-hub {
+  background: rgba(26, 15, 10, 0.98) !important;
+  border-bottom: 1.5px solid rgba(167, 118, 54, 0.35) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-mode-pill-btn,
+.theme-lotus-zen-sanctuary .quiz-mode-pill-btn {
+  color: #E7DDD0 !important;
+  font-weight: 600;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-mode-pill-btn:hover,
+.theme-lotus-zen-sanctuary .quiz-mode-pill-btn:hover {
+  background: rgba(167, 118, 54, 0.2) !important;
+  color: #D8B36A !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-mode-pill-btn.is-active,
+.theme-lotus-zen-sanctuary .quiz-mode-pill-btn.is-active {
+  background: linear-gradient(135deg, rgba(123, 48, 38, 0.6) 0%, rgba(167, 118, 54, 0.6) 100%) !important;
+  border-color: #D8B36A !important;
+  color: #FFF8EC !important;
+  box-shadow: 0 0 12px rgba(216, 179, 106, 0.3) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. STANDARD QUIZ SANCTUARY VIEW
+   -------------------------------------------------------------------------- */
+.quiz-zen-sanctuary-view {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.zen-quiz-columns-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 310px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .zen-quiz-columns-grid {
+    grid-template-columns: 1fr 310px;
+  }
+  .zen-left-column {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .zen-quiz-columns-grid {
+    grid-template-columns: 1fr;
+  }
+  .zen-right-column {
+    display: none;
+  }
+}
+
+/* Zen Side Panels */
+.zen-side-card {
+  background: rgba(30, 18, 13, 0.9) !important;
+  border: 1.5px solid rgba(167, 118, 54, 0.45) !important;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px);
+  color: #FFF8EC;
+}
+
+.zen-side-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(167, 118, 54, 0.3);
+}
+
+.zen-side-title {
+  font-family: var(--theme-font-heading);
+  color: #D8B36A;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Wooden Fish Quick Mindfulness Widget Card */
+.zen-woodenfish-card {
+  background: linear-gradient(135deg, rgba(59, 32, 20, 0.8) 0%, rgba(30, 18, 13, 0.95) 100%);
+  border: 1.5px solid #A77636;
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  margin-top: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.zen-woodenfish-btn {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1px solid #D8B36A;
+  color: #FFF8EC;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.zen-woodenfish-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(216, 179, 106, 0.4);
+}
+
+/* Center Column: Question Paper */
+.zen-question-paper {
+  background: #FFF8EC !important;
+  border: 2px solid #A77636 !important;
+  border-radius: 24px;
+  padding: clamp(24px, 4vw, 36px);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4), inset 0 0 25px rgba(167, 118, 54, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.zen-q-badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.zen-q-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F7ECD6;
+  border: 1px solid rgba(167, 118, 54, 0.4);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #3B2014;
+}
+
+.zen-q-text {
+  font-size: clamp(17px, 2vw, 20px);
+  font-weight: 700;
+  color: #28211C;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.zen-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.zen-option-btn {
+  background: #F7ECD6;
+  border: 1.5px solid rgba(167, 118, 54, 0.35);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  color: #28211C;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.zen-option-btn:hover:not(:disabled) {
+  border-color: #A77636;
+  background: #FEF3C7;
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(167, 118, 54, 0.15);
+}
+
+.zen-option-btn.is-selected {
+  background: #FEF3C7;
+  border-color: #A77636;
+  box-shadow: 0 0 0 2px #A77636, 0 4px 14px rgba(167, 118, 54, 0.2);
+}
+
+.zen-option-btn.is-correct {
+  background: #DCFCE7 !important;
+  border-color: #16A34A !important;
+  color: #14532D !important;
+}
+
+.zen-option-btn.is-wrong {
+  background: #FEE2E2 !important;
+  border-color: #7B3026 !important;
+  color: #7F1D1D !important;
+}
+
+.zen-opt-key {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  background: #FFF8EC;
+  border: 1px solid rgba(167, 118, 54, 0.4);
+  color: #3B2014;
+  flex-shrink: 0;
+}
+
+.zen-nav-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(167, 118, 54, 0.3);
+  flex-wrap: wrap;
+}
+
+.zen-btn-action {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zen-btn-action.primary {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1px solid #D8B36A;
+  color: #FFF8EC;
+  box-shadow: 0 4px 14px rgba(123, 48, 38, 0.3);
+}
+
+.zen-btn-action.secondary {
+  background: #F7ECD6;
+  border: 1.5px solid rgba(167, 118, 54, 0.4);
+  color: #3B2014;
+}
+
+.zen-btn-action:hover {
+  transform: translateY(-2px);
+}

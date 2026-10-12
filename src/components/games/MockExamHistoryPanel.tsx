@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { Question } from '../../utils/quizParser';
 import type { MockExamAttempt } from '../../utils/mockExamStorage';
+import { useTheme } from '../../context/ThemeContext';
 
 interface MockExamHistoryPanelProps {
   attempts: MockExamAttempt[];
@@ -14,6 +15,7 @@ function formatTime(seconds: number): string {
 }
 
 export default function MockExamHistoryPanel({ attempts, questions }: MockExamHistoryPanelProps) {
+  const { theme } = useTheme();
   const recurringReviewQuestions = useMemo(() => {
     const counts = new Map<number, { incorrect: number; skipped: number }>();
     for (const attempt of attempts) {
@@ -40,7 +42,7 @@ export default function MockExamHistoryPanel({ attempts, questions }: MockExamHi
   }, [attempts, questions]);
 
   return (
-    <section className="mock-exam-history" aria-labelledby="mock-exam-history-title">
+    <section className={`mock-exam-history theme-${theme}`} aria-labelledby="mock-exam-history-title">
       <div className="mock-exam-history-heading">
         <div>
           <h3 id="mock-exam-history-title">Lịch sử Thi thử FE</h3>

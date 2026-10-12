@@ -12,6 +12,9 @@ import {
   playLifelineSound,
   playVictoryFanfare,
 } from '../../utils/soundEffects';
+import { useTheme } from '../../context/ThemeContext';
+import DongSonDrumSvg from '../DongSonDrumSvg';
+import ZenTempleWatermark from '../ZenTempleWatermark';
 
 interface SurvivalTowerGameProps {
   setId: string;
@@ -95,6 +98,7 @@ export default function SurvivalTowerGame({
   onBackToStudy,
   onOpenMistakes,
 }: SurvivalTowerGameProps) {
+  const { theme } = useTheme();
   // Game progress states
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentFloor, setCurrentFloor] = useState(1);
@@ -439,18 +443,50 @@ export default function SurvivalTowerGame({
 
   // 1. Splash Screen
   if (!isPlaying && !isGameOver && !isVictory) {
+    const splashHeaders = {
+      'hon-viet': {
+        title: 'CHINH PHỤC 50 TẦNG DANH THẮNG',
+        tagline: 'Đúng thăng 1 tầng ⬆️ · Sai lùi 2 tầng ⬇️ · Vang danh bảng vàng Tháp Cổ!',
+      },
+      'fantasy-academy': {
+        title: 'ĐẠI THÁP MA PHÁP 50 TẦNG',
+        tagline: 'Đúng leo 1 tầng năng lượng ⬆️ · Sai hao tổn 2 tầng ⬇️ · Phá vỡ phong ấn Tầng 50!',
+      },
+      'cozy-night': {
+        title: 'LEO THÁP 50 ÁNH SAO ĐÊM',
+        tagline: 'Đúng vươn lên 1 tầng ⬆️ · Sai lùi 2 tầng ⬇️ · Chạm tới đỉnh cao đêm trăng sao!',
+      },
+      'lotus-zen-sanctuary': {
+        title: 'BẢO THÁP TRÍ TUỆ 50 TẦNG',
+        tagline: 'Đúng thăng 1 tầng giác ngộ ⬆️ · Sai lùi 2 tầng khảo nghiệm ⬇️ · Chinh phục Đỉnh Tháp Liên Hoa!',
+      },
+      default: {
+        title: 'LEO THÁP 50 TẦNG',
+        tagline: 'Đúng leo 1 tầng ⬆️ · Sai rớt 2 tầng ⬇️⬇️ · Chinh phục đỉnh tháp quang vinh!',
+      },
+    };
+    const currentSplash = splashHeaders[theme] || splashHeaders.default;
+
     return (
-      <div className="game-card-surface tower-splash-card">
+      <div className={`game-card-surface tower-splash-card theme-${theme}`}>
+        {theme === 'hon-viet' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <DongSonDrumSvg size={540} opacity={0.035} color="#d97706" />
+          </div>
+        )}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <ZenTempleWatermark size={540} opacity={0.045} color="#A77636" />
+          </div>
+        )}
         <div className="tower-splash-hero">
           <div className="tower-splash-emojis">
-            <span className="splash-castle-emoji">🏰</span>
+            <span className="splash-castle-emoji">{theme === 'fantasy-academy' ? '🧙‍♂️' : theme === 'hon-viet' ? '🏛️' : theme === 'lotus-zen-sanctuary' ? '🛕' : '🏰'}</span>
             <span className="splash-climber-emoji">{avatar}</span>
             <span className="splash-apex-crown">👑</span>
           </div>
-          <h1 className="tower-splash-title">LEO THÁP 50 TẦNG</h1>
-          <p className="tower-splash-tagline">
-            Đúng leo 1 tầng ⬆️ · Sai rớt 2 tầng ⬇️⬇️ · Chinh phục đỉnh tháp quang vinh!
-          </p>
+          <h1 className="tower-splash-title">{currentSplash.title}</h1>
+          <p className="tower-splash-tagline">{currentSplash.tagline}</p>
         </div>
 
         {/* Avatar Selection */}
@@ -533,8 +569,22 @@ export default function SurvivalTowerGame({
 
   // 2. Victory / Game Over Screen
   if (isGameOver || isVictory) {
+    const victoryHeadings = {
+      'hon-viet': isVictory ? '🏛️ BẢNG VÀNG DANH THẮNG — ĐÃ CHINH PHỤC ĐỈNH CAO!' : 'CẦN RÈN LUYỆN THÊM TRÊN ĐƯỜNG LẬP NGHIỆP!',
+      'fantasy-academy': isVictory ? '⚡ ĐỈNH THÁP HUYỀN BÍ ĐÃ PHỤC TÙNG ĐẠI PHÁP SƯ!' : 'TÀ THUẬT QUÁ MẠNH! BẠN ĐÃ RƠI KHỎI THÁP MA PHÁP!',
+      'cozy-night': isVictory ? '🌙 CHINH PHỤC 50 TẦNG SAO ĐÊM HOÀN HẢO!' : 'TẠM NGHỈ CHÂN TÁCH TRÀ — HÃY TIẾP TỤC ĐÊM NAY NHÉ!',
+      'lotus-zen-sanctuary': isVictory ? '🪷 ĐẠI GIÁC NGỘ — ĐÃ CHINH PHỤC ĐỈNH THÁP LIÊN HOA!' : 'TÂM CHƯA ĐỊNH — TIẾP TỤC TU TẬP KHẢO NGHIỆM LẠI NHÉ!',
+      default: isVictory ? 'ĐỈNH THÁP HUYỀN THOẠI ĐÃ BỊ CHINH PHỤC!' : 'BẠN ĐÃ RƠI KHỎI THÁP!',
+    };
+
     return (
-      <div className="game-card-surface tower-result-card">
+      <div className={`game-card-surface tower-result-card theme-${theme}`}>
+        {theme === 'hon-viet' && <DongSonDrumSvg className="dongson-tower-watermark" />}
+        {theme === 'lotus-zen-sanctuary' && (
+          <div className="theme-bg-watermark-small" aria-hidden="true">
+            <ZenTempleWatermark size={540} opacity={0.045} color="#A77636" />
+          </div>
+        )}
         <div className="tower-result-emojis">
           {isVictory ? (
             <div className="victory-emoji-banner">
@@ -553,7 +603,7 @@ export default function SurvivalTowerGame({
         </div>
 
         <h2 className="tower-result-heading">
-          {isVictory ? 'ĐỈNH THÁP HUYỀN THOẠI ĐÃ BỊ CHINH PHỤC!' : 'BẠN ĐÃ RƠI KHỎI THÁP!'}
+          {victoryHeadings[theme] || (isVictory ? 'ĐỈNH THÁP HUYỀN THOẠI ĐÃ BỊ CHINH PHỤC!' : 'BẠN ĐÃ RƠI KHỎI THÁP!')}
         </h2>
 
         <div className="tower-result-floor-badge">
@@ -601,7 +651,7 @@ export default function SurvivalTowerGame({
   if (!currentQ) return null;
 
   return (
-    <div className="tower-game-wrapper">
+    <div className={`tower-game-wrapper theme-${theme}`}>
       {/* Mobile Top Progress Strip */}
       <div className="tower-mobile-strip">
         <div className="mobile-strip-left">

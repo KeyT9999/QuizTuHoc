@@ -4,6 +4,8 @@ import type { QuizSetInfo } from '../data/quizSets';
 import type { FlashcardSet } from '../data/flashcardData';
 import { calculateCourseProgress, getFlashcardProgress } from '../utils/courseStorage';
 import PassedBadge from './PassedBadge';
+import { useTheme } from '../context/ThemeContext';
+import Lotus3DExperience from './Lotus3DExperience';
 import './CourseSelector.css';
 
 interface CourseSelectorProps {
@@ -27,8 +29,59 @@ interface SubjectTheme {
   icon: 'book' | 'landmark' | 'folder' | 'code' | 'cloud' | 'globe' | 'tag' | 'cards' | 'grad-cap';
 }
 
-function getCourseTheme(courseId: string, courseCode: string): SubjectTheme {
+function getCourseTheme(courseId: string, courseCode: string, activeTheme = 'default'): SubjectTheme {
   const code = (courseCode || courseId).toUpperCase();
+  let icon: SubjectTheme['icon'] = 'grad-cap';
+  if (code.includes('MLN111')) icon = 'book';
+  else if (code.includes('MLN122')) icon = 'landmark';
+  else if (code.includes('PMG201')) icon = 'folder';
+  else if (code.includes('SWD392')) icon = 'code';
+  else if (code.includes('SDN302')) icon = 'cloud';
+  else if (code.includes('JPD')) icon = 'globe';
+  else if (code.includes('CCHN')) icon = 'tag';
+  else if (courseId === 'flashcard') icon = 'cards';
+
+  if (activeTheme === 'lotus-zen-sanctuary') {
+    return {
+      primary: '#A77636',
+      soft: 'rgba(247, 236, 214, 0.85)',
+      border: 'rgba(167, 118, 54, 0.5)',
+      hoverShadow: 'rgba(59, 32, 20, 0.35)',
+      icon,
+    };
+  }
+
+  if (activeTheme === 'fantasy-academy') {
+    return {
+      primary: '#f59e0b',
+      soft: 'rgba(217, 119, 6, 0.16)',
+      border: 'rgba(217, 119, 6, 0.4)',
+      hoverShadow: 'rgba(217, 119, 6, 0.35)',
+      icon,
+    };
+  }
+
+  if (activeTheme === 'hon-viet') {
+    return {
+      primary: '#991b1b',
+      soft: 'rgba(254, 243, 199, 0.8)',
+      border: 'rgba(217, 119, 6, 0.45)',
+      hoverShadow: 'rgba(153, 27, 27, 0.25)',
+      icon,
+    };
+  }
+
+  if (activeTheme === 'cozy-night') {
+    return {
+      primary: '#38bdf8',
+      soft: 'rgba(99, 102, 241, 0.18)',
+      border: 'rgba(129, 140, 248, 0.35)',
+      hoverShadow: 'rgba(56, 189, 248, 0.28)',
+      icon,
+    };
+  }
+
+  // Modern Light / Default theme
   if (code.includes('MLN111')) {
     return {
       primary: '#8b5cf6',
@@ -110,6 +163,7 @@ function getCourseTheme(courseId: string, courseCode: string): SubjectTheme {
   };
 }
 
+
 function renderSubjectIcon(iconType: SubjectTheme['icon']) {
   switch (iconType) {
     case 'book':
@@ -181,6 +235,56 @@ function renderSubjectIcon(iconType: SubjectTheme['icon']) {
   }
 }
 
+function getHomeHeroDetails(theme: string) {
+  switch (theme) {
+    case 'lotus-zen-sanctuary':
+      return {
+        eyebrow: '🪷 LIÊN HOA PHẬT QUỐC · THIỀN VIỆN TRI THỨC',
+        titlePre: 'Tâm an định tĩnh, ',
+        titleHighlight: 'trí tuệ khai hoa',
+        desc: 'Không gian tu học lấy cảm hứng từ kiến trúc Phật giáo Việt Nam, hoa sen, vàng đồng và thiền định an yên. Chọn một pháp môn ôn luyện để thắp sáng con đường tri thức.',
+        badgeIcon: '🪷',
+        badgeTitle: 'Liên Hoa Phật Quốc',
+      };
+    case 'hon-viet':
+      return {
+        eyebrow: '🇻🇳 HỒN VIỆT · VĂN MIẾU THƯ PHÒNG',
+        titlePre: 'Khơi nguồn tri thức, ',
+        titleHighlight: 'vững bước tương lai',
+        desc: 'Học tập hôm nay – Dựng xây mai sau. Chọn một môn học để xem toàn bộ danh sách đề thi và theo dõi tiến độ ôn tập.',
+        badgeIcon: '🪷',
+        badgeTitle: 'Tinh hoa Đại Việt',
+      };
+    case 'fantasy-academy':
+      return {
+        eyebrow: '⚔️ HỌC VIỆN MA PHÁP · ĐẤU TRƯỜNG TRI THỨC',
+        titlePre: 'Hôm nay bạn muốn ',
+        titleHighlight: 'chinh phục bí tịch nào?',
+        desc: 'Mở khóa từng pho cổ thư, tích lũy điểm kinh nghiệm và thăng hạng học giả thượng thừa.',
+        badgeIcon: '📜',
+        badgeTitle: 'Học Viện Ma Pháp',
+      };
+    case 'cozy-night':
+      return {
+        eyebrow: '☕ GÓC HỌC KHUYA · LOFI STUDY HUB',
+        titlePre: 'Đêm nay bạn muốn ',
+        titleHighlight: 'ôn tập môn nào?',
+        desc: 'Bật một bản nhạc lofi yêu thích, nhâm nhi tách trà ấm và bắt đầu phiên ôn tập hiệu quả.',
+        badgeIcon: '🎧',
+        badgeTitle: 'Lofi Study Night',
+      };
+    default:
+      return {
+        eyebrow: 'THƯ VIỆN MÔN HỌC',
+        titlePre: 'Hôm nay bạn muốn ',
+        titleHighlight: 'ôn môn nào?',
+        desc: 'Chọn một môn học để xem toàn bộ danh sách đề thi và theo dõi tiến độ ôn tập.',
+        badgeIcon: '🎓',
+        badgeTitle: 'Thư viện môn học',
+      };
+  }
+}
+
 export default function CourseSelector({
   courses,
   quizSets,
@@ -190,6 +294,8 @@ export default function CourseSelector({
   onCreateCourseClick,
   onDeleteCourse,
 }: CourseSelectorProps) {
+  const { theme, openThemeModal } = useTheme();
+  const heroDetails = getHomeHeroDetails(theme);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
   const [sortOrder, setSortOrder] = useState<SortType>('default');
@@ -265,7 +371,7 @@ export default function CourseSelector({
   }, [courses, quizSets, searchQuery, selectedCategory, sortOrder]);
 
   return (
-    <div className="home-dashboard">
+    <div className={`home-dashboard theme-${theme} home-${theme}`}>
       {/* ====================================================================
           1. HEADER NAVIGATION
           ==================================================================== */}
@@ -307,6 +413,17 @@ export default function CourseSelector({
               <span>Thống kê</span>
             </button>
 
+            {/* Global Theme Selector Button */}
+            <button
+              type="button"
+              className="global-theme-toggle-btn"
+              onClick={openThemeModal}
+              title="Đổi giao diện học tập"
+            >
+              <span>🎨</span>
+              <span>Giao diện</span>
+            </button>
+
             {/* User Avatar Menu */}
             <div className="home-user-menu">
               <div className="home-user-avatar" title="Tài khoản cá nhân">
@@ -327,53 +444,60 @@ export default function CourseSelector({
           ==================================================================== */}
       <section className="home-hero">
         <div className="home-hero-left">
-          <span className="home-hero-eyebrow">THƯ VIỆN MÔN HỌC</span>
+          <span className="home-hero-eyebrow">{heroDetails.eyebrow}</span>
           <h1 className="home-hero-title">
-            Hôm nay bạn muốn <span className="home-gradient-text">ôn môn nào?</span>
+            {heroDetails.titlePre}
+            <span className="home-gradient-text">{heroDetails.titleHighlight}</span>
           </h1>
           <p className="home-hero-desc">
-            Chọn một môn học để xem toàn bộ danh sách đề thi và theo dõi tiến độ ôn tập.
+            {heroDetails.desc}
           </p>
         </div>
 
-        {/* Hero Right Visual (SVG Study Illustration) */}
+        {/* Hero Right Visual (SVG Study Illustration or 3D Lotus Experience) */}
         <div className="home-hero-right">
-          <svg className="home-hero-illustration" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Soft Ambient Shadow */}
-            <ellipse cx="160" cy="195" rx="130" ry="14" fill="#E2E8F0" opacity="0.6" />
+          {theme === 'lotus-zen-sanctuary' ? (
+            <div className="home-hero-3d-lotus-wrap" style={{ width: 320, height: 220, position: 'relative' }}>
+              <Lotus3DExperience height={220} />
+            </div>
+          ) : (
+            <svg className="home-hero-illustration" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Soft Ambient Shadow */}
+              <ellipse cx="160" cy="195" rx="130" ry="14" fill="#E2E8F0" opacity="0.6" />
 
-            {/* Stacked Book 1 (Bottom Dark Indigo) */}
-            <rect x="70" y="160" width="180" height="26" rx="5" fill="#312E81" />
-            <rect x="85" y="164" width="162" height="18" rx="2" fill="#FFFFFF" />
-            <rect x="68" y="160" width="18" height="26" rx="4" fill="#4338CA" />
+              {/* Stacked Book 1 (Bottom Dark Indigo) */}
+              <rect x="70" y="160" width="180" height="26" rx="5" fill="#312E81" />
+              <rect x="85" y="164" width="162" height="18" rx="2" fill="#FFFFFF" />
+              <rect x="68" y="160" width="18" height="26" rx="4" fill="#4338CA" />
 
-            {/* Stacked Book 2 (Middle Blue) */}
-            <rect x="82" y="132" width="165" height="26" rx="5" fill="#2563EB" />
-            <rect x="96" y="136" width="148" height="18" rx="2" fill="#F8FAFC" />
-            <rect x="80" y="132" width="18" height="26" rx="4" fill="#3B82F6" />
+              {/* Stacked Book 2 (Middle Blue) */}
+              <rect x="82" y="132" width="165" height="26" rx="5" fill="#2563EB" />
+              <rect x="96" y="136" width="148" height="18" rx="2" fill="#F8FAFC" />
+              <rect x="80" y="132" width="18" height="26" rx="4" fill="#3B82F6" />
 
-            {/* Stacked Book 3 (Top Sky Blue) */}
-            <rect x="95" y="104" width="150" height="26" rx="5" fill="#0284C7" />
-            <rect x="108" y="108" width="134" height="18" rx="2" fill="#FFFFFF" />
-            <rect x="93" y="104" width="17" height="26" rx="4" fill="#38BDF8" />
+              {/* Stacked Book 3 (Top Sky Blue) */}
+              <rect x="95" y="104" width="150" height="26" rx="5" fill="#0284C7" />
+              <rect x="108" y="108" width="134" height="18" rx="2" fill="#FFFFFF" />
+              <rect x="93" y="104" width="17" height="26" rx="4" fill="#38BDF8" />
 
-            {/* Succulent Plant Pot (Left) */}
-            <path d="M36 175H58L54 195H40L36 175Z" fill="#F1F5F9" stroke="#CBD5E1" strokeWidth="2" />
-            <ellipse cx="47" cy="175" rx="11" ry="3" fill="#E2E8F0" />
-            <path d="M47 150C44 160 41 170 47 175C53 170 50 160 47 150Z" fill="#10B981" />
-            <path d="M40 156C36 163 38 171 45 174C45 168 43 161 40 156Z" fill="#059669" />
-            <path d="M54 156C58 163 56 171 49 174C49 168 51 161 54 156Z" fill="#34D399" />
+              {/* Succulent Plant Pot (Left) */}
+              <path d="M36 175H58L54 195H40L36 175Z" fill="#F1F5F9" stroke="#CBD5E1" strokeWidth="2" />
+              <ellipse cx="47" cy="175" rx="11" ry="3" fill="#E2E8F0" />
+              <path d="M47 150C44 160 41 170 47 175C53 170 50 160 47 150Z" fill="#10B981" />
+              <path d="M40 156C36 163 38 171 45 174C45 168 43 161 40 156Z" fill="#059669" />
+              <path d="M54 156C58 163 56 171 49 174C49 168 51 161 54 156Z" fill="#34D399" />
 
-            {/* Pencil Cup (Between) */}
-            <rect x="255" y="152" width="28" height="42" rx="4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1.5" />
-            <line x1="262" y1="130" x2="262" y2="152" stroke="#F59E0B" strokeWidth="4" strokeLinecap="round" />
-            <line x1="270" y1="124" x2="270" y2="152" stroke="#4F46E5" strokeWidth="4" strokeLinecap="round" />
-            <line x1="277" y1="134" x2="277" y2="152" stroke="#EF4444" strokeWidth="4" strokeLinecap="round" />
-          </svg>
+              {/* Pencil Cup (Between) */}
+              <rect x="255" y="152" width="28" height="42" rx="4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1.5" />
+              <line x1="262" y1="130" x2="262" y2="152" stroke="#F59E0B" strokeWidth="4" strokeLinecap="round" />
+              <line x1="270" y1="124" x2="270" y2="152" stroke="#4F46E5" strokeWidth="4" strokeLinecap="round" />
+              <line x1="277" y1="134" x2="277" y2="152" stroke="#EF4444" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+          )}
 
-          {/* Floating Graduation Cap Card */}
-          <div className="home-floating-grad-cap" title="Học tập vững vàng">
-            <span className="grad-cap-icon">🎓</span>
+          {/* Floating Theme Badge Card */}
+          <div className="home-floating-grad-cap" title={heroDetails.badgeTitle}>
+            <span className="grad-cap-icon">{heroDetails.badgeIcon}</span>
           </div>
         </div>
       </section>
@@ -572,7 +696,7 @@ export default function CourseSelector({
             </div>
           ) : (
             displayedCourses.map((course) => {
-              const theme = getCourseTheme(course.id, course.code);
+              const courseTheme = getCourseTheme(course.id, course.code, theme);
 
               // 1. Flashcard Course
               if (course.id === 'flashcard' && flashcardSets.length > 0) {
@@ -585,17 +709,17 @@ export default function CourseSelector({
                     key={course.id}
                     className="subject-card"
                     style={{
-                      '--subj-primary': theme.primary,
-                      '--subj-soft': theme.soft,
-                      '--subj-border': theme.border,
-                      '--subj-hover-shadow': theme.hoverShadow,
+                      '--subj-primary': courseTheme.primary,
+                      '--subj-soft': courseTheme.soft,
+                      '--subj-border': courseTheme.border,
+                      '--subj-hover-shadow': courseTheme.hoverShadow,
                     } as React.CSSProperties}
                     onClick={() => onSelectFlashcard(fcSet)}
                   >
                     {/* Header */}
                     <div className="subject-card-header">
                       <div className="subject-icon-box">
-                        {renderSubjectIcon(theme.icon)}
+                        {renderSubjectIcon(courseTheme.icon)}
                       </div>
 
                       <div className="subject-info-body">
@@ -678,17 +802,17 @@ export default function CourseSelector({
                   key={course.id}
                   className="subject-card"
                   style={{
-                    '--subj-primary': theme.primary,
-                    '--subj-soft': theme.soft,
-                    '--subj-border': theme.border,
-                    '--subj-hover-shadow': theme.hoverShadow,
+                    '--subj-primary': courseTheme.primary,
+                    '--subj-soft': courseTheme.soft,
+                    '--subj-border': courseTheme.border,
+                    '--subj-hover-shadow': courseTheme.hoverShadow,
                   } as React.CSSProperties}
                   onClick={() => onSelectCourse(course)}
                 >
                   {/* Header */}
                   <div className="subject-card-header">
                     <div className="subject-icon-box">
-                      {renderSubjectIcon(theme.icon)}
+                      {renderSubjectIcon(courseTheme.icon)}
                     </div>
 
                     <div className="subject-info-body">
