@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import type { Question } from '../utils/quizParser';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
@@ -113,18 +113,29 @@ export default function LotusZenQuizView({
     }
   });
 
-  const [floatingBlessing, setFloatingBlessing] = useState<string | null>(null);
+  interface FloatingBlessingItem {
+    id: number;
+    text: string;
+    xOffset: number;
+  }
+  const [floatingBlessings, setFloatingBlessings] = useState<FloatingBlessingItem[]>([]);
+  const [isMeritPopping, setIsMeritPopping] = useState(false);
+  const nextBlessingId = useRef(0);
 
   // Sync user XP
   useEffect(() => {
     setXp(getUserXP());
   }, [answers, submittedIds]);
 
-  // Handle quick wooden fish strike
+  // Handle quick wooden fish strike with zero layout shift
   const handleQuickStrike = () => {
     playWoodFishSound('warm');
     setIsStriking(true);
-    setTimeout(() => setIsStriking(false), 260);
+    setTimeout(() => setIsStriking(false), 240);
+
+    // Bouncy pop animation on merit count
+    setIsMeritPopping(true);
+    setTimeout(() => setIsMeritPopping(false), 280);
 
     const newMerits = merits + 1;
     setMerits(newMerits);
@@ -143,10 +154,18 @@ export default function LotusZenQuizView({
       '+1 Tâm An Vạn Sự An 🕊️',
       '+1 Vượt Qua Khảo Nghiệm ⚡',
       '+1 Tinh Tấn Không Ngừng ☸️',
+      '+1 Bồ Đề Tâm Kiên Cố 🌿',
+      '+1 Học Đâu Nhớ Đó 🧠',
     ];
     const picked = blessings[Math.floor(Math.random() * blessings.length)];
-    setFloatingBlessing(picked);
-    setTimeout(() => setFloatingBlessing(null), 1500);
+    const id = ++nextBlessingId.current;
+    const xOffset = Math.floor(Math.random() * 32) - 16; // -16px to +16px
+
+    setFloatingBlessings((prev) => [...prev.slice(-6), { id, text: picked, xOffset }]);
+
+    setTimeout(() => {
+      setFloatingBlessings((prev) => prev.filter((b) => b.id !== id));
+    }, 1400);
   };
 
   // Fullscreen Focus Mode Toggle
@@ -362,6 +381,44 @@ export default function LotusZenQuizView({
               <ZenCornerFiligree position="top-left" size={24} />
               <ZenCornerFiligree position="top-right" size={24} />
 
+              {/* Zero-Layout-Shift Floating Blessings Overlay */}
+              <div
+                className="zen-floating-blessings-overlay"
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  top: 20,
+                  left: 0,
+                  right: 0,
+                  height: 120,
+                  pointerEvents: 'none',
+                  zIndex: 30,
+                  overflow: 'visible',
+                }}
+              >
+                {floatingBlessings.map((b) => (
+                  <div
+                    key={b.id}
+                    className="zen-floating-blessing-item"
+                    style={{
+                      position: 'absolute',
+                      left: `calc(50% + ${b.xOffset}px)`,
+                      top: '25%',
+                      transform: 'translate(-50%, 0)',
+                      color: '#FEF08A',
+                      fontFamily: 'var(--theme-font-heading)',
+                      fontSize: 13,
+                      fontWeight: 800,
+                      whiteSpace: 'nowrap',
+                      textShadow: '0 0 10px rgba(245, 158, 11, 0.95), 0 2px 5px rgba(0,0,0,0.9)',
+                      animation: 'zenBlessingFloatUp 1.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                    }}
+                  >
+                    {b.text}
+                  </div>
+                ))}
+              </div>
+
               <div
                 className={`zen-woodenfish-avatar-wrap ${isStriking ? 'is-striking' : ''}`}
                 onClick={handleQuickStrike}
@@ -421,21 +478,14 @@ export default function LotusZenQuizView({
                 Mõ Gỗ Tu Tâm
               </div>
               <div style={{ fontSize: 12, color: '#E7DDD0', marginTop: 4 }}>
-                Công đức tích lũy: <strong style={{ color: '#FDE68A', fontSize: 14 }}>{merits.toLocaleString()}</strong>
+                Công đức tích lũy:{' '}
+                <strong
+                  className={isMeritPopping ? 'zen-merit-pop' : ''}
+                  style={{ color: '#FDE68A', fontSize: 14 }}
+                >
+                  {merits.toLocaleString()}
+                </strong>
               </div>
-
-              {floatingBlessing && (
-                <div style={{
-                  color: '#FDE047',
-                  fontSize: 13,
-                  fontWeight: 800,
-                  margin: '8px 0',
-                  animation: 'themeSlideUp 0.3s ease-out',
-                  textShadow: '0 0 8px rgba(245, 158, 11, 0.6)',
-                }}>
-                  {floatingBlessing}
-                </div>
-              )}
 
               <button
                 type="button"
