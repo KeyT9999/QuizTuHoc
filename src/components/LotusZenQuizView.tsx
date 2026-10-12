@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import type { Question } from '../utils/quizParser';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
@@ -149,13 +149,52 @@ export default function LotusZenQuizView({
     setTimeout(() => setFloatingBlessing(null), 1500);
   };
 
+  // Fullscreen Focus Mode Toggle
+  const toggleZenFocusMode = useCallback(async () => {
+    if (!isZenFocusMode) {
+      setIsZenFocusMode(true);
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (err) {
+        console.warn('Fullscreen request:', err);
+      }
+    } else {
+      setIsZenFocusMode(false);
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        }
+      } catch (err) {
+        console.warn('Exit fullscreen:', err);
+      }
+    }
+  }, [isZenFocusMode]);
+
+  // Sync fullscreen change with state (Esc / F11 / browser back)
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isFullscreen = !!document.fullscreenElement;
+      if (!isFullscreen && isZenFocusMode) {
+        setIsZenFocusMode(false);
+      }
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, [isZenFocusMode]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
 
       const key = e.key.toUpperCase();
-      if (['A', 'B', 'C', 'D'].includes(key) && !isAnswered) {
+      if (e.key === 'Escape' && isZenFocusMode) {
+        toggleZenFocusMode();
+      } else if (key === 'F') {
+        toggleZenFocusMode();
+      } else if (['A', 'B', 'C', 'D'].includes(key) && !isAnswered) {
         onSelectOption(key);
       } else if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
         if (!isMultipleChoice || isAnswered) {
@@ -174,7 +213,7 @@ export default function LotusZenQuizView({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isAnswered, onSelectOption, onNext, onPrev, isMultipleChoice, question.id, onToggleMastered, onOpenQuestionGrid]);
+  }, [isAnswered, onSelectOption, onNext, onPrev, isMultipleChoice, question.id, onToggleMastered, onOpenQuestionGrid, isZenFocusMode, toggleZenFocusMode]);
 
   const progressPercent = useMemo(() => {
     return totalCount > 0 ? Math.round((masteredIds.length / questions.length) * 100) : 0;
@@ -187,17 +226,67 @@ export default function LotusZenQuizView({
         <ZenTempleWatermark size={650} color="#D8B36A" opacity={0.06} />
       </div>
 
-      {/* Flanking Temple Lanterns */}
-      {!isZenFocusMode && (
-        <>
-          <div className="zen-flank-lantern left" style={{ position: 'fixed', top: 120, left: 16, zIndex: 10, pointerEvents: 'none' }}>
-            <ZenHangingLantern size={52} />
+      {/* Zen Focus Mode Top HUD Bar */}
+      {isZenFocusMode && (
+        <header className="zen-focus-hud">
+          <div className="zen-focus-hud-left">
+            <LotusFlowerSvg size={22} color="#D8B36A" />
+            <div className="zen-focus-hud-title">
+              THIỀN ĐỊNH TOÀN MÀN HÌNH
+            </div>
+            <span className="zen-focus-hud-hint">Phím F / Esc để thu nhỏ</span>
           </div>
-          <div className="zen-flank-lantern right" style={{ position: 'fixed', top: 120, right: 16, zIndex: 10, pointerEvents: 'none' }}>
-            <ZenHangingLantern size={52} />
+
+          <div className="zen-focus-hud-right">
+            {/* Quick strike in focus mode */}
+            <button
+              type="button"
+              onClick={handleQuickStrike}
+              className="zen-focus-woodfish-chip"
+              title="Gõ Mõ tích công đức"
+            >
+              <img src={zenWoodenFishImg} alt="Mõ" style={{ width: 18, height: 18, borderRadius: 4 }} />
+              <span>Gõ Mõ (+1)</span>
+              <strong style={{ color: '#FEF08A' }}>{merits}</strong>
+            </button>
+
+            <button
+              type="button"
+              className="zen-focus-exit-btn"
+              onClick={toggleZenFocusMode}
+              title="Thoát chế độ thiền định (Esc hoặc F)"
+            >
+              ✕ Thu nhỏ
+            </button>
           </div>
-        </>
+        </header>
       )}
+
+      {/* Flanking Temple Lanterns */}
+      <div
+        className="zen-flank-lantern left"
+        style={{
+          position: 'fixed',
+          top: isZenFocusMode ? 80 : 120,
+          left: isZenFocusMode ? 24 : 16,
+          zIndex: isZenFocusMode ? 100000 : 10,
+          pointerEvents: 'none',
+        }}
+      >
+        <ZenHangingLantern size={isZenFocusMode ? 56 : 52} />
+      </div>
+      <div
+        className="zen-flank-lantern right"
+        style={{
+          position: 'fixed',
+          top: isZenFocusMode ? 80 : 120,
+          right: isZenFocusMode ? 24 : 16,
+          zIndex: isZenFocusMode ? 100000 : 10,
+          pointerEvents: 'none',
+        }}
+      >
+        <ZenHangingLantern size={isZenFocusMode ? 56 : 52} />
+      </div>
 
       <div className="zen-quiz-columns-grid">
         {/* ==================================================================
@@ -597,23 +686,28 @@ export default function LotusZenQuizView({
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 800, color: '#D8B36A' }}>Chế Độ Thiền Định</div>
-                  <div style={{ fontSize: 11.5, color: '#E7DDD0', marginTop: 2 }}>Ẩn bớt thanh bên để tập trung</div>
+                  <div style={{ fontSize: 11.5, color: '#E7DDD0', marginTop: 2 }}>Toàn màn hình F11 tĩnh tâm</div>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setIsZenFocusMode(!isZenFocusMode)}
+                  onClick={toggleZenFocusMode}
                   style={{
                     background: isZenFocusMode ? '#D8B36A' : 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid #D8B36A',
+                    border: '1.2px solid #D8B36A',
                     color: isZenFocusMode ? '#1E120D' : '#D8B36A',
                     borderRadius: 999,
                     padding: '6px 14px',
                     fontSize: 12,
                     fontWeight: 800,
                     cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    transition: 'all 0.2s ease',
                   }}
+                  title="Phóng to toàn màn hình F11 để thiền định học tập (Phím F)"
                 >
-                  {isZenFocusMode ? 'BẬT' : 'TẮT'}
+                  {isZenFocusMode ? '⛶ BẬT' : '⛶ TẮT'}
                 </button>
               </div>
             </div>
@@ -625,24 +719,11 @@ export default function LotusZenQuizView({
       {isZenFocusMode && (
         <button
           type="button"
-          onClick={() => setIsZenFocusMode(false)}
-          style={{
-            position: 'fixed',
-            bottom: 24,
-            right: 24,
-            background: 'linear-gradient(135deg, #7B3026 0%, #A77636 100%)',
-            border: '1.5px solid #D8B36A',
-            color: '#FFF8EC',
-            padding: '10px 18px',
-            borderRadius: 999,
-            fontSize: 13,
-            fontWeight: 800,
-            cursor: 'pointer',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)',
-            zIndex: 100,
-          }}
+          onClick={toggleZenFocusMode}
+          className="zen-floating-focus-exit-btn"
+          title="Thu nhỏ toàn màn hình (Phím Esc hoặc F)"
         >
-          ✕ Thoát Chế Độ Thiền Định
+          ✕ Thoát Thiền Định (Esc)
         </button>
       )}
     </div>

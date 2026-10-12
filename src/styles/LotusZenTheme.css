@@ -826,3 +826,196 @@
 .zen-btn-action:hover {
   transform: translateY(-2px);
 }
+
+/* ==========================================================================
+   5. ZEN FOCUS MODE (CHẾ ĐỘ THIỀN ĐỊNH TOÀN MÀN HÌNH - FULLSCREEN EXPERIENCE)
+   ========================================================================== */
+.quiz-zen-sanctuary-view.is-focus-mode {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 16px 32px 36px !important;
+  background-color: #120905 !important;
+  background-image: 
+    radial-gradient(circle at 50% 18%, rgba(216, 179, 106, 0.16) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(20, 10, 6, 0.85) 0%, rgba(12, 6, 3, 0.95) 100%),
+    url('../assets/zen_temple_bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Focus Mode Top HUD */
+.zen-focus-hud {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 22px;
+  margin-bottom: 20px;
+  background: rgba(30, 18, 13, 0.92);
+  border: 1.5px solid rgba(167, 118, 54, 0.55);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 16px rgba(216, 179, 106, 0.12);
+  backdrop-filter: blur(14px);
+  color: #FFF8EC;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.zen-focus-hud-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zen-focus-hud-title {
+  font-family: var(--theme-font-heading);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #D8B36A;
+  letter-spacing: 1.2px;
+}
+
+.zen-focus-hud-hint {
+  font-size: 11.5px;
+  color: #F7ECD6;
+  opacity: 0.75;
+  background: rgba(167, 118, 54, 0.2);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(167, 118, 54, 0.35);
+}
+
+.zen-focus-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zen-focus-woodfish-chip {
+  background: rgba(59, 32, 20, 0.9);
+  border: 1.2px solid #D8B36A;
+  color: #FDE68A;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.zen-focus-woodfish-chip:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 14px rgba(216, 179, 106, 0.5);
+}
+
+.zen-focus-woodfish-chip:active {
+  transform: scale(0.95);
+}
+
+.zen-focus-exit-btn {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1.2px solid #D8B36A;
+  color: #FFF8EC;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(123, 48, 38, 0.4);
+}
+
+.zen-focus-exit-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 16px rgba(216, 179, 106, 0.6);
+}
+
+/* In Focus Mode: Columns Grid Expands to Full Max Width */
+.quiz-zen-sanctuary-view.is-focus-mode .zen-quiz-columns-grid {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 960px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+.quiz-zen-sanctuary-view.is-focus-mode .zen-center-column {
+  width: 100% !important;
+  max-width: 960px !important;
+  margin: 0 auto !important;
+}
+
+.quiz-zen-sanctuary-view.is-focus-mode .zen-question-paper {
+  width: 100% !important;
+  max-width: 960px !important;
+  box-sizing: border-box !important;
+  padding: clamp(32px, 4vw, 46px) clamp(28px, 4vw, 52px) !important;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.75),
+    0 0 40px rgba(216, 179, 106, 0.28),
+    inset 0 0 45px rgba(167, 118, 54, 0.12) !important;
+}
+
+.quiz-zen-sanctuary-view.is-focus-mode .zen-q-text {
+  font-size: clamp(20px, 2.3vw, 24px) !important;
+  line-height: 1.65 !important;
+  margin-bottom: 28px !important;
+}
+
+.quiz-zen-sanctuary-view.is-focus-mode .zen-option-btn {
+  padding: 16px 22px !important;
+  font-size: 16px !important;
+}
+
+.quiz-zen-sanctuary-view.is-focus-mode .zen-opt-key {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 15px !important;
+}
+
+.zen-floating-focus-exit-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border: 1.5px solid #D8B36A;
+  color: #FFF8EC;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(216, 179, 106, 0.4);
+  z-index: 100001;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zen-floating-focus-exit-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 24px rgba(216, 179, 106, 0.6);
+}
