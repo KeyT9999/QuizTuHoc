@@ -8,6 +8,12 @@ import {
 } from '../utils/studyStats';
 import LotusFlowerSvg from './LotusFlowerSvg';
 import ZenTempleWatermark from './ZenTempleWatermark';
+import ZenCornerFiligree from './ZenCornerFiligree';
+import ZenHangingLantern from './ZenHangingLantern';
+import ZenMalaBeads from './ZenMalaBeads';
+import ZenTempleSeal from './ZenTempleSeal';
+import ZenDharmaWheel from './ZenDharmaWheel';
+import zenWoodenFishImg from '../assets/zen_wooden_fish.jpg';
 import { playWoodFishSound, playClickSound } from '../utils/soundEffects';
 
 interface QuizSplitPart {
@@ -95,6 +101,7 @@ export default function LotusZenQuizView({
   const [xp, setXp] = useState(() => getUserXP());
   const [streak] = useState(() => getStudyStreak());
   const [isZenFocusMode, setIsZenFocusMode] = useState(false);
+  const [isStriking, setIsStriking] = useState(false);
 
   // Merit counter for Wooden Fish widget
   const [merits, setMerits] = useState<number>(() => {
@@ -116,6 +123,9 @@ export default function LotusZenQuizView({
   // Handle quick wooden fish strike
   const handleQuickStrike = () => {
     playWoodFishSound('warm');
+    setIsStriking(true);
+    setTimeout(() => setIsStriking(false), 260);
+
     const newMerits = merits + 1;
     setMerits(newMerits);
     try {
@@ -125,15 +135,18 @@ export default function LotusZenQuizView({
     }
 
     const blessings = [
-      '+1 Trí tuệ hanh thông 🪷',
-      '+1 Tâm bất biến 🧘',
-      '+1 Vía đỗ FE 🏆',
-      '+1 Công đức vô lượng ✨',
-      '+1 Bắt trúng đề thi 🎯',
+      '+1 Công Đức Vô Lượng ✨',
+      '+1 Trí Tuệ Khai Sáng 🪷',
+      '+1 Định Tâm Nhập Thiền 🧘',
+      '+1 Vía Đậu Bảng Vàng FE 🏆',
+      '+1 Thấu Triệt Nghĩa Lý 📜',
+      '+1 Tâm An Vạn Sự An 🕊️',
+      '+1 Vượt Qua Khảo Nghiệm ⚡',
+      '+1 Tinh Tấn Không Ngừng ☸️',
     ];
     const picked = blessings[Math.floor(Math.random() * blessings.length)];
     setFloatingBlessing(picked);
-    setTimeout(() => setFloatingBlessing(null), 1400);
+    setTimeout(() => setFloatingBlessing(null), 1500);
   };
 
   // Keyboard navigation
@@ -174,6 +187,18 @@ export default function LotusZenQuizView({
         <ZenTempleWatermark size={650} color="#D8B36A" opacity={0.06} />
       </div>
 
+      {/* Flanking Temple Lanterns */}
+      {!isZenFocusMode && (
+        <>
+          <div className="zen-flank-lantern left" style={{ position: 'fixed', top: 120, left: 16, zIndex: 10, pointerEvents: 'none' }}>
+            <ZenHangingLantern size={52} />
+          </div>
+          <div className="zen-flank-lantern right" style={{ position: 'fixed', top: 120, right: 16, zIndex: 10, pointerEvents: 'none' }}>
+            <ZenHangingLantern size={52} />
+          </div>
+        </>
+      )}
+
       <div className="zen-quiz-columns-grid">
         {/* ==================================================================
             LEFT COLUMN: LỘ TRÌNH TU HỌC & MÕ GỖ CHÁNH NIỆM
@@ -181,9 +206,11 @@ export default function LotusZenQuizView({
         {!isZenFocusMode && (
           <aside className="zen-left-column">
             {/* Roadmap / Parts Panel */}
-            <div className="zen-side-card">
+            <div className="zen-side-card has-corners">
+              <ZenCornerFiligree position="top-left" size={28} />
+              <ZenCornerFiligree position="top-right" size={28} />
               <div className="zen-side-header">
-                <LotusFlowerSvg size={24} color="#D8B36A" />
+                <LotusFlowerSvg size={22} color="#D8B36A" />
                 <h3 className="zen-side-title">Lộ Trình Tu Học</h3>
               </div>
 
@@ -241,14 +268,71 @@ export default function LotusZenQuizView({
               )}
             </div>
 
-            {/* Quick Wooden Fish Mindfulness Widget */}
-            <div className="zen-woodenfish-card">
-              <div style={{ fontSize: 32, marginBottom: 4 }}>🪷 🪵</div>
+            {/* Quick Wooden Fish Mindfulness Widget with Authentic 3D Carved Mõ Gỗ */}
+            <div className="zen-woodenfish-card has-corners">
+              <ZenCornerFiligree position="top-left" size={24} />
+              <ZenCornerFiligree position="top-right" size={24} />
+
+              <div
+                className={`zen-woodenfish-avatar-wrap ${isStriking ? 'is-striking' : ''}`}
+                onClick={handleQuickStrike}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleQuickStrike();
+                  }
+                }}
+                title="Nhấn chuột để gõ mõ tích công đức tu học"
+                style={{
+                  position: 'relative',
+                  width: 112,
+                  height: 112,
+                  margin: '0 auto 8px',
+                  cursor: 'pointer',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(216, 179, 106, 0.3) 0%, rgba(59, 32, 20, 0.8) 65%, transparent 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 0 24px rgba(216, 179, 106, 0.25)',
+                  transition: 'transform 0.12s ease',
+                  transform: isStriking ? 'scale(0.92) rotate(-3deg)' : 'scale(1)',
+                }}
+              >
+                <img
+                  src={zenWoodenFishImg}
+                  alt="Mõ Gỗ Tu Tâm"
+                  style={{
+                    width: 98,
+                    height: 98,
+                    objectFit: 'contain',
+                    borderRadius: 18,
+                    filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.6))',
+                  }}
+                />
+                {/* Floating incense smoke wisp */}
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: -4,
+                    right: 8,
+                    fontSize: 16,
+                    opacity: 0.85,
+                    pointerEvents: 'none',
+                    animation: 'zenSmokeFloat 2.6s infinite ease-out',
+                  }}
+                >
+                  💨
+                </span>
+              </div>
+
               <div style={{ fontSize: 15, fontWeight: 800, color: '#D8B36A', fontFamily: 'var(--theme-font-heading)' }}>
                 Mõ Gỗ Tu Tâm
               </div>
               <div style={{ fontSize: 12, color: '#E7DDD0', marginTop: 4 }}>
-                Công đức tích lũy: <strong style={{ color: '#FDE68A' }}>{merits.toLocaleString()}</strong>
+                Công đức tích lũy: <strong style={{ color: '#FDE68A', fontSize: 14 }}>{merits.toLocaleString()}</strong>
               </div>
 
               {floatingBlessing && (
@@ -258,6 +342,7 @@ export default function LotusZenQuizView({
                   fontWeight: 800,
                   margin: '8px 0',
                   animation: 'themeSlideUp 0.3s ease-out',
+                  textShadow: '0 0 8px rgba(245, 158, 11, 0.6)',
                 }}>
                   {floatingBlessing}
                 </div>
@@ -268,7 +353,7 @@ export default function LotusZenQuizView({
                 className="zen-woodenfish-btn"
                 onClick={handleQuickStrike}
               >
-                Gõ Mõ Tích Đức (+1) 🔔
+                🔔 Gõ Mõ Tích Đức (+1)
               </button>
             </div>
 
@@ -285,7 +370,13 @@ export default function LotusZenQuizView({
             CENTER COLUMN: GIẤY THI LIÊN HOA (PARCHMENT QUESTION PAPER)
             ================================================================== */}
         <main className="zen-center-column">
-          <div className="zen-question-paper">
+          <div className="zen-question-paper has-deckled-corners">
+            {/* 4 Sacred Pagoda Eave Corner Brackets */}
+            <ZenCornerFiligree position="top-left" size={44} className="zen-card-corner top-left" />
+            <ZenCornerFiligree position="top-right" size={44} className="zen-card-corner top-right" />
+            <ZenCornerFiligree position="bottom-left" size={44} className="zen-card-corner bottom-left" />
+            <ZenCornerFiligree position="bottom-right" size={44} className="zen-card-corner bottom-right" />
+
             {/* Top Row: Tag + Question Number + Mastered Action */}
             <div className="zen-q-badge-row">
               <div className="zen-q-badge">
@@ -301,7 +392,8 @@ export default function LotusZenQuizView({
                 )}
               </div>
 
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                <ZenTempleSeal size={36} text="TU TÂM KHAI TRÍ" />
                 <button
                   type="button"
                   onClick={() => onToggleMastered(question.id)}
@@ -325,6 +417,9 @@ export default function LotusZenQuizView({
                 </button>
               </div>
             </div>
+
+            {/* Sacred Bodhi Mala Beads Progress Divider */}
+            <ZenMalaBeads count={12} activeIndex={relativeIndex % 12} className="zen-mala-divider" />
 
             {/* Question Text */}
             <div className="zen-q-text">
@@ -440,24 +535,18 @@ export default function LotusZenQuizView({
         {!isZenFocusMode && (
           <aside className="zen-right-column">
             {/* Progress Circular Card */}
-            <div className="zen-side-card">
+            <div className="zen-side-card has-corners">
+              <ZenCornerFiligree position="top-left" size={28} />
+              <ZenCornerFiligree position="top-right" size={28} />
               <div className="zen-side-header">
-                <LotusFlowerSvg size={24} color="#D8B36A" />
+                <LotusFlowerSvg size={22} color="#D8B36A" />
                 <h3 className="zen-side-title">Tiến Độ Tu Học</h3>
               </div>
 
               <div style={{ textAlign: 'center', margin: '14px 0' }}>
-                <div style={{
-                  fontSize: 38,
-                  fontWeight: 900,
-                  color: '#D8B36A',
-                  fontFamily: 'var(--theme-font-heading)',
-                  textShadow: '0 0 12px rgba(216, 179, 106, 0.4)',
-                }}>
-                  {progressPercent}%
-                </div>
-                <div style={{ fontSize: 13, color: '#E7DDD0', marginTop: 4 }}>
-                  Đã tinh thông <strong>{masteredIds.length}</strong> / {questions.length} câu
+                <ZenDharmaWheel progress={progressPercent} size={94} />
+                <div style={{ fontSize: 13, color: '#E7DDD0', marginTop: 10 }}>
+                  Đã tinh thông <strong style={{ color: '#FDE68A' }}>{masteredIds.length}</strong> / {questions.length} câu
                 </div>
               </div>
 

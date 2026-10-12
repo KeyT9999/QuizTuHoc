@@ -235,7 +235,11 @@
 .home-lotus-zen-sanctuary .subject-card,
 [data-theme="lotus-zen-sanctuary"] .exam-card,
 .course-lotus-zen-sanctuary .exam-card {
-  background: #FFF8EC !important;
+  background-color: #FFF8EC !important;
+  background-image: 
+    linear-gradient(180deg, rgba(255, 248, 236, 0.94) 0%, rgba(247, 236, 214, 0.94) 100%),
+    url('../assets/zen_do_paper.jpg') !important;
+  background-size: cover !important;
   border: 1.8px solid #A77636 !important;
   border-radius: 20px !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 18px rgba(167, 118, 54, 0.08) !important;
@@ -426,14 +430,74 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. STANDARD QUIZ SANCTUARY VIEW
+   4. STANDARD QUIZ SANCTUARY VIEW & ATMOSPHERIC TEMPLE BACKDROP
    -------------------------------------------------------------------------- */
+.quiz-lotus-zen-page-wrapper,
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-wrapper,
+.theme-lotus-zen-sanctuary.quiz-v2-wrapper {
+  background-color: #140A06 !important;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(216, 179, 106, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(20, 10, 6, 0.82) 0%, rgba(14, 7, 4, 0.92) 100%),
+    url('../assets/zen_temple_bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  min-height: 100vh;
+}
+
 .quiz-zen-sanctuary-view {
   max-width: 1440px;
   margin: 0 auto;
   padding: 24px 20px 80px;
   position: relative;
   z-index: 1;
+}
+
+/* Animations: Incense Smoke & Lantern Sway */
+@keyframes zenSmokeFloat {
+  0% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-14px) translateX(4px) scale(1.15);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-26px) translateX(-3px) scale(1.3);
+    opacity: 0;
+  }
+}
+
+@keyframes lanternFlicker {
+  0%, 100% { opacity: 0.95; transform: scale(1); }
+  50% { opacity: 0.76; transform: scale(0.96); }
+}
+
+@keyframes lanternSwayLeft {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(1.8deg); }
+}
+
+@keyframes lanternSwayRight {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-1.8deg); }
+}
+
+.zen-flank-lantern.left {
+  animation: lanternSwayLeft 6.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.zen-flank-lantern.right {
+  animation: lanternSwayRight 7s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.lantern-pulse-glow {
+  animation: lanternFlicker 3s ease-in-out infinite;
 }
 
 .zen-quiz-columns-grid {
@@ -459,17 +523,33 @@
   .zen-right-column {
     display: none;
   }
+  .zen-flank-lantern {
+    display: none !important;
+  }
 }
 
 /* Zen Side Panels */
 .zen-side-card {
-  background: rgba(30, 18, 13, 0.9) !important;
+  background: rgba(30, 18, 13, 0.92) !important;
   border: 1.5px solid rgba(167, 118, 54, 0.45) !important;
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5), inset 0 0 16px rgba(167, 118, 54, 0.08);
+  backdrop-filter: blur(16px);
   color: #FFF8EC;
+  position: relative;
+}
+
+.zen-side-card.has-corners > .zen-corner-filigree:nth-child(1) {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.zen-side-card.has-corners > .zen-corner-filigree:nth-child(2) {
+  position: absolute;
+  top: 4px;
+  right: 4px;
 }
 
 .zen-side-header {
@@ -478,7 +558,7 @@
   gap: 10px;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px dashed rgba(167, 118, 54, 0.3);
+  border-bottom: 1px dashed rgba(167, 118, 54, 0.35);
 }
 
 .zen-side-title {
@@ -486,26 +566,54 @@
   color: #D8B36A;
   font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  text-shadow: 0 0 8px rgba(216, 179, 106, 0.3);
 }
 
 /* Wooden Fish Quick Mindfulness Widget Card */
 .zen-woodenfish-card {
-  background: linear-gradient(135deg, rgba(59, 32, 20, 0.8) 0%, rgba(30, 18, 13, 0.95) 100%);
-  border: 1.5px solid #A77636;
-  border-radius: 18px;
-  padding: 16px;
+  background: linear-gradient(135deg, rgba(48, 27, 20, 0.92) 0%, rgba(28, 15, 10, 0.96) 100%) !important;
+  border: 1.8px solid #A77636 !important;
+  border-radius: 20px;
+  padding: 20px 16px;
   text-align: center;
   margin-top: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 0 20px rgba(216, 179, 106, 0.12) !important;
+  position: relative;
+}
+
+.zen-woodenfish-card.has-corners > .zen-corner-filigree:nth-child(1) {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.zen-woodenfish-card.has-corners > .zen-corner-filigree:nth-child(2) {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
+.zen-woodenfish-avatar-wrap {
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.zen-woodenfish-avatar-wrap:hover {
+  transform: scale(1.04) !important;
+  box-shadow: 0 0 32px rgba(216, 179, 106, 0.45) !important;
+}
+
+.zen-woodenfish-avatar-wrap:active {
+  transform: scale(0.92) rotate(-4deg) !important;
 }
 
 .zen-woodenfish-btn {
-  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
-  border: 1px solid #D8B36A;
-  color: #FFF8EC;
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%) !important;
+  border: 1.2px solid #D8B36A !important;
+  color: #FFF8EC !important;
   border-radius: 12px;
-  padding: 8px 16px;
+  padding: 9px 18px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
@@ -513,23 +621,48 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 14px rgba(123, 48, 38, 0.35);
 }
 
 .zen-woodenfish-btn:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 15px rgba(216, 179, 106, 0.4);
+  box-shadow: 0 0 18px rgba(216, 179, 106, 0.5) !important;
 }
 
-/* Center Column: Question Paper */
+/* Center Column: Question Paper with Deckled Do Paper & Pagoda Corners */
 .zen-question-paper {
-  background: #FFF8EC !important;
+  background-color: #FBF4E6 !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(216, 179, 106, 0.12) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(255, 248, 236, 0.94) 0%, rgba(247, 236, 214, 0.94) 100%),
+    url('../assets/zen_do_paper.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
   border: 2px solid #A77636 !important;
   border-radius: 24px;
-  padding: clamp(24px, 4vw, 36px);
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4), inset 0 0 25px rgba(167, 118, 54, 0.08);
+  padding: clamp(26px, 4vw, 38px);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(216, 179, 106, 0.22),
+    inset 0 0 35px rgba(167, 118, 54, 0.1) !important;
   position: relative;
   overflow: hidden;
+}
+
+.zen-card-corner {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.zen-card-corner.top-left { top: 6px; left: 6px; }
+.zen-card-corner.top-right { top: 6px; right: 6px; }
+.zen-card-corner.bottom-left { bottom: 6px; left: 6px; }
+.zen-card-corner.bottom-right { bottom: 6px; right: 6px; }
+
+.zen-mala-divider {
+  margin: 6px 0 18px;
 }
 
 .zen-q-badge-row {
@@ -596,30 +729,62 @@
 }
 
 .zen-option-btn.is-correct {
-  background: #DCFCE7 !important;
+  background: #E8F5E9 !important;
   border-color: #16A34A !important;
   color: #14532D !important;
+  box-shadow: 0 0 0 1px #16A34A, 0 4px 14px rgba(22, 163, 74, 0.15) !important;
 }
 
 .zen-option-btn.is-wrong {
-  background: #FEE2E2 !important;
+  background: #FDF2F2 !important;
   border-color: #7B3026 !important;
   color: #7F1D1D !important;
+  box-shadow: 0 0 0 1px #7B3026, 0 4px 14px rgba(123, 48, 38, 0.15) !important;
 }
 
 .zen-opt-key {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--theme-font-heading);
   font-weight: 800;
-  font-size: 13px;
-  background: #FFF8EC;
-  border: 1px solid rgba(167, 118, 54, 0.4);
+  font-size: 14px;
+  background: linear-gradient(135deg, #FFF8EC 0%, #F5E6CC 100%);
+  border: 1.5px solid #A77636;
   color: #3B2014;
   flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), inset 0 1px 2px #FFF;
+  transition: all 0.2s ease;
+}
+
+.zen-option-btn:hover:not(:disabled) .zen-opt-key {
+  border-color: #D8B36A;
+  background: #FEF3C7;
+  transform: scale(1.05);
+}
+
+.zen-option-btn.is-selected .zen-opt-key {
+  background: #D8B36A;
+  color: #1E120D;
+  border-color: #A77636;
+  box-shadow: 0 0 8px rgba(216, 179, 106, 0.6);
+}
+
+.zen-option-btn.is-correct .zen-opt-key {
+  background: #059669 !important;
+  border-color: #047857 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.zen-option-btn.is-wrong .zen-opt-key {
+  background: #DC2626 !important;
+  border-color: #B91C1C !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
 }
 
 .zen-nav-bottom-row {
