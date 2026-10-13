@@ -101,17 +101,6 @@ export default function KnowledgeGroupPicker({
 
   return (
     <div className={`tesla-container knowledge-groups-page theme-${theme}`}>
-      {theme === 'hon-viet' && (
-        <div className="knowledge-groups-watermark" aria-hidden="true">
-          <DongSonDrumSvg size={600} opacity={0.04} color="#d97706" />
-        </div>
-      )}
-      {theme === 'lotus-zen-sanctuary' && (
-        <div className="knowledge-groups-watermark" aria-hidden="true">
-          <ZenTempleWatermark size={600} opacity={0.045} color="#A77636" />
-        </div>
-      )}
-
       <header className="tesla-nav">
         <button type="button" className="keyt-back-nav-btn" onClick={onBack}>
           <span className="keyt-back-arrow">←</span>
@@ -123,6 +112,26 @@ export default function KnowledgeGroupPicker({
           <span className="tesla-logo">KEYT</span>
         </div>
       </header>
+
+      {/* Background Watermarks — Zero-Layout-Shift */}
+      {theme === 'hon-viet' && (
+        <div
+          className="knowledge-groups-watermark"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: 180, right: '5%', pointerEvents: 'none', zIndex: 0, opacity: 0.04 }}
+        >
+          <DongSonDrumSvg size={600} opacity={0.04} color="#d97706" />
+        </div>
+      )}
+      {theme === 'lotus-zen-sanctuary' && (
+        <div
+          className="knowledge-groups-watermark"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: 180, right: '5%', pointerEvents: 'none', zIndex: 0, opacity: 0.045 }}
+        >
+          <ZenTempleWatermark size={600} opacity={0.045} color="#A77636" />
+        </div>
+      )}
 
       <main className="tesla-main-content">
         <section className="knowledge-groups-heading" aria-labelledby="knowledge-groups-title">

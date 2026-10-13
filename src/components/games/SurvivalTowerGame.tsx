@@ -468,14 +468,22 @@ export default function SurvivalTowerGame({
     const currentSplash = splashHeaders[theme] || splashHeaders.default;
 
     return (
-      <div className={`game-card-surface tower-splash-card theme-${theme}`}>
+      <div className={`game-card-surface tower-splash-card theme-${theme}`} style={{ position: 'relative' }}>
         {theme === 'hon-viet' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.035, lineHeight: 0 }}
+          >
             <DongSonDrumSvg size={540} opacity={0.035} color="#d97706" />
           </div>
         )}
         {theme === 'lotus-zen-sanctuary' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+          >
             <ZenTempleWatermark size={540} opacity={0.045} color="#A77636" />
           </div>
         )}
@@ -578,10 +586,14 @@ export default function SurvivalTowerGame({
     };
 
     return (
-      <div className={`game-card-surface tower-result-card theme-${theme}`}>
+      <div className={`game-card-surface tower-result-card theme-${theme}`} style={{ position: 'relative' }}>
         {theme === 'hon-viet' && <DongSonDrumSvg className="dongson-tower-watermark" />}
         {theme === 'lotus-zen-sanctuary' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+          >
             <ZenTempleWatermark size={540} opacity={0.045} color="#A77636" />
           </div>
         )}

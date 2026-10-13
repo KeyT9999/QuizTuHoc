@@ -410,14 +410,22 @@ export default function MockExamView({
     const currentSetup = setupHeaders[theme] || setupHeaders.default;
 
     return (
-      <div className={`mock-exam-container theme-${theme}`}>
+      <div className={`mock-exam-container theme-${theme}`} style={{ position: 'relative' }}>
         {theme === 'hon-viet' && (
-          <div className="theme-bg-watermark-exam" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-exam"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.035, lineHeight: 0 }}
+          >
             <DongSonDrumSvg size={580} opacity={0.035} color="#d97706" />
           </div>
         )}
         {theme === 'lotus-zen-sanctuary' && (
-          <div className="theme-bg-watermark-exam" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-exam"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+          >
             <ZenTempleWatermark size={580} opacity={0.045} color="#A77636" />
           </div>
         )}
@@ -760,14 +768,22 @@ export default function MockExamView({
       : '❌ Chưa đạt';
 
   return (
-    <div className={`mock-exam-container result-mode theme-${theme}`}>
+    <div className={`mock-exam-container result-mode theme-${theme}`} style={{ position: 'relative' }}>
       {theme === 'hon-viet' && (
-        <div className="theme-bg-watermark-exam" aria-hidden="true">
+        <div
+          className="theme-bg-watermark-exam"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.035, lineHeight: 0 }}
+        >
           <DongSonDrumSvg size={580} opacity={0.035} color="#d97706" />
         </div>
       )}
       {theme === 'lotus-zen-sanctuary' && (
-        <div className="theme-bg-watermark-exam" aria-hidden="true">
+        <div
+          className="theme-bg-watermark-exam"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+        >
           <ZenTempleWatermark size={580} opacity={0.045} color="#A77636" />
         </div>
       )}

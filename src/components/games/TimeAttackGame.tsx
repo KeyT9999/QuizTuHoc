@@ -239,14 +239,22 @@ export default function TimeAttackGame({
     const currentSplash = splashInfo[theme] || splashInfo.default;
 
     return (
-      <div className={`game-card-surface game-splash-box theme-${theme}`}>
+      <div className={`game-card-surface game-splash-box theme-${theme}`} style={{ position: 'relative' }}>
         {theme === 'hon-viet' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.035, lineHeight: 0 }}
+          >
             <DongSonDrumSvg size={520} opacity={0.035} color="#d97706" />
           </div>
         )}
         {theme === 'lotus-zen-sanctuary' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+          >
             <ZenTempleWatermark size={520} opacity={0.045} color="#A77636" />
           </div>
         )}
@@ -295,14 +303,22 @@ export default function TimeAttackGame({
     const accuracy = totalAttempted > 0 ? Math.round((correctCount / totalAttempted) * 100) : 0;
 
     return (
-      <div className={`game-card-surface game-result-box theme-${theme}`}>
+      <div className={`game-card-surface game-result-box theme-${theme}`} style={{ position: 'relative' }}>
         {theme === 'hon-viet' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.035, lineHeight: 0 }}
+          >
             <DongSonDrumSvg size={520} opacity={0.035} color="#d97706" />
           </div>
         )}
         {theme === 'lotus-zen-sanctuary' && (
-          <div className="theme-bg-watermark-small" aria-hidden="true">
+          <div
+            className="theme-bg-watermark-small"
+            aria-hidden="true"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+          >
             <ZenTempleWatermark size={520} opacity={0.045} color="#A77636" />
           </div>
         )}
@@ -357,14 +373,22 @@ export default function TimeAttackGame({
   const timerColorClass = timeLeft <= 10 ? 'timer-danger' : timeLeft <= 20 ? 'timer-warning' : 'timer-normal';
 
   return (
-    <div className={`game-gameplay-container theme-${theme}`}>
+    <div className={`game-gameplay-container theme-${theme}`} style={{ position: 'relative' }}>
       {theme === 'hon-viet' && (
-        <div className="theme-bg-watermark-small" aria-hidden="true">
+        <div
+          className="theme-bg-watermark-small"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.035, lineHeight: 0 }}
+        >
           <DongSonDrumSvg size={520} opacity={0.035} color="#d97706" />
         </div>
       )}
       {theme === 'lotus-zen-sanctuary' && (
-        <div className="theme-bg-watermark-small" aria-hidden="true">
+        <div
+          className="theme-bg-watermark-small"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0, opacity: 0.045, lineHeight: 0 }}
+        >
           <ZenTempleWatermark size={520} opacity={0.045} color="#A77636" />
         </div>
       )}
