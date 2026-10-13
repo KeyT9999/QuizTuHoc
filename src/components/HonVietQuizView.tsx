@@ -151,6 +151,8 @@ export default function HonVietQuizView({
     };
     window.addEventListener('storage', handleStorage);
     window.addEventListener('keyt-xp-earned', handleStorage);
+    window.addEventListener('keyt-xp-changed', handleStorage);
+    window.addEventListener('keyt-streak-changed', handleStorage);
 
     const timer = setInterval(() => {
       try {
@@ -168,6 +170,8 @@ export default function HonVietQuizView({
     return () => {
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('keyt-xp-earned', handleStorage);
+      window.removeEventListener('keyt-xp-changed', handleStorage);
+      window.removeEventListener('keyt-streak-changed', handleStorage);
       clearInterval(timer);
     };
   }, []);
@@ -243,7 +247,7 @@ export default function HonVietQuizView({
   };
 
   const rankTitle = xp >= 2000 ? 'Tiến sĩ' : xp >= 1200 ? 'Cử nhân' : xp >= 600 ? 'Tú tài' : 'Tân binh';
-  const badgesCount = Math.max(1, Math.floor(statMastered / 10));
+  const badgesCount = Math.floor(statMastered / 10);
 
   return (
     <div className={`hon-viet-theme ${isFocusMode ? 'is-focus-mode' : ''}`}>
@@ -721,8 +725,12 @@ export default function HonVietQuizView({
             <div className="hon-viet-streak-row">
               <span className="hon-viet-flame-icon">🔥</span>
               <div className="hon-viet-streak-text">
-                <h4>{streakDays} ngày</h4>
-                <p>Kiên trì hôm nay — Vững vàng ngày mai!</p>
+                <h4>{streakDays > 0 ? `${streakDays} ngày` : '0 ngày'}</h4>
+                <p>
+                  {streakDays > 0
+                    ? 'Kiên trì hôm nay — Vững vàng ngày mai!'
+                    : 'Làm bài ngay để bắt đầu chuỗi ngày học!'}
+                </p>
               </div>
             </div>
           </div>

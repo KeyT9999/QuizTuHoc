@@ -52,6 +52,24 @@ export function setFocusMode(enabled: boolean): void {
   }
 }
 
+// One-time cleanup of legacy mock default values
+const MOCK_CLEANED_FLAG = 'keyt_mock_data_cleaned_v2';
+try {
+  if (typeof window !== 'undefined' && localStorage.getItem(MOCK_CLEANED_FLAG) !== 'true') {
+    // If previously initialized with hardcoded mock '6' or mock '2478', reset to clean state
+    if (localStorage.getItem(STREAK_DAYS_KEY) === '6') {
+      localStorage.removeItem(STREAK_DAYS_KEY);
+      localStorage.removeItem(STREAK_LAST_DATE_KEY);
+    }
+    if (localStorage.getItem(XP_STORAGE_KEY) === '2478') {
+      localStorage.removeItem(XP_STORAGE_KEY);
+    }
+    localStorage.setItem(MOCK_CLEANED_FLAG, 'true');
+  }
+} catch {
+  // ignore
+}
+
 // XP Gamification
 export function getUserXP(): number {
   try {
@@ -63,7 +81,7 @@ export function getUserXP(): number {
   } catch {
     // ignore
   }
-  return 2478; // Baseline starting XP matching mock
+  return 0; // Pure real data: starts at 0 XP
 }
 
 export function addStudyXP(amount: number): number {
@@ -72,6 +90,8 @@ export function addStudyXP(amount: number): number {
   try {
     localStorage.setItem(XP_STORAGE_KEY, next.toString());
     window.dispatchEvent(new CustomEvent('keyt-xp-changed', { detail: next }));
+    window.dispatchEvent(new CustomEvent('keyt-xp-earned', { detail: next }));
+    window.dispatchEvent(new Event('storage'));
   } catch {
     // ignore
   }
@@ -91,24 +111,33 @@ export function calculateLevel(xp: number): { level: number; currentLevelXp: num
   };
 }
 
-// Study Streak Management
+// Study Streak Management (100% Real User Activity)
 export function getStudyStreak(): number {
   try {
-    const savedStreak = localStorage.getItem(STREAK_DAYS_KEY);
+    const savedStreakRaw = localStorage.getItem(STREAK_DAYS_KEY);
     const lastDate = localStorage.getItem(STREAK_LAST_DATE_KEY);
-    const today = new Date().toDateString();
 
-    if (!savedStreak || !lastDate) {
-      // Initialize with 6 days matching the mock
-      localStorage.setItem(STREAK_DAYS_KEY, '6');
-      localStorage.setItem(STREAK_LAST_DATE_KEY, today);
-      return 6;
+    if (!savedStreakRaw || !lastDate) {
+      return 0; // No real study recorded yet -> 0 days
     }
 
-    const streak = parseInt(savedStreak, 10) || 1;
-    return streak;
+    const today = new Date().toDateString();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toDateString();
+
+    const streak = parseInt(savedStreakRaw, 10) || 0;
+
+    // If last active study was today or yesterday, streak is currently valid
+    if (lastDate === today || lastDate === yesterdayStr) {
+      return streak;
+    }
+
+    // Missed more than 1 calendar day without studying -> streak reset to 0
+    localStorage.setItem(STREAK_DAYS_KEY, '0');
+    return 0;
   } catch {
-    return 6;
+    return 0;
   }
 }
 
@@ -116,27 +145,35 @@ export function recordDailyStudy(): number {
   try {
     const today = new Date().toDateString();
     const lastDate = localStorage.getItem(STREAK_LAST_DATE_KEY);
-    const currentStreak = parseInt(localStorage.getItem(STREAK_DAYS_KEY) || '6', 10);
-
-    if (lastDate === today) {
-      return currentStreak;
-    }
+    const savedStreak = parseInt(localStorage.getItem(STREAK_DAYS_KEY) || '0', 10);
 
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toDateString();
 
-    let nextStreak = currentStreak;
-    if (lastDate === yesterday.toDateString()) {
-      nextStreak += 1;
-    } else if (lastDate) {
-      // More than 1 day missed
+    // Already recorded study session for today: keep current streak
+    if (lastDate === today) {
+      const activeStreak = Math.max(1, savedStreak);
+      localStorage.setItem(STREAK_DAYS_KEY, activeStreak.toString());
+      return activeStreak;
+    }
+
+    let nextStreak = 1;
+    // Studied yesterday: maintain unbroken streak (+1 day)
+    if (lastDate === yesterdayStr) {
+      nextStreak = Math.max(1, savedStreak) + 1;
+    } else {
+      // First day ever or restarted after missing days
       nextStreak = 1;
     }
 
     localStorage.setItem(STREAK_DAYS_KEY, nextStreak.toString());
     localStorage.setItem(STREAK_LAST_DATE_KEY, today);
+    window.dispatchEvent(new CustomEvent('keyt-streak-changed', { detail: nextStreak }));
+    window.dispatchEvent(new Event('storage'));
     return nextStreak;
   } catch {
-    return 6;
+    return 0;
   }
 }
+

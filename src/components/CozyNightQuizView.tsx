@@ -102,15 +102,23 @@ export default function CozyNightQuizView({
   // Live XP state
   const [xp, setXp] = useState(() => getUserXP());
   // Streak state
-  const [streak] = useState(() => getStudyStreak());
+  const [streak, setStreak] = useState(() => getStudyStreak());
 
   useEffect(() => {
-    const handleXpChanged = (e: Event) => {
-      const custom = e as CustomEvent<number>;
-      if (custom.detail !== undefined) setXp(custom.detail);
+    const handleSync = () => {
+      setXp(getUserXP());
+      setStreak(getStudyStreak());
     };
-    window.addEventListener('keyt-xp-changed', handleXpChanged);
-    return () => window.removeEventListener('keyt-xp-changed', handleXpChanged);
+    window.addEventListener('keyt-xp-changed', handleSync);
+    window.addEventListener('keyt-xp-earned', handleSync);
+    window.addEventListener('keyt-streak-changed', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('keyt-xp-changed', handleSync);
+      window.removeEventListener('keyt-xp-earned', handleSync);
+      window.removeEventListener('keyt-streak-changed', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
   }, []);
 
   const handleToggleFocus = () => {
@@ -239,9 +247,11 @@ export default function CozyNightQuizView({
               </div>
               <div className="cozy-streak-info">
                 <div className="cozy-streak-count">
-                  <strong>{streak} ngày</strong> liên tiếp
+                  <strong>{streak > 0 ? `${streak} ngày` : '0 ngày'}</strong> {streak > 0 ? 'liên tiếp' : ''}
                 </div>
-                <div className="cozy-streak-sub">Đang cày chăm chỉ</div>
+                <div className="cozy-streak-sub">
+                  {streak > 0 ? 'Đang duy trì đều đặn' : 'Làm câu hỏi để bắt đầu chuỗi'}
+                </div>
               </div>
               <div className="cozy-streak-chevron">›</div>
             </div>

@@ -1,0 +1,848 @@
+/* ==========================================================================
+   MOCK EXAM HISTORY PANEL — UI/UX PRO MAX DESIGN SYSTEM
+   Theme-aware exam history & weak question review panel
+   ========================================================================== */
+
+/* --- Base Container --- */
+.mock-exam-history {
+  margin-top: 36px;
+  padding: 26px 28px;
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Ornamental Divider */
+.mock-exam-history-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.mock-exam-history-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167, 118, 54, 0.45), transparent);
+}
+
+.mock-exam-history-divider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+/* Header Area */
+.mock-exam-history-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.mock-exam-history-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mock-exam-history-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mock-exam-history-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mock-exam-history-subtitle {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* Quick Metrics Row */
+.mock-exam-history-metrics {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mock-exam-metric-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.mock-exam-metric-chip.highlight {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.mock-exam-btn-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+/* Empty State */
+.mock-exam-history-empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 44px 24px;
+  border-radius: 18px;
+  gap: 14px;
+}
+
+.mock-exam-empty-icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-exam-empty-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.mock-exam-empty-desc {
+  margin: 0;
+  max-width: 480px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Two Columns Layout */
+.mock-exam-history-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.12fr);
+  gap: 20px;
+}
+
+/* Column Box */
+.mock-exam-col-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.mock-exam-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px dashed;
+  flex-wrap: wrap;
+}
+
+.mock-exam-col-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mock-exam-col-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mock-exam-col-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.mock-exam-btn-fast-practice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mock-exam-btn-fast-practice:hover {
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* Scrollable Lists */
+.mock-exam-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+/* Individual Attempt Card */
+.mock-exam-attempt-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.mock-exam-attempt-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.mock-exam-attempt-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.mock-exam-attempt-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mock-exam-attempt-num {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+}
+
+.mock-exam-attempt-grade {
+  font-size: 11px;
+  font-weight: 750;
+  padding: 2px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mock-exam-attempt-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+.mock-exam-attempt-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.mock-exam-attempt-acc {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Score Block on Right */
+.mock-exam-attempt-score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.mock-exam-attempt-score {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+}
+
+.mock-exam-attempt-score small {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.65;
+  margin-left: 2px;
+}
+
+.mock-exam-attempt-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Review Questions Column */
+.mock-exam-weak-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid;
+  border-left-width: 4px;
+  transition: all 0.2s ease;
+}
+
+.mock-exam-weak-item:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.mock-exam-weak-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mock-exam-weak-id {
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mock-exam-weak-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mock-exam-chip-danger {
+  font-size: 10px;
+  font-weight: 750;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.mock-exam-chip-skip {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.mock-exam-weak-text {
+  font-size: 12.5px;
+  line-height: 1.55;
+  font-weight: 600;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mock-exam-weak-text.is-expanded {
+  -webkit-line-clamp: unset;
+}
+
+.mock-exam-weak-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.mock-exam-btn-reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  border: 1px dashed;
+  transition: all 0.2s ease;
+}
+
+.mock-exam-reveal-box {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.mock-exam-reveal-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mock-exam-reveal-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  border: 1px solid;
+}
+
+.mock-exam-reveal-opt.is-correct-opt {
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   THEME SPECIFIC STYLES: LIÊN HOA PHẬT QUỐC (ZEN SANCTUARY)
+   ========================================================================== */
+.mock-exam-history.theme-lotus-zen-sanctuary,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-history {
+  background: linear-gradient(180deg, #FDF7ED 0%, #F6EBD6 100%) !important;
+  border: 1.8px solid #C89B48;
+  box-shadow: 0 14px 40px rgba(40, 20, 10, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-history-divider-badge,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-history-divider-badge {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  color: #FFF8EC;
+  border: 1px solid #D8B36A;
+  box-shadow: 0 2px 10px rgba(123, 48, 38, 0.25);
+  font-family: var(--theme-font-heading, 'Cinzel', serif);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-history-title,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-history-title {
+  font-family: var(--theme-font-heading, 'Cinzel', serif);
+  color: #3B2014;
+  letter-spacing: 0.5px;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-history-subtitle,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-history-subtitle {
+  color: #6B5B4D;
+}
+
+/* Metric Chips */
+.theme-lotus-zen-sanctuary .mock-exam-metric-chip,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-metric-chip {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(167, 118, 54, 0.35);
+  color: #3B2014;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-metric-chip.highlight,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-metric-chip.highlight {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  border-color: #D8B36A;
+  color: #FFF8EC;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-btn-clear,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-btn-clear {
+  border: 1px solid rgba(123, 48, 38, 0.35);
+  color: #7B3026;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-btn-clear:hover,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-btn-clear:hover {
+  background: rgba(123, 48, 38, 0.08);
+  border-color: #7B3026;
+}
+
+/* Columns */
+.theme-lotus-zen-sanctuary .mock-exam-col-card,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-col-card {
+  background: #FFFDF9;
+  border: 1.5px solid rgba(167, 118, 54, 0.3);
+  box-shadow: 0 4px 18px rgba(59, 32, 20, 0.05);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-col-header,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-col-header {
+  border-color: rgba(167, 118, 54, 0.25);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-col-title,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-col-title {
+  font-family: var(--theme-font-heading, 'Cinzel', serif);
+  color: #3B2014;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-col-badge,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-col-badge {
+  background: #F7ECD6;
+  color: #7B3026;
+  border: 1px solid rgba(167, 118, 54, 0.35);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-btn-fast-practice,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-btn-fast-practice {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+  color: #FFF8EC;
+  border: 1px solid #D8B36A;
+}
+
+/* Attempt Card */
+.theme-lotus-zen-sanctuary .mock-exam-attempt-item,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-item {
+  background: #FFFFFF;
+  border-color: rgba(167, 118, 54, 0.22);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-attempt-item:hover,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-item:hover {
+  border-color: #D8B36A;
+  box-shadow: 0 6px 18px rgba(167, 118, 54, 0.18);
+  background: #FFFDF8;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-attempt-num,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-num {
+  background: #F7ECD6;
+  color: #3B2014;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-attempt-stats,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-stats {
+  color: #6B5B4D;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-attempt-score.high,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-score.high {
+  color: #15803D;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-attempt-score.good,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-score.good {
+  color: #A77636;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-attempt-score.low,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-attempt-score.low {
+  color: #991B1B;
+}
+
+/* Weak Items */
+.theme-lotus-zen-sanctuary .mock-exam-weak-item,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-weak-item {
+  background: #FFFFFF;
+  border-color: rgba(167, 118, 54, 0.22);
+  border-left-color: #A77636;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-weak-item:hover,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-weak-item:hover {
+  border-color: #D8B36A;
+  border-left-color: #7B3026;
+  box-shadow: 0 6px 18px rgba(167, 118, 54, 0.16);
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-weak-id,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-weak-id {
+  color: #A77636;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-weak-text,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-weak-text {
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-btn-reveal,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-btn-reveal {
+  border-color: rgba(167, 118, 54, 0.4);
+  color: #A77636;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-btn-reveal:hover,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-btn-reveal:hover {
+  background: #FEF3C7;
+  border-color: #A77636;
+  color: #7B3026;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-reveal-box,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-reveal-box {
+  background: #FDF9F1;
+  border: 1px solid rgba(167, 118, 54, 0.25);
+  color: #28211C;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-reveal-opt,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-reveal-opt {
+  background: #FFFFFF;
+  border-color: rgba(167, 118, 54, 0.2);
+  color: #3B2014;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-reveal-opt.is-correct-opt,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-reveal-opt.is-correct-opt {
+  background: #FEF3C7;
+  border-color: #A77636;
+  color: #7B3026;
+}
+
+.theme-lotus-zen-sanctuary .mock-exam-history-list::-webkit-scrollbar-thumb,
+[data-theme="lotus-zen-sanctuary"] .mock-exam-history-list::-webkit-scrollbar-thumb {
+  background: rgba(167, 118, 54, 0.4);
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   THEME SPECIFIC STYLES: HỒN VIỆT (HON-VIET)
+   ========================================================================== */
+.mock-exam-history.theme-hon-viet,
+[data-theme="hon-viet"] .mock-exam-history {
+  background: linear-gradient(180deg, #FDF8F0 0%, #F5EBDB 100%) !important;
+  border: 1.8px solid #D97706;
+  box-shadow: 0 14px 40px rgba(180, 83, 9, 0.12);
+  color: #451A03;
+}
+
+.theme-hon-viet .mock-exam-history-divider-badge,
+[data-theme="hon-viet"] .mock-exam-history-divider-badge {
+  background: linear-gradient(135deg, #B45309 0%, #D97706 100%);
+  color: #FFFBEB;
+  border: 1px solid #F59E0B;
+}
+
+.theme-hon-viet .mock-exam-history-title,
+[data-theme="hon-viet"] .mock-exam-history-title {
+  color: #78350F;
+  font-family: serif;
+}
+
+.theme-hon-viet .mock-exam-col-card,
+[data-theme="hon-viet"] .mock-exam-col-card {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(217, 119, 6, 0.28);
+}
+
+.theme-hon-viet .mock-exam-btn-fast-practice,
+[data-theme="hon-viet"] .mock-exam-btn-fast-practice {
+  background: linear-gradient(135deg, #B45309 0%, #D97706 100%);
+  color: #FFF;
+}
+
+/* ==========================================================================
+   THEME SPECIFIC STYLES: FANTASY ACADEMY (FANTASY-ACADEMY)
+   ========================================================================== */
+.mock-exam-history.theme-fantasy-academy,
+[data-theme="fantasy-academy"] .mock-exam-history {
+  background: linear-gradient(180deg, rgba(24, 16, 50, 0.95) 0%, rgba(15, 10, 35, 0.98) 100%) !important;
+  border: 1.8px solid rgba(168, 85, 247, 0.5);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(168, 85, 247, 0.2);
+  color: #F3E8FF;
+}
+
+.theme-fantasy-academy .mock-exam-history-title,
+[data-theme="fantasy-academy"] .mock-exam-history-title {
+  color: #E9D5FF;
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+.theme-fantasy-academy .mock-exam-history-subtitle,
+[data-theme="fantasy-academy"] .mock-exam-history-subtitle {
+  color: #C084FC;
+}
+
+.theme-fantasy-academy .mock-exam-col-card,
+[data-theme="fantasy-academy"] .mock-exam-col-card {
+  background: rgba(30, 20, 60, 0.7);
+  border: 1.5px solid rgba(168, 85, 247, 0.35);
+  color: #F3E8FF;
+}
+
+.theme-fantasy-academy .mock-exam-attempt-item,
+[data-theme="fantasy-academy"] .mock-exam-attempt-item,
+.theme-fantasy-academy .mock-exam-weak-item,
+[data-theme="fantasy-academy"] .mock-exam-weak-item {
+  background: rgba(45, 30, 85, 0.6);
+  border-color: rgba(168, 85, 247, 0.25);
+  color: #F3E8FF;
+}
+
+.theme-fantasy-academy .mock-exam-weak-text,
+[data-theme="fantasy-academy"] .mock-exam-weak-text {
+  color: #F3E8FF;
+}
+
+.theme-fantasy-academy .mock-exam-btn-fast-practice,
+[data-theme="fantasy-academy"] .mock-exam-btn-fast-practice {
+  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  color: #FFF;
+  border: 1px solid #C084FC;
+}
+
+/* ==========================================================================
+   THEME SPECIFIC STYLES: COZY NIGHT (COZY-NIGHT)
+   ========================================================================== */
+.mock-exam-history.theme-cozy-night,
+[data-theme="cozy-night"] .mock-exam-history {
+  background: linear-gradient(180deg, rgba(26, 32, 56, 0.95) 0%, rgba(18, 23, 40, 0.98) 100%) !important;
+  border: 1.8px solid rgba(99, 102, 241, 0.4);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+  color: #E2E8F0;
+}
+
+.theme-cozy-night .mock-exam-history-title,
+[data-theme="cozy-night"] .mock-exam-history-title {
+  color: #A5B4FC;
+}
+
+.theme-cozy-night .mock-exam-history-subtitle,
+[data-theme="cozy-night"] .mock-exam-history-subtitle {
+  color: #94A3B8;
+}
+
+.theme-cozy-night .mock-exam-col-card,
+[data-theme="cozy-night"] .mock-exam-col-card {
+  background: rgba(30, 38, 66, 0.75);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  color: #E2E8F0;
+}
+
+.theme-cozy-night .mock-exam-attempt-item,
+[data-theme="cozy-night"] .mock-exam-attempt-item,
+.theme-cozy-night .mock-exam-weak-item,
+[data-theme="cozy-night"] .mock-exam-weak-item {
+  background: rgba(38, 48, 80, 0.65);
+  border-color: rgba(99, 102, 241, 0.25);
+  color: #E2E8F0;
+}
+
+.theme-cozy-night .mock-exam-weak-text,
+[data-theme="cozy-night"] .mock-exam-weak-text {
+  color: #F1F5F9;
+}
+
+/* ==========================================================================
+   DEFAULT THEME
+   ========================================================================== */
+.mock-exam-history.theme-default,
+[data-theme="default"] .mock-exam-history {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  color: #0F172A;
+}
+
+.theme-default .mock-exam-col-card,
+[data-theme="default"] .mock-exam-col-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+}
+
+.theme-default .mock-exam-attempt-item,
+[data-theme="default"] .mock-exam-attempt-item,
+.theme-default .mock-exam-weak-item,
+[data-theme="default"] .mock-exam-weak-item {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 900px) {
+  .mock-exam-history-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mock-exam-history {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mock-exam-history-header-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mock-exam-btn-clear {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+
+  .mock-exam-attempt-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .mock-exam-attempt-score-block {
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  }
+}

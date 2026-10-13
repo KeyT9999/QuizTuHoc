@@ -117,3 +117,14 @@ export function saveMockExamAttempt(setId: string, attempt: MockExamAttempt): bo
     return false;
   }
 }
+
+export function clearMockExamHistory(setId: string): boolean {
+  try {
+    localStorage.removeItem(storageKey(setId));
+    return true;
+  } catch (error) {
+    console.error('Lỗi khi xóa lịch sử thi thử:', error);
+    return false;
+  }
+}
+

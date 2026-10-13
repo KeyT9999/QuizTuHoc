@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import type { Question } from '../../utils/quizParser';
 import { saveMistakeQuestion } from '../../utils/gameStorage';
-import { loadMockExamHistory, saveMockExamAttempt } from '../../utils/mockExamStorage';
+import {
+  loadMockExamHistory,
+  saveMockExamAttempt,
+  clearMockExamHistory,
+} from '../../utils/mockExamStorage';
+import { recordDailyStudy, addStudyXP } from '../../utils/studyStats';
 import MockExamHistoryPanel from './MockExamHistoryPanel';
 import {
   playClickSound,
@@ -219,6 +224,10 @@ export default function MockExamView({
       if (saveMockExamAttempt(setId, attempt)) {
         setAttemptHistory((previous) => [attempt, ...previous.filter((saved) => saved.id !== attempt.id)].slice(0, 20));
       }
+
+      // Record daily streak and real XP
+      recordDailyStudy();
+      addStudyXP(correct * 10 + (score >= 5.0 ? 50 : 20));
 
       onMistakesUpdated();
 
@@ -554,7 +563,24 @@ export default function MockExamView({
             </button>
           </div>
 
-          <MockExamHistoryPanel attempts={attemptHistory} questions={allQuestions} />
+          <MockExamHistoryPanel
+            attempts={attemptHistory}
+            questions={allQuestions}
+            onStartWeakExam={(weakQuestions) => {
+              const count = weakQuestions.length;
+              const minutes = Math.max(5, Math.ceil(count * 1.5));
+              startExam(count, minutes, weakQuestions);
+            }}
+            onClearHistory={() => {
+              const confirmClear = window.confirm(
+                'Bạn có chắc chắn muốn xóa toàn bộ lịch sử thi thử của phần này không?'
+              );
+              if (confirmClear) {
+                clearMockExamHistory(setId);
+                setAttemptHistory([]);
+              }
+            }}
+          />
         </div>
       </div>
     );

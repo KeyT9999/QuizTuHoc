@@ -99,7 +99,7 @@ export default function LotusZenQuizView({
   mistakeCount = 0,
 }: LotusZenQuizViewProps) {
   const [xp, setXp] = useState(() => getUserXP());
-  const [streak] = useState(() => getStudyStreak());
+  const [streak, setStreak] = useState(() => getStudyStreak());
   const [isZenFocusMode, setIsZenFocusMode] = useState(false);
   const [isStriking, setIsStriking] = useState(false);
 
@@ -122,10 +122,28 @@ export default function LotusZenQuizView({
   const [isMeritPopping, setIsMeritPopping] = useState(false);
   const nextBlessingId = useRef(0);
 
-  // Sync user XP
+  // Sync user XP & Streak
   useEffect(() => {
     setXp(getUserXP());
+    setStreak(getStudyStreak());
   }, [answers, submittedIds]);
+
+  useEffect(() => {
+    const handleSync = () => {
+      setXp(getUserXP());
+      setStreak(getStudyStreak());
+    };
+    window.addEventListener('storage', handleSync);
+    window.addEventListener('keyt-xp-changed', handleSync);
+    window.addEventListener('keyt-xp-earned', handleSync);
+    window.addEventListener('keyt-streak-changed', handleSync);
+    return () => {
+      window.removeEventListener('storage', handleSync);
+      window.removeEventListener('keyt-xp-changed', handleSync);
+      window.removeEventListener('keyt-xp-earned', handleSync);
+      window.removeEventListener('keyt-streak-changed', handleSync);
+    };
+  }, []);
 
   // Handle quick wooden fish strike with zero layout shift
   const handleQuickStrike = () => {

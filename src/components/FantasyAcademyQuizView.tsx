@@ -102,7 +102,7 @@ export default function FantasyAcademyQuizView({
   onOpenKnowledgeGroups: _onOpenKnowledgeGroups,
 }: FantasyAcademyQuizViewProps) {
   const [xp, setXp] = useState(() => getUserXP());
-  const [streak] = useState(() => getStudyStreak());
+  const [streak, setStreak] = useState(() => getStudyStreak());
   const [claimedChest, setClaimedChest] = useState<string | null>(null);
   const [claimedChests, setClaimedChests] = useState<Record<string, boolean>>(() => {
     try {
@@ -116,12 +116,20 @@ export default function FantasyAcademyQuizView({
   const activeChunkRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    const handleXpChanged = (e: Event) => {
-      const custom = e as CustomEvent<number>;
-      if (custom.detail !== undefined) setXp(custom.detail);
+    const handleSync = () => {
+      setXp(getUserXP());
+      setStreak(getStudyStreak());
     };
-    window.addEventListener('keyt-xp-changed', handleXpChanged);
-    return () => window.removeEventListener('keyt-xp-changed', handleXpChanged);
+    window.addEventListener('keyt-xp-changed', handleSync);
+    window.addEventListener('keyt-xp-earned', handleSync);
+    window.addEventListener('keyt-streak-changed', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('keyt-xp-changed', handleSync);
+      window.removeEventListener('keyt-xp-earned', handleSync);
+      window.removeEventListener('keyt-streak-changed', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
   }, []);
 
   // Compute question groups / chunks (10 questions each)
