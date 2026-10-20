@@ -17,6 +17,13 @@ export const DEFAULT_COURSES: Course[] = [
     badge: '7 bộ đề',
   },
   {
+    id: 'hcm202',
+    code: 'HCM202',
+    name: 'Tư tưởng Hồ Chí Minh',
+    description: 'Ngân hàng câu hỏi trắc nghiệm gồm 656 câu.',
+    badge: '1 quiz',
+  },
+  {
     id: 'mln122',
     code: 'MLN122',
     name: 'Kinh tế chính trị Mác - Lênin',

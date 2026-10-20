@@ -24,6 +24,7 @@ import { SAMPLE_QUIZ_PMG201C_CAU_LAP } from './sampleQuizPMG201cCauLap';
 import { SAMPLE_QUIZ_PMG201C_SP24_FE } from './sampleQuizPMG201cSP24FE';
 import { SAMPLE_QUIZ_PMG201C_SU24_FE1 } from './sampleQuizPMG201cSU24FE1';
 import { SAMPLE_QUIZ_MLN111_FULL } from './sampleQuizMLN111Full';
+import { SAMPLE_QUIZ_HCM202_FULL } from './sampleQuizHCM202';
 import { SAMPLE_QUIZ_MLN111_SU26_C1FE } from './sampleQuizMLN111SU26C1FE';
 import { SAMPLE_QUIZ_MLN111_SU26_C2FE } from './sampleQuizMLN111SU26C2FE';
 import { SAMPLE_QUIZ_MLN111_SU26_RE } from './sampleQuizMLN111SU26RE';
@@ -296,6 +297,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MLN111',
     badge: 'Đề chuẩn 556 câu',
     rawText: SAMPLE_QUIZ_MLN111_FULL,
+  },
+  {
+    id: 'hcm292_fullsrc',
+    courseId: 'hcm202',
+    title: 'HCM292_fullsrc',
+    description: 'Bộ ngân hàng 656 câu hỏi trắc nghiệm Tư tưởng Hồ Chí Minh.',
+    category: 'Môn HCM202',
+    badge: 'Đề chuẩn 656 câu',
+    rawText: SAMPLE_QUIZ_HCM202_FULL,
   },
   {
     id: 'mln111_su26_c1fe',
