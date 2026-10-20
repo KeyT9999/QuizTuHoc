@@ -25,6 +25,11 @@ import {
   MLN122_KNOWLEDGE_GROUPS,
 } from './data/mln122KnowledgeGroups';
 import {
+  getHcm202KnowledgeGroupId,
+  getHcm202QuestionsForGroup,
+  HCM202_KNOWLEDGE_GROUPS,
+} from './data/hcm202KnowledgeGroups';
+import {
   loadCustomCourses,
   saveCustomCourses,
   loadCustomQuizSets,
@@ -56,6 +61,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: MLN122_KNOWLEDGE_GROUPS,
     getGroupId: getMln122KnowledgeGroupId,
     filterQuestions: getMln122QuestionsForGroup,
+  },
+  hcm292_fullsrc: {
+    courseLabel: 'HCM202',
+    groups: HCM202_KNOWLEDGE_GROUPS,
+    getGroupId: getHcm202KnowledgeGroupId,
+    filterQuestions: getHcm202QuestionsForGroup,
   },
 };
 
