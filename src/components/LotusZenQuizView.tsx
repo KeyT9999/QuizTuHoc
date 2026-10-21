@@ -221,36 +221,22 @@ export default function LotusZenQuizView({
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, [isZenFocusMode]);
 
-  // Keyboard navigation
+  // Keyboard navigation for Zen Focus Mode (Quiz shortcuts are handled centrally in Quiz.tsx)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) return;
 
       const key = e.key.toUpperCase();
       if (e.key === 'Escape' && isZenFocusMode) {
         toggleZenFocusMode();
-      } else if (key === 'F') {
+      } else if (key === 'F' && !question.options.some((o) => o.key.toUpperCase() === 'F')) {
         toggleZenFocusMode();
-      } else if (['A', 'B', 'C', 'D'].includes(key) && !isAnswered) {
-        onSelectOption(key);
-      } else if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
-        if (!isMultipleChoice || isAnswered) {
-          e.preventDefault();
-          onNext();
-        }
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        onPrev();
-      } else if (key === 'M') {
-        onToggleMastered(question.id);
-      } else if (key === 'G') {
-        onOpenQuestionGrid();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isAnswered, onSelectOption, onNext, onPrev, isMultipleChoice, question.id, onToggleMastered, onOpenQuestionGrid, isZenFocusMode, toggleZenFocusMode]);
+  }, [question.options, isZenFocusMode, toggleZenFocusMode]);
 
   const progressPercent = useMemo(() => {
     return totalCount > 0 ? Math.round((masteredIds.length / questions.length) * 100) : 0;
@@ -592,9 +578,13 @@ export default function LotusZenQuizView({
             <div className="zen-options-list">
               {question.options.map((opt) => {
                 const optKey = opt.key.toUpperCase();
-                const isSelected = selectedAnswer?.includes(optKey);
-                const isCorrect = isAnswered && optKey === question.correctAnswer.trim().toUpperCase();
-                const isWrong = isAnswered && isSelected && !isCorrect;
+                const isSelected = selectedAnswer?.includes(optKey) ?? false;
+                const isCorrect =
+                  (isAnswered || isRevealed) &&
+                  !isUnresolved &&
+                  question.correctAnswer.trim().toUpperCase().includes(optKey);
+                const isWrong =
+                  (isAnswered || isRevealed) && !isUnresolved && isSelected && !isCorrect;
 
                 let btnClass = 'zen-option-btn';
                 if (isCorrect) btnClass += ' is-correct';
@@ -607,6 +597,7 @@ export default function LotusZenQuizView({
                     type="button"
                     className={btnClass}
                     disabled={isAnswered}
+                    aria-pressed={isSelected}
                     onClick={() => {
                       playClickSound();
                       onSelectOption(opt.key);
@@ -630,24 +621,48 @@ export default function LotusZenQuizView({
                   disabled={!selectedAnswer}
                   onClick={onCheckMultiple}
                 >
-                  Kiểm tra đáp án đã chọn 🎯
+                  Kiểm tra đáp án đã chọn{selectedAnswer ? ` (${selectedAnswer.split('').join(', ')})` : ''} 🎯
                 </button>
               </div>
             )}
 
-            {/* Revealed Answer Box */}
-            {isRevealed && (
+            {/* Revealed / Answered Feedback Box */}
+            {(isAnswered || isRevealed) && (
               <div style={{
                 marginTop: 20,
                 padding: '14px 18px',
-                background: '#FEF3C7',
-                border: '1.5px solid #F59E0B',
+                background: isAnswered
+                  ? selectedAnswer === question.correctAnswer
+                    ? '#ECFDF5'
+                    : '#FEF2F2'
+                  : '#FEF3C7',
+                border: `1.5px solid ${
+                  isAnswered
+                    ? selectedAnswer === question.correctAnswer
+                      ? '#10B981'
+                      : '#EF4444'
+                    : '#F59E0B'
+                }`,
                 borderRadius: 14,
-                color: '#78350F',
+                color: isAnswered
+                  ? selectedAnswer === question.correctAnswer
+                    ? '#065F46'
+                    : '#991B1B'
+                  : '#78350F',
                 fontSize: 14,
                 lineHeight: 1.6,
               }}>
-                <strong>ĐÁP ÁN ĐÚNG:</strong> {question.correctAnswer}
+                {isUnresolved ? (
+                  <span>⚠ Chưa có đáp án chính thức cho câu này.</span>
+                ) : isAnswered ? (
+                  selectedAnswer === question.correctAnswer ? (
+                    <span>✓ <strong>Chính xác!</strong> Đáp án đúng là: <strong>{question.correctAnswer}</strong></span>
+                  ) : (
+                    <span>✗ <strong>Chưa đúng!</strong> Đáp án đúng là: <strong>{question.correctAnswer}</strong></span>
+                  )
+                ) : (
+                  <span><strong>ĐÁP ÁN ĐÚNG:</strong> {question.correctAnswer}</span>
+                )}
                 {(question as any).explanation && (
                   <div style={{ marginTop: 6, fontSize: 13.5, color: '#92400E' }}>
                     {(question as any).explanation}

@@ -217,8 +217,8 @@ export default function Quiz({
 
   const selectedAnswer = question ? answers[question.id] : undefined;
   const isUnresolved = question?.correctAnswer === '?';
-  const isMultipleChoice = !isUnresolved && (question?.correctAnswer.length ?? 0) > 1;
   const isFreeResponse = question?.freeResponse === true;
+  const isMultipleChoice = !isFreeResponse && !isUnresolved && (question?.correctAnswer.length ?? 0) > 1;
   const isAnswered = isFreeResponse
     ? Boolean(selectedAnswer?.trim())
     : isUnresolved
@@ -252,19 +252,26 @@ export default function Quiz({
   const handleSelectOption = useCallback(
     (key: string) => {
       if (!question || isAnswered) return;
-      const answer = isMultipleChoice
-        ? (selectedAnswer?.includes(key)
-            ? selectedAnswer.replace(key, '')
-            : `${selectedAnswer ?? ''}${key}`)
+      if (isMultipleChoice) {
+        setAnswers((prev) => {
+          const current = prev[question.id] ?? '';
+          const next = (current.includes(key)
+            ? current.replace(key, '')
+            : `${current}${key}`)
             .split('')
             .sort()
-            .join('')
-        : key;
-      const newAnswers = { ...answers, [question.id]: answer };
-      setAnswers(newAnswers);
+            .join('');
+          return { ...prev, [question.id]: next };
+        });
+        recordDailyStudy();
+        return;
+      }
+
+      const answer = key;
+      setAnswers((prev) => ({ ...prev, [question.id]: answer }));
 
       recordDailyStudy();
-      if (!isUnresolved && !isMultipleChoice) {
+      if (!isUnresolved) {
         if (answer === question.correctAnswer) {
           playCorrectSound();
           addStudyXP(35);
@@ -276,19 +283,18 @@ export default function Quiz({
 
       if (
         !isUnresolved &&
-        !isMultipleChoice &&
         answer === question.correctAnswer &&
         !masteredIds.includes(question.id)
       ) {
         setMasteredIds((prev) => [...prev, question.id]);
-      } else if (!isUnresolved && !isMultipleChoice && answer !== question.correctAnswer) {
+      } else if (!isUnresolved && answer !== question.correctAnswer) {
         if (setId) {
           saveMistakeQuestion(setId, question.id);
           setMistakeCount(getMistakeQuestionIds(setId).length);
         }
       }
     },
-    [isAnswered, isMultipleChoice, selectedAnswer, answers, question, isUnresolved, masteredIds, setId]
+    [isAnswered, isMultipleChoice, question, isUnresolved, masteredIds, setId]
   );
 
   const handleCheckMultiple = useCallback(() => {
@@ -306,8 +312,11 @@ export default function Quiz({
 
     if (isCorrect && !masteredIds.includes(question.id)) {
       setMasteredIds((prev) => [...prev, question.id]);
+    } else if (!isUnresolved && !isCorrect && setId) {
+      saveMistakeQuestion(setId, question.id);
+      setMistakeCount(getMistakeQuestionIds(setId).length);
     }
-  }, [selectedAnswer, isAnswered, question, masteredIds]);
+  }, [selectedAnswer, isAnswered, question, masteredIds, isUnresolved, setId]);
 
   const toggleMastered = (questionId: number) => {
     setMasteredIds((prev) =>
@@ -507,16 +516,20 @@ export default function Quiz({
         return;
       }
 
-      // Option selection: A/B/C/D or 1/2/3/4
+      // Option selection: A-F or 1-6
       const optionKeys: Record<string, string> = {
         a: 'A',
         b: 'B',
         c: 'C',
         d: 'D',
+        e: 'E',
+        f: 'F',
         '1': 'A',
         '2': 'B',
         '3': 'C',
         '4': 'D',
+        '5': 'E',
+        '6': 'F',
       };
       if (optionKeys[key]) {
         e.preventDefault();
@@ -1129,7 +1142,7 @@ export default function Quiz({
                     {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                       <span className="quiz-v2-option-icon correct-icon">✓</span>
                     )}
-                    {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
+                    {(isAnswered || isRevealed) && isSelected && !isUnresolved && !isCorrect && (
                       <span className="quiz-v2-option-icon incorrect-icon">✗</span>
                     )}
                   </button>
@@ -1207,7 +1220,7 @@ export default function Quiz({
                 onClick={handleCheckMultiple}
                 disabled={!selectedAnswer}
               >
-                Kiểm tra đáp án
+                Kiểm tra đáp án{selectedAnswer ? ` (${selectedAnswer.split('').join(', ')})` : ''}
               </button>
             )}
 

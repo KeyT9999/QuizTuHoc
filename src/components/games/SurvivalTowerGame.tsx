@@ -281,7 +281,7 @@ export default function SurvivalTowerGame({
       setIsAnswering(true);
       setSelectedKey(chosenKey);
 
-      const isCorrect = chosenKey.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+      const isCorrect = currentQ.correctAnswer.trim().toUpperCase().includes(chosenKey.toUpperCase());
 
       if (isCorrect) {
         // Correct answer: Climb +1 floor
@@ -371,7 +371,7 @@ export default function SurvivalTowerGame({
     const correctKey = currentQ.correctAnswer.trim().toUpperCase();
     const incorrectKeys = currentQ.options
       .map((o) => o.key.toUpperCase())
-      .filter((k) => k !== correctKey);
+      .filter((k) => !correctKey.includes(k));
 
     const shuffledIncorrect = [...incorrectKeys].sort(() => Math.random() - 0.5);
     setHiddenOptions(shuffledIncorrect.slice(0, 2));
@@ -872,7 +872,7 @@ export default function SurvivalTowerGame({
                 const isHidden = hiddenOptions.includes(opt.key.toUpperCase());
                 const isSelected = selectedKey === opt.key;
                 const isCorrectAnswer =
-                  opt.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+                  currentQ.correctAnswer.trim().toUpperCase().includes(opt.key.toUpperCase());
 
                 if (isHidden) {
                   return (

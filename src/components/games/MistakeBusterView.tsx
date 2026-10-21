@@ -130,12 +130,15 @@ export default function MistakeBusterView({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key.toUpperCase();
-      if (['A', 'B', 'C', 'D'].includes(key)) {
+      if (['A', 'B', 'C', 'D', 'E', 'F'].includes(key)) {
         if (!showExplanation) {
           e.preventDefault();
           handleSelectOption(key);
         }
-      } else if (e.key === 'ArrowRight' || e.code === 'Space') {
+      } else if (e.key === 'Enter' && !showExplanation && isMultipleChoice && selectedAnswer) {
+        e.preventDefault();
+        handleCheckAnswer();
+      } else if (e.key === 'ArrowRight' || e.code === 'Space' || e.key === 'Enter') {
         if (showExplanation) {
           e.preventDefault();
           handleNext();
@@ -150,7 +153,7 @@ export default function MistakeBusterView({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showExplanation, handleSelectOption, handleNext, handlePrev]);
+  }, [showExplanation, isMultipleChoice, selectedAnswer, handleSelectOption, handleCheckAnswer, handleNext, handlePrev]);
 
   // Clean state (no mistakes left!)
   if (mistakeQuestions.length === 0) {

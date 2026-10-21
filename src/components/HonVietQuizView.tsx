@@ -546,13 +546,11 @@ export default function HonVietQuizView({
             {question.options && question.options.length > 0 && (
               <div className="hon-viet-options-list">
                 {question.options.map((opt) => {
-                  const isSelected = isMultipleChoice
-                    ? selectedAnswer?.split(',').includes(opt.key)
-                    : selectedAnswer === opt.key;
-                  const isCorrect = opt.key === question.correctAnswer;
+                  const isSelected = selectedAnswer?.includes(opt.key) ?? false;
+                  const isCorrect = question.correctAnswer.includes(opt.key);
 
                   let optClass = 'hon-viet-opt-card';
-                  if (isSelected) optClass += ' is-selected';
+                  if (isSelected && (!isAnswered || isUnresolved)) optClass += ' is-selected';
                   if ((isAnswered || isRevealed) && !isUnresolved) {
                     if (isCorrect) optClass += ' is-correct';
                     else if (isSelected) optClass += ' is-incorrect';
@@ -564,14 +562,15 @@ export default function HonVietQuizView({
                       type="button"
                       className={optClass}
                       onClick={() => onSelectOption(opt.key)}
-                      aria-label={`${opt.key}. ${opt.text}`}
+                      aria-label={`${opt.key}. ${opt.text}${isSelected ? '. Đã chọn' : ''}`}
+                      aria-pressed={isSelected}
                     >
                       <span className="hon-viet-opt-badge">{opt.key}</span>
                       <span className="hon-viet-opt-text">{opt.text}</span>
                       {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                         <span className="hon-viet-opt-status-correct">✓</span>
                       )}
-                      {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
+                      {(isAnswered || isRevealed) && isSelected && !isUnresolved && !isCorrect && (
                         <span className="hon-viet-opt-status-incorrect">✗</span>
                       )}
                     </button>
@@ -612,8 +611,9 @@ export default function HonVietQuizView({
                   type="button"
                   className="hon-viet-reveal-btn"
                   onClick={onCheckMultiple}
+                  disabled={!selectedAnswer}
                 >
-                  Kiểm tra đáp án
+                  Kiểm tra đáp án{selectedAnswer ? ` (${selectedAnswer.split('').join(', ')})` : ''}
                 </button>
               </div>
             )}

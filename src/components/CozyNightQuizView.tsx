@@ -134,11 +134,13 @@ export default function CozyNightQuizView({
 
   const statTotal = activeQuestions.length;
   const statMastered = activeQuestions.filter((q) => masteredIds.includes(q.id)).length;
-  const statAnswered = activeQuestions.filter((q) =>
-    q.correctAnswer.length > 1 ? submittedIds.includes(q.id) : answers[q.id] !== undefined
-  ).length;
-  const statCorrect = activeQuestions.filter((q) => answers[q.id] === q.correctAnswer).length;
-  const statWrong = activeQuestions.filter((q) => answers[q.id] && answers[q.id] !== q.correctAnswer).length;
+  const isQSubmitted = (q: Question) =>
+    !q.freeResponse && q.correctAnswer !== '?' && q.correctAnswer.length > 1
+      ? submittedIds.includes(q.id)
+      : answers[q.id] !== undefined;
+  const statAnswered = activeQuestions.filter(isQSubmitted).length;
+  const statCorrect = activeQuestions.filter((q) => isQSubmitted(q) && answers[q.id] === q.correctAnswer).length;
+  const statWrong = activeQuestions.filter((q) => isQSubmitted(q) && answers[q.id] && answers[q.id] !== q.correctAnswer).length;
   const statUnanswered = Math.max(0, statTotal - statAnswered);
 
   const masteredPercent = statTotal > 0 ? Math.round((statMastered / statTotal) * 100) : 0;
@@ -368,7 +370,7 @@ export default function CozyNightQuizView({
                       {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                         <span className="cozy-option-status-icon correct">✓</span>
                       )}
-                      {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
+                      {(isAnswered || isRevealed) && isSelected && !isUnresolved && !isCorrect && (
                         <span className="cozy-option-status-icon incorrect">✗</span>
                       )}
                     </button>
@@ -438,7 +440,7 @@ export default function CozyNightQuizView({
                   disabled={!selectedAnswer}
                   style={{ background: 'linear-gradient(135deg, #059669, #10b981)' }}
                 >
-                  Kiểm tra đáp án
+                  Kiểm tra đáp án{selectedAnswer ? ` (${selectedAnswer.split('').join(', ')})` : ''}
                 </button>
               )}
 

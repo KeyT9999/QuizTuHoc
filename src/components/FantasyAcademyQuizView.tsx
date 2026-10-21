@@ -187,10 +187,12 @@ export default function FantasyAcademyQuizView({
 
   const statTotal = activeQuestions.length;
   const statMastered = activeQuestions.filter((q) => masteredIds.includes(q.id)).length;
-  const statAnswered = activeQuestions.filter((q) =>
-    q.correctAnswer.length > 1 ? submittedIds.includes(q.id) : answers[q.id] !== undefined
-  ).length;
-  const statCorrect = activeQuestions.filter((q) => answers[q.id] === q.correctAnswer).length;
+  const isQSubmitted = (q: Question) =>
+    !q.freeResponse && q.correctAnswer !== '?' && q.correctAnswer.length > 1
+      ? submittedIds.includes(q.id)
+      : answers[q.id] !== undefined;
+  const statAnswered = activeQuestions.filter(isQSubmitted).length;
+  const statCorrect = activeQuestions.filter((q) => isQSubmitted(q) && answers[q.id] === q.correctAnswer).length;
 
   const accuracyPercent = statAnswered > 0 ? Math.round((statCorrect / statAnswered) * 100) : 100;
   const levelData = calculateLevel(xp);
@@ -506,7 +508,7 @@ export default function FantasyAcademyQuizView({
                       {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                         <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>
                       )}
-                      {(isAnswered || (isRevealed && isSelected)) && !isUnresolved && !isCorrect && (
+                      {(isAnswered || isRevealed) && isSelected && !isUnresolved && !isCorrect && (
                         <span style={{ color: '#dc2626', fontWeight: 800 }}>✗</span>
                       )}
                     </button>
@@ -580,7 +582,7 @@ export default function FantasyAcademyQuizView({
                   disabled={!selectedAnswer}
                   style={{ background: '#059669' }}
                 >
-                  Kiểm tra đáp án
+                  Kiểm tra đáp án{selectedAnswer ? ` (${selectedAnswer.split('').join(', ')})` : ''}
                 </button>
               )}
 

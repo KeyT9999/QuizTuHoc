@@ -117,7 +117,7 @@ export default function TimeAttackGame({
       setSelectedKey(chosenKey);
       setTotalAttempted((prev) => prev + 1);
 
-      const isCorrect = chosenKey.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+      const isCorrect = currentQ.correctAnswer.trim().toUpperCase().includes(chosenKey.toUpperCase());
 
       if (isCorrect) {
         const nextStreak = streak + 1;
@@ -443,7 +443,7 @@ export default function TimeAttackGame({
         <div className="game-q-options">
           {currentQ.options.map((opt) => {
             const isSelected = selectedKey === opt.key;
-            const isCorrectAnswer = opt.key.toUpperCase() === currentQ.correctAnswer.trim().toUpperCase();
+            const isCorrectAnswer = currentQ.correctAnswer.trim().toUpperCase().includes(opt.key.toUpperCase());
 
             let optStateClass = '';
             if (isAnswering) {

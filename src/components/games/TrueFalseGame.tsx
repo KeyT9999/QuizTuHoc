@@ -69,11 +69,12 @@ export default function TrueFalseGame({
 
     return shuffled.map((q) => {
       const isTrue = Math.random() > 0.5;
+      const correctKeys = q.correctAnswer.trim().toUpperCase();
       const correctOpt = q.options.find(
-        (o) => o.key.toUpperCase() === q.correctAnswer.trim().toUpperCase()
+        (o) => correctKeys.includes(o.key.toUpperCase())
       );
       const wrongOpts = q.options.filter(
-        (o) => o.key.toUpperCase() !== q.correctAnswer.trim().toUpperCase()
+        (o) => !correctKeys.includes(o.key.toUpperCase())
       );
 
       let pairingText = '';
