@@ -25,6 +25,7 @@ import { SAMPLE_QUIZ_PMG201C_SP24_FE } from './sampleQuizPMG201cSP24FE';
 import { SAMPLE_QUIZ_PMG201C_SU24_FE1 } from './sampleQuizPMG201cSU24FE1';
 import { SAMPLE_QUIZ_MLN111_FULL } from './sampleQuizMLN111Full';
 import { SAMPLE_QUIZ_HCM202_FULL } from './sampleQuizHCM202';
+import { SAMPLE_QUIZ_HCM202_BAKHI } from './sampleQuizHCM202BaKhi';
 import { SAMPLE_QUIZ_MLN111_SU26_C1FE } from './sampleQuizMLN111SU26C1FE';
 import { SAMPLE_QUIZ_MLN111_SU26_C2FE } from './sampleQuizMLN111SU26C2FE';
 import { SAMPLE_QUIZ_MLN111_SU26_RE } from './sampleQuizMLN111SU26RE';
@@ -306,6 +307,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn HCM202',
     badge: 'Đề chuẩn 656 câu',
     rawText: SAMPLE_QUIZ_HCM202_FULL,
+  },
+  {
+    id: 'hcm202_bakhi',
+    courseId: 'hcm202',
+    title: 'HCM202 Bá Khí',
+    description: 'Bộ ngân hàng 640 câu hỏi trắc nghiệm Tư tưởng Hồ Chí Minh.',
+    category: 'Môn HCM202',
+    badge: 'Đề chuẩn 640 câu',
+    rawText: SAMPLE_QUIZ_HCM202_BAKHI,
   },
   {
     id: 'mln111_su26_c1fe',

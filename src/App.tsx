@@ -68,6 +68,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     getGroupId: getHcm202KnowledgeGroupId,
     filterQuestions: getHcm202QuestionsForGroup,
   },
+  hcm202_bakhi: {
+    courseLabel: 'HCM202',
+    groups: HCM202_KNOWLEDGE_GROUPS,
+    getGroupId: getHcm202KnowledgeGroupId,
+    filterQuestions: getHcm202QuestionsForGroup,
+  },
 };
 
 function getKnowledgeGroupIdFromUrl(setId: string): string | null {

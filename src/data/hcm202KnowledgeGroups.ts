@@ -132,6 +132,7 @@ const CLASSIFICATION_RULES: ClassificationRule[] = [
   { groupId: '3', pattern: /giai cap dia chu.*viet nam|cach mang viet nam.*duoc xem|cach mang nao.*thuc tinh cac dan toc|ban chat cua phap va nhat/, weight: 8 },
   { groupId: '3', pattern: /dong bao nam bo.*dan nuoc viet nam|hoa binh la phuong phap cach mang|muc dich.*ra nuoc ngoai.*cuu nuoc|giai quyet van de dan toc.*van de/, weight: 8 },
   { groupId: '3', pattern: /thuc dan phap.*xam luoc|xam luoc viet nam|khai thac thuoc dia|binh dinh viet nam|doc lap.*hanh phuc tu do/, weight: 8 },
+  { groupId: '3', pattern: /ban chat cua nhat va phap|nhat va phap.*ho chi minh|thuc dan phap.*thuc dan nhat/, weight: 10 },
   { groupId: '3', pattern: /cong nong la goc cach mang|luc luong.*goc cach mang|dong bao mien nam.*ten than thuong|van de dan toc.*lap truong/, weight: 8 },
   { groupId: '3', pattern: /truc tiep chi huy chien dich|chien dich.*khang chien|loi keu goi toan quoc khang chien|dau tranh giai phong.*dan toc/, weight: 8 },
   { groupId: '3', pattern: /dong bao toi duoc tu do|can nhat tren doi.*tu do|quy luat.*doc lap dan toc/, weight: 8 },
@@ -158,6 +159,7 @@ const CLASSIFICATION_RULES: ClassificationRule[] = [
   { groupId: '5', pattern: /luan diem sang tao.*dang|dang.*nhan to quyet dinh|dang.*tu phe binh|phe binh va tu phe binh|tu phe binh va phe binh|muc dich phe binh|chuc nang lanh dao.*dang/, weight: 10 },
   { groupId: '5', pattern: /duong loi chinh tri|trong tac pham duong (?:k|c)ach menh.*dang|duong cach menh.*dang nhu|cach mang truoc het phai co|dang la cua|chanh cuong van tat|suc manh cua dang|viet len tran hai chu cong san|dang nhu nguoi cam lai|cam lai co vung/, weight: 9 },
   { groupId: '5', pattern: /lanh dao duoc nhan dan|dang phai co.*nhan dan|dang cong san anh em|to chuc dang.*vai tro/, weight: 8 },
+  { groupId: '5', pattern: /dang cong san viet nam ra doi|dang cong san.*ra doi.*co so|co so.*ra doi cua dang/, weight: 10 },
 
   // State, democracy, law and public service.
   { groupId: '6', pattern: /nha nuoc|nha nuoc phap quyen|phap quyen|quyen luc nha nuoc|kiem soat quyen luc/, weight: 12 },
@@ -178,6 +180,7 @@ const CLASSIFICATION_RULES: ClassificationRule[] = [
   { groupId: '7', pattern: /viet nam doc lap dong minh|viet minh|nguyen tac toi cao.*doan ket|tin vao.*nhan dan|dan lieu cung xong/, weight: 8 },
   { groupId: '7', pattern: /doan ket phai can cu|doan ket.*can cu vao|quyen lanh dao mat tran|don ket rong rai|mat tran.*quyen lanh dao/, weight: 9 },
   { groupId: '7', pattern: /nha nong dan.*nam|nong dan.*nam quyen|ai co tai co duc.*phuc vu nhan dan/, weight: 7 },
+  { groupId: '7', pattern: /doan ket phai gan voi|doan ket.*gan voi/, weight: 8 },
 
   // International solidarity.
   { groupId: '8', pattern: /doan ket quoc te|luc luong doan ket quoc te|nguyen tac doan ket quoc te|cach menh an nam.*bo phan.*cach menh the gioi/, weight: 14 },
@@ -185,6 +188,7 @@ const CLASSIFICATION_RULES: ClassificationRule[] = [
   { groupId: '8', pattern: /quan he quoc te|ngoai giao|hoi nhap quoc te|doan ket.*cac dan toc/, weight: 8 },
   { groupId: '8', pattern: /tinh than quoc te|quan he voi trung quoc|lao dong tat ca cac nuoc|giai phong anh em|cach mang an nam.*bo phan.*cach mang the gioi/, weight: 10 },
   { groupId: '8', pattern: /quoc te|quoc te chu nghia|quoc te vo san|cac dan toc bi ap buc/, weight: 6 },
+  { groupId: '8', pattern: /bo phan.*cach mang the gioi|cach mang.*the gioi.*dong chi/, weight: 9 },
 
   // Culture, education and youth.
   { groupId: '9', pattern: /van hoa|nen van hoa|chuc nang van hoa|tinh chat van hoa|muc dich cua van hoa/, weight: 10 },
