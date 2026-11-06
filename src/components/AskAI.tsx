@@ -1,5 +1,47 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type { Question } from '../utils/quizParser';
+import { useTheme, type AppTheme } from '../context/ThemeContext';
+
+const AI_PERSONAS: Record<
+  AppTheme,
+  { icon: string; btnIcon: string; title: string; subtitle: string; cta: string }
+> = {
+  'lotus-zen-sanctuary': {
+    icon: '🪷',
+    btnIcon: '✨',
+    title: 'Kinh Đài Luận Giải AI',
+    subtitle: 'Thấu triệt câu hỏi · Chỉ điểm đáp án & luận giải',
+    cta: 'Thỉnh AI giảng',
+  },
+  'hon-viet': {
+    icon: '📜',
+    btnIcon: '🏮',
+    title: 'Trạng Nguyên AI Luận Giải',
+    subtitle: 'Phân tích đề bài · Đối chiếu đáp án chính xác',
+    cta: 'Hỏi Trạng Nguyên',
+  },
+  'fantasy-academy': {
+    icon: '🔮',
+    btnIcon: '⚡',
+    title: 'Hiền Giả Cổ Thuật AI',
+    subtitle: 'Giải mã cổ ngữ · Chỉ dẫn đáp án & ma pháp',
+    cta: 'Triệu hồi AI',
+  },
+  'cozy-night': {
+    icon: '🎧',
+    btnIcon: '🌙',
+    title: 'Lofi Study Buddy AI',
+    subtitle: 'Phân tích nhanh · Giải thích đáp án dễ hiểu',
+    cta: 'Hỏi AI ngay',
+  },
+  default: {
+    icon: '✦',
+    btnIcon: '🤖',
+    title: 'Trợ lý AI Thông Minh',
+    subtitle: 'Đọc câu hỏi · Chọn đáp án · Giải thích chi tiết',
+    cta: 'Hỏi AI',
+  },
+};
 
 interface AskAIProps {
   question: Question;
@@ -13,6 +55,8 @@ interface AskAIResponse {
 }
 
 export default function AskAI({ question }: AskAIProps) {
+  const { theme } = useTheme();
+  const persona = AI_PERSONAS[theme] || AI_PERSONAS.default;
   const [isOpen, setIsOpen] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [answer, setAnswer] = useState('');
@@ -90,13 +134,13 @@ export default function AskAI({ question }: AskAIProps) {
   };
 
   return (
-    <section className="ask-ai" aria-labelledby={`${panelId}-title`}>
+    <section className={`ask-ai ask-ai-theme-${theme}`} aria-labelledby={`${panelId}-title`}>
       <div className="ask-ai-toolbar">
         <div className="ask-ai-toolbar-copy">
-          <span className="ask-ai-toolbar-icon" aria-hidden="true">✦</span>
+          <span className="ask-ai-toolbar-icon" aria-hidden="true">{persona.icon}</span>
           <div>
-            <strong>Trợ lý AI</strong>
-            <span>Đọc câu hỏi · chọn đáp án · giải thích</span>
+            <strong>{persona.title}</strong>
+            <span>{persona.subtitle}</span>
           </div>
         </div>
         <button
@@ -106,8 +150,8 @@ export default function AskAI({ question }: AskAIProps) {
           aria-controls={panelId}
           onClick={handleToggle}
         >
-          <span aria-hidden="true">🤖</span>
-          <span>{isLoading ? 'Đang phân tích…' : isOpen ? 'Ẩn AI' : 'Hỏi AI'}</span>
+          <span aria-hidden="true">{persona.btnIcon}</span>
+          <span>{isLoading ? 'Đang phân tích…' : isOpen ? 'Ẩn lời giải' : persona.cta}</span>
           <span className="ask-ai-toggle-chevron" aria-hidden="true">{isOpen ? '⌃' : '›'}</span>
         </button>
       </div>

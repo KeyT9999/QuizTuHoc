@@ -1405,28 +1405,32 @@ body,
 
 [data-theme="hon-viet"] .quiz-mode-hub,
 .theme-hon-viet .quiz-mode-hub {
-  background: rgba(255, 251, 242, 0.98) !important;
-  border-bottom: 1.5px solid rgba(217, 119, 6, 0.28) !important;
+  background: linear-gradient(90deg, rgba(45, 5, 8, 0.96) 0%, rgba(65, 8, 12, 0.96) 50%, rgba(38, 4, 7, 0.96) 100%) !important;
+  border-bottom: 1.5px solid rgba(245, 158, 11, 0.38) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
 }
 
 [data-theme="hon-viet"] .quiz-mode-pill-btn,
 .theme-hon-viet .quiz-mode-pill-btn {
-  color: #78350f !important;
+  color: #fde68a !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
 }
 
 [data-theme="hon-viet"] .quiz-mode-pill-btn:hover,
 .theme-hon-viet .quiz-mode-pill-btn:hover {
-  background: #fef3c7 !important;
-  color: #92400e !important;
+  background: rgba(245, 158, 11, 0.22) !important;
+  border-color: rgba(254, 240, 138, 0.5) !important;
+  color: #ffffff !important;
 }
 
 [data-theme="hon-viet"] .quiz-mode-pill-btn.is-active,
 .theme-hon-viet .quiz-mode-pill-btn.is-active {
-  background: linear-gradient(135deg, #fef2f2, #fee2e2) !important;
-  color: #991b1b !important;
-  border-color: #fca5a5 !important;
+  background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+  color: #fef08a !important;
+  border-color: #f59e0b !important;
   font-weight: 700 !important;
-  box-shadow: 0 2px 8px rgba(185, 28, 28, 0.15) !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.32) !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -1515,4 +1519,341 @@ body,
   color: #a5b4fc !important;
   border-color: #6366f1 !important;
   box-shadow: 0 0 10px rgba(99, 102, 241, 0.22) !important;
+}
+
+/* ==========================================================================
+   THREE.JS HERO 3D DIORAMA STAGE, INTERACTIVE CARD TILT & ASK-AI THEMING
+   ========================================================================== */
+.home-hero-3d-stage {
+  position: relative;
+  width: 360px;
+  height: 245px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.theme-diorama-aura {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  animation: dioramaAuraBreathe 5s ease-in-out infinite alternate;
+}
+
+.theme-diorama-aura.aura-lotus-zen-sanctuary {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.42) 0%, rgba(167, 118, 54, 0.18) 55%, transparent 75%);
+}
+
+.theme-diorama-aura.aura-hon-viet {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(185, 28, 28, 0.28) 55%, transparent 75%);
+}
+
+.theme-diorama-aura.aura-fantasy-academy {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.38) 0%, rgba(217, 119, 6, 0.24) 55%, transparent 75%);
+}
+
+.theme-diorama-aura.aura-cozy-night {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.36) 0%, rgba(129, 140, 248, 0.26) 55%, transparent 75%);
+}
+
+.theme-diorama-aura.aura-default {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(6, 182, 212, 0.18) 55%, transparent 75%);
+}
+
+.theme-diorama-aura.is-pulsing {
+  animation: dioramaPulseBurst 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dioramaAuraBreathe {
+  0% { transform: scale(0.92); opacity: 0.55; }
+  100% { transform: scale(1.08); opacity: 0.82; }
+}
+
+@keyframes dioramaPulseBurst {
+  0% { transform: scale(0.9); opacity: 0.9; }
+  50% { transform: scale(1.32); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.65; }
+}
+
+.theme-diorama-interactive-hint {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.72);
+  color: #fef08a;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  backdrop-filter: blur(8px);
+  opacity: 0.78;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+[data-theme="default"] .theme-diorama-interactive-hint {
+  background: rgba(255, 255, 255, 0.9);
+  color: #4f46e5;
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12);
+}
+
+.theme-hero-3d-diorama:hover .theme-diorama-interactive-hint {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* ==========================================================================
+   3D MOUSE PERSPECTIVE TILT & SPECULAR SPOTLIGHT ON COURSE CARDS
+   ========================================================================== */
+.subject-card {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(920px) rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg));
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease !important;
+  will-change: transform;
+}
+
+.subject-card:hover {
+  transform: perspective(920px) rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg)) translateY(-5px) !important;
+}
+
+.subject-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    360px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.13),
+    transparent 60%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+
+.subject-card:hover::after {
+  opacity: 1;
+}
+
+/* Fix 0% Progress Bar Text Contrast across Dark & Heritage Themes */
+[data-theme="fantasy-academy"] .subject-progress-label {
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="fantasy-academy"] .subject-progress-percent {
+  color: #fbbf24 !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.35);
+}
+
+[data-theme="fantasy-academy"] .subject-progress-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+[data-theme="cozy-night"] .subject-progress-label {
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="cozy-night"] .subject-progress-percent {
+  color: #38bdf8 !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
+}
+
+[data-theme="cozy-night"] .subject-progress-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(129, 140, 248, 0.22);
+}
+
+[data-theme="hon-viet"] .subject-progress-label {
+  color: #78350f !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="hon-viet"] .subject-progress-percent {
+  color: #b91c1c !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-progress-label {
+  color: #5c4028 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-progress-percent {
+  color: #7B3026 !important;
+  font-weight: 850 !important;
+}
+
+/* ==========================================================================
+   BESPOKE THEME-SYNCHRONIZED ASK-AI COMPONENT (NO STARK WHITE BOXES!)
+   ========================================================================== */
+[data-theme="lotus-zen-sanctuary"] .ask-ai,
+[data-theme="hon-viet"] .ask-ai,
+[data-theme="fantasy-academy"] .ask-ai,
+[data-theme="cozy-night"] .ask-ai {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 1. Liên Hoa Phật Quốc (Kinh Đài Luận Giải) */
+[data-theme="lotus-zen-sanctuary"] .ask-ai-toolbar,
+.ask-ai-theme-lotus-zen-sanctuary .ask-ai-toolbar {
+  background: linear-gradient(135deg, #2e190f 0%, #1c0f09 100%) !important;
+  border: 1.5px solid #D8B36A !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 22px rgba(40, 20, 10, 0.25), inset 0 0 14px rgba(216, 179, 106, 0.14) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .ask-ai-toolbar-icon,
+.ask-ai-theme-lotus-zen-sanctuary .ask-ai-toolbar-icon {
+  background: rgba(216, 179, 106, 0.22) !important;
+  border: 1px solid #D8B36A !important;
+  color: #FEF08A !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .ask-ai-toolbar-copy strong,
+.ask-ai-theme-lotus-zen-sanctuary .ask-ai-toolbar-copy strong {
+  color: #FEF08A !important;
+  font-family: 'Playfair Display', 'Be Vietnam Pro', serif !important;
+  letter-spacing: 0.4px;
+}
+
+[data-theme="lotus-zen-sanctuary"] .ask-ai-toolbar-copy span,
+[data-theme="lotus-zen-sanctuary"] .ask-ai-toolbar-copy span:last-child,
+.ask-ai-theme-lotus-zen-sanctuary .ask-ai-toolbar-copy span,
+.ask-ai-theme-lotus-zen-sanctuary .ask-ai-toolbar-copy span:last-child {
+  color: #F7ECD6 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .ask-ai-toggle,
+.ask-ai-theme-lotus-zen-sanctuary .ask-ai-toggle {
+  background: linear-gradient(135deg, #7B3026 0%, #A77636 100%) !important;
+  border: 1px solid #D8B36A !important;
+  color: #FFF8EC !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 2. Hồn Việt (Trạng Nguyên AI Luận Giải) */
+[data-theme="hon-viet"] .ask-ai-toolbar,
+.ask-ai-theme-hon-viet .ask-ai-toolbar {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+  border: 1.5px solid #d97706 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.12) !important;
+}
+
+[data-theme="hon-viet"] .ask-ai-toolbar-icon,
+.ask-ai-theme-hon-viet .ask-ai-toolbar-icon {
+  background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+  border: 1px solid #f59e0b !important;
+  color: #fef08a !important;
+}
+
+[data-theme="hon-viet"] .ask-ai-toolbar-copy strong,
+.ask-ai-theme-hon-viet .ask-ai-toolbar-copy strong {
+  color: #7f1d1d !important;
+}
+
+[data-theme="hon-viet"] .ask-ai-toolbar-copy span,
+[data-theme="hon-viet"] .ask-ai-toolbar-copy span:last-child,
+.ask-ai-theme-hon-viet .ask-ai-toolbar-copy span,
+.ask-ai-theme-hon-viet .ask-ai-toolbar-copy span:last-child {
+  color: #92400e !important;
+}
+
+[data-theme="hon-viet"] .ask-ai-toggle,
+.ask-ai-theme-hon-viet .ask-ai-toggle {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
+  border: 1px solid #fcd34d !important;
+  color: #fef08a !important;
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.28) !important;
+}
+
+/* 3. Học Viện Ma Pháp (Hiền Giả Cổ Thuật AI) */
+[data-theme="fantasy-academy"] .ask-ai-toolbar,
+.ask-ai-theme-fantasy-academy .ask-ai-toolbar {
+  background: linear-gradient(135deg, #0b2219 0%, #133528 100%) !important;
+  border: 1.5px solid #f59e0b !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 0 16px rgba(16, 185, 129, 0.14) !important;
+}
+
+[data-theme="fantasy-academy"] .ask-ai-toolbar-icon,
+.ask-ai-theme-fantasy-academy .ask-ai-toolbar-icon {
+  background: rgba(16, 185, 129, 0.22) !important;
+  border: 1px solid #34d399 !important;
+  color: #6ee7b7 !important;
+}
+
+[data-theme="fantasy-academy"] .ask-ai-toolbar-copy strong,
+.ask-ai-theme-fantasy-academy .ask-ai-toolbar-copy strong {
+  color: #fef08a !important;
+}
+
+[data-theme="fantasy-academy"] .ask-ai-toolbar-copy span,
+[data-theme="fantasy-academy"] .ask-ai-toolbar-copy span:last-child,
+.ask-ai-theme-fantasy-academy .ask-ai-toolbar-copy span,
+.ask-ai-theme-fantasy-academy .ask-ai-toolbar-copy span:last-child {
+  color: #a7f3d0 !important;
+}
+
+[data-theme="fantasy-academy"] .ask-ai-toggle,
+.ask-ai-theme-fantasy-academy .ask-ai-toggle {
+  background: linear-gradient(135deg, #d97706 0%, #059669 100%) !important;
+  border: 1px solid #fef08a !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* 4. Phòng Học Cozy Night (Lofi Study Buddy AI) */
+[data-theme="cozy-night"] .ask-ai-toolbar,
+.ask-ai-theme-cozy-night .ask-ai-toolbar {
+  background: linear-gradient(135deg, #11182f 0%, #1e1b4b 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 0 14px rgba(56, 189, 248, 0.12) !important;
+}
+
+[data-theme="cozy-night"] .ask-ai-toolbar-icon,
+.ask-ai-theme-cozy-night .ask-ai-toolbar-icon {
+  background: rgba(56, 189, 248, 0.18) !important;
+  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  color: #38bdf8 !important;
+}
+
+[data-theme="cozy-night"] .ask-ai-toolbar-copy strong,
+.ask-ai-theme-cozy-night .ask-ai-toolbar-copy strong {
+  color: #f8fafc !important;
+}
+
+[data-theme="cozy-night"] .ask-ai-toolbar-copy span,
+[data-theme="cozy-night"] .ask-ai-toolbar-copy span:last-child,
+.ask-ai-theme-cozy-night .ask-ai-toolbar-copy span,
+.ask-ai-theme-cozy-night .ask-ai-toolbar-copy span:last-child {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="cozy-night"] .ask-ai-toggle,
+.ask-ai-theme-cozy-night .ask-ai-toggle {
+  background: linear-gradient(135deg, #6366f1 0%, #0284c7 100%) !important;
+  border: 1px solid rgba(186, 230, 253, 0.45) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
 }

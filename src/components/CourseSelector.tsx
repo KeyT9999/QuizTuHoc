@@ -5,7 +5,7 @@ import type { FlashcardSet } from '../data/flashcardData';
 import { calculateCourseProgress, getFlashcardProgress } from '../utils/courseStorage';
 import PassedBadge from './PassedBadge';
 import { useTheme } from '../context/ThemeContext';
-import Lotus3DExperience from './Lotus3DExperience';
+import ThemeHero3DDiorama from './ThemeHero3DDiorama';
 import './CourseSelector.css';
 
 interface CourseSelectorProps {
@@ -248,7 +248,7 @@ function getHomeHeroDetails(theme: string) {
       };
     case 'hon-viet':
       return {
-        eyebrow: '🇻🇳 HỒN VIỆT · VĂN MIẾU THƯ PHÒNG',
+        eyebrow: '⭐ HỒN VIỆT · VĂN MIẾU THƯ PHÒNG',
         titlePre: 'Khơi nguồn tri thức, ',
         titleHighlight: 'vững bước tương lai',
         desc: 'Học tập hôm nay – Dựng xây mai sau. Chọn một môn học để xem toàn bộ danh sách đề thi và theo dõi tiến độ ôn tập.',
@@ -454,50 +454,10 @@ export default function CourseSelector({
           </p>
         </div>
 
-        {/* Hero Right Visual (SVG Study Illustration or 3D Lotus Experience) */}
+        {/* Hero Right Visual — Interactive Three.js 3D Centerpiece per Theme */}
         <div className="home-hero-right">
-          {theme === 'lotus-zen-sanctuary' ? (
-            <div className="home-hero-3d-lotus-wrap" style={{ width: 320, height: 220, position: 'relative' }}>
-              <Lotus3DExperience height={220} />
-            </div>
-          ) : (
-            <svg className="home-hero-illustration" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Soft Ambient Shadow */}
-              <ellipse cx="160" cy="195" rx="130" ry="14" fill="#E2E8F0" opacity="0.6" />
-
-              {/* Stacked Book 1 (Bottom Dark Indigo) */}
-              <rect x="70" y="160" width="180" height="26" rx="5" fill="#312E81" />
-              <rect x="85" y="164" width="162" height="18" rx="2" fill="#FFFFFF" />
-              <rect x="68" y="160" width="18" height="26" rx="4" fill="#4338CA" />
-
-              {/* Stacked Book 2 (Middle Blue) */}
-              <rect x="82" y="132" width="165" height="26" rx="5" fill="#2563EB" />
-              <rect x="96" y="136" width="148" height="18" rx="2" fill="#F8FAFC" />
-              <rect x="80" y="132" width="18" height="26" rx="4" fill="#3B82F6" />
-
-              {/* Stacked Book 3 (Top Sky Blue) */}
-              <rect x="95" y="104" width="150" height="26" rx="5" fill="#0284C7" />
-              <rect x="108" y="108" width="134" height="18" rx="2" fill="#FFFFFF" />
-              <rect x="93" y="104" width="17" height="26" rx="4" fill="#38BDF8" />
-
-              {/* Succulent Plant Pot (Left) */}
-              <path d="M36 175H58L54 195H40L36 175Z" fill="#F1F5F9" stroke="#CBD5E1" strokeWidth="2" />
-              <ellipse cx="47" cy="175" rx="11" ry="3" fill="#E2E8F0" />
-              <path d="M47 150C44 160 41 170 47 175C53 170 50 160 47 150Z" fill="#10B981" />
-              <path d="M40 156C36 163 38 171 45 174C45 168 43 161 40 156Z" fill="#059669" />
-              <path d="M54 156C58 163 56 171 49 174C49 168 51 161 54 156Z" fill="#34D399" />
-
-              {/* Pencil Cup (Between) */}
-              <rect x="255" y="152" width="28" height="42" rx="4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1.5" />
-              <line x1="262" y1="130" x2="262" y2="152" stroke="#F59E0B" strokeWidth="4" strokeLinecap="round" />
-              <line x1="270" y1="124" x2="270" y2="152" stroke="#4F46E5" strokeWidth="4" strokeLinecap="round" />
-              <line x1="277" y1="134" x2="277" y2="152" stroke="#EF4444" strokeWidth="4" strokeLinecap="round" />
-            </svg>
-          )}
-
-          {/* Floating Theme Badge Card */}
-          <div className="home-floating-grad-cap" title={heroDetails.badgeTitle}>
-            <span className="grad-cap-icon">{heroDetails.badgeIcon}</span>
+          <div className="home-hero-3d-stage">
+            <ThemeHero3DDiorama theme={theme} height={250} />
           </div>
         </div>
       </section>
@@ -698,6 +658,25 @@ export default function CourseSelector({
             displayedCourses.map((course) => {
               const courseTheme = getCourseTheme(course.id, course.code, theme);
 
+              const handleCardPointerMove = (e: React.MouseEvent<HTMLElement>) => {
+                const el = e.currentTarget;
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rx = ((y - rect.height / 2) / (rect.height / 2)) * -4.2;
+                const ry = ((x - rect.width / 2) / (rect.width / 2)) * 4.2;
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
+                el.style.setProperty('--card-rx', `${rx.toFixed(2)}deg`);
+                el.style.setProperty('--card-ry', `${ry.toFixed(2)}deg`);
+              };
+
+              const handleCardPointerLeave = (e: React.MouseEvent<HTMLElement>) => {
+                const el = e.currentTarget;
+                el.style.setProperty('--card-rx', '0deg');
+                el.style.setProperty('--card-ry', '0deg');
+              };
+
               // 1. Flashcard Course
               if (course.id === 'flashcard' && flashcardSets.length > 0) {
                 const fcSet = flashcardSets[0];
@@ -714,6 +693,8 @@ export default function CourseSelector({
                       '--subj-border': courseTheme.border,
                       '--subj-hover-shadow': courseTheme.hoverShadow,
                     } as React.CSSProperties}
+                    onMouseMove={handleCardPointerMove}
+                    onMouseLeave={handleCardPointerLeave}
                     onClick={() => onSelectFlashcard(fcSet)}
                   >
                     {/* Header */}
@@ -807,6 +788,8 @@ export default function CourseSelector({
                     '--subj-border': courseTheme.border,
                     '--subj-hover-shadow': courseTheme.hoverShadow,
                   } as React.CSSProperties}
+                  onMouseMove={handleCardPointerMove}
+                  onMouseLeave={handleCardPointerLeave}
                   onClick={() => onSelectCourse(course)}
                 >
                   {/* Header */}

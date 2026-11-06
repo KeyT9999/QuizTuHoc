@@ -49,6 +49,7 @@ import {
 } from './utils/courseStorage';
 import { useAppRouter } from './utils/router';
 import WoodenFish from './components/WoodenFish';
+import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
 import './App.css';
 
@@ -527,6 +528,9 @@ export default function App() {
         onClose={() => setIsCreateCourseOpen(false)}
         onCreateCourse={handleCreateCourse}
       />
+
+      {/* Ambient WebGL / Interactive Particle & Cursor Layer */}
+      <ThemeAmbientCanvas theme={theme} />
 
       {/* Widget Gõ Mõ Tịnh Tâm & Cầu May */}
       <WoodenFish />

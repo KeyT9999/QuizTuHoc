@@ -3,7 +3,7 @@
    The Path of Wisdom · Vietnamese Buddhist Heritage × Cinematic 3D × Luxury UI/UX
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
 
 /* --------------------------------------------------------------------------
    1. GLOBAL TOKENS & DOCUMENT ATTRIBUTES
@@ -11,7 +11,7 @@
 [data-theme="lotus-zen-sanctuary"],
 .theme-lotus-zen-sanctuary {
   --theme-id: "lotus-zen-sanctuary";
-  --theme-font-heading: 'Cinzel', 'Playfair Display', serif;
+  --theme-font-heading: 'Playfair Display', 'Cormorant Garamond', 'Be Vietnam Pro', serif;
   --theme-font-body: 'Be Vietnam Pro', -apple-system, sans-serif;
 
   /* Color Palette */
@@ -110,13 +110,22 @@
 
 [data-theme="lotus-zen-sanctuary"] .home-nav-item,
 .home-lotus-zen-sanctuary .home-nav-item,
+[data-theme="lotus-zen-sanctuary"] .global-theme-toggle-btn,
+.home-lotus-zen-sanctuary .global-theme-toggle-btn,
 [data-theme="lotus-zen-sanctuary"] .course-nav-item,
 .course-lotus-zen-sanctuary .course-nav-item,
 [data-theme="lotus-zen-sanctuary"] .course-back-btn,
 .course-lotus-zen-sanctuary .course-back-btn {
-  color: #E7DDD0 !important;
+  color: #FFF8EC !important;
   font-weight: 600;
   transition: all 0.2s ease;
+}
+
+[data-theme="lotus-zen-sanctuary"] .global-theme-toggle-btn,
+.home-lotus-zen-sanctuary .global-theme-toggle-btn {
+  background: linear-gradient(135deg, rgba(167, 118, 54, 0.28) 0%, rgba(123, 48, 38, 0.38) 100%) !important;
+  border: 1px solid #D8B36A !important;
+  color: #FEF08A !important;
 }
 
 [data-theme="lotus-zen-sanctuary"] .home-nav-item:hover,
@@ -384,8 +393,20 @@
 
 [data-theme="lotus-zen-sanctuary"] .quiz-v2-part-selector,
 .theme-lotus-zen-sanctuary .quiz-v2-part-selector {
-  background: rgba(18, 10, 7, 0.8) !important;
-  border-color: rgba(167, 118, 54, 0.4) !important;
+  background: rgba(42, 23, 15, 0.92) !important;
+  border-color: rgba(216, 179, 106, 0.55) !important;
+  color: #FFF8EC !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-part-select-btn,
+.theme-lotus-zen-sanctuary .quiz-v2-part-select-btn,
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-part-select,
+.theme-lotus-zen-sanctuary .quiz-v2-part-select,
+[data-theme="lotus-zen-sanctuary"] .quiz-v2-part-nav-btn,
+.theme-lotus-zen-sanctuary .quiz-v2-part-nav-btn,
+[data-theme="lotus-zen-sanctuary"] .quiz-progress-ring-label,
+.theme-lotus-zen-sanctuary .quiz-progress-ring-label {
+  color: #FFF8EC !important;
 }
 
 [data-theme="lotus-zen-sanctuary"] .quiz-v2-header-btn,

@@ -4,6 +4,7 @@ import {
   setAppTheme,
   type AppTheme,
 } from '../utils/studyStats';
+export type { AppTheme };
 import ThemeSelectorModal from '../components/ThemeSelectorModal';
 
 interface ThemeContextValue {

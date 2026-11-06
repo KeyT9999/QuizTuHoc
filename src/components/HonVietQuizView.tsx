@@ -763,12 +763,22 @@ export default function HonVietQuizView({
             </div>
           </div>
 
-          {/* Card 4: Patriotic Inspirational Banner */}
+          {/* Card 4: Patriotic Inspirational Banner (Crisp SVG Vietnam Flag & Lotus — No broken Windows Flag Emoji) */}
           <div className="hon-viet-patriotic-banner">
             <p className="hon-viet-banner-slogan">
               “Học tập hôm nay – dựng xây ngày mai.”
             </p>
-            <span className="hon-viet-banner-flag">🇻🇳 🪷 🇻🇳</span>
+            <div className="hon-viet-banner-emblem-row" aria-hidden="true">
+              <svg width="26" height="18" viewBox="0 0 30 20" style={{ borderRadius: 3, boxShadow: '0 2px 6px rgba(185,28,28,0.35)' }}>
+                <rect width="30" height="20" fill="#da251d" />
+                <polygon points="15,4 16.8,9.5 22.6,9.5 17.9,12.9 19.7,18.4 15,15 10.3,18.4 12.1,12.9 7.4,9.5 13.2,9.5" fill="#ffff00" />
+              </svg>
+              <span className="hon-viet-banner-flag">🪷</span>
+              <svg width="26" height="18" viewBox="0 0 30 20" style={{ borderRadius: 3, boxShadow: '0 2px 6px rgba(185,28,28,0.35)' }}>
+                <rect width="30" height="20" fill="#da251d" />
+                <polygon points="15,4 16.8,9.5 22.6,9.5 17.9,12.9 19.7,18.4 15,15 10.3,18.4 12.1,12.9 7.4,9.5 13.2,9.5" fill="#ffff00" />
+              </svg>
+            </div>
           </div>
 
           {/* Card 5: Real Focus Mode Toggle (Chế độ tập trung) */}

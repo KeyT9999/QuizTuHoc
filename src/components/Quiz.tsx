@@ -275,6 +275,7 @@ export default function Quiz({
         if (answer === question.correctAnswer) {
           playCorrectSound();
           addStudyXP(35);
+          window.dispatchEvent(new CustomEvent('theme-particle-burst'));
         } else {
           playWrongSound();
           addStudyXP(15);
@@ -305,6 +306,7 @@ export default function Quiz({
     if (isCorrect) {
       playCorrectSound();
       addStudyXP(35);
+      window.dispatchEvent(new CustomEvent('theme-particle-burst'));
     } else {
       playWrongSound();
       addStudyXP(15);

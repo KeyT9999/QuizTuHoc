@@ -45,7 +45,7 @@ export default function ZenTempleSeal({
         <span
           style={{
             color: '#991B1B',
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "'Playfair Display', 'Cormorant Garamond', 'Be Vietnam Pro', serif",
             fontWeight: 900,
             fontSize: size * 0.17,
             lineHeight: 1.15,
