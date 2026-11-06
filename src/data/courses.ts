@@ -66,6 +66,20 @@ export const DEFAULT_COURSES: Course[] = [
     badge: 'Đề chuẩn 426 câu',
   },
   {
+    id: 'mkt209m',
+    code: 'MKT209M',
+    name: 'Content Marketing',
+    description: 'Ngân hàng 284 câu hỏi trắc nghiệm Content Marketing, Social Media, Storytelling, Experience Mapping và 7A/EPIC Framework.',
+    badge: '1 bộ đề',
+  },
+  {
+    id: 'mkt301',
+    code: 'MKT301',
+    name: 'Marketing Research',
+    description: 'Ngân hàng 458 câu hỏi trắc nghiệm Nghiên cứu Marketing về thiết kế nghiên cứu, định tính/định lượng, chọn mẫu, thang đo và phân tích dữ liệu.',
+    badge: '1 bộ đề',
+  },
+  {
     id: 'flashcard',
     code: 'FLASHCARD',
     name: 'Thuật ngữ Flashcard PMG201c',

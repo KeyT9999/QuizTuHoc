@@ -48,6 +48,8 @@ import { SAMPLE_QUIZ_MLN122_SU26_FE_C1 } from './sampleQuizMLN122SU26C1FE';
 import { SAMPLE_QUIZ_MLN122_SU26_RE } from './sampleQuizMLN122SU26RE';
 import { SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330 } from './sampleQuizMLN122SU25FEC14330';
 import { SAMPLE_QUIZ_MLN122_QUIZ_THAY_CHO } from './sampleQuizMLN122QuizThayCho';
+import { SAMPLE_QUIZ_MKT209M } from './sampleQuizMKT209m';
+import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
 
 export interface QuizSetInfo {
   id: string;
@@ -496,5 +498,23 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn JPD123',
     badge: 'SU26 RE - 30 câu',
     rawText: SAMPLE_QUIZ_JPD123_SU26_RE,
+  },
+  {
+    id: 'mkt209m_full',
+    courseId: 'mkt209m',
+    title: 'MKT209M',
+    description: 'Bộ ngân hàng 284 câu hỏi trắc nghiệm môn MKT209M (Content Marketing).',
+    category: 'Môn MKT209M',
+    badge: 'Đề chuẩn 284 câu',
+    rawText: SAMPLE_QUIZ_MKT209M,
+  },
+  {
+    id: 'mkt301_full',
+    courseId: 'mkt301',
+    title: 'MKT301',
+    description: 'Bộ ngân hàng 458 câu hỏi trắc nghiệm môn MKT301 (Marketing Research).',
+    category: 'Môn MKT301',
+    badge: 'Đề chuẩn 458 câu',
+    rawText: SAMPLE_QUIZ_MKT301,
   },
 ];

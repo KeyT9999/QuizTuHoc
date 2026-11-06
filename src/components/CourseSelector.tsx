@@ -38,7 +38,7 @@ function getCourseTheme(courseId: string, courseCode: string, activeTheme = 'def
   else if (code.includes('SWD392')) icon = 'code';
   else if (code.includes('SDN302')) icon = 'cloud';
   else if (code.includes('JPD')) icon = 'globe';
-  else if (code.includes('CCHN')) icon = 'tag';
+  else if (code.includes('CCHN') || code.includes('MKT')) icon = 'tag';
   else if (courseId === 'flashcard') icon = 'cards';
 
   if (activeTheme === 'lotus-zen-sanctuary') {

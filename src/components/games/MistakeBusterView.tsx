@@ -12,7 +12,7 @@ import DongSonDrumSvg from '../DongSonDrumSvg';
 import ZenTempleWatermark from '../ZenTempleWatermark';
 
 const normalizeAnswer = (answer: string) =>
-  answer.trim().toUpperCase().replace(/[^A-F]/g, '').split('').sort().join('');
+  answer.trim().toUpperCase().replace(/[^A-H]/g, '').split('').sort().join('');
 
 interface MistakeBusterViewProps {
   setId: string;

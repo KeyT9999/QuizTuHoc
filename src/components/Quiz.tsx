@@ -516,7 +516,7 @@ export default function Quiz({
         return;
       }
 
-      // Option selection: A-F or 1-6
+      // Option selection: A-H or 1-8
       const optionKeys: Record<string, string> = {
         a: 'A',
         b: 'B',
@@ -524,12 +524,16 @@ export default function Quiz({
         d: 'D',
         e: 'E',
         f: 'F',
+        g: 'G',
+        h: 'H',
         '1': 'A',
         '2': 'B',
         '3': 'C',
         '4': 'D',
         '5': 'E',
         '6': 'F',
+        '7': 'G',
+        '8': 'H',
       };
       if (optionKeys[key]) {
         e.preventDefault();

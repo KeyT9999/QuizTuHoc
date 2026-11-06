@@ -32,9 +32,9 @@ export function parseQuizText(rawText: string): Question[] {
     // "D. link() . A" or "D. link() . B, C".
     const inlineAnswerMatch = lines
       .join('\n')
-      .match(/\s+\.\s*([A-F](?:\s*,\s*[A-F]){0,3})\s*$/i);
+      .match(/\s+\.\s*([A-H](?:\s*,\s*[A-H]){0,5})\s*$/i);
     if (inlineAnswerMatch) {
-      const answer = inlineAnswerMatch[1].replace(/[^A-F]/gi, '').toUpperCase();
+      const answer = inlineAnswerMatch[1].replace(/[^A-H]/gi, '').toUpperCase();
       const withoutAnswer = lines
         .join('\n')
         .slice(0, inlineAnswerMatch.index)
@@ -56,7 +56,7 @@ export function parseQuizText(rawText: string): Question[] {
       : null;
 
     // Extract answer letter (A, B, C, D) even if followed by explanation/parentheses: e.g. "D (Kiểu hỏi khác...)"
-    const ansMatch = lastLine.match(/^(\?|[A-F](?:\s*,?\s*[A-F]){0,3})(?:\s*\(.*|\s+.*)?$/i);
+    const ansMatch = lastLine.match(/^(\?|[A-H](?:\s*,?\s*[A-H]){0,5})(?:\s*\(.*|\s+.*)?$/i);
     if (!ansMatch && !freeResponseAnswer) continue;
 
     if (freeResponse && freeResponseAnswer) {
@@ -97,7 +97,7 @@ export function parseQuizText(rawText: string): Question[] {
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-F])[.)-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-H])[.)-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (options.length === 0 && key !== 'A') {
@@ -125,7 +125,7 @@ export function parseQuizText(rawText: string): Question[] {
     }
 
     const correctAnswerKey = ansMatch[1]
-      .replace(/[^A-F]/gi, '')
+      .replace(/[^A-H]/gi, '')
       .toUpperCase()
       .split('')
       .sort()
@@ -142,7 +142,7 @@ export function parseQuizText(rawText: string): Question[] {
     if (parts.length >= 2) {
       questionText = parts[0];
       for (let j = 1; j < parts.length; j++) {
-        const optMatch = parts[j].match(/^([A-F])[.:)-]?\s*(.+)$/i);
+        const optMatch = parts[j].match(/^([A-H])[.:)-]?\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (!seenKeys.has(key)) {
@@ -163,7 +163,7 @@ export function parseQuizText(rawText: string): Question[] {
       const qTextLines: string[] = [];
 
       for (const line of contentLines) {
-        const optMatch = line.match(/^([A-F])[.)-]\s*(.+)$/i);
+        const optMatch = line.match(/^([A-H])[.)-]\s*(.+)$/i);
         if (optMatch) {
           const key = optMatch[1].toUpperCase();
           if (options.length === 0 && key !== 'A') {
