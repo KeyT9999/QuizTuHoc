@@ -30,6 +30,16 @@ import {
   HCM202_KNOWLEDGE_GROUPS,
 } from './data/hcm202KnowledgeGroups';
 import {
+  getMkt209mKnowledgeGroupId,
+  getMkt209mQuestionsForGroup,
+  MKT209M_KNOWLEDGE_GROUPS,
+} from './data/mkt209mKnowledgeGroups';
+import {
+  getMkt301KnowledgeGroupId,
+  getMkt301QuestionsForGroup,
+  MKT301_KNOWLEDGE_GROUPS,
+} from './data/mkt301KnowledgeGroups';
+import {
   loadCustomCourses,
   saveCustomCourses,
   loadCustomQuizSets,
@@ -73,6 +83,18 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: HCM202_KNOWLEDGE_GROUPS,
     getGroupId: getHcm202KnowledgeGroupId,
     filterQuestions: getHcm202QuestionsForGroup,
+  },
+  mkt209m_full: {
+    courseLabel: 'MKT209M',
+    groups: MKT209M_KNOWLEDGE_GROUPS,
+    getGroupId: getMkt209mKnowledgeGroupId,
+    filterQuestions: getMkt209mQuestionsForGroup,
+  },
+  mkt301_full: {
+    courseLabel: 'MKT301',
+    groups: MKT301_KNOWLEDGE_GROUPS,
+    getGroupId: getMkt301KnowledgeGroupId,
+    filterQuestions: getMkt301QuestionsForGroup,
   },
 };
 
