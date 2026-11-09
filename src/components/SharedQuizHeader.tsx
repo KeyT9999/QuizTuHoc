@@ -1,5 +1,6 @@
 import QuizModeBar, { type QuizPlayMode } from './QuizModeBar';
 import { type QuizSplitSettings } from '../utils/quizSplit';
+import { useTheme } from '../context/ThemeContext';
 
 export interface QuizSplitPart {
   partIndex: number;
@@ -83,6 +84,7 @@ export default function SharedQuizHeader({
   onOpenKnowledgeGroups,
   knowledgeGroupsLabel,
 }: SharedQuizHeaderProps) {
+  const { mouseEffectsEnabled, toggleMouseEffects } = useTheme();
   const displayTitle = setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE';
   const effectiveProgressPercent = splitSettings.enabled ? partProgressPercent : progressPercent;
 
@@ -286,12 +288,27 @@ export default function SharedQuizHeader({
             </button>
           )}
 
+          {/* Action 4.5: Mouse Sparkle Effect Toggle */}
+          <button
+            type="button"
+            className={`quiz-v2-header-icon-btn quiz-v2-mouse-fx-btn ${mouseEffectsEnabled ? 'is-fx-on' : 'is-fx-off'}`}
+            onClick={toggleMouseEffects}
+            title={
+              mouseEffectsEnabled
+                ? 'Đang BẬT hiệu ứng di chuột lấp lánh (Bấm để tắt chống rối mắt)'
+                : 'Đang TẮT hiệu ứng di chuột lấp lánh (Bấm để bật lại)'
+            }
+            aria-label="Bật tắt hiệu ứng di chuột lấp lánh"
+          >
+            {mouseEffectsEnabled ? '✨' : '🛡️'}
+          </button>
+
           {/* Action 5: Theme Selector */}
           <button
             type="button"
             className="quiz-v2-header-btn quiz-v2-theme-btn"
             onClick={onOpenThemeModal}
-            title="Đổi giao diện học tập"
+            title="Đổi giao diện học tập & Cài đặt hiệu ứng"
           >
             🎨 Giao diện
           </button>

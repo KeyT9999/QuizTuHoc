@@ -6,6 +6,8 @@ interface ThemeSelectorModalProps {
   onClose: () => void;
   currentTheme: AppTheme;
   onSelectTheme: (theme: AppTheme) => void;
+  mouseEffectsEnabled?: boolean;
+  onToggleMouseEffects?: (enabled: boolean) => void;
 }
 
 export default function ThemeSelectorModal({
@@ -13,6 +15,8 @@ export default function ThemeSelectorModal({
   onClose,
   currentTheme,
   onSelectTheme,
+  mouseEffectsEnabled = true,
+  onToggleMouseEffects,
 }: ThemeSelectorModalProps) {
   if (!isOpen) return null;
 
@@ -38,6 +42,41 @@ export default function ThemeSelectorModal({
             ✕
           </button>
         </div>
+
+        {/* Setting Toggle: Mouse Sparkle & Interactive Cursor Effects */}
+        {onToggleMouseEffects && (
+          <div className={`theme-fx-setting-bar ${mouseEffectsEnabled ? 'is-enabled' : 'is-disabled'}`}>
+            <div className="theme-fx-setting-info">
+              <span className="theme-fx-setting-icon">{mouseEffectsEnabled ? '✨' : '🛡️'}</span>
+              <div>
+                <div className="theme-fx-setting-title">
+                  Hiệu ứng di chuột lấp lánh & Hạt tương tác
+                  <span className={`theme-fx-status-pill ${mouseEffectsEnabled ? 'on' : 'off'}`}>
+                    {mouseEffectsEnabled ? 'Đang bật' : 'Đã tắt'}
+                  </span>
+                </div>
+                <p className="theme-fx-setting-desc">
+                  {mouseEffectsEnabled
+                    ? 'Tạo vệt sáng theo con trỏ chuột, hạt lơ lửng và nghiêng thẻ 3D. Bấm tắt nếu bạn thấy rối mắt khi đọc đề.'
+                    : 'Đã tắt toàn bộ hạt lấp lánh theo trỏ chuột và nghiêng thẻ để giao diện tĩnh, chống mỏi mắt tối đa.'}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              role="switch"
+              aria-checked={mouseEffectsEnabled}
+              className={`theme-fx-switch-btn ${mouseEffectsEnabled ? 'is-on' : 'is-off'}`}
+              onClick={() => onToggleMouseEffects(!mouseEffectsEnabled)}
+            >
+              <span className="theme-fx-switch-thumb" />
+              <span className="theme-fx-switch-label">
+                {mouseEffectsEnabled ? 'Bật ✨' : 'Tắt'}
+              </span>
+            </button>
+          </div>
+        )}
 
         <div className="theme-grid">
           {/* Option: Liên Hoa Phật Quốc (Zen Sanctuary) */}

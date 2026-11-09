@@ -956,6 +956,11 @@ export default function ThemeHero3DDiorama({
     let targetLightY = 1.8;
 
     const handlePointerMove = (e: PointerEvent) => {
+      if (document.documentElement.getAttribute('data-mouse-effects') === 'off') {
+        targetRotX = 0;
+        targetRotY = 0;
+        return;
+      }
       const rect = container.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1;
       const ny = ((e.clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1;

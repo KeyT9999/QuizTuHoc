@@ -1,6 +1,7 @@
 export type AppTheme = 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
 
 const THEME_STORAGE_KEY = 'keyt_selected_ui_theme';
+const MOUSE_EFFECTS_KEY = 'keyt_mouse_effects_enabled';
 const FOCUS_MODE_KEY = 'keyt_focus_mode_enabled';
 const XP_STORAGE_KEY = 'keyt_user_total_xp';
 const STREAK_DAYS_KEY = 'keyt_study_streak_days';
@@ -29,6 +30,27 @@ export function setAppTheme(theme: AppTheme): void {
   try {
     localStorage.setItem(THEME_STORAGE_KEY, theme);
     window.dispatchEvent(new CustomEvent('keyt-theme-changed', { detail: theme }));
+  } catch {
+    // ignore
+  }
+}
+
+// Mouse Sparkle & Interactive Cursor Effects
+export function getMouseEffectsEnabled(): boolean {
+  try {
+    const saved = localStorage.getItem(MOUSE_EFFECTS_KEY);
+    if (saved === 'false') return false;
+    if (saved === 'true') return true;
+  } catch {
+    // ignore
+  }
+  return true;
+}
+
+export function setMouseEffectsEnabled(enabled: boolean): void {
+  try {
+    localStorage.setItem(MOUSE_EFFECTS_KEY, enabled ? 'true' : 'false');
+    window.dispatchEvent(new CustomEvent('keyt-mouse-effects-changed', { detail: enabled }));
   } catch {
     // ignore
   }

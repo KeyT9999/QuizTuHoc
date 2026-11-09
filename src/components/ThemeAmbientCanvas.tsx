@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import type { AppTheme } from '../context/ThemeContext';
+import { useTheme, type AppTheme } from '../context/ThemeContext';
 
 interface ThemeAmbientCanvasProps {
   theme: AppTheme;
@@ -70,9 +70,11 @@ const THEME_CONFIG: Record<
 };
 
 export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
+  const { mouseEffectsEnabled } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    if (!mouseEffectsEnabled) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -137,18 +139,18 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
 
       const dx = mouseX - lastSpawnX;
       const dy = mouseY - lastSpawnY;
-      if (dx * dx + dy * dy > 196) {
+      if (dx * dx + dy * dy > 520) {
         lastSpawnX = mouseX;
         lastSpawnY = mouseY;
-        if (trailSparks.length < 90) {
+        if (trailSparks.length < 36) {
           trailSparks.push({
-            x: mouseX + (Math.random() - 0.5) * 10,
-            y: mouseY + (Math.random() - 0.5) * 10,
-            vx: (Math.random() - 0.5) * 1.1,
-            vy: -0.6 - Math.random() * 0.9,
-            size: 2 + Math.random() * 2.5,
+            x: mouseX + (Math.random() - 0.5) * 8,
+            y: mouseY + (Math.random() - 0.5) * 8,
+            vx: (Math.random() - 0.5) * 0.85,
+            vy: -0.45 - Math.random() * 0.65,
+            size: 1.4 + Math.random() * 1.6,
             life: 0,
-            maxLife: 24 + Math.random() * 14,
+            maxLife: 20 + Math.random() * 12,
             color: cfg.colors[Math.floor(Math.random() * cfg.colors.length)],
           });
         }
@@ -297,7 +299,11 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
       window.removeEventListener('theme-particle-burst', handleCustomBurst);
       window.removeEventListener('resize', handleResize);
     };
-  }, [theme]);
+  }, [theme, mouseEffectsEnabled]);
+
+  if (!mouseEffectsEnabled) {
+    return null;
+  }
 
   return (
     <canvas

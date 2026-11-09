@@ -294,7 +294,7 @@ export default function CourseSelector({
   onCreateCourseClick,
   onDeleteCourse,
 }: CourseSelectorProps) {
-  const { theme, openThemeModal } = useTheme();
+  const { theme, openThemeModal, mouseEffectsEnabled, toggleMouseEffects } = useTheme();
   const heroDetails = getHomeHeroDetails(theme);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
@@ -411,6 +411,21 @@ export default function CourseSelector({
                 <line x1="6" y1="20" x2="6" y2="14" />
               </svg>
               <span>Thống kê</span>
+            </button>
+
+            {/* Quick Toggle: Mouse Sparkle Effect */}
+            <button
+              type="button"
+              className={`global-mouse-fx-toggle-btn ${mouseEffectsEnabled ? 'is-on' : 'is-off'}`}
+              onClick={toggleMouseEffects}
+              title={
+                mouseEffectsEnabled
+                  ? 'Đang BẬT hiệu ứng di chuột lấp lánh (Bấm để tắt chống rối mắt)'
+                  : 'Đang TẮT hiệu ứng di chuột lấp lánh (Bấm để bật lại)'
+              }
+            >
+              <span>{mouseEffectsEnabled ? '✨' : '🛡️'}</span>
+              <span>{mouseEffectsEnabled ? 'Hiệu ứng chuột: Bật' : 'Hiệu ứng chuột: Tắt'}</span>
             </button>
 
             {/* Global Theme Selector Button */}
@@ -659,6 +674,7 @@ export default function CourseSelector({
               const courseTheme = getCourseTheme(course.id, course.code, theme);
 
               const handleCardPointerMove = (e: React.MouseEvent<HTMLElement>) => {
+                if (!mouseEffectsEnabled) return;
                 const el = e.currentTarget;
                 const rect = el.getBoundingClientRect();
                 const x = e.clientX - rect.left;

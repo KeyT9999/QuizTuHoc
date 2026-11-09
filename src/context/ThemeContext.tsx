@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import {
   getAppTheme,
   setAppTheme,
+  getMouseEffectsEnabled,
+  setMouseEffectsEnabled as saveMouseEffectsEnabled,
   type AppTheme,
 } from '../utils/studyStats';
 export type { AppTheme };
@@ -10,6 +12,9 @@ import ThemeSelectorModal from '../components/ThemeSelectorModal';
 interface ThemeContextValue {
   theme: AppTheme;
   setTheme: (theme: AppTheme) => void;
+  mouseEffectsEnabled: boolean;
+  setMouseEffectsEnabled: (enabled: boolean) => void;
+  toggleMouseEffects: () => void;
   isThemeModalOpen: boolean;
   openThemeModal: () => void;
   closeThemeModal: () => void;
@@ -20,6 +25,9 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<AppTheme>(() => getAppTheme());
+  const [mouseEffectsEnabled, setMouseEffectsState] = useState<boolean>(() =>
+    getMouseEffectsEnabled()
+  );
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
   // Synchronize document attribute with active theme
@@ -28,7 +36,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // Listen for theme changes across windows/components
+  // Synchronize document attribute with mouse effects setting
+  useEffect(() => {
+    const attrVal = mouseEffectsEnabled ? 'on' : 'off';
+    document.documentElement.setAttribute('data-mouse-effects', attrVal);
+    document.body.setAttribute('data-mouse-effects', attrVal);
+  }, [mouseEffectsEnabled]);
+
+  // Listen for theme & mouse effects changes across windows/components
   useEffect(() => {
     const handleThemeChange = (e: Event) => {
       const customEvent = e as CustomEvent<AppTheme>;
@@ -37,17 +52,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
+    const handleMouseEffectsChange = (e: Event) => {
+      const customEvent = e as CustomEvent<boolean>;
+      if (typeof customEvent.detail === 'boolean') {
+        setMouseEffectsState(customEvent.detail);
+      }
+    };
+
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'keyt_selected_ui_theme') {
         const nextTheme = getAppTheme();
         setThemeState(nextTheme);
+      } else if (e.key === 'keyt_mouse_effects_enabled') {
+        setMouseEffectsState(getMouseEffectsEnabled());
       }
     };
 
     window.addEventListener('keyt-theme-changed', handleThemeChange);
+    window.addEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
     window.addEventListener('storage', handleStorage);
     return () => {
       window.removeEventListener('keyt-theme-changed', handleThemeChange);
+      window.removeEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
       window.removeEventListener('storage', handleStorage);
     };
   }, [theme]);
@@ -55,6 +81,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const changeTheme = useCallback((newTheme: AppTheme) => {
     setThemeState(newTheme);
     setAppTheme(newTheme);
+  }, []);
+
+  const changeMouseEffects = useCallback((enabled: boolean) => {
+    setMouseEffectsState(enabled);
+    saveMouseEffectsEnabled(enabled);
+  }, []);
+
+  const toggleMouseEffects = useCallback(() => {
+    setMouseEffectsState((prev) => {
+      const next = !prev;
+      saveMouseEffectsEnabled(next);
+      return next;
+    });
   }, []);
 
   const openThemeModal = useCallback(() => setIsThemeModalOpen(true), []);
@@ -66,6 +105,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       value={{
         theme,
         setTheme: changeTheme,
+        mouseEffectsEnabled,
+        setMouseEffectsEnabled: changeMouseEffects,
+        toggleMouseEffects,
         isThemeModalOpen,
         openThemeModal,
         closeThemeModal,
@@ -78,6 +120,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         onClose={closeThemeModal}
         currentTheme={theme}
         onSelectTheme={changeTheme}
+        mouseEffectsEnabled={mouseEffectsEnabled}
+        onToggleMouseEffects={changeMouseEffects}
       />
     </ThemeContext.Provider>
   );

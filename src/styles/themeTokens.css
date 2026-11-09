@@ -1857,3 +1857,74 @@ body,
   color: #ffffff !important;
   box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
 }
+
+/* ==========================================================================
+   MOUSE SPARKLE & CURSOR EFFECTS TOGGLE BUTTON + STATIC MODE OVERRIDES
+   ========================================================================== */
+.global-mouse-fx-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+.global-mouse-fx-toggle-btn:hover {
+  transform: translateY(-1px);
+}
+
+.global-mouse-fx-toggle-btn.is-on {
+  border-color: rgba(251, 191, 36, 0.55);
+  background: rgba(251, 191, 36, 0.14);
+  color: #fef08a;
+}
+
+.global-mouse-fx-toggle-btn.is-off {
+  border-color: rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.38);
+  color: #cbd5e1;
+  opacity: 0.88;
+}
+
+[data-theme="default"] .global-mouse-fx-toggle-btn.is-on {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #4338ca;
+}
+
+[data-theme="default"] .global-mouse-fx-toggle-btn.is-off {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.quiz-v2-mouse-fx-btn.is-fx-off {
+  opacity: 0.65;
+  filter: grayscale(0.4);
+}
+
+/* Disable 3D card tilt and mouse spotlight when user turns off mouse effects */
+[data-mouse-effects="off"] .subject-card {
+  transform: none !important;
+}
+
+[data-mouse-effects="off"] .subject-card:hover {
+  transform: translateY(-3px) !important;
+}
+
+[data-mouse-effects="off"] .subject-card::after {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .global-mouse-fx-toggle-btn span:last-child {
+    display: none;
+  }
+}
