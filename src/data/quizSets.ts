@@ -50,6 +50,7 @@ import { SAMPLE_QUIZ_MLN122_SU25_FE_C1_4330 } from './sampleQuizMLN122SU25FEC143
 import { SAMPLE_QUIZ_MLN122_QUIZ_THAY_CHO } from './sampleQuizMLN122QuizThayCho';
 import { SAMPLE_QUIZ_MKT209M } from './sampleQuizMKT209m';
 import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
+import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
 
 export interface QuizSetInfo {
   id: string;
@@ -516,5 +517,14 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MKT301',
     badge: 'Đề chuẩn 458 câu',
     rawText: SAMPLE_QUIZ_MKT301,
+  },
+  {
+    id: 'ccm301_hoc_bao_pass',
+    courseId: 'ccm301',
+    title: 'CCM301 - Học Bao Pass',
+    description: 'Bộ 444 câu hỏi CCM301 về quản lý khủng hoảng, truyền thông, các bên liên quan và danh tiếng tổ chức.',
+    category: 'Môn CCM301',
+    badge: '444 câu',
+    rawText: SAMPLE_QUIZ_CCM301,
   },
 ];

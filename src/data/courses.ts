@@ -80,6 +80,13 @@ export const DEFAULT_COURSES: Course[] = [
     badge: '1 bộ đề',
   },
   {
+    id: 'ccm301',
+    code: 'CCM301',
+    name: 'CCM301',
+    description: 'Ngân hàng 444 câu hỏi ôn tập về quản lý khủng hoảng, truyền thông và danh tiếng tổ chức.',
+    badge: '1 bộ đề',
+  },
+  {
     id: 'flashcard',
     code: 'FLASHCARD',
     name: 'Thuật ngữ Flashcard PMG201c',
