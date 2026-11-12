@@ -40,6 +40,11 @@ import {
   MKT301_KNOWLEDGE_GROUPS,
 } from './data/mkt301KnowledgeGroups';
 import {
+  getCcm301KnowledgeGroupId,
+  getCcm301QuestionsForGroup,
+  CCM301_KNOWLEDGE_GROUPS,
+} from './data/ccm301KnowledgeGroups';
+import {
   loadCustomCourses,
   saveCustomCourses,
   loadCustomQuizSets,
@@ -96,6 +101,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: MKT301_KNOWLEDGE_GROUPS,
     getGroupId: getMkt301KnowledgeGroupId,
     filterQuestions: getMkt301QuestionsForGroup,
+  },
+  ccm301_hoc_bao_pass: {
+    courseLabel: 'CCM301',
+    groups: CCM301_KNOWLEDGE_GROUPS,
+    getGroupId: getCcm301KnowledgeGroupId,
+    filterQuestions: getCcm301QuestionsForGroup,
   },
 };
 
