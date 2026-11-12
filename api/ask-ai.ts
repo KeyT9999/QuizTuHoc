@@ -31,27 +31,41 @@ interface AIProvider {
   model: string;
 }
 
+function getProviderSetting(name: string): string {
+  return process.env[name]
+    ?.trim()
+    .replace(/\\(?=[:/.])/g, '')
+    .replace(/\\+$/, '') || '';
+}
+
 function getConfiguredProviders(): AIProvider[] {
+  const deepseekApiKey = getProviderSetting('DEEPSEEK_API_KEY');
+  const configuredDeepseekModel = getProviderSetting('DEEPSEEK_MODEL');
+  const deepseekModel = ['deepseek-chat', 'deepseek-v4-flash'].includes(configuredDeepseekModel)
+    ? 'deepseek-flash'
+    : configuredDeepseekModel || 'deepseek-flash';
+  const siliconflowApiKey = getProviderSetting('SILICONFLOW_API_KEY');
+  const xkiroApiKey = getProviderSetting('XKIRO_API_KEY');
   const providers: Array<AIProvider | null> = [
-    process.env.DEEPSEEK_API_KEY?.trim()
+    deepseekApiKey
       ? {
-          apiKey: process.env.DEEPSEEK_API_KEY.trim(),
-          baseURL: process.env.DEEPSEEK_API_BASE?.trim() || 'https://api.deepseek.com',
-          model: process.env.DEEPSEEK_MODEL?.trim() || 'deepseek-v4-flash',
+          apiKey: deepseekApiKey,
+          baseURL: getProviderSetting('DEEPSEEK_API_BASE') || 'https://api.deepseek.com',
+          model: deepseekModel,
         }
       : null,
-    process.env.SILICONFLOW_API_KEY?.trim()
+    siliconflowApiKey
       ? {
-          apiKey: process.env.SILICONFLOW_API_KEY.trim(),
-          baseURL: process.env.SILICONFLOW_API_BASE?.trim() || 'https://api.siliconflow.com/v1',
-          model: process.env.SILICONFLOW_MODEL?.trim() || 'deepseek-ai/DeepSeek-V3',
+          apiKey: siliconflowApiKey,
+          baseURL: getProviderSetting('SILICONFLOW_API_BASE') || 'https://api.siliconflow.com/v1',
+          model: getProviderSetting('SILICONFLOW_MODEL') || 'deepseek-ai/DeepSeek-V3',
         }
       : null,
-    process.env.XKIRO_API_KEY?.trim()
+    xkiroApiKey
       ? {
-          apiKey: process.env.XKIRO_API_KEY.trim(),
-          baseURL: process.env.XKIRO_API_BASE?.trim() || 'https://api.xkiro.com/v1',
-          model: process.env.XKIRO_MODEL?.trim() || 'cohere/command-a',
+          apiKey: xkiroApiKey,
+          baseURL: getProviderSetting('XKIRO_API_BASE') || 'https://api.xkiro.com/v1',
+          model: getProviderSetting('XKIRO_MODEL') || 'cohere/command-a',
         }
       : null,
   ];
