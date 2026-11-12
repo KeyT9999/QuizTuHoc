@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Question } from '../utils/quizParser';
+import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
 import mascotCatImg from '../assets/mascot_cat.png';
@@ -360,8 +361,10 @@ export default function CozyNightQuizView({
                     <button
                       key={opt.key}
                       type="button"
-                      className={cardClass}
-                      onClick={() => onSelectOption(opt.key)}
+                      className={`${cardClass} quiz-selectable-option`}
+                      onClick={(event) => {
+                        if (!isAnswerTextSelection(event)) onSelectOption(opt.key);
+                      }}
                       aria-label={`${opt.key}. ${opt.text}`}
                     >
                       <span className="cozy-option-key-badge">{opt.key}</span>

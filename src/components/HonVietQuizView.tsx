@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import type { Question } from '../utils/quizParser';
+import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
 import {
@@ -560,8 +561,10 @@ export default function HonVietQuizView({
                     <button
                       key={opt.key}
                       type="button"
-                      className={optClass}
-                      onClick={() => onSelectOption(opt.key)}
+                      className={`${optClass} quiz-selectable-option`}
+                      onClick={(event) => {
+                        if (!isAnswerTextSelection(event)) onSelectOption(opt.key);
+                      }}
                       aria-label={`${opt.key}. ${opt.text}${isSelected ? '. Đã chọn' : ''}`}
                       aria-pressed={isSelected}
                     >

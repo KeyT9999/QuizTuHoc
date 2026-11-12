@@ -28,3 +28,10 @@ html, body, #root {
 button {
   font-family: inherit;
 }
+
+/* Answer buttons remain selectable for copying and browser translation tools. */
+.quiz-selectable-option,
+.quiz-selectable-option * {
+  -webkit-user-select: text;
+  user-select: text;
+}

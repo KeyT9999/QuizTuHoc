@@ -778,7 +778,7 @@
   line-height: 1.5;
 }
 
-.zen-option-btn:hover:not(:disabled) {
+.zen-option-btn:hover:not(:disabled):not([aria-disabled="true"]) {
   border-color: #A77636;
   background: #FEF3C7;
   transform: translateX(4px);
@@ -823,7 +823,7 @@
   transition: all 0.2s ease;
 }
 
-.zen-option-btn:hover:not(:disabled) .zen-opt-key {
+.zen-option-btn:hover:not(:disabled):not([aria-disabled="true"]) .zen-opt-key {
   border-color: #D8B36A;
   background: #FEF3C7;
   transform: scale(1.05);

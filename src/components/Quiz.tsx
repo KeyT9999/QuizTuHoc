@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import type { Question } from '../utils/quizParser';
+import { isAnswerTextSelection, isModifiedQuizKey } from '../utils/quizTextSelection';
 import { MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
 import {
   loadQuizSplitSettings,
@@ -489,8 +490,10 @@ export default function Quiz({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (activeMode !== 'study') return;
+      if (e.defaultPrevented || isModifiedQuizKey(e)) return;
       const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT'
+        || (e.target as HTMLElement)?.isContentEditable) return;
 
       const key = e.key.toLowerCase();
 
@@ -1139,9 +1142,11 @@ export default function Quiz({
                   <button
                     type="button"
                     key={opt.key}
-                    className={optClass}
+                    className={`${optClass} quiz-selectable-option`}
                     aria-label={`${opt.key}. ${opt.text}${isSelected ? '. Đã chọn' : ''}`}
-                    onClick={() => handleSelectOption(opt.key)}
+                    onClick={(event) => {
+                      if (!isAnswerTextSelection(event)) handleSelectOption(opt.key);
+                    }}
                   >
                     <span className="quiz-v2-option-key">{opt.key}</span>
                     <span className="quiz-v2-option-text">{opt.text}</span>

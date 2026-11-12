@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import type { Question } from '../utils/quizParser';
+import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
 import {
@@ -595,10 +596,11 @@ export default function LotusZenQuizView({
                   <button
                     key={opt.key}
                     type="button"
-                    className={btnClass}
-                    disabled={isAnswered}
+                    className={`${btnClass} quiz-selectable-option`}
+                    aria-disabled={isAnswered}
                     aria-pressed={isSelected}
-                    onClick={() => {
+                    onClick={(event) => {
+                      if (isAnswered || isAnswerTextSelection(event)) return;
                       playClickSound();
                       onSelectOption(opt.key);
                     }}
