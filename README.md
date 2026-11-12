@@ -4,14 +4,11 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 ## Cấu hình tính năng Hỏi AI
 
-Tính năng Hỏi AI gọi xKiro từ API route phía server, nên API key không được đưa vào mã frontend. Khi chạy local bằng `npm run dev`, tạo file `.env` hoặc `.env.local` từ `.env.example` và điền:
+Tính năng Hỏi AI gọi API từ phía máy chủ. Ứng dụng thử DeepSeek trước, sau đó tự chuyển sang SiliconFlow và xKiro nếu dịch vụ trước lỗi. API key chỉ được đặt trong `.env` local hoặc biến môi trường máy chủ, không dùng tiền tố `VITE_`.
 
-```env
-XKIRO_API_KEY=your_xkiro_api_key_here
-XKIRO_MODEL=qwen/qwen3.5-397b-a17b:free
-```
+Khi chạy local bằng `npm run dev`, tạo file `.env` từ `.env.example` và điền các API key cùng cấu hình tương ứng. Các biến base URL và model có giá trị mặc định trong ví dụ.
 
-Trên Vercel, thêm `XKIRO_API_KEY` trong **Project Settings → Environment Variables**, rồi redeploy. `XKIRO_MODEL` là biến tùy chọn; nếu bỏ trống, ứng dụng dùng model mặc định ở trên.
+Trên Vercel, thêm các biến `DEEPSEEK_API_KEY`, `DEEPSEEK_API_BASE`, `DEEPSEEK_MODEL`, `SILICONFLOW_API_KEY`, `SILICONFLOW_API_BASE`, `SILICONFLOW_MODEL`, `XKIRO_API_KEY`, `XKIRO_API_BASE`, và `XKIRO_MODEL` trong **Project Settings → Environment Variables**, sau đó redeploy. Chỉ cần cấu hình key của những nhà cung cấp muốn bật.
 
 ## Cấu hình Google Analytics 4
 

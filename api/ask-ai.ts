@@ -25,10 +25,43 @@ interface RateBucket {
   resetAt: number;
 }
 
-const XKIRO_BASE_URL = 'https://api.xkiro.com/v1';
-const DEFAULT_MODEL = 'qwen/qwen3.5-397b-a17b:free';
+interface AIProvider {
+  apiKey: string;
+  baseURL: string;
+  model: string;
+}
+
+function getConfiguredProviders(): AIProvider[] {
+  const providers: Array<AIProvider | null> = [
+    process.env.DEEPSEEK_API_KEY?.trim()
+      ? {
+          apiKey: process.env.DEEPSEEK_API_KEY.trim(),
+          baseURL: process.env.DEEPSEEK_API_BASE?.trim() || 'https://api.deepseek.com',
+          model: process.env.DEEPSEEK_MODEL?.trim() || 'deepseek-v4-flash',
+        }
+      : null,
+    process.env.SILICONFLOW_API_KEY?.trim()
+      ? {
+          apiKey: process.env.SILICONFLOW_API_KEY.trim(),
+          baseURL: process.env.SILICONFLOW_API_BASE?.trim() || 'https://api.siliconflow.com/v1',
+          model: process.env.SILICONFLOW_MODEL?.trim() || 'deepseek-ai/DeepSeek-V3',
+        }
+      : null,
+    process.env.XKIRO_API_KEY?.trim()
+      ? {
+          apiKey: process.env.XKIRO_API_KEY.trim(),
+          baseURL: process.env.XKIRO_API_BASE?.trim() || 'https://api.xkiro.com/v1',
+          model: process.env.XKIRO_MODEL?.trim() || 'cohere/command-a',
+        }
+      : null,
+  ];
+
+  return providers.filter((provider): provider is AIProvider => provider !== null);
+}
+
 const RATE_LIMIT = 30;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
+const PROVIDER_TIMEOUT_MS = 15_000;
 const rateBuckets = new Map<string, RateBucket>();
 
 const SYSTEM_PROMPT = `Bạn là trợ giảng AI cho một ứng dụng ôn thi trắc nghiệm.
@@ -134,8 +167,8 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
     return;
   }
 
-  const apiKey = process.env.XKIRO_API_KEY?.trim();
-  if (!apiKey) {
+  const providers = getConfiguredProviders();
+  if (providers.length === 0) {
     sendError(res, 503, 'AI_NOT_CONFIGURED', 'Tính năng AI chưa được cấu hình trên máy chủ.');
     return;
   }
@@ -152,51 +185,58 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
     : 'Chưa có đáp án chuẩn; hãy tự suy luận từ câu hỏi và các lựa chọn.';
   const learnerPrompt = body.prompt || 'Hãy tự đọc câu hỏi, chọn đáp án đúng và giải thích ngắn gọn.';
 
-  try {
-    const client = new OpenAI({
-      baseURL: XKIRO_BASE_URL,
-      apiKey,
-      maxRetries: 0,
-      timeout: 30_000,
-    });
+  const providerStatuses: number[] = [];
+  const messages = [
+    { role: 'system' as const, content: SYSTEM_PROMPT },
+    {
+      role: 'user' as const,
+      content: `Câu hỏi:\n${body.question}\n\nCác lựa chọn:\n${optionsText}\n\nĐáp án chuẩn của bộ đề (nếu có):\n${answerKey}\n\nYêu cầu của người học:\n${learnerPrompt}\n\nHãy bắt đầu bằng đáp án đúng, sau đó mới giải thích.`,
+    },
+  ];
 
-    const response = await client.chat.completions.create({
-      model: process.env.XKIRO_MODEL || DEFAULT_MODEL,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        {
-          role: 'user',
-          content: `Câu hỏi:\n${body.question}\n\nCác lựa chọn:\n${optionsText}\n\nĐáp án chuẩn của bộ đề (nếu có):\n${answerKey}\n\nYêu cầu của người học:\n${learnerPrompt}\n\nHãy bắt đầu bằng đáp án đúng, sau đó mới giải thích.`,
-        },
-      ],
-      temperature: 0.2,
-      max_tokens: 700,
-    });
+  for (const provider of providers) {
+    try {
+      const client = new OpenAI({
+        baseURL: provider.baseURL,
+        apiKey: provider.apiKey,
+        maxRetries: 0,
+        timeout: PROVIDER_TIMEOUT_MS,
+      });
 
-    const answer = response.choices[0]?.message?.content?.trim();
-    if (!answer) {
-      sendError(res, 502, 'EMPTY_AI_RESPONSE', 'AI không trả về nội dung giải thích.');
-      return;
+      const response = await client.chat.completions.create({
+        model: provider.model,
+        messages,
+        temperature: 0.2,
+        max_tokens: 700,
+      });
+
+      const answer = response.choices[0]?.message?.content?.trim();
+      if (answer) {
+        res.status(200).json({ answer });
+        return;
+      }
+
+      providerStatuses.push(502);
+    } catch (error: unknown) {
+      const status = isRecord(error) && typeof error.status === 'number' ? error.status : 0;
+      providerStatuses.push(status);
     }
-
-    res.status(200).json({ answer });
-  } catch (error: unknown) {
-    const status = isRecord(error) && typeof error.status === 'number' ? error.status : 0;
-    if (status === 429) {
-      sendError(res, 429, 'AI_RATE_LIMITED', 'XKiro đang giới hạn lượt gọi. Vui lòng thử lại sau.');
-      return;
-    }
-
-    if (status === 401 || status === 403) {
-      sendError(res, 502, 'AI_AUTH_ERROR', 'API key XKiro không hợp lệ hoặc không có quyền dùng model này.');
-      return;
-    }
-
-    if (status === 400 || status === 404) {
-      sendError(res, 502, 'AI_MODEL_ERROR', 'XKiro không chấp nhận model hoặc dữ liệu yêu cầu. Hãy kiểm tra lại XKIRO_MODEL.');
-      return;
-    }
-
-    sendError(res, 502, 'AI_UNAVAILABLE', 'Không thể kết nối với XKiro lúc này. Vui lòng thử lại.');
   }
+
+  if (providerStatuses.every((status) => status === 429)) {
+    sendError(res, 429, 'AI_RATE_LIMITED', 'Các dịch vụ AI đang giới hạn lượt gọi. Vui lòng thử lại sau ít phút.');
+    return;
+  }
+
+  if (providerStatuses.every((status) => status === 401 || status === 403)) {
+    sendError(res, 502, 'AI_AUTH_ERROR', 'Cấu hình API key AI không hợp lệ hoặc chưa có quyền dùng model.');
+    return;
+  }
+
+  if (providerStatuses.every((status) => status === 400 || status === 404)) {
+    sendError(res, 502, 'AI_MODEL_ERROR', 'Các dịch vụ AI không chấp nhận model đã cấu hình. Hãy kiểm tra tên model.');
+    return;
+  }
+
+  sendError(res, 502, 'AI_UNAVAILABLE', 'Không thể kết nối với các dịch vụ AI lúc này. Vui lòng thử lại.');
 }

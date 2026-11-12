@@ -72,12 +72,22 @@ function localApiPlugin(): Plugin {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const serverEnvKeys = [
+    'DEEPSEEK_API_KEY',
+    'DEEPSEEK_API_BASE',
+    'DEEPSEEK_MODEL',
+    'SILICONFLOW_API_KEY',
+    'SILICONFLOW_API_BASE',
+    'SILICONFLOW_MODEL',
+    'XKIRO_API_KEY',
+    'XKIRO_API_BASE',
+    'XKIRO_MODEL',
+  ];
 
-  if (env.XKIRO_API_KEY && !process.env.XKIRO_API_KEY) {
-    process.env.XKIRO_API_KEY = env.XKIRO_API_KEY;
-  }
-  if (env.XKIRO_MODEL && !process.env.XKIRO_MODEL) {
-    process.env.XKIRO_MODEL = env.XKIRO_MODEL;
+  for (const key of serverEnvKeys) {
+    if (env[key] && !process.env[key]) {
+      process.env[key] = env[key];
+    }
   }
 
   return {
