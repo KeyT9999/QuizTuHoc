@@ -312,7 +312,7 @@ export default function CozyNightQuizView({
             </div>
 
             {/* Question Text */}
-            <h2 className="cozy-question-text">{question.text}</h2>
+            <h2 className="cozy-question-text" data-hover-translate={question.text}>{question.text}</h2>
 
             {/* AI Assistant Banner */}
             <AskAI question={question} />
@@ -368,7 +368,7 @@ export default function CozyNightQuizView({
                       aria-label={`${opt.key}. ${opt.text}`}
                     >
                       <span className="cozy-option-key-badge">{opt.key}</span>
-                      <span className="cozy-option-text">{opt.text}</span>
+                      <span className="cozy-option-text" data-hover-translate={opt.text}>{opt.text}</span>
 
                       {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                         <span className="cozy-option-status-icon correct">✓</span>

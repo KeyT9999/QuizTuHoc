@@ -4,13 +4,17 @@ import { initializeGoogleAnalytics } from './utils/googleAnalytics'
 import './index.css'
 import { ThemeProvider } from './context/ThemeContext'
 import App from './App.tsx'
+import HoverTranslate from './components/HoverTranslate'
 
 initializeGoogleAnalytics()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <App />
+      <>
+        <App />
+        <HoverTranslate />
+      </>
     </ThemeProvider>
   </StrictMode>,
 )

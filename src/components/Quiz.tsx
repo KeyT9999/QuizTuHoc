@@ -1099,7 +1099,7 @@ export default function Quiz({
           </div>
 
           {/* Question Text */}
-          <div className="quiz-v2-q-text">{question.text}</div>
+          <div className="quiz-v2-q-text" data-hover-translate={question.text}>{question.text}</div>
 
           <AskAI question={question} />
 
@@ -1149,7 +1149,7 @@ export default function Quiz({
                     }}
                   >
                     <span className="quiz-v2-option-key">{opt.key}</span>
-                    <span className="quiz-v2-option-text">{opt.text}</span>
+                    <span className="quiz-v2-option-text" data-hover-translate={opt.text}>{opt.text}</span>
                     {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                       <span className="quiz-v2-option-icon correct-icon">✓</span>
                     )}

@@ -449,7 +449,7 @@ export default function FantasyAcademyQuizView({
             </div>
 
             {/* Question Text */}
-            <h2 className="fantasy-question-text">{question.text}</h2>
+            <h2 className="fantasy-question-text" data-hover-translate={question.text}>{question.text}</h2>
 
             {/* AI Assistant Banner */}
             <AskAI question={question} />
@@ -506,7 +506,7 @@ export default function FantasyAcademyQuizView({
                       aria-label={`${opt.key}. ${opt.text}`}
                     >
                       <span className="fantasy-option-key-badge">{opt.key}</span>
-                      <span className="fantasy-option-text">{opt.text}</span>
+                      <span className="fantasy-option-text" data-hover-translate={opt.text}>{opt.text}</span>
 
                       {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                         <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>

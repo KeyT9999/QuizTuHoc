@@ -566,7 +566,7 @@ export default function LotusZenQuizView({
             <ZenMalaBeads count={12} activeIndex={relativeIndex % 12} className="zen-mala-divider" />
 
             {/* Question Text */}
-            <div className="zen-q-text">
+            <div className="zen-q-text" data-hover-translate={question.text}>
               {question.text}
             </div>
 
@@ -608,7 +608,7 @@ export default function LotusZenQuizView({
                     <span className="zen-opt-key">
                       {isCorrect ? '✓' : isWrong ? '✗' : opt.key}
                     </span>
-                    <span style={{ flex: 1 }}>{opt.text}</span>
+                    <span style={{ flex: 1 }} data-hover-translate={opt.text}>{opt.text}</span>
                   </button>
                 );
               })}

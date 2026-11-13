@@ -515,7 +515,7 @@ export default function HonVietQuizView({
             </div>
 
             {/* Question Statement */}
-            <h2 className="hon-viet-q-statement">
+            <h2 className="hon-viet-q-statement" data-hover-translate={question.text}>
               {question.text}
             </h2>
 
@@ -569,7 +569,7 @@ export default function HonVietQuizView({
                       aria-pressed={isSelected}
                     >
                       <span className="hon-viet-opt-badge">{opt.key}</span>
-                      <span className="hon-viet-opt-text">{opt.text}</span>
+                      <span className="hon-viet-opt-text" data-hover-translate={opt.text}>{opt.text}</span>
                       {(isAnswered || isRevealed) && !isUnresolved && isCorrect && (
                         <span className="hon-viet-opt-status-correct">✓</span>
                       )}
