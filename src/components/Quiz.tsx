@@ -1099,7 +1099,7 @@ export default function Quiz({
           </div>
 
           {/* Question Text */}
-          <div className="quiz-v2-q-text" data-hover-translate={question.text}>{question.text}</div>
+          <div className="quiz-v2-q-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</div>
 
           <AskAI question={question} />
 

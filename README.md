@@ -6,7 +6,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 Tính năng Hỏi AI gọi API từ phía máy chủ. Ứng dụng thử DeepSeek trước, sau đó tự chuyển sang SiliconFlow và xKiro nếu dịch vụ trước lỗi. API key chỉ được đặt trong `.env` local hoặc biến môi trường máy chủ, không dùng tiền tố `VITE_`. Giá trị biến môi trường nên nhập dạng thường, không thêm dấu gạch chéo ngược.
 
-Trong lúc học, rê chuột lên một từ tiếng Anh trong câu hỏi hoặc lựa chọn để xem nghĩa tiếng Việt theo ngữ cảnh. Dịch chỉ chạy sau khi con trỏ dừng một lúc và được lưu trong phiên để tránh gọi AI lặp lại.
+Trong lúc học, rê chuột lên câu hỏi hoặc lựa chọn tiếng Anh để xem bản dịch tiếng Việt đầy đủ. Dịch chỉ chạy sau khi con trỏ dừng một lúc và được lưu trong phiên để tránh gọi AI lặp lại.
 
 Khi chạy local bằng `npm run dev`, tạo file `.env` từ `.env.example` và điền các API key cùng cấu hình tương ứng. Các biến base URL và model có giá trị mặc định trong ví dụ.
 

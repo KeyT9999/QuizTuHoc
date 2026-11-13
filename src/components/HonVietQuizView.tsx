@@ -515,7 +515,7 @@ export default function HonVietQuizView({
             </div>
 
             {/* Question Statement */}
-            <h2 className="hon-viet-q-statement" data-hover-translate={question.text}>
+            <h2 className="hon-viet-q-statement" data-hover-translate={question.text} data-hover-translate-kind="question">
               {question.text}
             </h2>
 

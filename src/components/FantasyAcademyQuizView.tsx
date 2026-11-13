@@ -449,7 +449,7 @@ export default function FantasyAcademyQuizView({
             </div>
 
             {/* Question Text */}
-            <h2 className="fantasy-question-text" data-hover-translate={question.text}>{question.text}</h2>
+            <h2 className="fantasy-question-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</h2>
 
             {/* AI Assistant Banner */}
             <AskAI question={question} />

@@ -566,7 +566,7 @@ export default function LotusZenQuizView({
             <ZenMalaBeads count={12} activeIndex={relativeIndex % 12} className="zen-mala-divider" />
 
             {/* Question Text */}
-            <div className="zen-q-text" data-hover-translate={question.text}>
+            <div className="zen-q-text" data-hover-translate={question.text} data-hover-translate-kind="question">
               {question.text}
             </div>
 
