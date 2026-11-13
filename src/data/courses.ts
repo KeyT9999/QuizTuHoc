@@ -87,6 +87,13 @@ export const DEFAULT_COURSES: Course[] = [
     badge: '1 bộ đề',
   },
   {
+    id: 'bra301',
+    code: 'BRA301',
+    name: 'Quản trị thương hiệu',
+    description: 'Ngân hàng 518 câu trắc nghiệm về giá trị thương hiệu, định vị, truyền thông, kiến trúc và đo lường thương hiệu.',
+    badge: '1 quiz',
+  },
+  {
     id: 'flashcard',
     code: 'FLASHCARD',
     name: 'Thuật ngữ Flashcard PMG201c',

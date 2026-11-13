@@ -45,6 +45,11 @@ import {
   CCM301_KNOWLEDGE_GROUPS,
 } from './data/ccm301KnowledgeGroups';
 import {
+  getBra301KnowledgeGroupId,
+  getBra301QuestionsForGroup,
+  BRA301_KNOWLEDGE_GROUPS,
+} from './data/bra301KnowledgeGroups';
+import {
   loadCustomCourses,
   saveCustomCourses,
   loadCustomQuizSets,
@@ -107,6 +112,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: CCM301_KNOWLEDGE_GROUPS,
     getGroupId: getCcm301KnowledgeGroupId,
     filterQuestions: getCcm301QuestionsForGroup,
+  },
+  bra301_quiz_ba_khi: {
+    courseLabel: 'BRA301',
+    groups: BRA301_KNOWLEDGE_GROUPS,
+    getGroupId: getBra301KnowledgeGroupId,
+    filterQuestions: getBra301QuestionsForGroup,
   },
 };
 

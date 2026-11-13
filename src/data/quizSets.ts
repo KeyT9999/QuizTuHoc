@@ -51,6 +51,7 @@ import { SAMPLE_QUIZ_MLN122_QUIZ_THAY_CHO } from './sampleQuizMLN122QuizThayCho'
 import { SAMPLE_QUIZ_MKT209M } from './sampleQuizMKT209m';
 import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
 import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
+import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
 
 export interface QuizSetInfo {
   id: string;
@@ -526,5 +527,14 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn CCM301',
     badge: '444 câu',
     rawText: SAMPLE_QUIZ_CCM301,
+  },
+  {
+    id: 'bra301_quiz_ba_khi',
+    courseId: 'bra301',
+    title: 'BRA301-Quiz Bá Khí',
+    description: 'Bộ 518 câu hỏi trắc nghiệm BRA301 về quản trị thương hiệu, định vị, truyền thông, kiến trúc và giá trị thương hiệu.',
+    category: 'Môn BRA301',
+    badge: '518 câu',
+    rawText: SAMPLE_QUIZ_BRA301,
   },
 ];
