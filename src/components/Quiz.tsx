@@ -17,7 +17,12 @@ import MistakeBusterView from './games/MistakeBusterView';
 import MockExamView from './games/MockExamView';
 import QuestionListView from './QuestionListView';
 import AskAI from './AskAI';
-import { clearMistakes, getMistakeQuestionIds, saveMistakeQuestion } from '../utils/gameStorage';
+import {
+  clearMistakes,
+  getMistakeQuestionIds,
+  removeMistakeQuestion,
+  saveMistakeQuestion,
+} from '../utils/gameStorage';
 import { playCorrectSound, playWrongSound } from '../utils/soundEffects';
 import StudyMilestoneRain from './StudyMilestoneRain';
 import {
@@ -418,6 +423,24 @@ export default function Quiz({
     }
   };
 
+  const resetAllProgress = () => {
+    setRevealedIds([]);
+    setCurrentIndex(0);
+    setAnswers({});
+    setMasteredIds([]);
+    setSubmittedIds([]);
+    setMistakeCount(0);
+    setActiveMode('study');
+    setShowQuestionGrid(false);
+    setShowPartCompleteModal(false);
+    setSplitSettings((previous) => ({ ...previous, currentPart: 0 }));
+    localStorage.removeItem(storageKeyIndex);
+    localStorage.removeItem(storageKeyAnswers);
+    localStorage.removeItem(storageKeyMastered);
+    localStorage.removeItem(storageKeySubmitted);
+    if (setId) clearMistakes(setId);
+  };
+
   const handleResetProgress = () => {
     if (isKnowledgeGroupMode) {
       const groupName = setTitle || 'nhóm đang học';
@@ -425,21 +448,7 @@ export default function Quiz({
         `Bạn có chắc muốn làm lại từ đầu ${groupName}? Tiến độ, câu trả lời và danh sách câu sai của nhóm này sẽ được xóa.`
       )) return;
 
-      setRevealedIds([]);
-      setCurrentIndex(0);
-      setAnswers({});
-      setMasteredIds([]);
-      setSubmittedIds([]);
-      setMistakeCount(0);
-      setActiveMode('study');
-      setShowQuestionGrid(false);
-      setShowPartCompleteModal(false);
-      setSplitSettings((previous) => ({ ...previous, currentPart: 0 }));
-      localStorage.removeItem(storageKeyIndex);
-      localStorage.removeItem(storageKeyAnswers);
-      localStorage.removeItem(storageKeyMastered);
-      localStorage.removeItem(storageKeySubmitted);
-      if (setId) clearMistakes(setId);
+      resetAllProgress();
       return;
     }
 
@@ -448,41 +457,36 @@ export default function Quiz({
         `Bạn muốn học lại từ đầu?\n\n• Nhấn OK: Đặt lại toàn bộ đề thi (${questions.length} câu).\n• Nhấn Hủy (Cancel): Chỉ đặt lại tiến trình của riêng ${currentPart.name} (${currentPart.totalCount} câu).`
       );
 
-      setRevealedIds([]);
       if (resetChoice) {
-        // Reset all
-        setCurrentIndex(0);
-        setAnswers({});
-        setMasteredIds([]);
-        setSubmittedIds([]);
-        localStorage.removeItem(storageKeyIndex);
-        localStorage.removeItem(storageKeyAnswers);
-        localStorage.removeItem(storageKeyMastered);
-        localStorage.removeItem(storageKeySubmitted);
-      } else {
-        // Reset current part only
-        const partIds = new Set(partQuestionIds);
-        setAnswers((prev) => {
-          const next = { ...prev };
-          partIds.forEach((id) => delete next[id]);
-          return next;
-        });
-        setMasteredIds((prev) => prev.filter((id) => !partIds.has(id)));
-        setSubmittedIds((prev) => prev.filter((id) => !partIds.has(id)));
-        setCurrentIndex(currentPart.startIndex);
+        resetAllProgress();
+        return;
       }
-    } else {
-      if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) {
-        setRevealedIds([]);
-        setCurrentIndex(0);
-        setAnswers({});
-        setMasteredIds([]);
-        setSubmittedIds([]);
-        localStorage.removeItem(storageKeyIndex);
-        localStorage.removeItem(storageKeyAnswers);
-        localStorage.removeItem(storageKeyMastered);
-        localStorage.removeItem(storageKeySubmitted);
+
+      // Reset only the current part when the user chooses Cancel in split mode.
+      const partIds = new Set(partQuestionIds);
+      setRevealedIds((previous) => previous.filter((id) => !partIds.has(id)));
+      setAnswers((previous) => {
+        const next = { ...previous };
+        partIds.forEach((id) => delete next[id]);
+        return next;
+      });
+      setMasteredIds((previous) => previous.filter((id) => !partIds.has(id)));
+      setSubmittedIds((previous) => previous.filter((id) => !partIds.has(id)));
+      setCurrentIndex(currentPart.startIndex);
+      setActiveMode('study');
+      setShowQuestionGrid(false);
+      setShowPartCompleteModal(false);
+      if (setId) {
+        getMistakeQuestionIds(setId)
+          .filter((id) => partIds.has(id))
+          .forEach((id) => removeMistakeQuestion(setId, id));
+        setMistakeCount(getMistakeQuestionIds(setId).length);
       }
+      return;
+    }
+
+    if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học và bắt đầu lại từ đầu?')) {
+      resetAllProgress();
     }
   };
 
