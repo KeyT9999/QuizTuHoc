@@ -53,6 +53,7 @@ import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
 import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
 import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
 import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
+import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
 
 export interface QuizSetInfo {
   id: string;
@@ -546,5 +547,14 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn EVN301',
     badge: '136 câu',
     rawText: SAMPLE_QUIZ_EVN301,
+  },
+  {
+    id: 'mco302_quiz_ba_khi',
+    courseId: 'mco302',
+    title: 'MCO302-Quiz Bá Khí',
+    description: 'Bộ 285 câu hỏi trắc nghiệm MCO302 (Intercultural Communication) về văn hóa, bản sắc, ngôn ngữ, phi ngôn từ, di cư, văn hóa đại chúng và quản trị xung đột.',
+    category: 'Môn MCO302',
+    badge: '285 câu',
+    rawText: SAMPLE_QUIZ_MCO302,
   },
 ];

@@ -101,6 +101,13 @@ export const DEFAULT_COURSES: Course[] = [
     badge: '1 quiz',
   },
   {
+    id: 'mco302',
+    code: 'MCO302',
+    name: 'Giao tiếp Liên văn hóa (Intercultural Communication)',
+    description: 'Ngân hàng 285 câu trắc nghiệm về giao tiếp liên văn hóa, bản sắc, ngôn ngữ/phi ngôn từ, thích nghi văn hóa, truyền thông đại chúng và giải quyết xung đột.',
+    badge: '1 quiz',
+  },
+  {
     id: 'flashcard',
     code: 'FLASHCARD',
     name: 'Thuật ngữ Flashcard PMG201c',

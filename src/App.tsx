@@ -55,6 +55,11 @@ import {
   EVN301_KNOWLEDGE_GROUPS,
 } from './data/evn301KnowledgeGroups';
 import {
+  getMco302KnowledgeGroupId,
+  getMco302QuestionsForGroup,
+  MCO302_KNOWLEDGE_GROUPS,
+} from './data/mco302KnowledgeGroups';
+import {
   loadCustomCourses,
   saveCustomCourses,
   loadCustomQuizSets,
@@ -129,6 +134,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: EVN301_KNOWLEDGE_GROUPS,
     getGroupId: getEvn301KnowledgeGroupId,
     filterQuestions: getEvn301QuestionsForGroup,
+  },
+  mco302_quiz_ba_khi: {
+    courseLabel: 'MCO302',
+    groups: MCO302_KNOWLEDGE_GROUPS,
+    getGroupId: getMco302KnowledgeGroupId,
+    filterQuestions: getMco302QuestionsForGroup,
   },
 };
 
