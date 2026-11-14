@@ -596,12 +596,38 @@
 }
 
 /* Phù hợp màn hình nhỏ */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .woodfish-float-container {
-    top: 42%;
+    top: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom));
     right: 12px;
-    transform: translateY(-50%);
+    transform: none;
   }
+  .woodfish-float-bubble {
+    width: 46px;
+    height: 46px;
+  }
+  .woodfish-bubble-svg {
+    width: 34px;
+    height: 34px;
+  }
+  .woodfish-float-badge {
+    font-size: 10px;
+    padding: 1px 5px;
+    top: -4px;
+    left: -5px;
+  }
+  .woodfish-float-expand-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+  .woodfish-float-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
   .woodfish-stage {
     width: 280px;
     height: 240px;

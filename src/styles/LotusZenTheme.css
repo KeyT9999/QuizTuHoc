@@ -113,10 +113,17 @@
 [data-theme="lotus-zen-sanctuary"] .global-theme-toggle-btn,
 .home-lotus-zen-sanctuary .global-theme-toggle-btn,
 [data-theme="lotus-zen-sanctuary"] .course-nav-item,
-.course-lotus-zen-sanctuary .course-nav-item,
+.course-lotus-zen-sanctuary .course-nav-item {
+  color: #FFF8EC !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
 [data-theme="lotus-zen-sanctuary"] .course-back-btn,
 .course-lotus-zen-sanctuary .course-back-btn {
   color: #FFF8EC !important;
+  background: rgba(167, 118, 54, 0.22) !important;
+  border-color: rgba(216, 179, 106, 0.45) !important;
   font-weight: 600;
   transition: all 0.2s ease;
 }
@@ -521,6 +528,10 @@
   animation: lanternFlicker 3s ease-in-out infinite;
 }
 
+.zen-mobile-drawer-bar {
+  display: none;
+}
+
 .zen-quiz-columns-grid {
   display: grid;
   grid-template-columns: 280px 1fr 310px;
@@ -540,10 +551,80 @@
 @media (max-width: 900px) {
   .zen-quiz-columns-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
-  .zen-right-column {
-    display: none;
+
+  .zen-center-column {
+    order: 1;
+    min-width: 0;
   }
+
+  .zen-mobile-drawer-bar {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .zen-mobile-drawer-btn {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(30, 18, 13, 0.92);
+    border: 1.5px solid rgba(167, 118, 54, 0.55);
+    border-radius: 14px;
+    color: #FFF8EC;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .zen-mobile-drawer-btn .drawer-chevron {
+    color: #D8B36A;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .zen-mobile-woodfish-pill {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #7B3026 0%, #A77636 100%);
+    border: 1.5px solid #D8B36A;
+    border-radius: 14px;
+    color: #FFF8EC;
+    font-size: 12.5px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .zen-left-column.is-mobile-drawer-closed,
+  .zen-right-column.is-mobile-drawer-closed {
+    display: none !important;
+  }
+
+  .zen-left-column.is-mobile-drawer-open {
+    display: flex !important;
+    flex-direction: column;
+    gap: 14px;
+    order: 3;
+  }
+
+  .zen-right-column.is-mobile-drawer-open {
+    display: flex !important;
+    flex-direction: column;
+    gap: 14px;
+    order: 4;
+  }
+
   .zen-flank-lantern {
     display: none !important;
   }
@@ -1081,4 +1162,115 @@
 .zen-floating-focus-exit-btn:hover {
   transform: translateY(-2px) scale(1.03);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 24px rgba(216, 179, 106, 0.6);
+}
+
+/* ==========================================================================
+   MOBILE ZEN SANCTUARY EXPERIENCE (<= 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-back-btn,
+  .theme-lotus-zen-sanctuary .quiz-mobile-back-btn,
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-icon-btn,
+  .theme-lotus-zen-sanctuary .quiz-mobile-icon-btn {
+    background: rgba(167, 118, 54, 0.22) !important;
+    border-color: rgba(216, 179, 106, 0.5) !important;
+    color: #FFF8EC !important;
+  }
+
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-count-pill,
+  .theme-lotus-zen-sanctuary .quiz-mobile-count-pill {
+    background: rgba(123, 48, 38, 0.72) !important;
+    color: #FDE68A !important;
+  }
+
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-more-btn.is-open,
+  .theme-lotus-zen-sanctuary .quiz-mobile-more-btn.is-open {
+    background: rgba(167, 118, 54, 0.42) !important;
+    border-color: #D8B36A !important;
+    color: #FFFFFF !important;
+  }
+
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-tools-drawer,
+  .theme-lotus-zen-sanctuary .quiz-mobile-tools-drawer {
+    background: rgba(30, 18, 13, 0.98) !important;
+    border-bottom: 1.5px solid #A77636 !important;
+  }
+
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-tool-chip,
+  .theme-lotus-zen-sanctuary .quiz-mobile-tool-chip {
+    background: rgba(59, 32, 20, 0.85) !important;
+    border-color: rgba(167, 118, 54, 0.48) !important;
+    color: #FFF8EC !important;
+  }
+
+  [data-theme="lotus-zen-sanctuary"] .quiz-mobile-tool-chip.is-highlighted,
+  .theme-lotus-zen-sanctuary .quiz-mobile-tool-chip.is-highlighted {
+    background: linear-gradient(135deg, rgba(123, 48, 38, 0.7) 0%, rgba(167, 118, 54, 0.7) 100%) !important;
+    border-color: #D8B36A !important;
+  }
+
+  .quiz-zen-sanctuary-view {
+    padding: 10px 10px calc(28px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .zen-focus-hud {
+    padding: 10px 12px;
+    border-radius: 14px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .zen-focus-hud-hint {
+    display: none;
+  }
+
+  .zen-question-paper {
+    padding: 20px 14px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .zen-question-paper .zen-corner-filigree {
+    transform: scale(0.65);
+    opacity: 0.5;
+  }
+
+  .zen-q-text {
+    font-size: clamp(16.5px, 4.4vw, 19px) !important;
+    line-height: 1.52 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .zen-option-btn {
+    padding: 11px 12px !important;
+    min-height: 48px;
+    font-size: 14.5px !important;
+    border-radius: 13px !important;
+  }
+
+  .zen-nav-bottom-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin-top: 14px !important;
+    padding-top: 12px !important;
+  }
+
+  .zen-nav-bottom-row .zen-btn-action {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 10px !important;
+    font-size: 12.5px !important;
+    justify-content: center;
+  }
+
+  .zen-nav-bottom-row > .zen-btn-action.primary {
+    grid-column: 1 / -1;
+  }
+
+  .zen-floating-focus-exit-btn {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    right: 14px;
+    padding: 9px 14px;
+    font-size: 12px;
+  }
 }

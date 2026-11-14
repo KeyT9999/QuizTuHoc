@@ -822,9 +822,28 @@
 }
 
 @media (max-width: 600px) {
+  .mock-exam-history {
+    margin-top: 20px;
+    padding: 16px 12px;
+    border-radius: 16px;
+  }
+
+  .mock-exam-history-title {
+    font-size: 17px;
+  }
+
   .mock-exam-history-header-top {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .mock-exam-history-metrics {
+    gap: 6px;
+  }
+
+  .mock-exam-metric-chip {
+    padding: 5px 10px;
+    font-size: 11px;
   }
 
   .mock-exam-btn-clear {

@@ -143,6 +143,7 @@ export default function HonVietQuizView({
     }
   });
   const [isWoodFishAnimated, setIsWoodFishAnimated] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   // Listen to XP, Streak & Study Timer updates
   useEffect(() => {
@@ -277,7 +278,10 @@ export default function HonVietQuizView({
         {/* ================================================================
             COLUMN 1: REAL LEFT SIDEBAR (NAVIGATION + STUDY ROADMAP)
             ================================================================ */}
-        <aside className="hon-viet-left-sidebar" aria-label="Thanh điều hướng và lộ trình">
+        <aside
+          className={`hon-viet-left-sidebar ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}
+          aria-label="Thanh điều hướng và lộ trình"
+        >
           {/* Sub-strip A: Real Navigation Strip */}
           <div className="hon-viet-menu-strip">
             <nav className="hon-viet-nav-list" aria-label="Danh mục chức năng">
@@ -670,10 +674,34 @@ export default function HonVietQuizView({
           </div>
         </main>
 
+        {/* MOBILE DRAWER TOGGLE BAR (Displayed below question card on <= 1080px) */}
+        <div className="hon-viet-mobile-drawer-bar">
+          <button
+            type="button"
+            className="hon-viet-mobile-drawer-btn"
+            onClick={() => setMobileDrawerOpen((prev) => !prev)}
+            aria-expanded={mobileDrawerOpen}
+          >
+            <span>🧭 Lộ trình & Thống kê ({statMastered}/{statTotal})</span>
+            <span className="drawer-chevron">{mobileDrawerOpen ? '▲ Thu gọn' : '▼ Mở'}</span>
+          </button>
+          <button
+            type="button"
+            className="hon-viet-mobile-woodfish-pill"
+            onClick={handleTapWoodFish}
+            title="Gõ Mõ công đức"
+          >
+            🪷 Mõ ({woodFishCount})
+          </button>
+        </div>
+
         {/* ================================================================
             COLUMN 3: REAL RIGHT SIDEBAR (STATISTICS, PROGRESS, FOCUS MODE)
             ================================================================ */}
-        <aside className="hon-viet-right-sidebar" aria-label="Thống kê học tập">
+        <aside
+          className={`hon-viet-right-sidebar ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}
+          aria-label="Thống kê học tập"
+        >
           {/* Card 1: Real Study Progress (Tiến độ học tập) */}
           <div className="hon-viet-stat-card">
             <div className="hon-viet-card-title">

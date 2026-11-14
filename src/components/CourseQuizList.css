@@ -1024,47 +1024,148 @@
 }
 
 @media (max-width: 640px) {
-  .course-main-content {
-    padding: 20px 16px 48px;
+  .course-nav {
+    height: auto;
+    min-height: 54px;
   }
 
   .course-nav-inner {
-    padding: 0 16px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .course-nav-left {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .course-back-btn {
+    padding: 6px 10px;
+    font-size: 12.5px;
   }
 
   .course-back-btn span:not(.course-back-arrow) {
     display: none;
   }
 
-  .course-hero-left {
-    flex-direction: column;
+  .course-brand-subtitle,
+  .course-nav-item,
+  .course-user-chevron {
+    display: none;
+  }
+
+  .course-logo-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    font-size: 16px;
+  }
+
+  .course-brand-name {
+    font-size: 14px;
+  }
+
+  .course-nav-links {
+    gap: 6px;
+  }
+
+  .course-user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .course-main-content {
+    padding: 18px 14px 44px;
     gap: 16px;
   }
 
+  .course-hero {
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
+
+  .course-hero-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
   .course-hero-icon-box {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
   }
 
   .course-hero-title {
-    font-size: 24px;
+    font-size: clamp(20px, 5.5vw, 24px);
+    line-height: 1.25;
+  }
+
+  .course-hero-desc {
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .course-stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .course-stat-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 12px 8px;
+    gap: 6px;
+    border-radius: 14px;
+  }
+
+  .course-stat-icon-wrap {
+    width: 38px;
+    height: 38px;
+  }
+
+  .course-stat-icon-wrap.ring-box svg {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+
+  .course-stat-number {
+    font-size: 18px;
+  }
+
+  .course-stat-label {
+    font-size: 11px;
   }
 
   .exam-toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+  }
+
+  .exam-search-input {
+    height: 44px;
+    font-size: 16px;
   }
 
   .exam-sort-btn {
     justify-content: center;
     width: 100%;
+    height: 42px;
+  }
+
+  .exam-card {
+    padding: 16px 15px;
+    border-radius: 16px;
   }
 
   .exam-footer {
     flex-direction: column;
     align-items: stretch;
-    gap: 14px;
+    gap: 12px;
   }
 
   .exam-stats-group {
@@ -1074,11 +1175,12 @@
   .exam-cta-btn {
     width: 100%;
     justify-content: center;
+    min-height: 42px;
   }
 
   .course-footer-inner {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     text-align: center;
   }
 }

@@ -1362,14 +1362,82 @@
   }
 }
 
+.hon-viet-mobile-drawer-bar {
+  display: none;
+}
+
 @media (max-width: 1080px) {
   .hon-viet-body-container {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    padding: 16px 14px 36px;
+    gap: 14px;
+  }
+
+  .hon-viet-center-col {
+    order: 1;
+    width: 100%;
+    max-width: 720px;
+    min-width: 0;
+  }
+
+  .hon-viet-mobile-drawer-bar {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .hon-viet-mobile-drawer-btn {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, rgba(107, 12, 16, 0.94), rgba(69, 6, 8, 0.96));
+    border: 1.5px solid rgba(245, 158, 11, 0.5);
+    border-radius: 14px;
+    color: #fef9c3;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  .hon-viet-mobile-drawer-btn .drawer-chevron {
+    color: #fde047;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .hon-viet-mobile-woodfish-pill {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #b91c1c, #d97706);
+    border: 1.5px solid #fde047;
+    border-radius: 14px;
+    color: #ffffff;
+    font-size: 12.5px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(185, 28, 28, 0.35);
+  }
+
+  .hon-viet-left-sidebar.is-mobile-drawer-closed,
+  .hon-viet-right-sidebar.is-mobile-drawer-closed {
+    display: none !important;
   }
 
   .hon-viet-left-sidebar {
+    order: 3;
     width: 100%;
     max-width: 720px;
     flex-direction: column;
@@ -1379,13 +1447,8 @@
     width: 100%;
   }
 
-  .hon-viet-center-col {
-    width: 100%;
-    max-width: 720px;
-    min-width: 0;
-  }
-
   .hon-viet-right-sidebar {
+    order: 4;
     width: 100%;
     max-width: 720px;
   }
@@ -1417,27 +1480,61 @@
     display: none;
   }
 
+  .hon-viet-body-container {
+    padding: 10px 12px calc(28px + env(safe-area-inset-bottom));
+    gap: 12px;
+  }
+
   .hon-viet-card {
-    padding: 16px;
-    border-radius: 14px;
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+
+  .hon-viet-card-drum-corner {
+    opacity: 0.45;
+    transform: scale(0.72);
   }
 
   .hon-viet-q-statement {
-    font-size: 16px;
+    font-size: clamp(16.5px, 4.4vw, 19px);
+    line-height: 1.5;
+    margin-bottom: 14px;
   }
 
   .hon-viet-opt-card {
-    padding: 12px 14px;
-    font-size: 14px;
+    padding: 11px 12px;
+    min-height: 48px;
+    font-size: 14.5px;
+    line-height: 1.48;
+    border-radius: 12px;
   }
 
   .hon-viet-actions {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 
   .hon-viet-actions button {
     width: 100%;
+    min-height: 44px;
+    padding: 10px;
+    font-size: 12.5px;
     justify-content: center;
+  }
+
+  .hon-viet-actions > .hon-viet-next-btn {
+    grid-column: 1 / -1;
+  }
+
+  .hon-viet-key-hints {
+    display: none;
+  }
+
+  .hon-viet-floating-focus-exit {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    right: 14px;
+    padding: 9px 14px;
+    font-size: 12px;
   }
 }

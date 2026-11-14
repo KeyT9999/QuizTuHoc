@@ -121,6 +121,7 @@ export default function LotusZenQuizView({
   }
   const [floatingBlessings, setFloatingBlessings] = useState<FloatingBlessingItem[]>([]);
   const [isMeritPopping, setIsMeritPopping] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const nextBlessingId = useRef(0);
 
   // Sync user XP & Streak
@@ -317,7 +318,7 @@ export default function LotusZenQuizView({
             LEFT COLUMN: LỘ TRÌNH TU HỌC & MÕ GỖ CHÁNH NIỆM
             ================================================================== */}
         {!isZenFocusMode && (
-          <aside className="zen-left-column">
+          <aside className={`zen-left-column ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}>
             {/* Roadmap / Parts Panel */}
             <div className="zen-side-card has-corners">
               <ZenCornerFiligree position="top-left" size={28} />
@@ -703,11 +704,34 @@ export default function LotusZenQuizView({
           </div>
         </main>
 
+        {/* MOBILE ZEN TOOL BAR (Displayed below question card on <= 900px) */}
+        {!isZenFocusMode && (
+          <div className="zen-mobile-drawer-bar">
+            <button
+              type="button"
+              className="zen-mobile-drawer-btn"
+              onClick={() => setMobileDrawerOpen((prev) => !prev)}
+              aria-expanded={mobileDrawerOpen}
+            >
+              <span>🪷 Tu Tâm & Tiến Độ (Lv.{Math.floor(xp / 100) + 1} · 🔥 {streak})</span>
+              <span className="drawer-chevron">{mobileDrawerOpen ? '▲ Thu gọn' : '▼ Mở'}</span>
+            </button>
+            <button
+              type="button"
+              className="zen-mobile-woodfish-pill"
+              onClick={handleQuickStrike}
+              title="Gõ Mõ công đức"
+            >
+              🪵 Gõ Mõ ({merits})
+            </button>
+          </div>
+        )}
+
         {/* ==================================================================
             RIGHT COLUMN: THỐNG KÊ TIẾN ĐỘ & ZEN FOCUS
             ================================================================== */}
         {!isZenFocusMode && (
-          <aside className="zen-right-column">
+          <aside className={`zen-right-column ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}>
             {/* Progress Circular Card */}
             <div className="zen-side-card has-corners">
               <ZenCornerFiligree position="top-left" size={28} />

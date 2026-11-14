@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import QuizModeBar, { type QuizPlayMode } from './QuizModeBar';
 import { type QuizSplitSettings } from '../utils/quizSplit';
 import { useTheme } from '../context/ThemeContext';
@@ -85,11 +86,25 @@ export default function SharedQuizHeader({
   knowledgeGroupsLabel,
 }: SharedQuizHeaderProps) {
   const { mouseEffectsEnabled, toggleMouseEffects } = useTheme();
+  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
+  const headerContainerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!mobileToolsOpen) return;
+    const handlePointerDown = (e: MouseEvent) => {
+      if (headerContainerRef.current && !headerContainerRef.current.contains(e.target as Node)) {
+        setMobileToolsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, [mobileToolsOpen]);
+
   const displayTitle = setTitle ? setTitle.toUpperCase() : 'MULTIPLE CHOICE';
   const effectiveProgressPercent = splitSettings.enabled ? partProgressPercent : progressPercent;
 
   return (
-    <header className="shared-quiz-header-container">
+    <header ref={headerContainerRef} className="shared-quiz-header-container">
       {/* ==================================================================
           ROW 1 — PRIMARY QUIZ HEADER
           Left: Subject Code & Circular Progress
@@ -99,6 +114,15 @@ export default function SharedQuizHeader({
       <div className="quiz-v2-header">
         {/* LEFT ZONE: SUBJECT CODE & PROGRESS */}
         <div className="quiz-v2-header-left">
+          <button
+            type="button"
+            className="quiz-mobile-back-btn"
+            onClick={onBack}
+            title={onBackLabel}
+            aria-label={onBackLabel}
+          >
+            ←
+          </button>
           <span className="quiz-v2-title">{displayTitle}</span>
 
           {/* Circular Progress Ring with Percentage & Counters */}
@@ -323,7 +347,127 @@ export default function SharedQuizHeader({
             {onBackLabel}
           </button>
         </div>
+
+        {/* MOBILE COMPACT ACTION CLUSTER (Shown <= 640px) */}
+        <div className="quiz-mobile-quick-actions">
+          <button
+            type="button"
+            className="quiz-mobile-icon-btn"
+            onClick={() => {
+              setMobileToolsOpen(false);
+              onOpenQuestionGrid();
+            }}
+            title="Bảng câu hỏi"
+            aria-label="Mở bảng câu hỏi"
+          >
+            <span>📋</span>
+            <span className="quiz-mobile-count-pill">
+              {splitSettings.enabled && currentPart ? `${relativeIndex + 1}` : `${currentIndex + 1}`}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className="quiz-mobile-icon-btn"
+            onClick={() => {
+              setMobileToolsOpen(false);
+              onOpenThemeModal();
+            }}
+            title="Đổi giao diện"
+            aria-label="Đổi giao diện học tập"
+          >
+            <span>🎨</span>
+          </button>
+
+          <button
+            type="button"
+            className={`quiz-mobile-icon-btn quiz-mobile-more-btn ${mobileToolsOpen ? 'is-open' : ''}`}
+            onClick={() => setMobileToolsOpen((prev) => !prev)}
+            title="Tiện ích học tập"
+            aria-label="Mở tiện ích học tập"
+            aria-expanded={mobileToolsOpen}
+          >
+            <span>{mobileToolsOpen ? '✕' : '⚙️'}</span>
+          </button>
+        </div>
       </div>
+
+      {/* MOBILE EXPANDABLE UTILITY DRAWER (<= 640px) */}
+      {mobileToolsOpen && (
+        <div className="quiz-mobile-tools-drawer" role="region" aria-label="Tiện ích bài thi">
+          <button
+            type="button"
+            className="quiz-mobile-tool-chip"
+            onClick={() => {
+              setMobileToolsOpen(false);
+              window.dispatchEvent(new CustomEvent('open-woodfish-modal'));
+            }}
+          >
+            <span>🪷</span>
+            <span>Gõ Mõ Tu Tâm</span>
+          </button>
+
+          <button
+            type="button"
+            className={`quiz-mobile-tool-chip ${splitSettings.enabled ? 'is-highlighted' : ''}`}
+            onClick={() => {
+              setMobileToolsOpen(false);
+              onOpenSplitModal();
+            }}
+          >
+            <span>✂️</span>
+            <span>Chia đề ({splitSettings.enabled ? `${splitSettings.chunkSize} câu` : 'Tắt'})</span>
+          </button>
+
+          <button
+            type="button"
+            className="quiz-mobile-tool-chip"
+            onClick={() => {
+              setMobileToolsOpen(false);
+              onResetProgress();
+            }}
+          >
+            <span>🔄</span>
+            <span>{isKnowledgeGroupMode ? 'Làm lại nhóm' : 'Làm lại đề'}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`quiz-mobile-tool-chip ${mouseEffectsEnabled ? 'is-highlighted' : ''}`}
+            onClick={() => {
+              toggleMouseEffects();
+              setMobileToolsOpen(false);
+            }}
+          >
+            <span>{mouseEffectsEnabled ? '✨' : '🛡️'}</span>
+            <span>{mouseEffectsEnabled ? 'Hiệu ứng chuột: Bật' : 'Hiệu ứng chuột: Tắt'}</span>
+          </button>
+
+          <button
+            type="button"
+            className="quiz-mobile-tool-chip"
+            onClick={() => {
+              setMobileToolsOpen(false);
+              onOpenThemeModal();
+            }}
+          >
+            <span>🎨</span>
+            <span>Chọn giao diện</span>
+          </button>
+
+          <button
+            type="button"
+            className="quiz-mobile-tool-chip"
+            onClick={() => {
+              setMobileToolsOpen(false);
+              onBack();
+            }}
+          >
+            <span>🚪</span>
+            <span>{onBackLabel.replace(/^←\s*/, '')}</span>
+          </button>
+        </div>
+      )}
 
       {/* Thin Progress Track under Row 1 */}
       <div className="quiz-v2-progress-track">

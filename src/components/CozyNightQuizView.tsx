@@ -104,6 +104,7 @@ export default function CozyNightQuizView({
   const [xp, setXp] = useState(() => getUserXP());
   // Streak state
   const [streak, setStreak] = useState(() => getStudyStreak());
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   useEffect(() => {
     const handleSync = () => {
@@ -161,7 +162,7 @@ export default function CozyNightQuizView({
           ================================================================== */}
       <main className={`cozy-body-layout ${isFocus ? 'is-focus-mode' : ''}`}>
         {/* ----------------- LEFT SIDEBAR ----------------- */}
-        <aside className="cozy-sidebar-left">
+        <aside className={`cozy-sidebar-left ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}>
           {/* Card 1: Tiến độ học Donut Chart */}
           <div className="cozy-widget-card">
             <div className="cozy-widget-title-row">
@@ -477,8 +478,21 @@ export default function CozyNightQuizView({
           </div>
         </section>
 
+        {/* MOBILE DRAWER TOGGLE BAR (Displayed below question card on <= 980px) */}
+        <div className="cozy-mobile-drawer-bar">
+          <button
+            type="button"
+            className="cozy-mobile-drawer-btn"
+            onClick={() => setMobileDrawerOpen((prev) => !prev)}
+            aria-expanded={mobileDrawerOpen}
+          >
+            <span>🌙 Tiến Độ & Mèo Lo-fi ({masteredPercent}% · 🔥 {streak})</span>
+            <span className="drawer-chevron">{mobileDrawerOpen ? '▲ Thu gọn' : '▼ Mở'}</span>
+          </button>
+        </div>
+
         {/* ----------------- RIGHT SIDEBAR ----------------- */}
-        <aside className="cozy-sidebar-right">
+        <aside className={`cozy-sidebar-right ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}>
           {/* Card 1: XP hôm nay */}
           <div className="cozy-widget-card">
             <div className="cozy-widget-title-row">

@@ -280,16 +280,21 @@ body,
 }
 
 [data-theme="hon-viet"] .home-nav-item,
-[data-theme="hon-viet"] .course-nav-item,
-[data-theme="hon-viet"] .course-back-btn {
+[data-theme="hon-viet"] .course-nav-item {
   color: #fce7f3 !important;
+}
+
+[data-theme="hon-viet"] .course-back-btn {
+  color: #fef3c7 !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(254, 240, 138, 0.35) !important;
 }
 
 [data-theme="hon-viet"] .home-nav-item:hover,
 [data-theme="hon-viet"] .course-nav-item:hover,
 [data-theme="hon-viet"] .course-back-btn:hover {
   color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 [data-theme="hon-viet"] .home-nav-item.active,
@@ -309,11 +314,16 @@ body,
 
 [data-theme="fantasy-academy"] .home-nav-item,
 [data-theme="fantasy-academy"] .course-nav-item,
-[data-theme="fantasy-academy"] .course-back-btn,
 [data-theme="cozy-night"] .home-nav-item,
-[data-theme="cozy-night"] .course-nav-item,
-[data-theme="cozy-night"] .course-back-btn {
+[data-theme="cozy-night"] .course-nav-item {
   color: var(--theme-text-secondary) !important;
+}
+
+[data-theme="fantasy-academy"] .course-back-btn,
+[data-theme="cozy-night"] .course-back-btn {
+  color: var(--theme-text-primary) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
 }
 
 [data-theme="fantasy-academy"] .home-nav-item:hover,
@@ -323,7 +333,7 @@ body,
 [data-theme="cozy-night"] .course-nav-item:hover,
 [data-theme="cozy-night"] .course-back-btn:hover {
   color: var(--theme-text-primary) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.14) !important;
 }
 
 [data-theme="fantasy-academy"] .home-nav-item.active,
@@ -1926,5 +1936,159 @@ body,
 @media (max-width: 768px) {
   .global-mouse-fx-toggle-btn span:last-child {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   MOBILE SHARED QUIZ CHROME & THEME INTEGRATIONS (<= 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* Hon Viet Header & Drawer */
+  [data-theme="hon-viet"] .quiz-mobile-back-btn,
+  .theme-hon-viet .quiz-mobile-back-btn,
+  [data-theme="hon-viet"] .quiz-mobile-icon-btn,
+  .theme-hon-viet .quiz-mobile-icon-btn {
+    background: rgba(245, 158, 11, 0.16) !important;
+    border-color: rgba(245, 158, 11, 0.48) !important;
+    color: #fef9c3 !important;
+  }
+
+  [data-theme="hon-viet"] .quiz-mobile-count-pill,
+  .theme-hon-viet .quiz-mobile-count-pill {
+    background: rgba(245, 158, 11, 0.28) !important;
+    color: #fef08a !important;
+  }
+
+  [data-theme="hon-viet"] .quiz-mobile-more-btn.is-open,
+  .theme-hon-viet .quiz-mobile-more-btn.is-open {
+    background: rgba(245, 158, 11, 0.34) !important;
+    border-color: #fde047 !important;
+    color: #ffffff !important;
+  }
+
+  [data-theme="hon-viet"] .quiz-mobile-tools-drawer,
+  .theme-hon-viet .quiz-mobile-tools-drawer {
+    background: rgba(52, 6, 9, 0.98) !important;
+    border-bottom: 1.5px solid rgba(245, 158, 11, 0.45) !important;
+  }
+
+  [data-theme="hon-viet"] .quiz-mobile-tool-chip,
+  .theme-hon-viet .quiz-mobile-tool-chip {
+    background: rgba(127, 29, 29, 0.55) !important;
+    border-color: rgba(245, 158, 11, 0.4) !important;
+    color: #fef9c3 !important;
+  }
+
+  [data-theme="hon-viet"] .quiz-mobile-tool-chip.is-highlighted,
+  .theme-hon-viet .quiz-mobile-tool-chip.is-highlighted {
+    background: rgba(245, 158, 11, 0.26) !important;
+    border-color: #f59e0b !important;
+    color: #ffffff !important;
+  }
+
+  /* Fantasy Academy Header & Drawer */
+  [data-theme="fantasy-academy"] .quiz-mobile-back-btn,
+  .theme-fantasy-academy .quiz-mobile-back-btn,
+  [data-theme="fantasy-academy"] .quiz-mobile-icon-btn,
+  .theme-fantasy-academy .quiz-mobile-icon-btn {
+    background: rgba(217, 119, 6, 0.16) !important;
+    border-color: rgba(217, 119, 6, 0.45) !important;
+    color: #fef3c7 !important;
+  }
+
+  [data-theme="fantasy-academy"] .quiz-mobile-count-pill,
+  .theme-fantasy-academy .quiz-mobile-count-pill {
+    background: rgba(217, 119, 6, 0.3) !important;
+    color: #fef08a !important;
+  }
+
+  [data-theme="fantasy-academy"] .quiz-mobile-more-btn.is-open,
+  .theme-fantasy-academy .quiz-mobile-more-btn.is-open {
+    background: rgba(217, 119, 6, 0.35) !important;
+    border-color: #f59e0b !important;
+    color: #ffffff !important;
+  }
+
+  [data-theme="fantasy-academy"] .quiz-mobile-tools-drawer,
+  .theme-fantasy-academy .quiz-mobile-tools-drawer {
+    background: rgba(9, 22, 16, 0.98) !important;
+    border-bottom: 1.5px solid rgba(217, 119, 6, 0.4) !important;
+  }
+
+  [data-theme="fantasy-academy"] .quiz-mobile-tool-chip,
+  .theme-fantasy-academy .quiz-mobile-tool-chip {
+    background: rgba(16, 38, 28, 0.9) !important;
+    border-color: rgba(217, 119, 6, 0.38) !important;
+    color: #fef3c7 !important;
+  }
+
+  [data-theme="fantasy-academy"] .quiz-mobile-tool-chip.is-highlighted,
+  .theme-fantasy-academy .quiz-mobile-tool-chip.is-highlighted {
+    background: rgba(217, 119, 6, 0.25) !important;
+    border-color: #f59e0b !important;
+    color: #ffffff !important;
+  }
+
+  /* Cozy Night Header & Drawer */
+  [data-theme="cozy-night"] .quiz-mobile-back-btn,
+  .theme-cozy-night .quiz-mobile-back-btn,
+  [data-theme="cozy-night"] .quiz-mobile-icon-btn,
+  .theme-cozy-night .quiz-mobile-icon-btn {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(99, 102, 241, 0.38) !important;
+    color: #e0e7ff !important;
+  }
+
+  [data-theme="cozy-night"] .quiz-mobile-count-pill,
+  .theme-cozy-night .quiz-mobile-count-pill {
+    background: rgba(99, 102, 241, 0.35) !important;
+    color: #e0e7ff !important;
+  }
+
+  [data-theme="cozy-night"] .quiz-mobile-more-btn.is-open,
+  .theme-cozy-night .quiz-mobile-more-btn.is-open {
+    background: rgba(99, 102, 241, 0.35) !important;
+    border-color: #818cf8 !important;
+    color: #ffffff !important;
+  }
+
+  [data-theme="cozy-night"] .quiz-mobile-tools-drawer,
+  .theme-cozy-night .quiz-mobile-tools-drawer {
+    background: rgba(15, 23, 42, 0.98) !important;
+    border-bottom: 1.5px solid rgba(99, 102, 241, 0.35) !important;
+  }
+
+  [data-theme="cozy-night"] .quiz-mobile-tool-chip,
+  .theme-cozy-night .quiz-mobile-tool-chip {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-color: rgba(99, 102, 241, 0.35) !important;
+    color: #e2e8f0 !important;
+  }
+
+  [data-theme="cozy-night"] .quiz-mobile-tool-chip.is-highlighted,
+  .theme-cozy-night .quiz-mobile-tool-chip.is-highlighted {
+    background: rgba(99, 102, 241, 0.25) !important;
+    border-color: #818cf8 !important;
+    color: #ffffff !important;
+  }
+
+  /* Knowledge Group Picker & Ask AI Mobile Polish */
+  .tesla-container.knowledge-groups-page .tesla-nav {
+    padding: 10px 14px !important;
+    gap: 10px !important;
+  }
+
+  .knowledge-groups-page .knowledge-groups-grid {
+    gap: 10px !important;
+  }
+
+  .knowledge-group-card {
+    padding: 15px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .ask-ai-toolbar {
+    padding: 10px 12px !important;
+    gap: 8px !important;
   }
 }

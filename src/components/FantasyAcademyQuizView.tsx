@@ -114,6 +114,7 @@ export default function FantasyAcademyQuizView({
     }
   });
   const [owlTip, setOwlTip] = useState<string | null>(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const activeChunkRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -286,7 +287,7 @@ export default function FantasyAcademyQuizView({
       {/* 3-COLUMN MAIN LAYOUT */}
       <main className="fantasy-body-layout">
         {/* ----------------- LEFT SIDEBAR: BẢN ĐỒ HỌC TẬP ----------------- */}
-        <aside className="fantasy-sidebar-left">
+        <aside className={`fantasy-sidebar-left ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}>
           <div className="fantasy-card-box">
             <div className="fantasy-roadmap-header">
               <h4 className="fantasy-box-title" style={{ margin: 0, padding: 0, border: 'none' }}>
@@ -619,8 +620,21 @@ export default function FantasyAcademyQuizView({
           </div>
         </section>
 
+        {/* MOBILE DRAWER TOGGLE BAR (Displayed below question card on <= 980px) */}
+        <div className="fantasy-mobile-drawer-bar">
+          <button
+            type="button"
+            className="fantasy-mobile-drawer-btn"
+            onClick={() => setMobileDrawerOpen((prev) => !prev)}
+            aria-expanded={mobileDrawerOpen}
+          >
+            <span>🧭 Bản Đồ & Nhiệm Vụ ({statMastered}/{statTotal})</span>
+            <span className="drawer-chevron">{mobileDrawerOpen ? '▲ Thu gọn' : '▼ Mở'}</span>
+          </button>
+        </div>
+
         {/* ----------------- RIGHT SIDEBAR: NHIỆM VỤ & THÀNH TÍCH ----------------- */}
-        <aside className="fantasy-sidebar-right">
+        <aside className={`fantasy-sidebar-right ${mobileDrawerOpen ? 'is-mobile-drawer-open' : 'is-mobile-drawer-closed'}`}>
           {/* Card 1: Nhiệm vụ học tập */}
           <div className="fantasy-card-box">
             <h4 className="fantasy-box-title">

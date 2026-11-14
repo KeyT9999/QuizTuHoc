@@ -389,11 +389,30 @@
   border-top: 1px dashed #f1f5f9;
 }
 
+.card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  margin-top: auto;
+  border-top: 1px dashed rgba(148, 163, 184, 0.28);
+  font-size: 12px;
+}
+
+.card-options-count {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.card-action-link,
 .card-action-hint {
   font-size: 12px;
   font-weight: 700;
   color: #4f46e5;
   transition: transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .theme-qlist-card:hover .card-action-hint {
@@ -649,13 +668,19 @@
 
 .knowledge-groups-page.theme-hon-viet .knowledge-groups-heading h1,
 [data-theme="hon-viet"] .knowledge-groups-heading h1 {
-  color: #5b1717;
+  color: #fef3c7;
   font-weight: 900;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+}
+
+.knowledge-groups-page.theme-hon-viet .knowledge-groups-heading p,
+[data-theme="hon-viet"] .knowledge-groups-page .knowledge-groups-heading p {
+  color: #f5e6d3;
 }
 
 .knowledge-groups-page.theme-hon-viet .knowledge-groups-eyebrow,
 [data-theme="hon-viet"] .knowledge-groups-eyebrow {
-  color: #8b1e1e;
+  color: #fbbf24;
   font-weight: 800;
   letter-spacing: 1px;
 }
@@ -2894,33 +2919,138 @@
    5. RESPONSIVE OPTIMIZATIONS ACROSS ALL THEMES
    ========================================================================== */
 @media (max-width: 768px) {
+  .theme-qlist-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    padding: 12px 10px 44px;
+  }
+
+  .theme-qlist-watermark {
+    display: none !important;
+  }
+
   .theme-qlist-hero {
     flex-direction: column;
-    padding: 16px;
+    gap: 12px;
+    padding: 14px 12px;
+    margin-bottom: 14px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .theme-qlist-hero-left {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .theme-qlist-title {
+    font-size: clamp(18px, 5vw, 22px);
+    line-height: 1.28;
+    word-break: break-word;
+  }
+
+  .theme-qlist-desc {
+    font-size: 13px;
+    max-width: 100%;
   }
 
   .theme-qlist-stats-pill {
     width: 100%;
-    justify-content: space-around;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .theme-qlist-stat-item .stat-label {
+    font-size: 9.5px;
+  }
+
+  .theme-qlist-stat-item .stat-value {
+    font-size: 17px;
   }
 
   .theme-qlist-toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .theme-qlist-search-wrap {
+    min-width: 0;
+    width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .theme-qlist-search-input {
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  .theme-qlist-tabs {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .theme-qlist-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .theme-qlist-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 7px 12px;
+    font-size: 12px;
   }
 
   .theme-qlist-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .theme-qlist-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 14px 13px;
+  }
+
+  .theme-qlist-back-btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    font-size: 13px;
+    padding: 11px 14px;
   }
 
   .dongson-exam-watermark,
   .dongson-tower-watermark,
   .dongson-tf-watermark {
-    width: 260px;
-    height: 260px;
+    width: 240px;
+    height: 240px;
   }
 }

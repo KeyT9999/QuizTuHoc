@@ -1171,6 +1171,40 @@
 }
 
 /* ==========================================================================
+   HERO STATUS STRIP & MOBILE DRAWER BAR
+   ========================================================================== */
+.fantasy-hero-status-strip {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1380px;
+  width: calc(100% - 40px);
+  margin: 14px auto 0;
+  padding: 8px 16px;
+  background: rgba(12, 26, 19, 0.82);
+  border: 1px solid rgba(217, 119, 6, 0.38);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+}
+
+.fantasy-hero-status-left,
+.fantasy-hero-status-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.fantasy-mobile-drawer-bar {
+  display: none;
+}
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 1200px) {
@@ -1183,13 +1217,178 @@
 @media (max-width: 980px) {
   .fantasy-body-layout {
     grid-template-columns: 1fr;
-    max-width: 680px;
+    max-width: 720px;
+    padding: 16px 14px 36px;
+    gap: 14px;
+  }
+
+  .fantasy-center-col {
+    order: 1;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .fantasy-mobile-drawer-bar {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .fantasy-mobile-drawer-btn {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(14, 28, 20, 0.92);
+    border: 1.5px solid rgba(217, 119, 6, 0.45);
+    border-radius: 14px;
+    color: #fef3c7;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  .fantasy-mobile-drawer-btn .drawer-chevron {
+    font-size: 11.5px;
+    color: #fcd34d;
+    white-space: nowrap;
+  }
+
+  .fantasy-sidebar-left.is-mobile-drawer-closed,
+  .fantasy-sidebar-right.is-mobile-drawer-closed {
+    display: none !important;
+  }
+
+  .fantasy-sidebar-left {
+    order: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .fantasy-sidebar-right {
+    order: 4;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fantasy-hero-status-strip {
+    width: calc(100% - 24px);
+    margin: 10px auto 0;
+    padding: 6px 10px;
+    border-radius: 12px;
+    gap: 6px;
+  }
+
+  .fantasy-hero-status-left .fantasy-course-title,
+  .fantasy-hero-status-left .fantasy-exp-bar-wrap > span:last-child {
+    display: none;
+  }
+
+  .fantasy-exp-track {
+    width: 54px;
+  }
+
+  .fantasy-streak-pill,
+  .fantasy-rank-pill {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  .fantasy-rank-pill {
+    display: none;
+  }
+
+  .fantasy-body-layout {
+    padding: 10px 12px calc(28px + env(safe-area-inset-bottom));
+    gap: 12px;
+  }
+
+  .fantasy-parchment-card {
+    padding: 18px 14px 16px;
+    border-radius: 18px;
+  }
+
+  .fantasy-parchment-card::before,
+  .fantasy-parchment-card::after {
+    font-size: 14px;
+    opacity: 0.45;
+  }
+
+  .fantasy-q-header {
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .fantasy-q-title {
+    font-size: 14px;
+  }
+
+  .fantasy-question-text,
+  .fantasy-q-text {
+    font-size: clamp(16.5px, 4.4vw, 19px);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .fantasy-option-card {
+    padding: 11px 12px;
+    gap: 10px;
+    min-height: 48px;
+    border-radius: 12px;
+  }
+
+  .fantasy-option-key-badge {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .fantasy-option-text {
+    font-size: 14.5px;
+    line-height: 1.48;
+  }
+
+  .fantasy-actions-bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+
+  .fantasy-prev-btn,
+  .fantasy-reveal-btn,
+  .fantasy-next-btn {
+    min-height: 44px;
+    padding: 10px 10px;
+    font-size: 12.5px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .fantasy-actions-bar > .fantasy-next-btn {
+    grid-column: 1 / -1;
+  }
+
+  .fantasy-keyboard-hints,
+  .fantasy-reveal-kbd,
+  .fantasy-reveal-btn kbd {
+    display: none;
   }
 
   .fantasy-sidebar-left,
   .fantasy-sidebar-right {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
+    grid-template-columns: 1fr;
   }
 }
