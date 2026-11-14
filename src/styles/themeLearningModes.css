@@ -2030,9 +2030,21 @@
 
 .theme-cozy-night .game-q-opt-btn,
 [data-theme="cozy-night"] .game-q-opt-btn {
-  background: rgba(30, 41, 59, 0.7);
-  border: 1.5px solid rgba(99, 102, 241, 0.25);
+  background: rgba(30, 41, 59, 0.78);
+  border: 1.5px solid rgba(129, 140, 248, 0.32);
+  color: #f8fafc;
+}
+
+.theme-cozy-night .game-q-opt-btn .opt-label-text,
+[data-theme="cozy-night"] .game-q-opt-btn .opt-label-text {
   color: #f1f5f9;
+}
+
+.theme-cozy-night .game-q-opt-btn .opt-key-circle,
+[data-theme="cozy-night"] .game-q-opt-btn .opt-key-circle {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(129, 140, 248, 0.45);
+  color: #e0e7ff;
 }
 
 .theme-cozy-night .game-q-opt-btn:hover:not(:disabled),

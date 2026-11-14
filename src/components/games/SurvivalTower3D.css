@@ -1,0 +1,1212 @@
+/* ==========================================================================
+   SURVIVAL TOWER 3D — SKYWARD CITADEL (THREE.JS INTERACTIVE GAME UI)
+   Scoped under .tower3d-* with full 5-theme tokens & mobile-first ergonomics
+   ========================================================================== */
+
+.tower3d-root {
+  --t3d-bg-outer: linear-gradient(145deg, #0b1026 0%, #161d42 55%, #1e1b4b 100%);
+  --t3d-panel-bg: rgba(15, 23, 42, 0.88);
+  --t3d-panel-border: rgba(129, 140, 248, 0.3);
+  --t3d-card-bg: rgba(30, 41, 59, 0.78);
+  --t3d-card-hover: rgba(51, 65, 85, 0.92);
+  --t3d-accent: #6366f1;
+  --t3d-accent-glow: rgba(99, 102, 241, 0.42);
+  --t3d-gold: #fbbf24;
+  --t3d-text: #f8fafc;
+  --t3d-muted: #cbd5e1;
+  --t3d-cta: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+
+  width: 100%;
+  max-width: 1320px;
+  margin: 14px auto 40px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  color: var(--t3d-text);
+  font-family: 'Be Vietnam Pro', Inter, system-ui, -apple-system, sans-serif;
+}
+
+.tower3d-root.theme-hon-viet {
+  --t3d-bg-outer: linear-gradient(145deg, #24080a 0%, #3d0e12 55%, #2b0b0c 100%);
+  --t3d-panel-bg: rgba(38, 12, 14, 0.92);
+  --t3d-panel-border: rgba(245, 158, 11, 0.42);
+  --t3d-card-bg: rgba(58, 18, 20, 0.84);
+  --t3d-card-hover: rgba(88, 26, 28, 0.95);
+  --t3d-accent: #f59e0b;
+  --t3d-accent-glow: rgba(245, 158, 11, 0.42);
+  --t3d-gold: #fde047;
+  --t3d-text: #fffbeb;
+  --t3d-muted: #fde68a;
+  --t3d-cta: linear-gradient(135deg, #b91c1c 0%, #d97706 100%);
+}
+
+.tower3d-root.theme-fantasy-academy {
+  --t3d-bg-outer: linear-gradient(145deg, #071912 0%, #0d2e22 55%, #162336 100%);
+  --t3d-panel-bg: rgba(10, 28, 21, 0.92);
+  --t3d-panel-border: rgba(217, 119, 6, 0.45);
+  --t3d-card-bg: rgba(16, 43, 33, 0.85);
+  --t3d-card-hover: rgba(23, 62, 47, 0.95);
+  --t3d-accent: #10b981;
+  --t3d-accent-glow: rgba(16, 185, 129, 0.4);
+  --t3d-gold: #fbbf24;
+  --t3d-text: #f0fdf4;
+  --t3d-muted: #bbf7d0;
+  --t3d-cta: linear-gradient(135deg, #059669 0%, #d97706 100%);
+}
+
+.tower3d-root.theme-cozy-night {
+  --t3d-bg-outer: linear-gradient(145deg, #090d1f 0%, #15193b 55%, #231942 100%);
+  --t3d-panel-bg: rgba(15, 20, 44, 0.92);
+  --t3d-panel-border: rgba(165, 180, 252, 0.35);
+  --t3d-card-bg: rgba(28, 36, 72, 0.84);
+  --t3d-card-hover: rgba(43, 55, 105, 0.95);
+  --t3d-accent: #818cf8;
+  --t3d-accent-glow: rgba(129, 140, 248, 0.42);
+  --t3d-gold: #fcd34d;
+  --t3d-text: #f8fafc;
+  --t3d-muted: #c7d2fe;
+  --t3d-cta: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+}
+
+.tower3d-root.theme-lotus-zen-sanctuary {
+  --t3d-bg-outer: linear-gradient(145deg, #1b130e 0%, #2d1f16 55%, #231710 100%);
+  --t3d-panel-bg: rgba(36, 25, 18, 0.93);
+  --t3d-panel-border: rgba(216, 179, 106, 0.45);
+  --t3d-card-bg: rgba(54, 38, 27, 0.86);
+  --t3d-card-hover: rgba(74, 52, 37, 0.96);
+  --t3d-accent: #d8b36a;
+  --t3d-accent-glow: rgba(216, 179, 106, 0.38);
+  --t3d-gold: #fef08a;
+  --t3d-text: #fff8ec;
+  --t3d-muted: #e7ddd0;
+  --t3d-cta: linear-gradient(135deg, #8c3a2b 0%, #c6934b 100%);
+}
+
+/* ==========================================================================
+   SHARED 3D CANVAS CONTAINER
+   ========================================================================== */
+.tower3d-canvas-host {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.tower3d-canvas-host:active {
+  cursor: grabbing;
+}
+
+.tower3d-canvas-host canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tower3d-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: radial-gradient(circle at center, #1e1b4b, #090d1f);
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px;
+}
+
+.tower3d-fallback-icon {
+  font-size: 42px;
+}
+
+/* ==========================================================================
+   1. LOBBY / SPLASH SCREEN (3D SHOWCASE + HERO & MODE PICKER)
+   ========================================================================== */
+.tower3d-lobby-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 4.4fr) minmax(0, 5.6fr);
+  gap: 20px;
+  background: var(--t3d-bg-outer);
+  border: 1.5px solid var(--t3d-panel-border);
+  border-radius: 26px;
+  padding: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.tower3d-lobby-preview {
+  position: relative;
+  min-height: 460px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid var(--t3d-panel-border);
+  background: #090d1f;
+  box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.55);
+}
+
+.tower3d-preview-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--t3d-gold);
+  letter-spacing: 0.4px;
+}
+
+.tower3d-preview-caption {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+  color: #e2e8f0;
+}
+
+.tower3d-preview-caption strong {
+  color: var(--t3d-gold);
+}
+
+.tower3d-lobby-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.tower3d-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  color: var(--t3d-gold);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.tower3d-lobby-title {
+  margin: 8px 0 6px;
+  font-size: clamp(22px, 3vw, 31px);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--t3d-text);
+  letter-spacing: -0.4px;
+}
+
+.tower3d-lobby-desc {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--t3d-muted);
+}
+
+.tower3d-record-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  font-size: 13px;
+  color: var(--t3d-text);
+}
+
+.tower3d-record-bar strong {
+  color: var(--t3d-gold);
+  font-weight: 900;
+}
+
+.tower3d-section-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--t3d-muted);
+  margin-bottom: 8px;
+}
+
+.tower3d-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tower3d-hero-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 11px;
+  border-radius: 13px;
+  background: var(--t3d-card-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: var(--t3d-text);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+}
+
+.tower3d-hero-card:hover {
+  background: var(--t3d-card-hover);
+  transform: translateY(-1px);
+}
+
+.tower3d-hero-card.is-selected {
+  border-color: var(--t3d-gold);
+  background: rgba(251, 191, 36, 0.16);
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.25);
+}
+
+.tower3d-hero-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.tower3d-hero-meta {
+  min-width: 0;
+}
+
+.tower3d-hero-name {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--t3d-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tower3d-hero-role {
+  font-size: 10.5px;
+  color: var(--t3d-muted);
+  opacity: 0.9;
+}
+
+.tower3d-pace-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tower3d-pace-btn {
+  padding: 9px 10px;
+  border-radius: 12px;
+  background: var(--t3d-card-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: var(--t3d-text);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s ease;
+}
+
+.tower3d-pace-btn:hover {
+  background: var(--t3d-card-hover);
+}
+
+.tower3d-pace-btn.is-active {
+  border-color: var(--t3d-accent);
+  box-shadow: 0 0 0 1px var(--t3d-accent), 0 6px 18px var(--t3d-accent-glow);
+  background: rgba(99, 102, 241, 0.22);
+}
+
+.tower3d-pace-title {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--t3d-text);
+}
+
+.tower3d-pace-sub {
+  display: block;
+  font-size: 10.5px;
+  color: var(--t3d-muted);
+  margin-top: 2px;
+}
+
+.tower3d-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tower3d-feature-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--t3d-muted);
+}
+
+.tower3d-feature-pill strong {
+  color: var(--t3d-text);
+  display: block;
+  margin-bottom: 1px;
+}
+
+.tower3d-lobby-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tower3d-btn-primary {
+  flex: 1;
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: var(--t3d-cta);
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.tower3d-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+}
+
+.tower3d-btn-ghost {
+  min-height: 48px;
+  padding: 11px 18px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--t3d-text);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+
+.tower3d-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================================================
+   2. LIVE 3D GAMEPLAY ARENA
+   ========================================================================== */
+.tower3d-arena {
+  display: grid;
+  grid-template-columns: minmax(0, 4.6fr) minmax(0, 5.4fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.tower3d-stage-card {
+  position: relative;
+  min-height: 560px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1.5px solid var(--t3d-panel-border);
+  background: #080d1e;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.tower3d-stage-top-left {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.tower3d-floor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.tower3d-floor-num {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--t3d-gold);
+}
+
+.tower3d-biome-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.tower3d-boss-alert {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.92), rgba(217, 119, 6, 0.92));
+  border: 1px solid #fef08a;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  animation: t3dPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes t3dPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.tower3d-stage-top-right {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  display: flex;
+  gap: 6px;
+}
+
+.tower3d-cam-btn {
+  padding: 6px 11px;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(10px);
+  color: #f1f5f9;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tower3d-cam-btn:hover,
+.tower3d-cam-btn.is-active {
+  background: rgba(99, 102, 241, 0.85);
+  border-color: #c7d2fe;
+  color: #ffffff;
+}
+
+.tower3d-mobile-expand-btn {
+  display: none;
+}
+
+/* Floating 3D Event Callout Toast */
+.tower3d-toast {
+  position: absolute;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  padding: 9px 16px;
+  border-radius: 14px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  animation: t3dSlidePop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+@keyframes t3dSlidePop {
+  from { opacity: 0; transform: translate(-50%, -10px) scale(0.92); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.tower3d-toast.is-climb {
+  background: rgba(6, 95, 70, 0.92);
+  border: 1.5px solid #34d399;
+  color: #ecfdf5;
+}
+
+.tower3d-toast.is-double {
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.95), rgba(217, 119, 6, 0.95));
+  border: 1.5px solid #fef08a;
+  color: #fffbeb;
+}
+
+.tower3d-toast.is-shield {
+  background: rgba(3, 105, 161, 0.94);
+  border: 1.5px solid #7dd3fc;
+  color: #f0f9ff;
+}
+
+.tower3d-toast.is-fall {
+  background: rgba(153, 27, 27, 0.94);
+  border: 1.5px solid #fca5a5;
+  color: #fef2f2;
+}
+
+.tower3d-toast-main {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.tower3d-toast-sub {
+  font-size: 11px;
+  opacity: 0.92;
+  margin-top: 2px;
+}
+
+/* Bottom Altitude & Checkpoint Track inside 3D Viewport */
+.tower3d-stage-bottom {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 4;
+  padding: 9px 13px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.tower3d-progress-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.tower3d-progress-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: visible;
+}
+
+.tower3d-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #34d399 0%, #fbbf24 65%, #f43f5e 100%);
+  transition: width 0.35s ease;
+}
+
+.tower3d-cp-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 2px solid #94a3b8;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tower3d-cp-dot.is-unlocked {
+  background: #10b981;
+  border-color: #fef08a;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+}
+
+/* Right Battle Console */
+.tower3d-console-card {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  background: var(--t3d-panel-bg);
+  border: 1.5px solid var(--t3d-panel-border);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.tower3d-hud-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 13px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.26);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tower3d-vitals {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tower3d-hearts {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 17px;
+}
+
+.tower3d-heart.is-lost {
+  opacity: 0.28;
+  filter: grayscale(1);
+}
+
+.tower3d-shield-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid #38bdf8;
+  color: #bae6fd;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tower3d-combo-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.14);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: var(--t3d-gold);
+  font-size: 11.5px;
+  font-weight: 800;
+}
+
+.tower3d-combo-meter.is-charged {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.35), rgba(239, 68, 68, 0.35));
+  border-color: #fef08a;
+  color: #fef08a;
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.35);
+}
+
+.tower3d-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tower3d-xp-pill {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--t3d-gold);
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.tower3d-timer-pill {
+  min-width: 68px;
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 900;
+  background: rgba(99, 102, 241, 0.25);
+  border: 1.5px solid rgba(165, 180, 252, 0.45);
+  color: #ffffff;
+}
+
+.tower3d-timer-pill.is-frozen {
+  background: rgba(14, 165, 233, 0.32);
+  border-color: #7dd3fc;
+  color: #e0f2fe;
+}
+
+.tower3d-timer-pill.is-danger {
+  background: rgba(220, 38, 38, 0.42);
+  border-color: #fca5a5;
+  color: #fef2f2;
+  animation: t3dPulse 0.65s infinite;
+}
+
+/* 4 Tactical Relics Bar */
+.tower3d-relics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tower3d-relic-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 8px;
+  border-radius: 12px;
+  background: var(--t3d-card-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  color: var(--t3d-text);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.tower3d-relic-btn:hover:not(:disabled) {
+  background: var(--t3d-card-hover);
+  border-color: var(--t3d-gold);
+  transform: translateY(-1px);
+}
+
+.tower3d-relic-btn.is-active-shield {
+  border-color: #38bdf8;
+  background: rgba(14, 165, 233, 0.28);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+}
+
+.tower3d-relic-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+.tower3d-relic-key {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--t3d-muted);
+}
+
+/* Question & Options */
+.tower3d-question-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tower3d-q-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--t3d-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tower3d-q-shortcuts {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--t3d-muted);
+  text-transform: none;
+}
+
+.tower3d-q-text {
+  font-size: clamp(16.5px, 1.9vw, 20px);
+  font-weight: 800;
+  line-height: 1.5;
+  color: #ffffff;
+  overflow-wrap: anywhere;
+}
+
+.tower3d-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tower3d-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 15px;
+  border-radius: 15px;
+  background: var(--t3d-card-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  color: #f8fafc;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tower3d-opt-btn:hover:not(:disabled) {
+  background: var(--t3d-card-hover);
+  border-color: var(--t3d-gold);
+  transform: translateX(3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+
+.tower3d-opt-key {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: var(--t3d-gold);
+}
+
+.tower3d-opt-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #f8fafc;
+  overflow-wrap: anywhere;
+}
+
+.tower3d-opt-btn.is-correct {
+  background: rgba(6, 95, 70, 0.92) !important;
+  border-color: #34d399 !important;
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.45) !important;
+}
+
+.tower3d-opt-btn.is-correct .tower3d-opt-key {
+  background: #10b981;
+  border-color: #a7f3d0;
+  color: #ffffff;
+}
+
+.tower3d-opt-btn.is-wrong {
+  background: rgba(153, 27, 27, 0.9) !important;
+  border-color: #f87171 !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4) !important;
+}
+
+.tower3d-opt-btn.is-wrong .tower3d-opt-key {
+  background: #ef4444;
+  border-color: #fecaca;
+  color: #ffffff;
+}
+
+.tower3d-opt-eliminated {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 15px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  color: rgba(203, 213, 225, 0.45);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Console Footer Escape Link */
+.tower3d-console-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--t3d-muted);
+}
+
+.tower3d-exit-link {
+  background: transparent;
+  border: none;
+  color: var(--t3d-muted);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tower3d-exit-link:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   3. RESULT / VICTORY SUMMARY PANEL
+   ========================================================================== */
+.tower3d-result-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tower3d-stat-box {
+  padding: 13px 10px;
+  border-radius: 15px;
+  background: var(--t3d-card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  text-align: center;
+}
+
+.tower3d-stat-val {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--t3d-gold);
+}
+
+.tower3d-stat-lbl {
+  display: block;
+  font-size: 11px;
+  color: var(--t3d-muted);
+  margin-top: 3px;
+}
+
+.tower3d-result-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tower3d-result-actions > .tower3d-btn-primary {
+  grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   4. TABLET & MOBILE RESPONSIVE DESIGN (<= 960px & <= 640px)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .tower3d-lobby-shell,
+  .tower3d-arena {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .tower3d-lobby-preview {
+    min-height: 250px;
+  }
+
+  .tower3d-stage-card {
+    min-height: 230px;
+    height: 230px;
+    transition: height 0.25s ease;
+  }
+
+  .tower3d-stage-card.is-mobile-expanded {
+    min-height: 360px;
+    height: 360px;
+  }
+
+  .tower3d-mobile-expand-btn {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .tower3d-root {
+    margin: 8px auto 28px;
+    padding: 0 10px;
+  }
+
+  .tower3d-lobby-shell {
+    padding: 14px 12px;
+    border-radius: 20px;
+    gap: 13px;
+  }
+
+  .tower3d-lobby-preview {
+    min-height: 205px;
+    border-radius: 16px;
+  }
+
+  .tower3d-hero-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .tower3d-pace-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .tower3d-pace-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+  }
+
+  .tower3d-features-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .tower3d-lobby-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tower3d-btn-primary,
+  .tower3d-btn-ghost {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .tower3d-stage-card {
+    min-height: 205px;
+    height: 205px;
+    border-radius: 18px;
+  }
+
+  .tower3d-stage-card.is-mobile-expanded {
+    min-height: 320px;
+    height: 320px;
+  }
+
+  .tower3d-stage-top-left {
+    top: 8px;
+    left: 8px;
+    gap: 4px;
+  }
+
+  .tower3d-stage-top-right {
+    top: 8px;
+    right: 8px;
+    gap: 4px;
+  }
+
+  .tower3d-floor-chip {
+    padding: 4px 9px;
+    border-radius: 10px;
+  }
+
+  .tower3d-floor-num {
+    font-size: 12px;
+  }
+
+  .tower3d-biome-name {
+    display: none;
+  }
+
+  .tower3d-boss-alert {
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+
+  .tower3d-cam-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 9px;
+  }
+
+  .tower3d-cam-label {
+    display: none;
+  }
+
+  .tower3d-stage-bottom {
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    padding: 6px 10px;
+  }
+
+  .tower3d-drag-hint {
+    display: none;
+  }
+
+  .tower3d-console-card {
+    padding: 13px 12px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .tower3d-hud-row {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .tower3d-relics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .tower3d-relic-key,
+  .tower3d-q-shortcuts {
+    display: none;
+  }
+
+  .tower3d-question-box {
+    padding: 13px 12px;
+    gap: 11px;
+  }
+
+  .tower3d-q-text {
+    font-size: 16px;
+  }
+
+  .tower3d-opt-btn {
+    padding: 11px 12px;
+    gap: 10px;
+    border-radius: 13px;
+  }
+
+  .tower3d-opt-key {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    font-size: 13px;
+  }
+
+  .tower3d-opt-text {
+    font-size: 14px;
+  }
+
+  .tower3d-result-actions {
+    grid-template-columns: 1fr;
+  }
+}
