@@ -68,6 +68,7 @@ import {
   deleteCustomQuizSet,
 } from './utils/courseStorage';
 import { useAppRouter } from './utils/router';
+import { clearQuizAttemptStorage } from './utils/quizSplit';
 import WoodenFish from './components/WoodenFish';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
@@ -220,6 +221,7 @@ export default function App() {
   const [isKnowledgeGroupPickerOpen, setIsKnowledgeGroupPickerOpen] = useState<boolean>(() =>
     route.type === 'quiz' && isKnowledgeGroupPickerRequestedFromUrl(route.setId)
   );
+  const [quizAttemptNonce, setQuizAttemptNonce] = useState<number>(0);
 
   // Derive active course and quiz set from current route
   const activeCourse = useMemo(() => {
@@ -239,6 +241,16 @@ export default function App() {
   const knowledgeGroupConfig = activeSet
     ? KNOWLEDGE_GROUP_CONFIGS[activeSet.id]
     : undefined;
+
+  const effectiveQuizSetId = useMemo(() => {
+    const baseSetId = activeSet?.id ?? (route.type === 'quiz' ? route.setId : undefined);
+    if (!baseSetId) return undefined;
+    const groupConfig = KNOWLEDGE_GROUP_CONFIGS[baseSetId];
+    const resolvedGroupId = knowledgeGroupId ?? getKnowledgeGroupIdFromUrl(baseSetId);
+    return resolvedGroupId && groupConfig
+      ? `${baseSetId}_group_${resolvedGroupId}`
+      : baseSetId;
+  }, [activeSet, knowledgeGroupId, route]);
 
   useEffect(() => {
     const nextGroupId = route.type === 'quiz' && activeSet
@@ -391,15 +403,37 @@ export default function App() {
   };
 
   const handleRetry = () => {
+    const baseSetId = activeSet?.id ?? (route.type === 'quiz' ? route.setId : undefined);
+    const activeGroupId =
+      knowledgeGroupId ?? (baseSetId ? getKnowledgeGroupIdFromUrl(baseSetId) : null);
+    const targetSetId = baseSetId
+      ? activeGroupId && KNOWLEDGE_GROUP_CONFIGS[baseSetId]
+        ? `${baseSetId}_group_${activeGroupId}`
+        : baseSetId
+      : undefined;
+
+    clearQuizAttemptStorage(targetSetId);
+
+    if (activeGroupId && knowledgeGroupId !== activeGroupId) {
+      setKnowledgeGroupId(activeGroupId);
+    }
+    setIsKnowledgeGroupPickerOpen(false);
     setAnswers({});
     setIsResultView(false);
+    setQuizAttemptNonce((prev) => prev + 1);
+
     try {
       const url = new URL(window.location.href);
+      if (activeGroupId) {
+        url.searchParams.set('group', activeGroupId);
+      }
+      url.searchParams.delete('groupPicker');
       url.searchParams.delete('result');
       window.history.replaceState({}, '', url.toString());
     } catch {
       // ignore
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Điều hướng quay lại danh sách môn học
@@ -488,7 +522,7 @@ export default function App() {
               : activeSet?.title}
             courseTitle={activeCourse?.name}
             courseCode={activeCourse?.code}
-            setId={activeSet?.id}
+            setId={effectiveQuizSetId}
           />
         )}
 
@@ -513,8 +547,8 @@ export default function App() {
         {/* 5. Màn hình làm bài trắc nghiệm văn bản (chuẩn PMG) */}
         {route.type === 'quiz' && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen && (
           <Quiz
-            key={knowledgeGroupId ? `${activeSet.id}_group_${knowledgeGroupId}` : activeSet.id}
-            setId={knowledgeGroupId ? `${activeSet.id}_group_${knowledgeGroupId}` : activeSet.id}
+            key={`${effectiveQuizSetId ?? activeSet.id}_${quizAttemptNonce}`}
+            setId={effectiveQuizSetId ?? activeSet.id}
             setTitle={knowledgeGroupId && knowledgeGroupConfig
               ? `${knowledgeGroupConfig.courseLabel} · Nhóm ${String(knowledgeGroupConfig.groups.find((group) => group.id === knowledgeGroupId)?.number ?? knowledgeGroupId).padStart(2, '0')}`
               : activeSet.title}

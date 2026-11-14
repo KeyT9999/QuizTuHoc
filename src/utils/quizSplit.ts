@@ -57,6 +57,34 @@ export function saveQuizSplitSettings(setId: string | undefined, settings: QuizS
   }
 }
 
+export function clearQuizAttemptStorage(setId?: string): void {
+  const storageKeyIndex = setId ? `keyt_quiz_index_${setId}` : 'keyt_quiz_index';
+  const storageKeyAnswers = setId ? `keyt_quiz_answers_${setId}` : 'keyt_quiz_answers';
+  const storageKeyMastered = setId ? `keyt_quiz_mastered_${setId}` : 'keyt_quiz_mastered';
+  const storageKeySubmitted = setId ? `keyt_quiz_submitted_${setId}` : 'keyt_quiz_submitted';
+
+  try {
+    localStorage.removeItem(storageKeyIndex);
+    localStorage.removeItem(storageKeyAnswers);
+    localStorage.removeItem(storageKeyMastered);
+    localStorage.removeItem(storageKeySubmitted);
+    if (setId === 'ccnc_426') {
+      localStorage.removeItem('keyt_quiz_answers');
+      localStorage.removeItem('keyt_quiz_mastered');
+    }
+
+    const splitSettings = loadQuizSplitSettings(setId, 50);
+    if (splitSettings.currentPart !== 0) {
+      saveQuizSplitSettings(setId, {
+        ...splitSettings,
+        currentPart: 0,
+      });
+    }
+  } catch {
+    // ignore storage errors
+  }
+}
+
 export function calculateQuizParts(totalQuestions: number, chunkSize: number): QuizPartInfo[] {
   if (totalQuestions <= 0) return [];
   const validChunk = Math.max(1, chunkSize);

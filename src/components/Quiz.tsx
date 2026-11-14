@@ -5,6 +5,7 @@ import { MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
 import {
   loadQuizSplitSettings,
   saveQuizSplitSettings,
+  clearQuizAttemptStorage,
   calculateQuizParts,
   type QuizSplitSettings,
 } from '../utils/quizSplit';
@@ -434,11 +435,31 @@ export default function Quiz({
     setShowQuestionGrid(false);
     setShowPartCompleteModal(false);
     setSplitSettings((previous) => ({ ...previous, currentPart: 0 }));
-    localStorage.removeItem(storageKeyIndex);
-    localStorage.removeItem(storageKeyAnswers);
-    localStorage.removeItem(storageKeyMastered);
-    localStorage.removeItem(storageKeySubmitted);
+    clearQuizAttemptStorage(setId);
     if (setId) clearMistakes(setId);
+  };
+
+  const resetCurrentPartProgress = (alsoClearMistakes = false) => {
+    if (!currentPart) return;
+    const partIds = new Set(partQuestionIds);
+    setRevealedIds((previous) => previous.filter((id) => !partIds.has(id)));
+    setAnswers((previous) => {
+      const next = { ...previous };
+      partIds.forEach((id) => delete next[id]);
+      return next;
+    });
+    setMasteredIds((previous) => previous.filter((id) => !partIds.has(id)));
+    setSubmittedIds((previous) => previous.filter((id) => !partIds.has(id)));
+    setCurrentIndex(currentPart.startIndex);
+    setActiveMode('study');
+    setShowQuestionGrid(false);
+    setShowPartCompleteModal(false);
+    if (alsoClearMistakes && setId) {
+      getMistakeQuestionIds(setId)
+        .filter((id) => partIds.has(id))
+        .forEach((id) => removeMistakeQuestion(setId, id));
+      setMistakeCount(getMistakeQuestionIds(setId).length);
+    }
   };
 
   const handleResetProgress = () => {
@@ -463,25 +484,7 @@ export default function Quiz({
       }
 
       // Reset only the current part when the user chooses Cancel in split mode.
-      const partIds = new Set(partQuestionIds);
-      setRevealedIds((previous) => previous.filter((id) => !partIds.has(id)));
-      setAnswers((previous) => {
-        const next = { ...previous };
-        partIds.forEach((id) => delete next[id]);
-        return next;
-      });
-      setMasteredIds((previous) => previous.filter((id) => !partIds.has(id)));
-      setSubmittedIds((previous) => previous.filter((id) => !partIds.has(id)));
-      setCurrentIndex(currentPart.startIndex);
-      setActiveMode('study');
-      setShowQuestionGrid(false);
-      setShowPartCompleteModal(false);
-      if (setId) {
-        getMistakeQuestionIds(setId)
-          .filter((id) => partIds.has(id))
-          .forEach((id) => removeMistakeQuestion(setId, id));
-        setMistakeCount(getMistakeQuestionIds(setId).length);
-      }
+      resetCurrentPartProgress(true);
       return;
     }
 
@@ -739,10 +742,7 @@ export default function Quiz({
             <button
               type="button"
               className="quiz-split-complete-btn-retry"
-              onClick={() => {
-                setCurrentIndex(currentPart.startIndex);
-                setShowPartCompleteModal(false);
-              }}
+              onClick={() => resetCurrentPartProgress(false)}
             >
               Ôn lại phần này 🔄
             </button>
