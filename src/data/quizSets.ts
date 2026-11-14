@@ -52,6 +52,7 @@ import { SAMPLE_QUIZ_MKT209M } from './sampleQuizMKT209m';
 import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
 import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
 import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
+import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
 
 export interface QuizSetInfo {
   id: string;
@@ -536,5 +537,14 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn BRA301',
     badge: '518 câu',
     rawText: SAMPLE_QUIZ_BRA301,
+  },
+  {
+    id: 'evn301_quiz_ba_khi',
+    courseId: 'evn301',
+    title: 'EVN301-Quiz Bá Khí',
+    description: 'Bộ 136 câu hỏi EVN301 về lập kế hoạch, ngân sách, địa điểm, vận hành, marketing và đánh giá sự kiện.',
+    category: 'Môn EVN301',
+    badge: '136 câu',
+    rawText: SAMPLE_QUIZ_EVN301,
   },
 ];
