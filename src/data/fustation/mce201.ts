@@ -81,7 +81,7 @@ export const QUIZ_MCE201_SP26_RE_690218 = [
   "Increasing loop gain will generally cause the Nyquist plot to:\nA. Shrink toward origin\nB. Rotate only\nC. Expand radially\nD. Shift horizontally\nC",
   "Robot control systems typically integrate:\nA. Sensors only\nB. Actuators only\nC. Sensors, controllers, and actuators\nD. Mechanical components only\nC",
   "Combining cascade control with feedforward control primarily improves:\nA. System order\nB. Disturbance rejection and response speed\nC. Measurement accuracy\nD. Controller simplicity\nB",
-  "What is an engineering system?\nA. A single mechanical component\nB. An arrangement of elements that transforms inputs into outputs\nC. A mathematical equation only\nD. A software control algorithm\nB",
+  "What is an engineering system?\nA. single mechanical component\nB. An arrangement of elements that transforms inputs into outputs\nC. A mathematical equation only\nD. A software control algorithm\nB",
   "Effective disturbance rejection requires the controller to respond primarily to:\nA. Reference changes\nB. Measurement noise\nC. Load variations\nD. Sensor drift\nC",
   "Machine tool control systems ensure:\nA. Accurate machining operations\nB. Reduced noise\nC. Higher temperature\nD. Manual operation\nA",
   "Which error is caused by environmental temperature variation?\nA. Zero drift\nB. Quantization error\nC. Hysteresis error\nD. Loading error\nA",

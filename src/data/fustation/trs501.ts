@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for TRS501 (TRS501)
+// Auto-generated FUSTATION quiz sets for TRS501 (Tiếng Anh dự bị Đại học mức 5 (Transition English 5))
 
 export const QUIZ_TRS501_SU26_H2_RE_R_748358 = [
   "Which of the following would be the best title for this passage?\nA. The development of the 1951 Refugee Convention\nB. Emergency help after natural disasters\nC. The legal and practical problems of climate migration\nD. New technology in global farming\nC",

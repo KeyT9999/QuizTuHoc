@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for AIL304m (AIL304M)
+// Auto-generated FUSTATION quiz sets for AIL304m (Học máy nâng cao (Machine Learning))
 
 export const QUIZ_AIL304M_SU26_FE_703975 = [
   "What is the primary reason for using the log loss function in classification tasks?\nA. It provides a linear relationship between predicted and actual values.\nB. It penalizes incorrect predictions more heavily than correct ones.\nC. It is computationally simpler than other loss functions.\nD. It has a probabilistic interpretation that aligns with classification outputs.\nD",

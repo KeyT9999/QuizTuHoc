@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for PRP201c (PRP201C)
+// Auto-generated FUSTATION quiz sets for PRP201c (Lập trình Python (Python Programming))
 
 export const QUIZ_PRP201C_SU26_FE_271351 = [
   "Which library is used to open and read web page contents in Python?\nA. urllib\nB. os\nC. library\nD. lib\nA",
@@ -24,14 +24,14 @@ export const QUIZ_PRP201C_SU26_FE_271351 = [
   "Which method of the socket module allows you to associate a host and a port with a specific socket?\nA. The socket.sendto(PORT) method\nB. The bind(IP,PORT) method\nC. The bind(PORT,IP) method\nD. The socket.accept(PORT) method\nB",
   "What is the ASCII character that is associated with the decimal value 42?\nA. !\nB. ^\nC. /\nB",
   "Is socket programming a point to point connection?\nA. No\nB. Can be\nC. Yes\nD. May be\nB",
-  "What ends up in the \"x\" variable in the following code: html = urllib.request.urlopen(url).read() soup = BeautifulSoup(html, 'html.parser') x = soup('a')\nA. A list of all the anchor tags (<a..) in the HTML from the URL\nB. True if there were any anchor tags in the HTML from the URL\nC. All of the externally linked CSS files in the HTML from the URL\nD. All of the paragraphs of the HTML from the URL\nA",
+  "What ends up in the \"x\" variable in the following code: html = urllib.request.urlopen(url).read() soup = BeautifulSoup(html, 'html.parser') x = soup('a')\nA. list of all the anchor tags (<a..) in the HTML from the URL\nB. True if there were any anchor tags in the HTML from the URL\nC. All of the externally linked CSS files in the HTML from the URL\nD. All of the paragraphs of the HTML from the URL\nA",
   "Using the pack manager, how can you put the components in a container in the same row?\nA. Component.pack(side= \"LEFT\")\nB. Component.pack(\"Left \")\nC. Component.pack(side=LEFT)\nD. Component.pack(Left-side)\nC",
   "What is the \"wild card\" character in a regular expression (i.e., the character that matches any character)?\nA. ?\nB. .\nC. $\nB",
   "What is the most common Unicode encoding when moving data between systems?\nA. UTF-128\nB. UTF-8\nC. UTF-32\nD. UTF-64\nB",
   "What is a good time zone to use when computers are exchanging data over APIs?\nA. The local time zone of the sending computer without daylight savings time\nB. The local time zone of the sending computer\nC. Universal Time / GMT\nD. The local time zone of the receiving computer\nC",
   "What is the purpose of the BeautifulSoup Python library?\nA. It optimizes files that are retrieved many times\nB. It builds word clouds from web pages\nC. It repairs and parses HTML to make it easier for a program to understand\nD. It allows a web site to choose an attractive skin\nE. It animates web operations to make them more attractive\nC",
   "What happens if newline is not added when writing lines?\nA. Line merges with next\nB. File is deleted\nC. Data is lost\nD. Nothing special\nA",
-  "What ends up in the \"x\" variable in the following code: html = urllib.request.urlopen(url).read() soup = BeautifulSoup(html, 'html.parser') x = soup('a')\nA. A list of all the anchor tags (<a..) in the HTML from the URL\nB. True if there were any anchor tags in the HTML from the URL\nC. All of the externally linked CSS files in the HTML from the URL\nD. All of the paragraphs of the HTML from the URL\nA",
+  "What ends up in the \"x\" variable in the following code: html = urllib.request.urlopen(url).read() soup = BeautifulSoup(html, 'html.parser') x = soup('a')\nA. list of all the anchor tags (<a..) in the HTML from the URL\nB. True if there were any anchor tags in the HTML from the URL\nC. All of the externally linked CSS files in the HTML from the URL\nD. All of the paragraphs of the HTML from the URL\nA",
   "What is the \"wild card\" character in a regular expression (i.e., the character that matches any character)?\nA. ?\nB. .\nC. $\nB",
   "When you click on an anchor tag in a web page like below, what HTTP request is sent to the server?\nA. GET\nB. POST\nC. PUT\nD. DELETE\nE. INFO\nA",
   "What is the \"wild card\" character in a regular expression (i.e., the character that matches any character)?\nA. ?\nB. .\nC. $\nB",
@@ -41,7 +41,7 @@ export const QUIZ_PRP201C_SU26_FE_271351 = [
   "What protocol is primarily used to retrieve web pages?\nA. FTP\nB. SMTP\nC. HTTP\nD. POP3\nC",
   "What SQLite keyword is added to primary keys in a CREATE TABLE statement to indicate that the database is to provide a value for the column when records are inserted?\nA. SERIAL\nB. ASSERT_UNIQUE\nC. AUTOINCREMENT\nD. AUTO_INCREMENT\nC",
   "Looking at the code below, what would this line do to the table Cats? cur.execute('DROP TABLE IF EXISTS Cats ')\nA. It will remove the row \"Cats\".\nB. It will move \"Cats\" to the end of the database.\nC. It will remove the column \"Cats\".\nD. It will remove the table \"Cats\".\nD",
-  "In Python, what is a database \"cursor\" most like?\nA. A function\nB. A method within a class\nC. A Python dictionary\nD. A file handle\nD",
+  "In Python, what is a database \"cursor\" most like?\nA. function\nB. A method within a class\nC. A Python dictionary\nD. A file handle\nD",
   "What method do you call in an SQLite cursor object in Python to run an SQL command?\nA. send()\nB. socket()\nC. execute()\nD. run()\nC",
   "What is the name of the SQL database the comes distributed with Python?\nA. SQLite\nB. PostgreSQL\nC. PySQL\nD. MySQL\nA",
   "Which command is used to retrieve all records from a table?\nA. RETRIEVE * FROM Users\nB. RETRIEVE all FROM User\nC. SELECT * FROM Users\nD. SELECT all FROM Users\nC",

@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for FIN201 (FIN201)
+// Auto-generated FUSTATION quiz sets for FIN201 (Nguyên lý Tài chính (Principles of Finance))
 
 export const QUIZ_FIN201_SU26_FE_696832 = [
   "An increase in the money supply would cause the FE line to\nA. shift to the right.\nB. shift to the left.\nC. remain unchanged.\nD. remain unchanged if Ricardian equivalence holds; otherwise, shift to the right.\nC",

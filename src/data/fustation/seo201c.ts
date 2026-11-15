@@ -1,8 +1,8 @@
-// Auto-generated FUSTATION quiz sets for SEO201c (SEO201C)
+// Auto-generated FUSTATION quiz sets for SEO201c (Tối ưu hóa Công cụ Tìm kiếm (SEO))
 
 export const QUIZ_SEO201C_SU26_FE_987463 = [
   "Which of the following social media activities is most likely to benefit your SEO strategy?\nA. Posting random content without any strategy\nB. Sharing high-quality content that encourages engagement and backlinks\nC. Only using social media for paid ads\nD. Ignoring user interactions on social platforms\nB",
-  "Which of the following completes this statement: “This is what you get if you don’t add value __________.”\nA. A lukewarm response\nB. Nothing!\nC. Value from others\nB",
+  "Which of the following completes this statement: “This is what you get if you don’t add value __________.”\nA. lukewarm response\nB. Nothing!\nC. Value from others\nB",
   "Analytics tools such as Google Search Console are are sufficient as a standalone solution for fully understanding customer search intent\nA. True\nB. False\nB",
   "What is \"topic clustering\" in advanced SEO?\nA. Grouping unrelated keywords together\nB. Creating a main pillar page and supporting it with related content to improve search relevance\nC. Posting content frequently on social media\nD. Using the same keyword across all pages\nB",
   "Which of the following factors do both the Apple App Store and Google Play Store consider when evaluating app performance?\nA. Keywords in tags\nB. Whether or not your app has an external website\nC. How many backlinks your app store listing has\nD. User metrics such as uninstall rate, app speed, and more\nD",

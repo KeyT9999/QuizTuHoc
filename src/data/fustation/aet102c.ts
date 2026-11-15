@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for AET102c (AET102C)
+// Auto-generated FUSTATION quiz sets for AET102c (Thẩm mỹ học và Nghệ thuật ứng dụng)
 
 export const QUIZ_AET102C_SU26_FE_937965 = [
   "Regarding the interpretation of a work, what is the point of ‘critical monism’?\nA. There are no correct interpretations of the work – because no work really means any particular thing.\nB. There is only one truly correct explanation.\nC. There are many correct explanations.\nD. None of these answers\nB",

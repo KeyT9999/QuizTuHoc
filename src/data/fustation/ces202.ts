@@ -3,7 +3,7 @@
 export const QUIZ_CES202_FA26_FE_370885 = [
   "What Power Shell command must you use prior to performing command-line server management?\nA. Import-Module ServerManager\nB. Export-Module ServerManager\nC. Install Module\nD. None of the other choices\nA",
   "What is the maximum memory size that is supported by Windows Server 2012 R2?\nA. 1T\nB. 2T\nC. 3T\nD. 4T\nD",
-  "What is PowerShell?\nA. A command shell and scripting language\nB. An application\nC. An Software\nD. None of the other choices\nA",
+  "What is PowerShell?\nA. command shell and scripting language\nB. An application\nC. An Software\nD. None of the other choices\nA",
   "what is SYSVOL?\nA. The SysVOL folder keeps the server’s copy of the domain’s public files\nB. The SysVOL folder keeps backup of server\nC. The SysVOL folder keeps configuration file of server\nD. None of the other choices\nA",
   "_____ are used to create a new object on Active Directory, all new objects are created with Security ID (SID) and RID is the last part of a SID\nA. RID Master\nB. Domain Naming Master\nC. Schema Master\nD. Infrastructure Master\nA",
   "What are the logical components of Active Directory?\nA. OUs\nB. Domain controller\nC. Computer\nD. Server\nA",
@@ -26,7 +26,7 @@ export const QUIZ_CES202_FA26_FE_370885 = [
   "Information supplied by the DHCP client includes the ____ and ____.\nA. Ip address and subnetmask\nB. Ip address and mac address\nC. Mac address and subnetmask\nD. Ip address and gateway\nC",
   "Administrators make changes to zone resource records in ____ zones.\nA. Primary\nB. Secondary\nC. Cache\nD. None of the mentioned\nA",
   "To conserve in internet bandwidth for your company, you can configure ____ ____, allowing DNS queries to be sent straight to a particular authoritative DNS server.\nA. Conditional Forwarders\nB. Root server\nC. Local\nD. None of the mentioned\nA",
-  "Which record is responsible for mapping a domain name to an IP address?\nA. A record\nB. NS record\nC. HTTP Redirection record\nD. SPF record\nA",
+  "Which record is responsible for mapping a domain name to an IP address?\nA. record\nB. NS record\nC. HTTP Redirection record\nD. SPF record\nA",
   "Which of the following would be the correct FQDN for a resource record in a reverse lookup zone if the computer’s IP address is 10.75.143.88?\nA. 88.143.75.10.in-addr.arpa\nB. 10.75.143.88.in-addr.arpa\nC. in-addr.arpa.88.143.75.10\nD. arpa.in-addr.10.75.143.88\nA",
   "__________ is a file-level computer data storage server connected to a computer network providing data access to a heterogeneous group of clients\nA. NAS\nB. DAS\nC. SSD\nD. Share\nE. All of the other choices\nA",
   "Hard Disk Drives are a form of what type of storage?\nA. Magnetic\nB. Optical\nC. Solid State\nD. Sequential\nE. None of the other choices\nA",

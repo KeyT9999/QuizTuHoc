@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for TRS601 (TRS601)
+// Auto-generated FUSTATION quiz sets for TRS601 (Tiếng Anh dự bị Đại học mức 6 (Transition English 6))
 
 export const QUIZ_TRS601_SU26_H2_FE_R_946875 = [
   "What is the central argument of the passage?\nA. Identity shapes people’s goals and strategies.\nB. Conflicts mainly occur because of limited resources.\nC. Games, sports, and wars share similar rules.\nD. Emotional reactions are stronger in sports than in politics.\nA",

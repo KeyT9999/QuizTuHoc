@@ -38,7 +38,7 @@ export const QUIZ_SBA301_SU26_FE_706624 = [
   "Which HTTP header is used to specify the content type of a JSON response?\nA. Content-Language\nB. Content-Encoding\nC. Content-Type: application/json\nD. Content-Length\nC",
   "Which HTTP method is idempotent?\nA. GET\nB. PUT\nC. Both GET and PUT\nD. POST\nC",
   "How is state initialized in a Class Component?\nA. Using useState().\nB. Using this.setState().\nC. By assigning a value to this.state in the constructor().\nD. By using props.state.\nC",
-  "What is MongoDB Atlas?\nA. A local installation of MongoDB.\nB. A cloud-hosted database service by MongoDB.\nC. A Java driver for MongoDB.\nD. A tool for managing relational databases.\nB",
+  "What is MongoDB Atlas?\nA. local installation of MongoDB.\nB. A cloud-hosted database service by MongoDB.\nC. A Java driver for MongoDB.\nD. A tool for managing relational databases.\nB",
   "To integrate Swagger 3 with a Spring Boot 3 application, which dependency is most commonly used?\nA. springfox-boot-starter\nB. springdoc-openapi-starter-webmvc-ui\nC. swagger-core-jakarta\nD. spring-boot-starter-docs\nB",
   "In JPA, which annotation defines a many-to-many relationship?\nA. @OneToOne\nB. @OneToMany\nC. @ManyToMany\nD. @JoinColumn\nC",
   "How do you show a success message alert in React-Bootstrap?\nA. <Alert type=\"success\">Message</Alert>\nB. <Alert variant=\"success\">Message</Alert>\nC. <Alert style=\"success\">Message</Alert>\nD. <SuccessAlert>Message</SuccessAlert>\nB",
@@ -100,7 +100,7 @@ export const QUIZ_SBA301_SP26_FE_826054 = [
   "Which MongoDB command is used to retrieve documents from a collection?\nA. update()\nB. find()\nC. insertOne()\nD. deleteMany()\nB",
   "Which class in Spring Data MongoDB provides a template for performing low-level MongoDB operations?\nA. MongoDBRepository\nB. MongoDBClient\nC. MongoDBTemplate\nD. SimpleMongoRepository\nC",
   "What is a key advantage of using MongoDB?\nA. Automatic generation of CRUD methods.\nB. Flexibility for complex queries and operations.\nC. Simplified data model definition.\nD. Built-in transaction management.\nB",
-  "What is MongoDB Atlas?\nA. A local installation of MongoDB.\nB. A cloud-hosted database service by MongoDB.\nC. A Java driver for MongoDB.\nD. A tool for managing relational databases.\nB",
+  "What is MongoDB Atlas?\nA. local installation of MongoDB.\nB. A cloud-hosted database service by MongoDB.\nC. A Java driver for MongoDB.\nD. A tool for managing relational databases.\nB",
   "When configuring the connection string for MongoDB Atlas in Spring Boot, what is the purpose of including the username and password?\nA. To specify the local database path.\nB. To authenticate the application with the MongoDB Atlas cluster.\nC. To configure the JDBC driver.\nD. To define the data model.\nB",
 ].join('\n\n');
 

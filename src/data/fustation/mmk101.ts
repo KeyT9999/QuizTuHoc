@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for MMK101 (MMK101)
+// Auto-generated FUSTATION quiz sets for MMK101 (Tiếp thị Đa phương tiện (Multimedia Marketing))
 
 export const QUIZ_MMK101_SU26_FE_636024 = [
   "Which type of power is based on the ability to offer rewards?\nA. Coercive Power\nB. Legitimate Power\nC. Reward Power\nD. Expert Power\nC",

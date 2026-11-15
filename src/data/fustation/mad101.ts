@@ -127,6 +127,29 @@ export const QUIZ_MAD101_SU26_FE_815892 = [
   "Find the prefix notation for the expression a / b + (c - d) * e\nA. / a b + c d - e *\nB. None of the other choices is correct\nC. + / a b * - c d e\nD. a b / c d - e * +\nC",
 ].join('\n\n');
 
+export const QUIZ_MAD101_SP26_B5RE_539672 = [
+  "Find the negation of the proposition: “If I have one million dollars then I will buy a villa”. Choose the correct answer: (i) “If I have one million dollars then I will not buy a villa”. (ii) “I have one million dollars but I will not buy a villa”. (iii) “I will buy a villa as soon as I have one million dollars”.\nA. (i)\nB. (ii)\nC. (iii)\nD. None of them is correct\nB",
+  "Đáp án đúng: B Câu 3 / 20\nA. (i)\nB. (ii)\nC. (iii)\nD. (iv)\nB",
+  "Find the negation of the statement “If you want to pass this course, then you should study hard and go to class regularly.”\nA. If you want to pass this course, then you should not study hard and should not go to class regularly.\nB. If you do not want to pass this course, then you should study hard and go to class regularly\nC. You want to pass this course, and you should not study hard or you should not go to class regularly\nD. You do not want to pass this course, and you should study hard or you should go to class regularly\nC",
+  "Suppose that the domain of the propositional function P(x) consists of -1, 0, 1, 2. Which of the following statement expresses “ ¬∃ x P ( x ) ”? (i) P ( − 1 ) ∨ P ( 0 ) ∨ P ( 1 ) ∨ P ( 2 ) (ii) ¬ P ( − 1 ) ∧ ¬ P ( 0 ) ∧ ¬ P ( 1 ) ∧ ¬ P ( 2 ) (iii) ¬ P ( − 1 ) ∨ ¬ P ( 0 ) ∨ ¬ P ( 1 ) ∨ ¬ P ( 2 ) (iv) P ( − 1 ) ∧ P ( 0 ) ∧ P ( 1 ) ∧ P ( 2 )\nA. (i)\nB. (ii)\nC. (iii)\nD. (iv)\nB",
+  "Suppose that the domain of the propositional function P(x) consists of -1, 0, 1, 2. Which of the following statement is logically equivalent to “ ∃ x P ( x ) ”? (i) P ( − 1 ) ∨ P ( 0 ) ∨ P ( 1 ) ∨ P ( 2 ) (ii) ¬ P ( − 1 ) ∨ P ( 0 ) ∨ P ( 1 ) ∨ P ( 2 ) (iii) ¬ P ( − 1 ) ∧ P ( 0 ) ∨ P ( 1 ) ∨ P ( 2 ) (iv) P ( − 1 ) ∧ P ( 0 ) ∧ P ( 1 ) ∧ P ( 2 )\nA. (i)\nB. (ii)\nC. (iii)\nD. (iv)\nE. None of the other choices is correct\nA",
+  "Let P ( x ) be the statement \"x is an even number\" and Q ( x ) be the statement \"x is an odd number\", where the domain is the set of all natural numbers. Which propositions are true? (i) ∀ x ∀ y (( P ( x ) ∧ Q ( y )) → Q ( x y )) (ii) ∀ x ∀ y (( P ( x ) ∧ Q ( y )) → P ( x y )) (iii) ∃ x ∃ y (( P ( x ) ∧ Q ( y )) → P ( x + y ))\nA. Only (i)\nB. Only (ii)\nC. Only (iii)\nD. (i) and (ii)\nE. (ii) and (iii)\nE",
+  "The proposition ∀ x ∃ y ( x = y 2 ) is True if the domain of x, y is...\nA. the set of positive real numbers\nB. the set of integers\nC. the set of positive integers\nD. the set of real numbers\nE. None of the other choices is correct\nA",
+  "Which argument is valid?\nA. I will miss the class if it is raining. I missed class today. Therefore it was raining.\nB. All parrots can speak. My bird is not a parrot. Therefore my bird can not speak\nC. Anyone who exercises everyday is healthy. Tung is not healthy. Therefore Tung has not exercised everyday\nD. Any student can borrow books. Nam can borrow books. Therefore Nam is a student\nC",
+  "Find the cardinality of the set {1, {1}, 1, 3, {1, 3}}\nA. 2\nB. 3\nC. 5\nD. 4\nE. None of the other choices is correct\nD",
+  "Let A = { 0 , 2 , 4 , 6 , 8 , 10 } . Find the cardinality of the power set P ( A ) .\nA. 64\nB. 32\nC. 12\nD. 36\nE. None of the other choices is correct\nF. 6\nA",
+  "Which set has the maximum cardinality? (Here x is an integer). X = { x ∣ − 100 < x 3 < 100 } Y = { x ∣ − 1 < x < 12 } Z = { x ∣ x 2 = 100 } W = { x ∣ x 4 = 256 }\nA. Y\nB. X\nC. Z\nD. W\nA",
+  "Let f be the function from N to N such that f ( x ) = ⌊ x /2 ⌋ . Which of the following statements is true?\nA. f is onto but not one-to-one\nB. f is one-to-one but not onto\nC. f is a bijection\nD. f is neither one-to-one nor onto\nA",
+  "Let f : N → N be a function defined by f ( n ) = 2 n + 3 . Select the correct statement.\nA. f is one-to-one but not onto.\nB. f is onto but not one-to-one.\nC. f is a bijection.\nD. f is neither one-to-one nor onto.\nA",
+  "Find the double sum i = 1 ∑ 4  j = 0 ∑ 3  ( 2 i + j 2 )\nA. 136\nB. 132\nC. 92\nD. 1440\nE. 240\nA",
+  "Given the Insertion sort algorithm (See picture) If input = 3, 2, 4, 7, 1, 6, 5, after running the outer loop with i = 5, the order of the elements in the list is_______________\nA. 1, 2, 3, 4, 7, 6, 5\nB. 1, 2, 3, 4, 6, 7, 5\nC. 1, 2, 3, 4, 7, 5, 6\nD. 1, 2, 3, 7, 4, 6, 5\nA",
+  "Use the Greedy Change-Making algorithm to make a change for 34 cents using quarters, dimes and pennies (1 quarter = 25 cents, 1 dime = 10 cents, 1 penny = 1 cent). What is the total number of coins used?\nA. 7\nB. 8\nC. 9\nD. 10\nE. None of the other choices\nD",
+  "Find the smallest integer n such that the following function is O ( x n ) x 2 + x 2 lo g x\nA. 3\nB. 2\nC. 4\nD. 1\nE. 0\nA",
+  "What is the largest integer n for which one can solve within 1 second a problem using an algorithm that requires f ( n ) = 2 n bit operations, where each bit operation is carried out in 1 0 − 9 seconds?\nA. 30\nB. 28\nC. 27\nD. 29\nD",
+  "Let a = 131  div  37 and b = − 131  div  37 . Find a − b .\nA. 7\nB. -1\nC. 3\nD. -4\nE. 5\nA",
+  "Which number is congruent to 10 modulo 17?\nA. -65\nB. -75\nC. -85\nD. -95\nE. None of the other choices is correct\nB",
+].join('\n\n');
+
 export const QUIZ_MAD101_SP26_B5FE_270184 = [
   "Let p = “An is absent” q = “It is cold” Translate the sentence into logical expression: “It is cold but An is not absent” (i) ¬p ∧ q (ii) p ∧ ¬q (iii) q → ¬p (iv) ¬p ∨ q\nA. (iii)\nB. (i)\nC. (ii)\nD. (iv)\nE. None of the other choices is correct\nB",
   "Given the propositions: p = “You have the flu” q = “You miss the final examination” r = “You pass the course” Express the following sentence into a logical expression: “If you have the flu but you don’t miss the final examination, then you pass the course”. (i) (p∨¬q)→r (ii) (¬p∨q)→r (iii) (p∧¬q)→r (iv) (¬p∧q)→r\nA. (iii)\nB. (i)\nC. (iv)\nD. (ii)\nA",
@@ -219,7 +242,7 @@ export const QUIZ_MAD101_SP26_FE_897042 = [
   "Câu hỏi 36 (Xem hình minh họa)\nA. 3\nB. 1\nC. None of the other choices is correct\nD. 2\nD",
   "Câu hỏi 37 (Xem hình minh họa)\nA. X\nB. Y\nC. X and Y\nD. None of the other choices is correct\nB",
   "How many cut vertices and cut edges in this graph? (See picture)\nA. 5 and 6\nB. 5 and 5\nC. 7 and 6\nD. 6 and 6\nA",
-  "Which of the following is NOT a circuit in this graph ? (See picture)\nA. A – B – C – D – F – B – A\nB. D– B– F– E– D\nC. E– F– B– A– D– E\nD. C– D– E– F– B– A– C\nE. B– A–D– E– F– B\nA",
+  "Which of the following is NOT a circuit in this graph ? (See picture)\nA. – B – C – D – F – B – A\nB. D– B– F– E– D\nC. E– F– B– A– D– E\nD. C– D– E– F– B– A– C\nE. B– A–D– E– F– B\nA",
   "Choose the correct statement.\nA. The graph does not have Euler paths\nB. The graph has Euler circuits\nC. The graph has Euler paths\nD. The graph has Euler paths but not Euler circuits\nD",
   "Which graphs have Euler paths? (i) K3,2 (ii) K3,3 (iii) W3 (iv) Q3\nA. (i)\nB. (ii) and (iii)\nC. (iii)\nD. (iv)\nA",
   "Câu hỏi 42 (Xem hình minh họa)\nA. c, e, g, z\nB. c, d, e, g, z\nC. c, d, f, g, z\nD. c, b, d, e, g, z\nB",

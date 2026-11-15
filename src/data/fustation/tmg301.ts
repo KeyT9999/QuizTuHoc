@@ -1,4 +1,4 @@
-// Auto-generated FUSTATION quiz sets for TMG301 (TMG301)
+// Auto-generated FUSTATION quiz sets for TMG301 (Quản trị Công nghệ và Dịch thuật máy)
 
 export const QUIZ_TMG301_SU26_FE_761954 = [
   "(Multiple Choice) Which evaluation metrics are commonly used for machine translation?\nA. BLEU score\nB. METEOR score\nC. TER metric\nD. Monitor resolution\nABC",
@@ -20,10 +20,10 @@ export const QUIZ_TMG301_SU26_FE_761954 = [
   "What is fine-tuning in the context of pretrained language models?\nA. Adapting a pretrained model to a specific task\nB. Deleting training data\nC. Compressing model weights\nD. Increasing data\nA",
   "(Multiple Choice) Which representations capture semantic meaning of words for modern text analysis tasks?\nA. Word embeddings\nB. Sentence embeddings\nC. Contextual embeddings (e.g., BERT)\nD. Text extraction\nABC",
   "In first-order logic, what is the main distinction between a \"function\" and a \"predicate\"?\nA. Functions are used to represent relations between entities, while predicates denote specific actions\nB. Functions return entities, whereas predicates return truth values\nC. Functions operate on quantifiers, while predicates operate on propositional logic\nD. Functions are always true, while predicates can be false\nB",
-  "What is a context-free grammar (CFG)?\nA. A set of production rules used to describe the syntax of a language\nB. A method for compressing text files\nC. A database indexing technique\nD. A neural network architecture\nA",
+  "What is a context-free grammar (CFG)?\nA. set of production rules used to describe the syntax of a language\nB. A method for compressing text files\nC. A database indexing technique\nD. A neural network architecture\nA",
   "(Multiple Choice) Which applications commonly rely on fine-tuned pretrained models?\nA. Chatbots\nB. Text summarization\nC. Information extraction\nD. Word embeddings\nABC",
   "(Multiple Choice) Which methods can improve robustness of text matching systems?\nA. Edit distance\nB. Regular expressions\nC. Normalization\nD. Word embeddings\nACD",
-  "What is an N-gram in text mining?\nA. A sequence of N consecutive words or tokens\nB. A type of database\nC. A visualization technique\nD. N-gram language modeling\nA",
+  "What is an N-gram in text mining?\nA. sequence of N consecutive words or tokens\nB. A type of database\nC. A visualization technique\nD. N-gram language modeling\nA",
   "Which N-gram consists of three consecutive tokens?\nA. Trigram\nB. Unigram\nC. Bigram\nD. Pentagram\nA",
   "(Multiple Choice) Which inputs are required when training masked language models?\nA. Tokenized text\nB. Masked tokens\nC. Large text corpus\nD. Normalization\nABC",
   "(Multiple Choice) Which modeling assumptions apply to logistic regression?\nA. Log-odds linearity\nB. Independent observations\nC. Probabilistic interpretation\nD. Hard drive rotation\nABC",
@@ -47,7 +47,7 @@ export const QUIZ_TMG301_SU26_FE_761954 = [
   "In text mining, logistic regression is commonly used for?\nA. Text classification\nB. File compression\nC. Video processing\nD. Hardware design\nA",
   "(Multiple Choice) Which improvements can enhance large-scale document clustering?\nA. Distributed computing\nB. Efficient indexing\nC. Dimensionality reduction\nD. Semantic embeddings\nABC",
   "(Multiple Choice) Which components are part of logical sentence representations?\nA. Predicates\nB. Variables\nC. Logical operators\nD. Part-of-speech tags\nABC",
-  "In sentiment analysis, what does a lexicon entry typically consist of?\nA. A list of related words with their part-of-speech tags\nB. A numerical score representing the polarity or sentiment strength of a word\nC. A definition of the word's meaning\nD. The frequency of the word's occurrence in a given text\nB",
+  "In sentiment analysis, what does a lexicon entry typically consist of?\nA. list of related words with their part-of-speech tags\nB. A numerical score representing the polarity or sentiment strength of a word\nC. A definition of the word's meaning\nD. The frequency of the word's occurrence in a given text\nB",
   "Which model type is commonly used in modern machine translation systems?\nA. Transformer models\nB. Decision Trees\nC. K-Means clustering\nD. Apriori algorithm\nA",
   "In event extraction, what does an \"event trigger\" refer to?\nA. The time at which an event occurred\nB. A word or phrase that denotes the occurrence of an event or action\nC. A type of passive voice construction\nD. A type of prepositional phrase\nB",
   "Which of the following word embedding models is capable of handling subword information?\nA. Word2Vec\nB. FastText\nC. GloVe\nD. LDA\nB",

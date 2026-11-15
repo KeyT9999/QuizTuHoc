@@ -4,7 +4,7 @@ export const QUIZ_MAI391_FA26_PT1_396192 = [
   "Let P be the projection matrix of the orthogonal projection onto the space spanned by b=(1,1,1) . What is the (3,2) -entry of P ?\nA. -1/3\nB. 1/2\nC. -1/2\nD. 1/3\nD",
   "Given two matrices A and B described as below A=[12−13],B=[2104] Compute ∥A−B∥ , where ∥⋅∥ is the Euclidean norm on R2×2 .\nA. 4\nB. 2\nC. 3\nD. 1\nB",
   "Let f(x)=x+11 be a continuous function from [0,2]→R . Compute ∥f∥=max0≤x≤2∣f(x)∣ .\nA. 1\nB. 1/4\nC. 1/2\nD. 0\nA",
-  "Let A,B,C be bilinear functions from R2→R defined as below A(x,y)=x1y1−x2y2 B(x,y)=x1y2+x2y1 C(x,y)=3x1y1+x1y2+x2y1+2x2y2\nA. A is symmetric, B is positive definite\nB. A is an inner product on R2\nC. B is an inner product on R2\nD. C is an inner product on R2\nD",
+  "Let A,B,C be bilinear functions from R2→R defined as below A(x,y)=x1y1−x2y2 B(x,y)=x1y2+x2y1 C(x,y)=3x1y1+x1y2+x2y1+2x2y2\nA. is symmetric, B is positive definite\nB. A is an inner product on R2\nC. B is an inner product on R2\nD. C is an inner product on R2\nD",
   "(Multiple Choice) The function K(x,y)=xT[1−1−11]y is\nA. symmetric\nB. bilinear\nC. positive definite\nD. an inner product\nAB",
   "Compute the distance between X=[11] and Y=[01] using the inner product defined by ⟨x,y⟩=xT[2−1−11]y . (Round to 2 decimal places)\nA. 1\nB. 1.41\nC. 1.33\nD. 2\nB",
   "Compute the distance between X=[12] and Y=[−11] using the inner product defined by ⟨x,y⟩=xT[1−1−13]y . (Round to 2 decimal places)\nA. 1.73\nB. 3\nC. 5\nD. 2.23\nA",
@@ -32,7 +32,7 @@ export const QUIZ_MAI391_FA26_PT1_396192 = [
   "Given ⟨⋅,⋅⟩ is an inner product in R2 described as below ⟨x,y⟩=x1y1+x2y2,∀x=[x1 x2]T∈R2, y=[y1 y2]T∈R2. Find λ∈R such that the angle between the vector [1 λ]T and [λ 1]T is π .\nA. 3\nB. 0\nC. -1\nD. 2\nC",
   "Let ⟨⋅,⋅⟩ be an inner product in R2 defined by ⟨x,y⟩:=xT[2112]y,∀x,y∈R2. Compute proj⟨b⟩(a) , where a=(2,0) and ⟨b⟩ is the vector space spanned by vector b=(1,2) .\nA. None of the others\nB. (−4,−8)\nC. (8/5,16/5)\nD. (4/5,−8/5)\nE. (8,16)\nA",
   "Given ⟨⋅,⋅⟩ is an inner product in R2 described as below ⟨x,y⟩:=x1y1+x2y2,∀x=[x1 x2]T∈R2, y=[y1 y2]T∈R2. Find λ∈R such that the angle between the vector [1 λ]T and [λ 1]T is π .\nA. -1\nB. 0\nC. 3\nD. 2\nA",
-  "Given the bilinear mapping A:R2×R2→R defined by A(x,y)=x1y1+2x2y2−3x1y2+4x2y1 for x=[x1 x2]T∈R2 , y=[y1 y2]T∈R2 .\nA. A is an inner product\nB. None of the other choices is correct\nC. A is symmetric\nD. A is positive definite\nD",
+  "Given the bilinear mapping A:R2×R2→R defined by A(x,y)=x1y1+2x2y2−3x1y2+4x2y1 for x=[x1 x2]T∈R2 , y=[y1 y2]T∈R2 .\nA. is an inner product\nB. None of the other choices is correct\nC. A is symmetric\nD. A is positive definite\nD",
   "Let f(x)=x+11 be a continuous function from [0,2]→R . Compute ∥f∥=max0≤x≤2∣f(x)∣ .\nA. 1\nB. 1/2\nC. 0\nD. 1/4\nA",
   "Compute the distance between X=[12] and Y=[−11] using the inner product defined by ⟨x,y⟩=xT[1−1−13]y . (Round to 2 decimal places)\nA. 2.23\nB. 3\nC. 1.73\nD. 5\nC",
   "Compute the distance between X=[11] and Y=[01] using the inner product defined by ⟨x,y⟩=xT[2−1−11]y . (Round to 2 decimal places)\nA. 2\nB. 1.33\nC. 1\nD. 1.41\nD",
@@ -48,7 +48,7 @@ export const QUIZ_MAI391_FA26_PT1_396192 = [
   "Let ⟨⋅,⋅⟩ be an inner product in R2 defined by ⟨x,y⟩:=xT[1112]y,∀x,y∈R2. Compute proj⟨b⟩(a) , where a=(2,−1) and ⟨b⟩ is the vector space spanned by b=(2,−2) .\nA. (−1,1)\nB. (1,−1)\nC. (−1,−1)\nD. (1,1)\nB",
   "Find m such that the matrix A given below is positive definite. A=121−10310m\nA. m>−3\nB. m<−3\nC. m<0\nD. m>0\nA",
   "Given ⟨⋅,⋅⟩ is an inner product on R2 defined by ⟨x,y⟩=x1y1−x1y2−x2y1+3x2y2 . Find the distance between two vectors u=[1 1]T and v=[−2 1]T .\nA. 3\nB. 4\nC. 0\nD. 1\nA",
-  "Let A,B,C be bilinear functions from R2→R defined as below A(x,y)=x1y1−x2y2 B(x,y)=x1y2+x2y1 C(x,y)=3x1y1+x1y2+x2y1+2x2y2\nA. A is symmetric, B is positive definite\nB. B is an inner product on R2\nC. C is an inner product on R2\nD. A is an inner product on R2\nC",
+  "Let A,B,C be bilinear functions from R2→R defined as below A(x,y)=x1y1−x2y2 B(x,y)=x1y2+x2y1 C(x,y)=3x1y1+x1y2+x2y1+2x2y2\nA. is symmetric, B is positive definite\nB. is an inner product on R2\nC. is an inner product on R2\nD. A is an inner product on R2\nC",
 ].join('\n\n');
 
 export const QUIZ_MAI391_SP26_RE_091263 = [

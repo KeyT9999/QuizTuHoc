@@ -137,7 +137,7 @@ export const QUIZ_SWT301_SP26_RE_584127 = [
   "Câu 8 / 60 As part of which test process do you determine the exit criteria?\nA. Test planning.\nB. Evaluating exit criteria and reporting.\nC. Test closure.\nD. Test control.\nA",
   "Câu 9 / 60 Which, in general, is the least required skill of a good tester?\nA. Being diplomatic\nB. Able to write software\nC. Having good attention to detail\nD. Able to be relied on\nB",
   "Câu 10 / 60 What is the purpose of exit criteria?\nA. To define when a test level is complete.\nB. To determine when a test has completed.\nC. To identify when a software system should be retired.\nD. To determine whether a test has passed.\nA",
-  "Câu 11 / 60 A test design technique is\nA. A process for selecting test cases\nB. A process for determining expected outputs\nC. A way to measure the quality of software\nD. A way to measure in a test plan what has to be done\nA",
+  "Câu 11 / 60 A test design technique is\nA. process for selecting test cases\nB. A process for determining expected outputs\nC. A way to measure the quality of software\nD. A way to measure in a test plan what has to be done\nA",
   "Câu 12 / 60 Testing activity which is performed to expose defects in the interfaces and in the interaction between integrated components is\nA. System Level Testing\nB. Integration Level Testing\nC. Unit Level Testing\nD. Component Testing\nB",
   "Câu 13 / 60 Repeated Testing of an already tested program, after modification, to discover any defects introduced or uncovered as a result of the changes in the software being tested or in another related or unrelated software component:\nA. Re Testing\nB. Confirmation Testing\nC. Regression Testing\nD. Negative Testing\nC",
   "Câu 14 / 60 Which of the following statements about component testing is not true?\nA. Component testing should be performed by development\nB. Component testing is also known as isolation or module testing\nC. Component testing should have completion criteria planned\nD. Component testing does not involve regression testing\nD",
@@ -186,7 +186,7 @@ export const QUIZ_SWT301_SP26_RE_584127 = [
   "Câu 57 / 60 The principal attributes of tools and automation are (choose one answer)\nA. (1) Speed & efficiency\nB. (2) Accuracy & precision\nC. Both of (1) and (2)\nD. None of (1) nor (2)\nC",
   "Câu 58 / 60 Find the mismatch\nA. Test data preparation tools - Manipulate Data bases\nB. Test design tools - Generate test inputs\nC. Requirement management tools - Enables individual tests to be traceable\nD. Configuration management tools - Check for consistence\nD",
   "Câu 59 / 60 A typical commercial test execution tool would be able to perform all of the following, EXCEPT:\nA. Generating expected outputs\nB. Replaying inputs according to a programmed script\nC. Comparison of expected outcomes with actual outcomes\nD. Recording test inputs\nE. Reading test values from a data file\nA",
-  "Câu 60 / 60 When a new testing tool is purchased, it should be used first by:\nA. A small team to establish the best way to use the tool\nB. Everyone who may eventually have some use for the tool\nC. The independent testing team\nD. The vendor contractor to write the initial scripts\nA",
+  "Câu 60 / 60 When a new testing tool is purchased, it should be used first by:\nA. small team to establish the best way to use the tool\nB. Everyone who may eventually have some use for the tool\nC. The independent testing team\nD. The vendor contractor to write the initial scripts\nA",
 ].join('\n\n');
 
 export const QUIZ_SWT301_SP26_FE_546031 = [
