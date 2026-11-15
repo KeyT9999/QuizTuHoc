@@ -55,7 +55,7 @@ export function parseQuizText(rawText: string): Question[] {
 
     // Filter out Quizlet section headers like "Chưa học (287)", "Bạn chưa học các thuật ngữ này!", "Chọn 287"
     lines = lines.filter(
-      (l) => !/^(Chưa học|Bạn chưa học|Chọn \d+|Chưa học \(\d+\))/i.test(l)
+      (l) => !/^(Chưa học\s*(\(\d+\))?$|Bạn chưa học|Chọn \d+$)/i.test(l)
     );
 
     if (lines.length < 2) continue;
