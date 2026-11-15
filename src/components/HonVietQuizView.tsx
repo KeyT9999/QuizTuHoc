@@ -3,6 +3,7 @@ import type { Question } from '../utils/quizParser';
 import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
+import QuestionImages from './QuestionImages';
 import {
   getUserXP,
   getStudyStreak,
@@ -522,6 +523,7 @@ export default function HonVietQuizView({
             <h2 className="hon-viet-q-statement" data-hover-translate={question.text} data-hover-translate-kind="question">
               {question.text}
             </h2>
+            <QuestionImages images={question.images} />
 
             {/* AI Assistant Banner */}
             <div className="hon-viet-ai-section">

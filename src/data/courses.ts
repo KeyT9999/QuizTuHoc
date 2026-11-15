@@ -1,3 +1,5 @@
+import { FUSTATION_NEW_COURSES } from './fustationCourses';
+
 export interface Course {
   id: string;
   code: string;
@@ -8,7 +10,7 @@ export interface Course {
   createdAt?: number;
 }
 
-export const DEFAULT_COURSES: Course[] = [
+const BASE_COURSES: Course[] = [
   {
     id: 'mln111',
     code: 'MLN111',
@@ -82,9 +84,9 @@ export const DEFAULT_COURSES: Course[] = [
   {
     id: 'ccm301',
     code: 'CCM301',
-    name: 'CCM301',
-    description: 'Ngân hàng 444 câu hỏi ôn tập về quản lý khủng hoảng, truyền thông và danh tiếng tổ chức.',
-    badge: '1 bộ đề',
+    name: 'Quản trị truyền thông khủng hoảng',
+    description: 'Ngân hàng 444 câu hỏi ôn tập và bộ đề thi từ FUSTATION về quản lý khủng hoảng, truyền thông và danh tiếng tổ chức.',
+    badge: '2 bộ đề',
   },
   {
     id: 'bra301',
@@ -135,4 +137,9 @@ export const DEFAULT_COURSES: Course[] = [
     description: 'Hệ thống thẻ lật thông minh giúp ghi nhớ nhanh các định nghĩa và thuật ngữ cốt lõi quản lý dự án.',
     badge: 'Thẻ ghi nhớ',
   },
+];
+
+export const DEFAULT_COURSES: Course[] = [
+  ...BASE_COURSES,
+  ...FUSTATION_NEW_COURSES,
 ];

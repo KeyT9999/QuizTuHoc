@@ -19,7 +19,9 @@ export default function QuizSetSelector({
 }: QuizSetSelectorProps) {
   // Helper to calculate progress for a quiz set
   const getSetProgress = (set: QuizSetInfo) => {
-    const total = set.kind === 'image' ? (set.imageCount ?? 0) : parseQuizText(set.rawText).length;
+    const total = set.kind === 'image'
+      ? (set.imageCount ?? 0)
+      : (set.questionCount ?? parseQuizText(set.rawText).length);
     if (total === 0) return { total: 0, mastered: 0, percent: 0 };
 
     try {

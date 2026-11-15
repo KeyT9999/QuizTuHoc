@@ -3,6 +3,7 @@ import type { Question } from '../utils/quizParser';
 import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
+import QuestionImages from './QuestionImages';
 import {
   getUserXP,
   getStudyStreak,
@@ -570,6 +571,7 @@ export default function LotusZenQuizView({
             <div className="zen-q-text" data-hover-translate={question.text} data-hover-translate-kind="question">
               {question.text}
             </div>
+            <QuestionImages images={question.images} />
 
             {/* Ask AI Assistant */}
             <div style={{ marginBottom: 20 }}>

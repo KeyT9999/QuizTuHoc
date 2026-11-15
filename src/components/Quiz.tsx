@@ -18,6 +18,7 @@ import MistakeBusterView from './games/MistakeBusterView';
 import MockExamView from './games/MockExamView';
 import QuestionListView from './QuestionListView';
 import AskAI from './AskAI';
+import QuestionImages from './QuestionImages';
 import {
   clearMistakes,
   getMistakeQuestionIds,
@@ -1104,6 +1105,7 @@ export default function Quiz({
 
           {/* Question Text */}
           <div className="quiz-v2-q-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</div>
+          <QuestionImages images={question.images} />
 
           <AskAI question={question} />
 

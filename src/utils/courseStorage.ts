@@ -67,8 +67,22 @@ export function deleteCustomQuizSet(setId: string): void {
   }
 }
 
+const parsedCountCache = new Map<string, { len: number; count: number }>();
+
+function getSetQuestionCount(set: QuizSetInfo): number {
+  if (set.kind === 'image') return set.imageCount ?? 0;
+  if (typeof set.questionCount === 'number') return set.questionCount;
+  const rawLen = set.rawText.length;
+  if (rawLen === 0) return 0;
+  const cached = parsedCountCache.get(set.id);
+  if (cached && cached.len === rawLen) return cached.count;
+  const count = parseQuizText(set.rawText).length;
+  parsedCountCache.set(set.id, { len: rawLen, count });
+  return count;
+}
+
 export function getQuizSetProgress(set: QuizSetInfo): { total: number; mastered: number; percent: number } {
-  const total = set.kind === 'image' ? (set.imageCount ?? 0) : parseQuizText(set.rawText).length;
+  const total = getSetQuestionCount(set);
   if (total === 0) return { total: 0, mastered: 0, percent: 0 };
 
   try {

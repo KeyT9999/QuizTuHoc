@@ -97,6 +97,7 @@ import {
   SAMPLE_QUIZ_JPD123_SP26_C1FE_860933,
   SAMPLE_QUIZ_JPD123_SP26_C1FE_128307,
 } from './sampleQuizJPD123Fustation';
+import { FUSTATION_QUIZ_SETS } from './fustationQuizSets';
 
 export interface QuizSetInfo {
   id: string;
@@ -105,6 +106,8 @@ export interface QuizSetInfo {
   category: string;
   badge?: string;
   rawText: string;
+  questionCount?: number;
+  loadRawText?: () => Promise<string>;
   kind?: 'text' | 'image';
   imageBasePath?: string;
   imageCount?: number;
@@ -861,4 +864,5 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     badge: 'Final Exam SU25 - 60 câu',
     rawText: SAMPLE_QUIZ_ITE302C_SU25_FE_613752,
   },
+  ...FUSTATION_QUIZ_SETS,
 ];

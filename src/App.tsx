@@ -222,6 +222,7 @@ export default function App() {
     route.type === 'quiz' && isKnowledgeGroupPickerRequestedFromUrl(route.setId)
   );
   const [quizAttemptNonce, setQuizAttemptNonce] = useState<number>(0);
+  const [loadedRawTexts, setLoadedRawTexts] = useState<Record<string, string>>({});
 
   // Derive active course and quiz set from current route
   const activeCourse = useMemo(() => {
@@ -237,6 +238,39 @@ export default function App() {
     }
     return null;
   }, [route, quizSets]);
+
+  useEffect(() => {
+    if (
+      route.type === 'quiz'
+      && activeSet
+      && activeSet.kind !== 'image'
+      && !activeSet.rawText
+      && activeSet.loadRawText
+      && !(activeSet.id in loadedRawTexts)
+    ) {
+      let cancelled = false;
+      const setId = activeSet.id;
+      activeSet.loadRawText().then((text) => {
+        if (!cancelled) {
+          setLoadedRawTexts((prev) => ({ ...prev, [setId]: text }));
+        }
+      }).catch((err) => {
+        console.error(`Lỗi tải nội dung đề thi ${setId}:`, err);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }
+  }, [route.type, activeSet, loadedRawTexts]);
+
+  const isLoadingActiveSetText = Boolean(
+    route.type === 'quiz'
+    && activeSet
+    && activeSet.kind !== 'image'
+    && !activeSet.rawText
+    && activeSet.loadRawText
+    && !(activeSet.id in loadedRawTexts)
+  );
 
   const knowledgeGroupConfig = activeSet
     ? KNOWLEDGE_GROUP_CONFIGS[activeSet.id]
@@ -265,7 +299,9 @@ export default function App() {
 
   const parsedQuestions = useMemo(() => {
     if (activeSet && activeSet.kind !== 'image') {
-      const parsed = parseQuizText(activeSet.rawText);
+      const effectiveRaw = activeSet.rawText || loadedRawTexts[activeSet.id] || '';
+      if (!effectiveRaw) return [];
+      const parsed = parseQuizText(effectiveRaw);
       const researchedAnswers = MLN_RESEARCH_ANSWER_KEYS[activeSet.id];
 
       if (!researchedAnswers) return parsed;
@@ -278,7 +314,7 @@ export default function App() {
       });
     }
     return [];
-  }, [activeSet]);
+  }, [activeSet, loadedRawTexts]);
 
   const knowledgeGroupQuestions = useMemo(() => {
     if (!knowledgeGroupId || !knowledgeGroupConfig) return parsedQuestions;
@@ -507,8 +543,16 @@ export default function App() {
           />
         )}
 
-        {/* 4. Màn hình kết quả làm bài */}
-        {route.type === 'quiz' && isResultView && (
+        {/* 4. Màn hình chờ tải dữ liệu đề thi (lazy chunk) */}
+        {isLoadingActiveSetText && (
+          <div className="app-error-state">
+            <h3>Đang tải đề thi...</h3>
+            <p>Vui lòng đợi trong giây lát.</p>
+          </div>
+        )}
+
+        {/* 4b. Màn hình kết quả làm bài */}
+        {route.type === 'quiz' && !isLoadingActiveSetText && isResultView && (
           <Result
             questions={knowledgeGroupQuestions}
             answers={answers}
@@ -526,7 +570,7 @@ export default function App() {
           />
         )}
 
-        {route.type === 'quiz' && !isResultView && knowledgeGroupConfig && isKnowledgeGroupPickerOpen && (
+        {route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && knowledgeGroupConfig && isKnowledgeGroupPickerOpen && (
           <KnowledgeGroupPicker
             setId={activeSet?.id ?? route.setId}
             questions={parsedQuestions}
@@ -545,7 +589,7 @@ export default function App() {
         )}
 
         {/* 5. Màn hình làm bài trắc nghiệm văn bản (chuẩn PMG) */}
-        {route.type === 'quiz' && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen && (
+        {route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen && (
           <Quiz
             key={`${effectiveQuizSetId ?? activeSet.id}_${quizAttemptNonce}`}
             setId={effectiveQuizSetId ?? activeSet.id}

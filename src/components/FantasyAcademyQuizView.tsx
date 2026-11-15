@@ -3,6 +3,7 @@ import type { Question } from '../utils/quizParser';
 import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
+import QuestionImages from './QuestionImages';
 import {
   getUserXP,
   calculateLevel,
@@ -451,6 +452,7 @@ export default function FantasyAcademyQuizView({
 
             {/* Question Text */}
             <h2 className="fantasy-question-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</h2>
+            <QuestionImages images={question.images} />
 
             {/* AI Assistant Banner */}
             <AskAI question={question} />

@@ -9,6 +9,7 @@ export interface Question {
   options: QuizOption[];
   correctAnswer: string;
   freeResponse?: boolean;
+  images?: string[];
 }
 
 export function parseQuizText(rawText: string): Question[] {
@@ -27,6 +28,16 @@ export function parseQuizText(rawText: string): Question[] {
       .filter((l) => l.length > 0);
     const freeResponse = lines[0]?.toLowerCase() === '[free-response]';
     if (freeResponse) lines = lines.slice(1);
+
+    const images: string[] = [];
+    lines = lines.filter((l) => {
+      const imgMatch = l.match(/^\[image\]\s*(.+)$/i);
+      if (imgMatch) {
+        images.push(imgMatch[1].trim());
+        return false;
+      }
+      return true;
+    });
 
     // Accept answers appended to the final option, such as
     // "D. link() . A" or "D. link() . B, C".
@@ -190,6 +201,7 @@ export function parseQuizText(rawText: string): Question[] {
         text: questionText.trim().replace(/^\d+\.\s*/, ''),
         options,
         correctAnswer: correctAnswerKey,
+        ...(images.length > 0 ? { images } : {}),
       });
     }
   }

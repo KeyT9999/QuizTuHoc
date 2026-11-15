@@ -3,6 +3,7 @@ import type { Question } from '../utils/quizParser';
 import { isAnswerTextSelection } from '../utils/quizTextSelection';
 import type { QuizPlayMode } from './QuizModeBar';
 import AskAI from './AskAI';
+import QuestionImages from './QuestionImages';
 import mascotCatImg from '../assets/mascot_cat.png';
 import {
   getUserXP,
@@ -314,6 +315,7 @@ export default function CozyNightQuizView({
 
             {/* Question Text */}
             <h2 className="cozy-question-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</h2>
+            <QuestionImages images={question.images} />
 
             {/* AI Assistant Banner */}
             <AskAI question={question} />
