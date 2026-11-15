@@ -140,3 +140,27 @@ export function getFlashcardProgress(fcSet: FlashcardSet): { total: number; know
     return { total, known: 0, percent: 0 };
   }
 }
+
+const STORAGE_RECENT_COURSES = 'keyt_recent_courses';
+
+export function loadRecentCourseIds(): string[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_RECENT_COURSES);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((id) => typeof id === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+export function recordRecentCourse(courseId: string): void {
+  try {
+    const current = loadRecentCourseIds().filter((id) => id !== courseId);
+    const updated = [courseId, ...current].slice(0, 12);
+    localStorage.setItem(STORAGE_RECENT_COURSES, JSON.stringify(updated));
+  } catch {
+    // ignore storage errors
+  }
+}
+

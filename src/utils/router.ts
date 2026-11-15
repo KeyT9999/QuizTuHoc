@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 
+export type HomeNavTab = 'home' | 'library' | 'stats';
+
 export type AppRoute =
-  | { type: 'course_list' }
+  | { type: 'course_list'; tab: HomeNavTab }
   | { type: 'course_detail'; courseId: string }
   | { type: 'quiz'; courseId: string; setId: string }
   | { type: 'new_quiz'; courseId: string }
@@ -12,9 +14,20 @@ export function parseRoute(pathname: string): AppRoute {
   const cleanPath = pathname.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
   const parts = cleanPath.split('/').filter(Boolean);
 
-  // 1. Root / Courses: / or /courses or /course
-  if (parts.length === 0 || (parts.length === 1 && (parts[0] === 'courses' || parts[0] === 'course'))) {
-    return { type: 'course_list' };
+  // 1. Root / Home / Library / Stats
+  if (parts.length === 0) {
+    return { type: 'course_list', tab: 'library' };
+  }
+  if (parts.length === 1) {
+    if (parts[0] === 'home') {
+      return { type: 'course_list', tab: 'home' };
+    }
+    if (parts[0] === 'stats' || parts[0] === 'statistics') {
+      return { type: 'course_list', tab: 'stats' };
+    }
+    if (parts[0] === 'courses' || parts[0] === 'course' || parts[0] === 'library') {
+      return { type: 'course_list', tab: 'library' };
+    }
   }
 
   // 2. Flashcards: /flashcards or /flashcard
@@ -26,7 +39,7 @@ export function parseRoute(pathname: string): AppRoute {
   if (parts[0] === 'course' || parts[0] === 'courses') {
     const courseId = parts[1];
     if (!courseId) {
-      return { type: 'course_list' };
+      return { type: 'course_list', tab: 'library' };
     }
 
     if (parts.length === 2) {
@@ -47,12 +60,14 @@ export function parseRoute(pathname: string): AppRoute {
   }
 
   // Default fallback to course list
-  return { type: 'course_list' };
+  return { type: 'course_list', tab: 'library' };
 }
 
 export function buildRouteUrl(route: AppRoute): string {
   switch (route.type) {
     case 'course_list':
+      if (route.tab === 'home') return '/home';
+      if (route.tab === 'stats') return '/stats';
       return '/courses';
     case 'course_detail':
       return `/course/${route.courseId}`;

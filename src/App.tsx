@@ -66,8 +66,9 @@ import {
   saveCustomQuizSets,
   deleteCustomCourse,
   deleteCustomQuizSet,
+  recordRecentCourse,
 } from './utils/courseStorage';
-import { useAppRouter } from './utils/router';
+import { useAppRouter, type HomeNavTab } from './utils/router';
 import { clearQuizAttemptStorage } from './utils/quizSplit';
 import WoodenFish from './components/WoodenFish';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
@@ -341,6 +342,7 @@ export default function App() {
 
   // Điều hướng chọn môn học
   const handleSelectCourse = (course: Course) => {
+    recordRecentCourse(course.id);
     if (course.id === 'flashcard') {
       navigate('/flashcards');
       return;
@@ -353,6 +355,7 @@ export default function App() {
     const updatedCourses = [...courses, newCourse];
     setCourses(updatedCourses);
     saveCustomCourses(updatedCourses.filter((c) => c.isCustom));
+    recordRecentCourse(newCourse.id);
     // Mở ngay môn học mới tạo
     navigate(`/course/${newCourse.id}`);
   };
@@ -370,6 +373,7 @@ export default function App() {
   // Chọn một đề thi để làm bài
   const handleSelectSet = (setInfo: QuizSetInfo) => {
     const courseId = setInfo.courseId || activeCourse?.id || 'pmg201c';
+    recordRecentCourse(courseId);
     setIsResultView(false);
     setAnswers({});
     setKnowledgeGroupId(null);
@@ -477,6 +481,12 @@ export default function App() {
     navigate('/courses');
   };
 
+  // Điều hướng chuyển tab trên thanh Navbar chính (Trang chủ / Thư viện / Thống kê)
+  const handleNavigateHomeTab = (tab: HomeNavTab) => {
+    navigate({ type: 'course_list', tab });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Điều hướng quay lại danh sách đề thi của môn
   const handleBackToCourseDetail = () => {
     setIsResultView(false);
@@ -505,7 +515,10 @@ export default function App() {
             courses={courses}
             quizSets={quizSets}
             flashcardSets={FLASHCARD_SETS}
+            activeNavTab={route.tab}
+            onChangeNavTab={handleNavigateHomeTab}
             onSelectCourse={handleSelectCourse}
+            onSelectSet={handleSelectSet}
             onSelectFlashcard={handleSelectFlashcard}
             onCreateCourseClick={() => setIsCreateCourseOpen(true)}
             onDeleteCourse={handleDeleteCourse}
@@ -520,6 +533,7 @@ export default function App() {
               quizSets={quizSets}
               onSelectSet={handleSelectSet}
               onBack={handleBackToCourseList}
+              onNavigateTab={handleNavigateHomeTab}
               onCreateQuizSet={handleCreateNewSet}
               onDeleteQuizSet={handleDeleteQuizSet}
             />

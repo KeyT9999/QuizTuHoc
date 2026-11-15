@@ -13,6 +13,7 @@ interface CourseQuizListProps {
   quizSets: QuizSetInfo[];
   onSelectSet: (set: QuizSetInfo) => void;
   onBack: () => void;
+  onNavigateTab?: (tab: 'home' | 'library' | 'stats') => void;
   onCreateQuizSet: () => void;
   onDeleteQuizSet?: (setId: string) => void;
 }
@@ -448,6 +449,7 @@ export default function CourseQuizList({
   quizSets,
   onSelectSet,
   onBack,
+  onNavigateTab,
   onCreateQuizSet,
   onDeleteQuizSet,
 }: CourseQuizListProps) {
@@ -574,8 +576,8 @@ export default function CourseQuizList({
             <button
               type="button"
               className="course-nav-item"
-              onClick={onBack}
-              title="Về trang chủ"
+              onClick={() => (onNavigateTab ? onNavigateTab('home') : onBack())}
+              title="Về trang chủ ôn tập"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -587,7 +589,8 @@ export default function CourseQuizList({
             <button
               type="button"
               className="course-nav-item active"
-              title="Thư viện môn học"
+              onClick={() => (onNavigateTab ? onNavigateTab('library') : onBack())}
+              title="Quay lại Thư viện môn học"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -599,7 +602,8 @@ export default function CourseQuizList({
             <button
               type="button"
               className="course-nav-item"
-              title="Thống kê học tập"
+              onClick={() => (onNavigateTab ? onNavigateTab('stats') : onBack())}
+              title="Xem thống kê học tập cá nhân"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <line x1="18" y1="20" x2="18" y2="10" />
