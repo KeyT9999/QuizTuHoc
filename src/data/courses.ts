@@ -55,8 +55,8 @@ export const DEFAULT_COURSES: Course[] = [
     id: 'jpd123',
     code: 'JPD123',
     name: 'Tiếng Nhật JPD123',
-    description: 'Bộ 6 đề luyện tập tiếng Nhật JPD123 (PT1, FA25, SP26, SU26) với các câu hỏi trắc nghiệm từ vựng, đọc hiểu và ngữ pháp.',
-    badge: '6 bộ đề',
+    description: 'Bao gồm 6 bộ đề luyện tập sẵn có và 7 bộ đề thi PT1, Final/Retake từ FUSTATION các kỳ FA26, SU26, SP26 (tổng 13 bộ đề · 400 câu hỏi từ vựng, chữ Hán, ngữ pháp và đọc hiểu).',
+    badge: '13 bộ đề',
   },
   {
     id: 'cchn',
@@ -125,8 +125,8 @@ export const DEFAULT_COURSES: Course[] = [
     id: 'ite302c',
     code: 'ITE302c',
     name: 'Đạo đức trong CNTT (Ethics in IT)',
-    description: 'Đề thi Final Exam kỳ SU26 (60 câu trắc nghiệm chuẩn có đáp án về đạo đức nghề nghiệp CNTT, quyền riêng tư dữ liệu, sở hữu trí tuệ, an ninh mạng và AI có trách nhiệm).',
-    badge: '1 bộ đề',
+    description: 'Bao gồm trọn bộ 5 đề thi Final/Retake các kỳ SU26, SP26 và SU25 từ FUSTATION (tổng 300 câu trắc nghiệm chuẩn có đáp án về đạo đức nghề nghiệp CNTT, quyền riêng tư dữ liệu, sở hữu trí tuệ, an ninh mạng và AI có trách nhiệm).',
+    badge: '5 bộ đề',
   },
   {
     id: 'flashcard',
