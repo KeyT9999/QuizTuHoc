@@ -32,13 +32,13 @@ interface SubjectTheme {
 function getCourseTheme(courseId: string, courseCode: string, activeTheme = 'default'): SubjectTheme {
   const code = (courseCode || courseId).toUpperCase();
   let icon: SubjectTheme['icon'] = 'grad-cap';
-  if (code.includes('MLN111')) icon = 'book';
-  else if (code.includes('MLN122')) icon = 'landmark';
-  else if (code.includes('PMG201')) icon = 'folder';
-  else if (code.includes('SWD392')) icon = 'code';
+  if (code.includes('MLN111') || code.includes('ITE302')) icon = 'book';
+  else if (code.includes('MLN122') || code.includes('IPR102')) icon = 'landmark';
+  else if (code.includes('PMG201') || code.includes('EVN301')) icon = 'folder';
+  else if (code.includes('SWD392') || code.includes('PRM393')) icon = 'code';
   else if (code.includes('SDN302')) icon = 'cloud';
-  else if (code.includes('JPD')) icon = 'globe';
-  else if (code.includes('CCHN') || code.includes('MKT')) icon = 'tag';
+  else if (code.includes('JPD') || code.includes('MCO302')) icon = 'globe';
+  else if (code.includes('CCHN') || code.includes('MKT') || code.includes('BRA301')) icon = 'tag';
   else if (courseId === 'flashcard') icon = 'cards';
 
   if (activeTheme === 'lotus-zen-sanctuary') {
@@ -143,6 +143,33 @@ function getCourseTheme(courseId: string, courseCode: string, activeTheme = 'def
       border: '#fef3c7',
       hoverShadow: 'rgba(245, 158, 11, 0.16)',
       icon: 'tag',
+    };
+  }
+  if (code.includes('IPR102')) {
+    return {
+      primary: '#0f766e',
+      soft: '#f0fdfa',
+      border: '#ccfbf1',
+      hoverShadow: 'rgba(15, 118, 110, 0.16)',
+      icon: 'landmark',
+    };
+  }
+  if (code.includes('PRM393')) {
+    return {
+      primary: '#0284c7',
+      soft: '#f0f9ff',
+      border: '#bae6fd',
+      hoverShadow: 'rgba(2, 132, 199, 0.16)',
+      icon: 'code',
+    };
+  }
+  if (code.includes('ITE302')) {
+    return {
+      primary: '#d97706',
+      soft: '#fffbeb',
+      border: '#fde68a',
+      hoverShadow: 'rgba(217, 119, 6, 0.16)',
+      icon: 'book',
     };
   }
   if (courseId === 'flashcard') {

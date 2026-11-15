@@ -395,7 +395,7 @@ function CourseHeroVisual({ theme }: { theme?: string }) {
 // Icon for course hero rounded square
 function renderCourseHeroIcon(code: string) {
   const c = code.toUpperCase();
-  if (c.includes('MLN111')) {
+  if (c.includes('MLN111') || c.includes('ITE302')) {
     // Open Book
     return (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -404,7 +404,7 @@ function renderCourseHeroIcon(code: string) {
       </svg>
     );
   }
-  if (c.includes('MLN122')) {
+  if (c.includes('MLN122') || c.includes('IPR102')) {
     // Landmark
     return (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -417,7 +417,7 @@ function renderCourseHeroIcon(code: string) {
       </svg>
     );
   }
-  if (c.includes('PMG201')) {
+  if (c.includes('PMG201') || c.includes('EVN301')) {
     // Folder
     return (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -425,7 +425,7 @@ function renderCourseHeroIcon(code: string) {
       </svg>
     );
   }
-  if (c.includes('SWD392')) {
+  if (c.includes('SWD392') || c.includes('PRM393')) {
     // Code
     return (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
