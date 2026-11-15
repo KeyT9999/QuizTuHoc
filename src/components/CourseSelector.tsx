@@ -6,6 +6,13 @@ import { calculateCourseProgress, getFlashcardProgress } from '../utils/courseSt
 import PassedBadge from './PassedBadge';
 import { useTheme } from '../context/ThemeContext';
 import ThemeHero3DDiorama from './ThemeHero3DDiorama';
+import {
+  COURSE_CATEGORIES,
+  CATEGORY_META_MAP,
+  getCourseCategories,
+  courseMatchesCategory,
+  type CourseCategory,
+} from '../utils/courseCategories';
 import './CourseSelector.css';
 
 interface CourseSelectorProps {
@@ -18,7 +25,6 @@ interface CourseSelectorProps {
   onDeleteCourse: (courseId: string) => void;
 }
 
-type CategoryType = 'all' | 'politics' | 'economics' | 'pm' | 'it';
 type SortType = 'default' | 'name_asc' | 'progress_desc' | 'questions_desc';
 
 interface SubjectTheme {
@@ -29,17 +35,18 @@ interface SubjectTheme {
   icon: 'book' | 'landmark' | 'folder' | 'code' | 'cloud' | 'globe' | 'tag' | 'cards' | 'grad-cap';
 }
 
-function getCourseTheme(courseId: string, courseCode: string, activeTheme = 'default'): SubjectTheme {
-  const code = (courseCode || courseId).toUpperCase();
-  let icon: SubjectTheme['icon'] = 'grad-cap';
-  if (code.includes('MLN111') || code.includes('ITE302')) icon = 'book';
-  else if (code.includes('MLN122') || code.includes('IPR102')) icon = 'landmark';
-  else if (code.includes('PMG201') || code.includes('EVN301')) icon = 'folder';
-  else if (code.includes('SWD392') || code.includes('PRM393')) icon = 'code';
-  else if (code.includes('SDN302')) icon = 'cloud';
-  else if (code.includes('JPD') || code.includes('MCO302')) icon = 'globe';
-  else if (code.includes('CCHN') || code.includes('MKT') || code.includes('BRA301')) icon = 'tag';
-  else if (courseId === 'flashcard') icon = 'cards';
+function getCourseTheme(course: Course, activeTheme = 'default'): SubjectTheme {
+  const courseId = course.id;
+  const code = (course.code || courseId).toUpperCase();
+  const primaryCat = getCourseCategories(course)[0] || 'it';
+  const catMeta = CATEGORY_META_MAP[primaryCat];
+
+  let icon: SubjectTheme['icon'] = catMeta.icon;
+  if (code.includes('SDN302') || code.includes('PRC392') || code.includes('CES202') || code.includes('OSP201')) {
+    icon = 'cloud';
+  } else if (courseId === 'flashcard') {
+    icon = 'cards';
+  }
 
   if (activeTheme === 'lotus-zen-sanctuary') {
     return {
@@ -182,11 +189,11 @@ function getCourseTheme(courseId: string, courseCode: string, activeTheme = 'def
     };
   }
   return {
-    primary: '#4f46e5',
-    soft: '#eef2ff',
-    border: '#e0e7ff',
-    hoverShadow: 'rgba(79, 70, 229, 0.16)',
-    icon: 'grad-cap',
+    primary: catMeta.primary,
+    soft: catMeta.soft,
+    border: catMeta.border,
+    hoverShadow: catMeta.hoverShadow,
+    icon,
   };
 }
 
@@ -324,7 +331,7 @@ export default function CourseSelector({
   const { theme, openThemeModal, mouseEffectsEnabled, toggleMouseEffects } = useTheme();
   const heroDetails = getHomeHeroDetails(theme);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
+  const [selectedCategory, setSelectedCategory] = useState<CourseCategory>('all');
   const [sortOrder, setSortOrder] = useState<SortType>('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
 
@@ -338,24 +345,25 @@ export default function CourseSelector({
     }
   };
 
-  // Helper to categorize course
-  const courseMatchesCategory = (c: Course, category: CategoryType) => {
-    if (category === 'all') return true;
-    const text = `${c.code} ${c.name} ${c.description}`.toLowerCase();
-    if (category === 'politics') {
-      return text.includes('mln111') || text.includes('mln122') || text.includes('mác') || text.includes('lênin') || text.includes('chính trị') || text.includes('triết học');
+  // Đếm số lượng môn học thuộc từng khối ngành (bao gồm các môn học chung 2-3 ngành)
+  const categoryCounts = useMemo(() => {
+    const counts: Record<CourseCategory, number> = {
+      all: courses.length,
+      it: 0,
+      economics: 0,
+      marketing: 0,
+      media: 0,
+      design: 0,
+      politics: 0,
+      language: 0,
+    };
+    for (const c of courses) {
+      for (const cat of getCourseCategories(c)) {
+        counts[cat] = (counts[cat] || 0) + 1;
+      }
     }
-    if (category === 'economics') {
-      return text.includes('mln122') || text.includes('cchn') || text.includes('kinh tế') || text.includes('marketing') || text.includes('thương hiệu');
-    }
-    if (category === 'pm') {
-      return text.includes('pmg') || text.includes('quản lý dự án') || text.includes('project');
-    }
-    if (category === 'it') {
-      return text.includes('swd') || text.includes('sdn') || text.includes('software') || text.includes('cloud') || text.includes('kiến trúc') || text.includes('cntt') || text.includes('lập trình');
-    }
-    return true;
-  };
+    return counts;
+  }, [courses]);
 
   // Compute filtered & sorted courses
   const displayedCourses = useMemo(() => {
@@ -609,70 +617,68 @@ export default function CourseSelector({
 
         {/* Category Chips */}
         <div className="home-category-chips">
-          <button
-            type="button"
-            className={`home-category-chip ${selectedCategory === 'all' ? 'active' : ''}`}
-            onClick={() => setSelectedCategory('all')}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-              <rect x="3" y="3" width="7" height="7" />
-              <rect x="14" y="3" width="7" height="7" />
-              <rect x="14" y="14" width="7" height="7" />
-              <rect x="3" y="14" width="7" height="7" />
-            </svg>
-            <span>Tất cả</span>
-          </button>
-
-          <button
-            type="button"
-            className={`home-category-chip ${selectedCategory === 'politics' ? 'active' : ''}`}
-            onClick={() => setSelectedCategory('politics')}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-            </svg>
-            <span>Lý luận chính trị</span>
-          </button>
-
-          <button
-            type="button"
-            className={`home-category-chip ${selectedCategory === 'economics' ? 'active' : ''}`}
-            onClick={() => setSelectedCategory('economics')}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <line x1="3" y1="22" x2="21" y2="22" />
-              <line x1="6" y1="18" x2="6" y2="11" />
-              <line x1="10" y1="18" x2="10" y2="11" />
-              <line x1="14" y1="18" x2="14" y2="11" />
-              <line x1="18" y1="18" x2="18" y2="11" />
-              <polygon points="12 2 20 7 4 7" />
-            </svg>
-            <span>Kinh tế</span>
-          </button>
-
-          <button
-            type="button"
-            className={`home-category-chip ${selectedCategory === 'pm' ? 'active' : ''}`}
-            onClick={() => setSelectedCategory('pm')}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-            </svg>
-            <span>Quản lý dự án</span>
-          </button>
-
-          <button
-            type="button"
-            className={`home-category-chip ${selectedCategory === 'it' ? 'active' : ''}`}
-            onClick={() => setSelectedCategory('it')}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
-            </svg>
-            <span>Công nghệ thông tin</span>
-          </button>
+          {COURSE_CATEGORIES.map((cat) => (
+            <button
+              key={cat.key}
+              type="button"
+              className={`home-category-chip ${selectedCategory === cat.key ? 'active' : ''}`}
+              onClick={() => setSelectedCategory(cat.key)}
+            >
+              {cat.key === 'all' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+              ) : cat.key === 'it' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              ) : cat.key === 'economics' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <line x1="3" y1="22" x2="21" y2="22" />
+                  <line x1="6" y1="18" x2="6" y2="11" />
+                  <line x1="10" y1="18" x2="10" y2="11" />
+                  <line x1="14" y1="18" x2="14" y2="11" />
+                  <line x1="18" y1="18" x2="18" y2="11" />
+                  <polygon points="12 2 20 7 4 7" />
+                </svg>
+              ) : cat.key === 'marketing' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                  <circle cx="7" cy="7" r="1.5" />
+                </svg>
+              ) : cat.key === 'media' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+              ) : cat.key === 'design' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                  <path d="M2 2l7.586 7.586" />
+                  <circle cx="11" cy="11" r="2" />
+                </svg>
+              ) : cat.key === 'politics' ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+              )}
+              <span>{cat.label}</span>
+              <span className="home-category-count">{categoryCounts[cat.key]}</span>
+            </button>
+          ))}
         </div>
       </section>
 
@@ -698,7 +704,8 @@ export default function CourseSelector({
             </div>
           ) : (
             displayedCourses.map((course) => {
-              const courseTheme = getCourseTheme(course.id, course.code, theme);
+              const courseTheme = getCourseTheme(course, theme);
+              const courseCategories = getCourseCategories(course);
 
               const handleCardPointerMove = (e: React.MouseEvent<HTMLElement>) => {
                 if (!mouseEffectsEnabled) return;
@@ -844,6 +851,24 @@ export default function CourseSelector({
                     <div className="subject-info-body">
                       <div className="subject-pill-row">
                         <span className="subject-code-badge">Môn {course.code}</span>
+                        {courseCategories.map((catKey) => {
+                          const cm = CATEGORY_META_MAP[catKey];
+                          return (
+                            <span
+                              key={catKey}
+                              className="subject-major-tag"
+                              style={
+                                {
+                                  '--tag-color': cm.primary,
+                                  '--tag-bg': cm.soft,
+                                  '--tag-border': cm.border,
+                                } as React.CSSProperties
+                              }
+                            >
+                              {cm.shortLabel}
+                            </span>
+                          );
+                        })}
                         {course.isCustom && (
                           <span className="subject-custom-tag">Tự tạo</span>
                         )}
