@@ -97,7 +97,7 @@ export const DEFAULT_COURSES: Course[] = [
     id: 'evn301',
     code: 'EVN301',
     name: 'Quản lý sự kiện',
-    description: 'Ngân hàng 136 câu hỏi về lập kế hoạch, vận hành, marketing, an toàn và đánh giá sự kiện.',
+    description: 'Ngân hàng 167 câu hỏi về lập kế hoạch, vận hành, marketing, an toàn và đánh giá sự kiện.',
     badge: '1 quiz',
   },
   {

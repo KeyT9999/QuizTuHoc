@@ -543,9 +543,9 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     id: 'evn301_quiz_ba_khi',
     courseId: 'evn301',
     title: 'EVN301-Quiz Bá Khí',
-    description: 'Bộ 136 câu hỏi EVN301 về lập kế hoạch, ngân sách, địa điểm, vận hành, marketing và đánh giá sự kiện.',
+    description: 'Bộ 167 câu hỏi EVN301 về lập kế hoạch, ngân sách, địa điểm, vận hành, marketing và đánh giá sự kiện.',
     category: 'Môn EVN301',
-    badge: '136 câu',
+    badge: '167 câu',
     rawText: SAMPLE_QUIZ_EVN301,
   },
   {
