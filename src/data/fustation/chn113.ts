@@ -1,5 +1,27 @@
 // Auto-generated FUSTATION quiz sets for CHN113 (Hán ngữ sơ cấp 1)
 
+export const QUIZ_CHN113_SU26_RE_L_125227 = [
+  "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nB",
+  "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nB",
+  "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nA",
+  "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nA",
+  "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nA",
+  "Bài 2: Nghe, chọn tranh phù hợp với nội dung nghe được (Mỗi câu nghe 2 lần) Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nB",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nA",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nB",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nC",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nA",
+  "Bài 3: Nghe, chọn tranh phù hợp với nội dung nghe được (Mỗi câu nghe 2 lần) Từ câu 11 đến câu 15 Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nD. Hình 4\nE. Hình 5\nC",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nD. Hình 4\nE. Hình 5\nB",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nD. Hình 4\nE. Hình 5\nD",
+  "Chọn tranh phù hợp với nội dung nghe được\nA. Hình 1\nB. Hình 2\nC. Hình 3\nD. Hình 4\nE. Hình 5\nA",
+  "Bài 4: Nghe chọn đáp án đúng (Mỗi câu nghe 2 lần) Từ câu 16 đến câu 20 Nghe chọn đáp án đúng\nA. 他 t a ˉ 老 l a ˇ o 师 sh ı ˉ\nB. 他 t a ˉ 同 t o ˊ ng 学 xu e ˊ\nC. 他 t a ˉ 的 de 学 xu e ˊ 生 sh e ˉ ng\nB",
+  "Nghe chọn đáp án đúng\nA. 星 x ı ˉ ng 期 q ı ˉ 二 e ˋ r\nB. 星 x ı ˉ ng 期 q ı ˉ 四 s ı ˋ\nC. 星 x ı ˉ ng 期 q ı ˉ 日 r ı ˋ\nA",
+  "Nghe chọn đáp án đúng\nA. 猫 m a ˉ o\nB. 电 di a ˋ n 视 sh ı ˋ\nC. 电 di a ˋ n 脑 n a ˇ o\nC",
+  "Nghe chọn đáp án đúng\nA. 机 j ı ˉ 场 ch a ˊ ng\nB. 饭 f a ˋ n 馆 gu a ˇ n 儿 e ˊ r\nC. 火 hu o ˇ 车 ch e ˉ 站 zh a ˋ n\nB",
+  "Nghe chọn đáp án đúng\nA. 很 h e ˇ n 热 r e ˋ\nB. 下 xi a ˋ 雨 y u ˇ 了 le\nC. 太 t a ˋ i 冷 l e ˇ ng 了 le\nC",
+].join('\n\n');
+
 export const QUIZ_CHN113_SU26_FE_L_243544 = [
   "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nB",
   "Nhìn tranh, nghe và phán đoán đúng sai\nA. Đúng\nB. Sai\nB",

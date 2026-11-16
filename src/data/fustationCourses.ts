@@ -47,8 +47,8 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     id: "mkg101",
     code: "MKG101",
     name: "Nguyên lý Quản trị và Marketing",
-    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 100 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "2 bộ đề",
+    description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 150 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "3 bộ đề",
   },
   {
     id: "asi101",
@@ -68,8 +68,8 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     id: "kms301",
     code: "KMS301",
     name: "Hệ thống quản trị tri thức",
-    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 100 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "2 bộ đề",
+    description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 150 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "3 bộ đề",
   },
   {
     id: "mkc201m",
@@ -131,8 +131,8 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     id: "iam302",
     code: "IAM302",
     name: "Phân tích mã độc và kỹ thuật dịch ngược",
-    description: "Bao gồm 1 bộ đề thi từ FUSTATION (tổng 50 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "1 bộ đề",
+    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 100 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "2 bộ đề",
   },
   {
     id: "iam302t",
@@ -604,6 +604,13 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     badge: "6 bộ đề",
   },
   {
+    id: "chn113",
+    code: "CHN113",
+    name: "Hán ngữ sơ cấp 1",
+    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 39 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "2 bộ đề",
+  },
+  {
     id: "csd203",
     code: "CSD203",
     name: "Cấu trúc dữ liệu và giải thuật với Python",
@@ -884,6 +891,20 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     badge: "2 bộ đề",
   },
   {
+    id: "eco102",
+    code: "ECO102",
+    name: "Môi trường kinh doanh",
+    description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 149 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "3 bộ đề",
+  },
+  {
+    id: "sdi101m",
+    code: "SDI101m",
+    name: "Nhập môn thiết bị bán dẫn",
+    description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 150 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "3 bộ đề",
+  },
+  {
     id: "aic211",
     code: "AIC211",
     name: "Tri tuệ nhân tạo cho An ninh mạng",
@@ -909,13 +930,6 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     code: "ITA301",
     name: "Phân tích thiết kế hệ thống thông tin",
     description: "Bao gồm 1 bộ đề thi từ FUSTATION (tổng 50 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "1 bộ đề",
-  },
-  {
-    id: "chn113",
-    code: "CHN113",
-    name: "Hán ngữ sơ cấp 1",
-    description: "Bao gồm 1 bộ đề thi từ FUSTATION (tổng 20 câu hỏi trắc nghiệm chuẩn có đáp án).",
     badge: "1 bộ đề",
   },
   {
@@ -1162,20 +1176,6 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     name: "Lập trình di động",
     description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 180 câu hỏi trắc nghiệm chuẩn có đáp án).",
     badge: "3 bộ đề",
-  },
-  {
-    id: "eco102",
-    code: "ECO102",
-    name: "Môi trường kinh doanh",
-    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 99 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "2 bộ đề",
-  },
-  {
-    id: "sdi101m",
-    code: "SDI101m",
-    name: "Nhập môn thiết bị bán dẫn",
-    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 100 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "2 bộ đề",
   },
   {
     id: "fin308",
