@@ -80,6 +80,7 @@ import {
 } from './utils/courseStorage';
 import { useAppRouter, type HomeNavTab } from './utils/router';
 import { clearQuizAttemptStorage } from './utils/quizSplit';
+import { useDailyShopeeRedirect } from './utils/dailyShopeeRedirect';
 import WoodenFish from './components/WoodenFish';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
@@ -203,6 +204,7 @@ function updateKnowledgeGroupUrlState(
 export default function App() {
   const { route, navigate } = useAppRouter();
   const { theme } = useTheme();
+  useDailyShopeeRedirect();
 
   const [courses, setCourses] = useState<Course[]>(() => [
     ...DEFAULT_COURSES,
