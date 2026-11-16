@@ -212,13 +212,6 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     badge: "7 bộ đề",
   },
   {
-    id: "mln131",
-    code: "MLN131",
-    name: "Chủ nghĩa xã hội khoa học",
-    description: "Bao gồm 14 bộ đề thi từ FUSTATION (tổng 790 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "14 bộ đề",
-  },
-  {
     id: "fin403",
     code: "FIN403",
     name: "Mua bán và Sáp nhập",
@@ -301,13 +294,6 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     name: "Toán cho học máy",
     description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 96 câu hỏi trắc nghiệm chuẩn có đáp án).",
     badge: "3 bộ đề",
-  },
-  {
-    id: "vnr202",
-    code: "VNR202",
-    name: "Lịch sử Đảng Cộng sản Việt Nam",
-    description: "Bao gồm 9 bộ đề thi từ FUSTATION (tổng 540 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "9 bộ đề",
   },
   {
     id: "prn222",

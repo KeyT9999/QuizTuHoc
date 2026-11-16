@@ -54,6 +54,8 @@ import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
 import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
 import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
 import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
+import { SAMPLE_QUIZ_VNR202_BAKHI } from './sampleQuizVNR202BaKhi';
+import { SAMPLE_QUIZ_MLN131_BAKHI } from './sampleQuizMLN131BaKhi';
 import {
   SAMPLE_QUIZ_IPR102_SU26_FE_873863,
   SAMPLE_QUIZ_IPR102_SP26_FE_138652,
@@ -665,6 +667,26 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn MCO302',
     badge: '285 câu',
     rawText: SAMPLE_QUIZ_MCO302,
+  },
+  {
+    id: 'vnr202_quiz_ba_khi',
+    courseId: 'vnr202',
+    title: 'Quiz Bá Khí',
+    description: 'Bộ ngân hàng 440 câu hỏi trắc nghiệm VNR202 (Lịch sử Đảng Cộng sản Việt Nam) chuẩn có đáp án, chia theo 8 chuyên đề lịch sử.',
+    category: 'Môn VNR202',
+    badge: 'Đề chuẩn 440 câu',
+    questionCount: 440,
+    rawText: SAMPLE_QUIZ_VNR202_BAKHI,
+  },
+  {
+    id: 'mln131_quiz_ba_khi',
+    courseId: 'mln131',
+    title: 'Quiz Bá Khí',
+    description: 'Bộ ngân hàng 464 câu hỏi trắc nghiệm MLN131 (Chủ nghĩa xã hội khoa học) chuẩn có đáp án, chia theo 7 chương kiến thức trọng tâm.',
+    category: 'Môn MLN131',
+    badge: 'Đề chuẩn 464 câu',
+    questionCount: 464,
+    rawText: SAMPLE_QUIZ_MLN131_BAKHI,
   },
   {
     id: 'ipr102_su26_fe_873863',

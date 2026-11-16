@@ -33,6 +33,20 @@ const BASE_COURSES: Course[] = [
     badge: '17 bộ đề',
   },
   {
+    id: 'mln131',
+    code: 'MLN131',
+    name: 'Chủ nghĩa xã hội khoa học',
+    description: 'Bao gồm ngân hàng Quiz Bá Khí 464 câu và 14 bộ đề thi từ FUSTATION (tổng 15 bộ đề · 1.254 câu hỏi trắc nghiệm chuẩn có đáp án).',
+    badge: '15 bộ đề',
+  },
+  {
+    id: 'vnr202',
+    code: 'VNR202',
+    name: 'Lịch sử Đảng Cộng sản Việt Nam',
+    description: 'Bao gồm ngân hàng Quiz Bá Khí 440 câu và 9 bộ đề thi từ FUSTATION (tổng 10 bộ đề · 980 câu hỏi trắc nghiệm chuẩn có đáp án).',
+    badge: '10 bộ đề',
+  },
+  {
     id: 'pmg201c',
     code: 'PMG201c',
     name: 'Quản lý dự án CNTT',

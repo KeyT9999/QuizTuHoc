@@ -60,6 +60,16 @@ import {
   MCO302_KNOWLEDGE_GROUPS,
 } from './data/mco302KnowledgeGroups';
 import {
+  getVnr202KnowledgeGroupId,
+  getVnr202QuestionsForGroup,
+  VNR202_KNOWLEDGE_GROUPS,
+} from './data/vnr202KnowledgeGroups';
+import {
+  getMln131KnowledgeGroupId,
+  getMln131QuestionsForGroup,
+  MLN131_KNOWLEDGE_GROUPS,
+} from './data/mln131KnowledgeGroups';
+import {
   loadCustomCourses,
   saveCustomCourses,
   loadCustomQuizSets,
@@ -142,6 +152,18 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: MCO302_KNOWLEDGE_GROUPS,
     getGroupId: getMco302KnowledgeGroupId,
     filterQuestions: getMco302QuestionsForGroup,
+  },
+  vnr202_quiz_ba_khi: {
+    courseLabel: 'VNR202',
+    groups: VNR202_KNOWLEDGE_GROUPS,
+    getGroupId: getVnr202KnowledgeGroupId,
+    filterQuestions: getVnr202QuestionsForGroup,
+  },
+  mln131_quiz_ba_khi: {
+    courseLabel: 'MLN131',
+    groups: MLN131_KNOWLEDGE_GROUPS,
+    getGroupId: getMln131KnowledgeGroupId,
+    filterQuestions: getMln131QuestionsForGroup,
   },
 };
 
