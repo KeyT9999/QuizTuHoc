@@ -53,6 +53,8 @@ import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
 import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
 import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
 import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
+import { SAMPLE_QUIZ_VNC } from './sampleQuizVNC';
+import { SAMPLE_QUIZ_SSA } from './sampleQuizSSA';
 import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
 import { SAMPLE_QUIZ_VNR202_BAKHI } from './sampleQuizVNR202BaKhi';
 import { SAMPLE_QUIZ_MLN131_BAKHI } from './sampleQuizMLN131BaKhi';
@@ -658,6 +660,26 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn EVN301',
     badge: '279 câu',
     rawText: SAMPLE_QUIZ_EVN301,
+  },
+  {
+    id: 'vnc_quiz_ba_khi',
+    courseId: 'vnc',
+    title: 'VNC-Quiz Bá Khí',
+    description: 'Bộ 498 câu hỏi VNC về văn hóa, lịch sử, địa lý, tín ngưỡng và đời sống Việt Nam; chia thành 12 nhóm học.',
+    category: 'Môn VNC',
+    badge: '498 câu · 12 nhóm',
+    questionCount: 498,
+    rawText: SAMPLE_QUIZ_VNC,
+  },
+  {
+    id: 'ssa_quiz_ba_khi',
+    courseId: 'ssa',
+    title: 'SSA-Quiz Bá Khí',
+    description: 'Bộ 153 câu hỏi SSA về kỹ năng học tập, tư duy, thời gian, năng lực số và liêm chính học thuật; chia thành 6 nhóm học.',
+    category: 'Môn SSA',
+    badge: '153 câu · 6 nhóm',
+    questionCount: 153,
+    rawText: SAMPLE_QUIZ_SSA,
   },
   {
     id: 'mco302_quiz_ba_khi',

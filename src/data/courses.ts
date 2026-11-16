@@ -117,6 +117,20 @@ const BASE_COURSES: Course[] = [
     badge: '6 bộ đề',
   },
   {
+    id: 'vnc',
+    code: 'VNC',
+    name: 'Văn hóa Việt Nam',
+    description: 'Bộ 498 câu hỏi về địa lý, lịch sử, tôn giáo, phong tục, gia đình, nghệ thuật và đời sống văn hóa Việt Nam.',
+    badge: '1 quiz · 498 câu',
+  },
+  {
+    id: 'ssa',
+    code: 'SSA',
+    name: 'Kỹ năng học tập & thành công sinh viên',
+    description: 'Bộ 153 câu hỏi về tư duy, quản lý thời gian, chiến lược học tập, năng lực thông tin, AI có trách nhiệm và giao tiếp.',
+    badge: '1 quiz · 153 câu',
+  },
+  {
     id: 'mco302',
     code: 'MCO302',
     name: 'Giao tiếp Liên văn hóa (Intercultural Communication)',

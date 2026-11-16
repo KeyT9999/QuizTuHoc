@@ -55,6 +55,16 @@ import {
   EVN301_KNOWLEDGE_GROUPS,
 } from './data/evn301KnowledgeGroups';
 import {
+  getVNCKnowledgeGroupId,
+  getVNCQuestionsForGroup,
+  VNC_KNOWLEDGE_GROUPS,
+} from './data/vncKnowledgeGroups';
+import {
+  getSSAKnowledgeGroupId,
+  getSSAQuestionsForGroup,
+  SSA_KNOWLEDGE_GROUPS,
+} from './data/ssaKnowledgeGroups';
+import {
   getMco302KnowledgeGroupId,
   getMco302QuestionsForGroup,
   MCO302_KNOWLEDGE_GROUPS,
@@ -147,6 +157,18 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: EVN301_KNOWLEDGE_GROUPS,
     getGroupId: getEvn301KnowledgeGroupId,
     filterQuestions: getEvn301QuestionsForGroup,
+  },
+  vnc_quiz_ba_khi: {
+    courseLabel: 'VNC',
+    groups: VNC_KNOWLEDGE_GROUPS,
+    getGroupId: getVNCKnowledgeGroupId,
+    filterQuestions: getVNCQuestionsForGroup,
+  },
+  ssa_quiz_ba_khi: {
+    courseLabel: 'SSA',
+    groups: SSA_KNOWLEDGE_GROUPS,
+    getGroupId: getSSAKnowledgeGroupId,
+    filterQuestions: getSSAQuestionsForGroup,
   },
   mco302_quiz_ba_khi: {
     courseLabel: 'MCO302',
