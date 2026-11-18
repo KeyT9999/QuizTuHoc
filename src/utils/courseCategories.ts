@@ -170,7 +170,7 @@ export function getCourseCategories(course: Pick<Course, 'code' | 'name' | 'desc
 
   // 4. Kinh tế, Quản trị kinh doanh, Tài chính - Kế toán, Kinh doanh quốc tế, Logistics
   if (
-    /^(ECO|ACC|FAC|FIN|BKG|SCM|GLA|GLC|GLI|LOG|IIP|IBF|IBC|IBI|IEI|MGT|OBE|HRM|SYB|TTM|SAL|CCHN|MKG|MKT101|MKT201|MKT202|MKT205|MKT301|MKT309|BRA301|EVN|ISC|ISM302|BPS|DSS|ITB|KMS|MAS202|SSB|RMB)/.test(code) ||
+    /^(ECO|ACC|FAC|FIN|BKG|SCM|GLA|GLC|GLI|LOG|IOM|IIP|IBF|IBC|IBI|IEI|MGT|OBE|HRM|SYB|TTM|SAL|CCHN|MKG|MKT101|MKT201|MKT202|MKT205|MKT301|MKT309|BRA301|EVN|ISC|ISM302|BPS|DSS|ITB|KMS|MAS202|SSB|RMB)/.test(code) ||
     code === 'PMG201C' ||
     code === 'FLASHCARD' ||
     code === 'DTA301' ||
@@ -193,7 +193,7 @@ export function getCourseCategories(course: Pick<Course, 'code' | 'name' | 'desc
 
   // 5. Công nghệ thông tin (Kỹ thuật phần mềm, AI/Data, An toàn thông tin, Vi mạch, Ô tô số, HTTT)
   if (
-    /^(CSI|PRF|PRO|PFP|PRP|APO|PCP|CSD|DBI|DBM|DBS|OSG|OSP|NWC|CEA|SWE|SWR|SWT|SWD|SDN|PRJ|PRN|PRM|MMA|FER|WED|WDU|HSF|SBA|MSS|PRC|MSA|SAP|PRU|AIG|AIL|AIM|AID|AIE|AIH|REL|CPV|NLP|MAI|MAD|MAE|MAS291|BDI|DTA|DAT|ADY|DSR|IAA|IAO|IAM|IAP|HOD402|FRS|CRY|AIC|SPM|CES|ITA|ISM302|BPS|DSS|ITB|KMS|IMO|ISC|IOT|EBS|DIC|ELC|EEI|MCP|MCE|FAP|SDI|ASI|ATS|AEE|PMG|ITE|SEG)/.test(code) ||
+    /^(CSI|PRF|PRO|PFP|PRP|APO|PCP|CSD|DBI|DBM|DBS|OSG|OSP|NWC|CEA|SWE|SWR|SWT|SWD|SDN|PRJ|PRN|PRM|MMA|FER|WED|WDU|HSF|SBA|MSS|PRC|MSA|SAP|PRU|PWD|AIG|AIL|AIM|AID|AIE|AIH|REL|CPV|NLP|MAI|MAD|MAE|MAS291|BDI|DTA|DAT|ADY|DSR|IAA|IAO|IAM|IAP|IAW|HOD402|FRS|CRY|AIC|SPM|CES|ITA|ISM302|BPS|DSS|ITB|KMS|IMO|ISC|IOT|EBS|DIC|ELC|EEI|MCP|MCE|FAP|SDI|ASI|ATS|AEE|PMG|ITE|SEG)/.test(code) ||
     code === 'FLASHCARD' ||
     code === 'TMG301' ||
     code === 'DET101C' ||
@@ -260,7 +260,7 @@ function getPrimaryPriority(code: string, cat: MajorCategoryKey): number {
   if (/^(WDU|HOD102|HOA|AET|DET)/.test(code) && cat === 'design') return 0;
   if (/^(CCM|MCO|EVN|PRE|EPR|RMC|CAA|CAM|ISM201|LAE|DPS)/.test(code) && cat === 'media') return 0;
   if (/^(MKT|MKG|MKC|MMK|ADS|SEO|SEG|DMS|DMA|CSP|BRA|CCHN|IMC|IMA|BCJ|SAL)/.test(code) && cat === 'marketing') return 0;
-  if (/^(ECO|ACC|FAC|FIN|BKG|SCM|GLA|GLC|GLI|LOG|IIP|IBF|IBC|IBI|IEI|MGT|OBE|HRM|SYB|TTM|MAS202|SSB|RMB)/.test(code) && cat === 'economics') return 0;
+  if (/^(ECO|ACC|FAC|FIN|BKG|SCM|GLA|GLC|GLI|LOG|IOM|IIP|IBF|IBC|IBI|IEI|MGT|OBE|HRM|SYB|TTM|MAS202|SSB|RMB)/.test(code) && cat === 'economics') return 0;
   return 10;
 }
 

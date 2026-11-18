@@ -29,8 +29,8 @@ const BASE_COURSES: Course[] = [
     id: 'mln122',
     code: 'MLN122',
     name: 'Kinh tế chính trị Mác - Lênin',
-    description: 'Gồm ngân hàng tổng hợp 510 câu, 7 bộ đề sẵn có và 9 bộ đề thi FUSTATION (tổng 17 bộ đề · 1.766 câu hỏi).',
-    badge: '17 bộ đề',
+    description: 'Gồm ngân hàng tổng hợp 510 câu, 7 bộ đề sẵn có và 10 bộ đề thi FUSTATION (tổng 18 bộ đề · 1.826 câu hỏi).',
+    badge: '18 bộ đề',
   },
   {
     id: 'mln131',
