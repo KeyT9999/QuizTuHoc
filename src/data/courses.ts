@@ -106,8 +106,8 @@ const BASE_COURSES: Course[] = [
     id: 'bra301',
     code: 'BRA301',
     name: 'Quản trị thương hiệu',
-    description: 'Ngân hàng 518 câu + 6 bộ đề thi Final/Retake các kỳ SU26, SP26, FA25, SU25 từ FUSTATION (tổng 7 bộ đề · 818 câu trắc nghiệm quản trị thương hiệu).',
-    badge: '7 bộ đề',
+    description: 'Ngân hàng 518 câu + 7 bộ đề thi Final/Retake các kỳ FA26, SU26, SP26, FA25, SU25 từ FUSTATION (tổng 8 bộ đề · 868 câu trắc nghiệm quản trị thương hiệu).',
+    badge: '8 bộ đề',
   },
   {
     id: 'evn301',

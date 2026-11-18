@@ -5920,6 +5920,17 @@ export const FUSTATION_QUIZ_SETS: QuizSetInfo[] = [
     loadRawText: () => import("./fustation/bra301").then((m) => m.QUIZ_BRA301_SU25_FE_718944),
   },
   {
+    id: "fustation_bra301_fa26_fe_951076",
+    courseId: "bra301",
+    title: "BRA301_FA26_FE_951076",
+    description: "Đề thi Final Exam môn BRA301 (Quản trị thương hiệu) mã BRA301_FA26_FE_951076 gồm 50 câu hỏi trắc nghiệm có đáp án.",
+    category: "Môn BRA301",
+    badge: "Final Exam FA26 - 50 câu",
+    rawText: '',
+    questionCount: 50,
+    loadRawText: () => import("./fustation/bra301").then((m) => m.QUIZ_BRA301_FA26_FE_951076),
+  },
+  {
     id: "fustation_log311_su25_fe_541940",
     courseId: "log311",
     title: "LOG311_SU25_FE_541940",
