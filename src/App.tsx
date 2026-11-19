@@ -65,6 +65,11 @@ import {
   SSA_KNOWLEDGE_GROUPS,
 } from './data/ssaKnowledgeGroups';
 import {
+  getDPFKnowledgeGroupId,
+  getDPFQuestionsForGroup,
+  DPF_KNOWLEDGE_GROUPS,
+} from './data/dpfKnowledgeGroups';
+import {
   getMco302KnowledgeGroupId,
   getMco302QuestionsForGroup,
   MCO302_KNOWLEDGE_GROUPS,
@@ -169,6 +174,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: SSA_KNOWLEDGE_GROUPS,
     getGroupId: getSSAKnowledgeGroupId,
     filterQuestions: getSSAQuestionsForGroup,
+  },
+  dpf_final_full: {
+    courseLabel: 'DPF',
+    groups: DPF_KNOWLEDGE_GROUPS,
+    getGroupId: getDPFKnowledgeGroupId,
+    filterQuestions: getDPFQuestionsForGroup,
   },
   mco302_quiz_ba_khi: {
     courseLabel: 'MCO302',

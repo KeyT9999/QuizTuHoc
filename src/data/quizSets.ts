@@ -55,6 +55,7 @@ import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
 import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
 import { SAMPLE_QUIZ_VNC } from './sampleQuizVNC';
 import { SAMPLE_QUIZ_SSA } from './sampleQuizSSA';
+import { SAMPLE_QUIZ_DPF } from './sampleQuizDPF';
 import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
 import { SAMPLE_QUIZ_VNR202_BAKHI } from './sampleQuizVNR202BaKhi';
 import { SAMPLE_QUIZ_MLN131_BAKHI } from './sampleQuizMLN131BaKhi';
@@ -680,6 +681,16 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     badge: '153 câu · 6 nhóm',
     questionCount: 153,
     rawText: SAMPLE_QUIZ_SSA,
+  },
+  {
+    id: 'dpf_final_full',
+    courseId: 'dpf',
+    title: 'DPF — Bộ đề tổng hợp FINAL (KEY CHÍNH + TỪ SLIDE)',
+    description: 'Bộ 183 câu hỏi tổng hợp đã lọc trùng từ tài liệu FINAL (KEY CHÍNH & TỪ SLIDE) về Nguyên lý Quản trị và Marketing; chia thành 7 nhóm kiến thức.',
+    category: 'Môn DPF',
+    badge: '183 câu · 7 nhóm',
+    questionCount: 183,
+    rawText: SAMPLE_QUIZ_DPF,
   },
   {
     id: 'mco302_quiz_ba_khi',

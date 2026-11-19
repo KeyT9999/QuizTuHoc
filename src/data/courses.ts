@@ -131,6 +131,13 @@ const BASE_COURSES: Course[] = [
     badge: '1 quiz · 153 câu',
   },
   {
+    id: 'dpf',
+    code: 'DPF',
+    name: 'Nguyên lý Quản trị & Marketing — DPF',
+    description: 'Bộ tổng hợp 183 câu hỏi trắc nghiệm từ tài liệu FINAL (KEY CHÍNH + TỪ SLIDE, đã lọc trùng), chia thành 7 nhóm kiến thức về quản trị, môi trường marketing, nghiên cứu thị trường, STP, 4P và truyền thông.',
+    badge: '1 quiz · 183 câu',
+  },
+  {
     id: 'mco302',
     code: 'MCO302',
     name: 'Giao tiếp Liên văn hóa (Intercultural Communication)',
