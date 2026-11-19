@@ -131,11 +131,11 @@ const BASE_COURSES: Course[] = [
     badge: '1 quiz · 153 câu',
   },
   {
-    id: 'dpf',
-    code: 'DPF',
-    name: 'Nguyên lý Quản trị & Marketing — DPF',
-    description: 'Bộ tổng hợp 183 câu hỏi trắc nghiệm từ tài liệu FINAL (KEY CHÍNH + TỪ SLIDE, đã lọc trùng), chia thành 7 nhóm kiến thức về quản trị, môi trường marketing, nghiên cứu thị trường, STP, 4P và truyền thông.',
-    badge: '1 quiz · 183 câu',
+    id: 'mmk101',
+    code: 'MMK101',
+    name: 'Nguyên lý Quản trị & Marketing (MMK)',
+    description: 'Ngân hàng tổng hợp 183 câu hỏi từ tài liệu FINAL (KEY CHÍNH + TỪ SLIDE, đã lọc trùng, chia 7 nhóm kiến thức) và 1 bộ đề thi Final Exam SU26 từ FUSTATION (tổng 2 bộ đề · 233 câu trắc nghiệm chuẩn có đáp án).',
+    badge: '2 bộ đề',
   },
   {
     id: 'mco302',

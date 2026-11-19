@@ -863,13 +863,6 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     badge: "6 bộ đề",
   },
   {
-    id: "mmk101",
-    code: "MMK101",
-    name: "Tiếp thị Đa phương tiện (Multimedia Marketing)",
-    description: "Bao gồm 1 bộ đề thi từ FUSTATION (tổng 50 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "1 bộ đề",
-  },
-  {
     id: "ssb201",
     code: "SSB201",
     name: "Kỹ năng giao tiếp nâng cao trong kinh doanh",

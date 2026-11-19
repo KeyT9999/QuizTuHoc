@@ -1,6 +1,6 @@
 // Built from FINAL.pdf (KEY CHÍNH + TỪ SLIDE, exact 2x PDF duplication and 17 cross/internal duplicates removed).
 // 183 unique verified questions with OCR/formatting cleanup and complete answer keys.
-export const SAMPLE_QUIZ_DPF = [
+export const SAMPLE_QUIZ_MMK = [
   "The six buyer-readiness stages include all of the following EXCEPT\nA. awareness\nB. knowledge\nC. conviction\nD. hesitation\nD",
   "In marketing terms, we say that the number of intermediary levels indicates the ________ of a channel.\nA. depth\nB. complexity\nC. involvement\nD. length\nD",
   "Products that consumers either do not know about or know about but do not normally consider buying are called:\nA. Unsought Product\nB. Specialty Product\nC. Shopping Product\nD. Convenience Product\nA",

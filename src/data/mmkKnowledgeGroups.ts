@@ -1,6 +1,6 @@
 import type { Question } from '../utils/quizParser';
 
-export interface DpfKnowledgeGroup {
+export interface MmkKnowledgeGroup {
   id: string;
   number: number;
   title: string;
@@ -8,8 +8,8 @@ export interface DpfKnowledgeGroup {
   questionIds: readonly number[];
 }
 
-// IDs follow the source order in sampleQuizDPF and cover all 183 questions exactly once.
-export const DPF_KNOWLEDGE_GROUPS: DpfKnowledgeGroup[] = [
+// IDs follow the source order in sampleQuizMMK and cover all 183 questions exactly once.
+export const MMK_KNOWLEDGE_GROUPS: MmkKnowledgeGroup[] = [
   {
     id: '1',
     number: 1,
@@ -88,16 +88,16 @@ export const DPF_KNOWLEDGE_GROUPS: DpfKnowledgeGroup[] = [
 ];
 
 const QUESTION_GROUP_IDS = new Map<number, string>(
-  DPF_KNOWLEDGE_GROUPS.flatMap((group) =>
+  MMK_KNOWLEDGE_GROUPS.flatMap((group) =>
     group.questionIds.map((id) => [id, group.id] as const)
   )
 );
 
-export function getDPFKnowledgeGroupId(question: Question): string {
+export function getMMKKnowledgeGroupId(question: Question): string {
   return QUESTION_GROUP_IDS.get(question.id) ?? '';
 }
 
-export function getDPFQuestionsForGroup(questions: Question[], groupId: string): Question[] {
-  if (!DPF_KNOWLEDGE_GROUPS.some((group) => group.id === groupId)) return [];
-  return questions.filter((question) => getDPFKnowledgeGroupId(question) === groupId);
+export function getMMKQuestionsForGroup(questions: Question[], groupId: string): Question[] {
+  if (!MMK_KNOWLEDGE_GROUPS.some((group) => group.id === groupId)) return [];
+  return questions.filter((question) => getMMKKnowledgeGroupId(question) === groupId);
 }

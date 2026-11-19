@@ -4746,7 +4746,7 @@ export const FUSTATION_QUIZ_SETS: QuizSetInfo[] = [
     id: "fustation_mmk101_su26_fe_636024",
     courseId: "mmk101",
     title: "MMK101_SU26_FE_636024",
-    description: "Đề thi Final Exam môn MMK101 (Tiếp thị Đa phương tiện (Multimedia Marketing)) mã MMK101_SU26_FE_636024 gồm 50 câu hỏi trắc nghiệm có đáp án.",
+    description: "Đề thi Final Exam môn MMK101 (Nguyên lý Quản trị & Marketing (MMK)) mã MMK101_SU26_FE_636024 gồm 50 câu hỏi trắc nghiệm có đáp án.",
     category: "Môn MMK101",
     badge: "Final Exam SU26 - 50 câu",
     rawText: '',
