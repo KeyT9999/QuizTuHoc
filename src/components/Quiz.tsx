@@ -166,7 +166,7 @@ export default function Quiz({
 
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
   const [gridFilter, setGridFilter] = useState<'part' | 'all'>('part');
-  const { theme, setTheme: _setTheme, openThemeModal } = useTheme();
+  const { theme, setTheme: _setTheme, openThemeModal, isThemeModalOpen } = useTheme();
   const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
   const questionCardRef = useRef<HTMLDivElement>(null);
   const activeStudySecondsRef = useRef<number | null>(null);
@@ -805,17 +805,19 @@ export default function Quiz({
       ? 'Nộp bài →'
       : 'Câu tiếp →';
 
+  const isAnyOverlayOpen =
+    showQuestionGrid ||
+    isSplitModalOpen ||
+    showPartCompleteModal ||
+    isMobileAskAIOpen ||
+    isThemeModalOpen;
+
   const swipeHandlers = useQuizSwipe({
     onSwipeLeft: handleNext,
     onSwipeRight: handlePrev,
     canSwipeLeft: canSwipeNext,
     canSwipeRight: canPrev,
-    enabled:
-      activeMode === 'study' &&
-      !showQuestionGrid &&
-      !isSplitModalOpen &&
-      !showPartCompleteModal &&
-      !isMobileAskAIOpen,
+    enabled: activeMode === 'study' && !isAnyOverlayOpen,
   });
 
   if (!question) {
@@ -1439,18 +1441,20 @@ export default function Quiz({
           </div>
         )}
 
-        <MobileQuizBottomBar
-          canPrev={canPrev}
-          isAnswered={isAnswered}
-          isRevealed={isRevealed}
-          isMultipleChoice={isMultipleChoice}
-          selectedAnswer={selectedAnswer}
-          nextLabel={mobileNextLabel}
-          onPrev={handlePrev}
-          onToggleReveal={handleToggleReveal}
-          onCheckMultiple={handleCheckMultiple}
-          onNext={handleNext}
-        />
+        {!isThemeModalOpen && !showQuestionGrid && !isSplitModalOpen && !showPartCompleteModal && (
+          <MobileQuizBottomBar
+            canPrev={canPrev}
+            isAnswered={isAnswered}
+            isRevealed={isRevealed}
+            isMultipleChoice={isMultipleChoice}
+            selectedAnswer={selectedAnswer}
+            nextLabel={mobileNextLabel}
+            onPrev={handlePrev}
+            onToggleReveal={handleToggleReveal}
+            onCheckMultiple={handleCheckMultiple}
+            onNext={handleNext}
+          />
+        )}
       </div>
     )}
 

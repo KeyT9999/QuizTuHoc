@@ -541,6 +541,25 @@
     border-radius: 11px !important;
   }
 
+  /* Keep LotusZen mobile drawer button cleanly on 1 line at 390px */
+  .zen-mobile-drawer-btn {
+    font-size: 11.5px !important;
+    padding: 8px 10px !important;
+    gap: 6px !important;
+  }
+
+  .zen-mobile-drawer-btn > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .zen-mobile-woodfish-pill {
+    font-size: 11.5px !important;
+    padding: 8px 10px !important;
+  }
+
   /* Lift floating focus exit buttons & mascots above the fixed bottom dock */
   .hon-viet-floating-focus-exit,
   .zen-floating-focus-exit-btn,
@@ -580,7 +599,7 @@
     justify-content: center;
     gap: 5px;
     white-space: nowrap;
-    transition: transform 0.12s ease, opacity 0.15s ease, background 0.15s ease;
+    transition: transform 0.12s ease, opacity 0.15s ease;
     -webkit-tap-highlight-color: transparent;
     border: 1px solid #cbd5e1;
     background: #f8fafc;
@@ -724,6 +743,26 @@
   .mobile-quiz-dock-shin-kasukabe .mobile-dock-next {
     background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
     box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+  }
+
+  /* Shin Kasukabe Dark Rainy Evening Scene */
+  [data-theme="shin-kasukabe"][data-shin-scene="rain"] .mobile-quiz-dock-shin-kasukabe {
+    background: rgba(11, 19, 38, 0.96);
+    border-top: 2px solid rgba(251, 191, 36, 0.45);
+    box-shadow: 0 -8px 26px rgba(0, 0, 0, 0.55);
+  }
+
+  [data-theme="shin-kasukabe"][data-shin-scene="rain"] .mobile-quiz-dock-shin-kasukabe .mobile-dock-prev,
+  [data-theme="shin-kasukabe"][data-shin-scene="rain"] .mobile-quiz-dock-shin-kasukabe .mobile-dock-reveal {
+    background: rgba(30, 41, 59, 0.88);
+    border-color: rgba(147, 197, 253, 0.38);
+    color: #f8fafc;
+  }
+
+  [data-theme="shin-kasukabe"][data-shin-scene="rain"] .mobile-quiz-dock-shin-kasukabe .mobile-dock-ai {
+    background: rgba(251, 191, 36, 0.22);
+    border-color: rgba(251, 191, 36, 0.55);
+    color: #fef08a;
   }
 
   /* ---- Theme: Billionaire Vault (Money) ---- */
