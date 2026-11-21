@@ -1143,13 +1143,6 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     badge: "1 bộ đề",
   },
   {
-    id: "ssa101",
-    code: "SSA101",
-    name: "Kỹ năng học thuật",
-    description: "Bao gồm 3 bộ đề thi từ FUSTATION (tổng 150 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "3 bộ đề",
-  },
-  {
     id: "jpd316",
     code: "JPD316",
     name: "Tiếng Nhật trung cấp 1-B1/B2",

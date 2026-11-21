@@ -55,6 +55,7 @@ import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
 import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
 import { SAMPLE_QUIZ_VNC } from './sampleQuizVNC';
 import { SAMPLE_QUIZ_SSA } from './sampleQuizSSA';
+import { SAMPLE_QUIZ_SSA2 } from './sampleQuizSSA2';
 import { SAMPLE_QUIZ_MMK } from './sampleQuizMMK';
 import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
 import { SAMPLE_QUIZ_VNR202_BAKHI } from './sampleQuizVNR202BaKhi';
@@ -677,10 +678,20 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     courseId: 'ssa',
     title: 'SSA-Quiz Bá Khí',
     description: 'Bộ 153 câu hỏi SSA về kỹ năng học tập, tư duy, thời gian, năng lực số và liêm chính học thuật; chia thành 6 nhóm học.',
-    category: 'Môn SSA',
+    category: 'Môn SSA101',
     badge: '153 câu · 6 nhóm',
     questionCount: 153,
     rawText: SAMPLE_QUIZ_SSA,
+  },
+  {
+    id: 'ssa2_quiz_ba_khi',
+    courseId: 'ssa',
+    title: 'SSA2_QuizBaKhi',
+    description: 'Bộ 251 câu hỏi SSA101 tổng hợp từ 4 file FINAL (đã tách câu dính, làm sạch ký tự và lọc trùng); chia thành 8 nhóm kiến thức.',
+    category: 'Môn SSA101',
+    badge: '251 câu · 8 nhóm',
+    questionCount: 251,
+    rawText: SAMPLE_QUIZ_SSA2,
   },
   {
     id: 'mmk_final_full',

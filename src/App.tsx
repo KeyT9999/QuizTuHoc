@@ -65,6 +65,11 @@ import {
   SSA_KNOWLEDGE_GROUPS,
 } from './data/ssaKnowledgeGroups';
 import {
+  getSSA2KnowledgeGroupId,
+  getSSA2QuestionsForGroup,
+  SSA2_KNOWLEDGE_GROUPS,
+} from './data/ssa2KnowledgeGroups';
+import {
   getMMKKnowledgeGroupId,
   getMMKQuestionsForGroup,
   MMK_KNOWLEDGE_GROUPS,
@@ -170,10 +175,16 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     filterQuestions: getVNCQuestionsForGroup,
   },
   ssa_quiz_ba_khi: {
-    courseLabel: 'SSA',
+    courseLabel: 'SSA101',
     groups: SSA_KNOWLEDGE_GROUPS,
     getGroupId: getSSAKnowledgeGroupId,
     filterQuestions: getSSAQuestionsForGroup,
+  },
+  ssa2_quiz_ba_khi: {
+    courseLabel: 'SSA101',
+    groups: SSA2_KNOWLEDGE_GROUPS,
+    getGroupId: getSSA2KnowledgeGroupId,
+    filterQuestions: getSSA2QuestionsForGroup,
   },
   mmk_final_full: {
     courseLabel: 'MMK101',

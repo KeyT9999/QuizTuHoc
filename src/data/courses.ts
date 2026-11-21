@@ -125,10 +125,10 @@ const BASE_COURSES: Course[] = [
   },
   {
     id: 'ssa',
-    code: 'SSA',
-    name: 'Kỹ năng học tập & thành công sinh viên',
-    description: 'Bộ 153 câu hỏi về tư duy, quản lý thời gian, chiến lược học tập, năng lực thông tin, AI có trách nhiệm và giao tiếp.',
-    badge: '1 quiz · 153 câu',
+    code: 'SSA101',
+    name: 'Kỹ năng học tập & thành công sinh viên (SSA)',
+    description: 'Gồm bộ SSA-Quiz Bá Khí (153 câu), bộ SSA2_QuizBaKhi tổng hợp từ 4 file FINAL (251 câu · 8 nhóm kiến thức) và 3 đề thi Final/Retake SP26 từ FUSTATION (tổng 5 bộ đề · 554 câu trắc nghiệm).',
+    badge: '5 bộ đề',
   },
   {
     id: 'mmk101',

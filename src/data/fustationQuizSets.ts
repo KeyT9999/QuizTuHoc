@@ -5547,7 +5547,7 @@ export const FUSTATION_QUIZ_SETS: QuizSetInfo[] = [
   },
   {
     id: "fustation_ssa101_sp26_re_587493",
-    courseId: "ssa101",
+    courseId: "ssa",
     title: "SSA101_SP26_RE_587493",
     description: "Đề thi Final Exam môn SSA101 (Kỹ năng học thuật) mã SSA101_SP26_RE_587493 gồm 50 câu hỏi trắc nghiệm có đáp án.",
     category: "Môn SSA101",
@@ -5558,7 +5558,7 @@ export const FUSTATION_QUIZ_SETS: QuizSetInfo[] = [
   },
   {
     id: "fustation_ssa101_sp26_c1fe_480312",
-    courseId: "ssa101",
+    courseId: "ssa",
     title: "SSA101_SP26_C1FE_480312",
     description: "Đề thi Final Exam môn SSA101 (Kỹ năng học thuật) mã SSA101_SP26_C1FE_480312 gồm 50 câu hỏi trắc nghiệm có đáp án.",
     category: "Môn SSA101",
@@ -5569,7 +5569,7 @@ export const FUSTATION_QUIZ_SETS: QuizSetInfo[] = [
   },
   {
     id: "fustation_ssa101_sp26_c2fe_846633",
-    courseId: "ssa101",
+    courseId: "ssa",
     title: "SSA101_SP26_C2FE_846633",
     description: "Đề thi Final Exam môn SSA101 (Kỹ năng học thuật) mã SSA101_SP26_C2FE_846633 gồm 50 câu hỏi trắc nghiệm có đáp án.",
     category: "Môn SSA101",
