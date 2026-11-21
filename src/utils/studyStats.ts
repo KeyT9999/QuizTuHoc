@@ -2,6 +2,7 @@ export type AppTheme = 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-
 
 const THEME_STORAGE_KEY = 'keyt_selected_ui_theme';
 const MOUSE_EFFECTS_KEY = 'keyt_mouse_effects_enabled';
+const HOVER_TRANSLATE_KEY = 'keyt_hover_translate_enabled';
 const FOCUS_MODE_KEY = 'keyt_focus_mode_enabled';
 const XP_STORAGE_KEY = 'keyt_user_total_xp';
 const STREAK_DAYS_KEY = 'keyt_study_streak_days';
@@ -52,6 +53,24 @@ export function setMouseEffectsEnabled(enabled: boolean): void {
   try {
     localStorage.setItem(MOUSE_EFFECTS_KEY, enabled ? 'true' : 'false');
     window.dispatchEvent(new CustomEvent('keyt-mouse-effects-changed', { detail: enabled }));
+  } catch {
+    // ignore
+  }
+}
+
+// Hover Auto-Translate (Default: OFF; users opt-in via settings/toggle)
+export function getHoverTranslateEnabled(): boolean {
+  try {
+    return localStorage.getItem(HOVER_TRANSLATE_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+export function setHoverTranslateEnabled(enabled: boolean): void {
+  try {
+    localStorage.setItem(HOVER_TRANSLATE_KEY, enabled ? 'true' : 'false');
+    window.dispatchEvent(new CustomEvent('keyt-hover-translate-changed', { detail: enabled }));
   } catch {
     // ignore
   }

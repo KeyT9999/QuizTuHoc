@@ -4,6 +4,8 @@ import {
   setAppTheme,
   getMouseEffectsEnabled,
   setMouseEffectsEnabled as saveMouseEffectsEnabled,
+  getHoverTranslateEnabled,
+  setHoverTranslateEnabled as saveHoverTranslateEnabled,
   type AppTheme,
 } from '../utils/studyStats';
 export type { AppTheme };
@@ -15,6 +17,9 @@ interface ThemeContextValue {
   mouseEffectsEnabled: boolean;
   setMouseEffectsEnabled: (enabled: boolean) => void;
   toggleMouseEffects: () => void;
+  hoverTranslateEnabled: boolean;
+  setHoverTranslateEnabled: (enabled: boolean) => void;
+  toggleHoverTranslate: () => void;
   isThemeModalOpen: boolean;
   openThemeModal: () => void;
   closeThemeModal: () => void;
@@ -27,6 +32,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<AppTheme>(() => getAppTheme());
   const [mouseEffectsEnabled, setMouseEffectsState] = useState<boolean>(() =>
     getMouseEffectsEnabled()
+  );
+  const [hoverTranslateEnabled, setHoverTranslateState] = useState<boolean>(() =>
+    getHoverTranslateEnabled()
   );
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
@@ -43,7 +51,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.body.setAttribute('data-mouse-effects', attrVal);
   }, [mouseEffectsEnabled]);
 
-  // Listen for theme & mouse effects changes across windows/components
+  // Synchronize document attribute with hover translate setting
+  useEffect(() => {
+    const attrVal = hoverTranslateEnabled ? 'on' : 'off';
+    document.documentElement.setAttribute('data-hover-translate-mode', attrVal);
+    document.body.setAttribute('data-hover-translate-mode', attrVal);
+  }, [hoverTranslateEnabled]);
+
+  // Listen for theme, mouse effects & hover translate changes across windows/components
   useEffect(() => {
     const handleThemeChange = (e: Event) => {
       const customEvent = e as CustomEvent<AppTheme>;
@@ -59,21 +74,32 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
+    const handleHoverTranslateChange = (e: Event) => {
+      const customEvent = e as CustomEvent<boolean>;
+      if (typeof customEvent.detail === 'boolean') {
+        setHoverTranslateState(customEvent.detail);
+      }
+    };
+
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'keyt_selected_ui_theme') {
         const nextTheme = getAppTheme();
         setThemeState(nextTheme);
       } else if (e.key === 'keyt_mouse_effects_enabled') {
         setMouseEffectsState(getMouseEffectsEnabled());
+      } else if (e.key === 'keyt_hover_translate_enabled') {
+        setHoverTranslateState(getHoverTranslateEnabled());
       }
     };
 
     window.addEventListener('keyt-theme-changed', handleThemeChange);
     window.addEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
+    window.addEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
     window.addEventListener('storage', handleStorage);
     return () => {
       window.removeEventListener('keyt-theme-changed', handleThemeChange);
       window.removeEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
+      window.removeEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
       window.removeEventListener('storage', handleStorage);
     };
   }, [theme]);
@@ -96,6 +122,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const changeHoverTranslate = useCallback((enabled: boolean) => {
+    setHoverTranslateState(enabled);
+    saveHoverTranslateEnabled(enabled);
+  }, []);
+
+  const toggleHoverTranslate = useCallback(() => {
+    setHoverTranslateState((prev) => {
+      const next = !prev;
+      saveHoverTranslateEnabled(next);
+      return next;
+    });
+  }, []);
+
   const openThemeModal = useCallback(() => setIsThemeModalOpen(true), []);
   const closeThemeModal = useCallback(() => setIsThemeModalOpen(false), []);
   const toggleThemeModal = useCallback(() => setIsThemeModalOpen((prev) => !prev), []);
@@ -108,6 +147,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         mouseEffectsEnabled,
         setMouseEffectsEnabled: changeMouseEffects,
         toggleMouseEffects,
+        hoverTranslateEnabled,
+        setHoverTranslateEnabled: changeHoverTranslate,
+        toggleHoverTranslate,
         isThemeModalOpen,
         openThemeModal,
         closeThemeModal,
@@ -122,6 +164,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         onSelectTheme={changeTheme}
         mouseEffectsEnabled={mouseEffectsEnabled}
         onToggleMouseEffects={changeMouseEffects}
+        hoverTranslateEnabled={hoverTranslateEnabled}
+        onToggleHoverTranslate={changeHoverTranslate}
       />
     </ThemeContext.Provider>
   );

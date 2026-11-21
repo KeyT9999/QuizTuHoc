@@ -85,7 +85,12 @@ export default function SharedQuizHeader({
   onOpenKnowledgeGroups,
   knowledgeGroupsLabel,
 }: SharedQuizHeaderProps) {
-  const { mouseEffectsEnabled, toggleMouseEffects } = useTheme();
+  const {
+    mouseEffectsEnabled,
+    toggleMouseEffects,
+    hoverTranslateEnabled,
+    toggleHoverTranslate,
+  } = useTheme();
   const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
   const headerContainerRef = useRef<HTMLElement>(null);
 
@@ -312,6 +317,22 @@ export default function SharedQuizHeader({
             </button>
           )}
 
+          {/* Action 4.4: Hover Auto-Translate Toggle (Default OFF) */}
+          <button
+            type="button"
+            className={`quiz-v2-header-icon-btn quiz-v2-translate-btn ${hoverTranslateEnabled ? 'is-fx-on' : 'is-fx-off'}`}
+            onClick={toggleHoverTranslate}
+            title={
+              hoverTranslateEnabled
+                ? 'Đang BẬT di chuột tự dịch tiếng Việt (Bấm để tắt)'
+                : 'Đang TẮT di chuột tự dịch (Mặc định tắt — Bấm để bật)'
+            }
+            aria-label="Bật tắt chế độ di chuột tự dịch"
+            aria-pressed={hoverTranslateEnabled}
+          >
+            🌐
+          </button>
+
           {/* Action 4.5: Mouse Sparkle Effect Toggle */}
           <button
             type="button"
@@ -429,6 +450,18 @@ export default function SharedQuizHeader({
           >
             <span>🔄</span>
             <span>{isKnowledgeGroupMode ? 'Làm lại nhóm' : 'Làm lại đề'}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`quiz-mobile-tool-chip ${hoverTranslateEnabled ? 'is-highlighted' : ''}`}
+            onClick={() => {
+              toggleHoverTranslate();
+              setMobileToolsOpen(false);
+            }}
+          >
+            <span>🌐</span>
+            <span>{hoverTranslateEnabled ? 'Tự dịch: Bật' : 'Tự dịch: Tắt'}</span>
           </button>
 
           <button

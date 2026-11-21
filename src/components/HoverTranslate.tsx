@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTheme } from '../context/ThemeContext';
 
 interface TranslationPopover {
   label: string;
@@ -41,11 +42,19 @@ function rememberTranslation(key: string, translation: string): void {
 }
 
 export default function HoverTranslate() {
+  const { hoverTranslateEnabled } = useTheme();
   const [popover, setPopover] = useState<TranslationPopover | null>(null);
   const activeTarget = useRef<HTMLElement | null>(null);
   const requestVersion = useRef(0);
 
   useEffect(() => {
+    if (!hoverTranslateEnabled) {
+      activeTarget.current = null;
+      requestVersion.current += 1;
+      setPopover(null);
+      return;
+    }
+
     let hoverTimer: number | undefined;
 
     const closePopover = () => {
@@ -145,9 +154,9 @@ export default function HoverTranslate() {
       document.removeEventListener('focusin', handleFocusIn);
       document.removeEventListener('focusout', handleFocusOut);
     };
-  }, []);
+  }, [hoverTranslateEnabled]);
 
-  if (!popover) return null;
+  if (!hoverTranslateEnabled || !popover) return null;
 
   return createPortal(
     <div

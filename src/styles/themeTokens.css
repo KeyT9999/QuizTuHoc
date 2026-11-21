@@ -2328,9 +2328,49 @@ body,
   color: #475569;
 }
 
+/* Hover Auto-Translate Quick Toggle Styling */
+.global-translate-toggle-btn.is-on {
+  border-color: rgba(56, 189, 248, 0.65);
+  background: rgba(14, 165, 233, 0.18);
+  color: #bae6fd;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
+}
+
+[data-theme="default"] .global-translate-toggle-btn.is-on {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0369a1;
+  box-shadow: none;
+}
+
 .quiz-v2-mouse-fx-btn.is-fx-off {
   opacity: 0.65;
   filter: grayscale(0.4);
+}
+
+.quiz-v2-translate-btn {
+  position: relative;
+}
+
+.quiz-v2-translate-btn.is-fx-on {
+  border-color: rgba(56, 189, 248, 0.72) !important;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4), 0 0 12px rgba(56, 189, 248, 0.32) !important;
+}
+
+.quiz-v2-translate-btn.is-fx-off {
+  opacity: 0.58;
+  filter: grayscale(0.75);
+}
+
+.quiz-v2-translate-btn.is-fx-off::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(248, 113, 113, 0.9);
+  transform: rotate(-40deg);
+  pointer-events: none;
 }
 
 /* Disable 3D card tilt and mouse spotlight when user turns off mouse effects */
@@ -2346,7 +2386,7 @@ body,
   display: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1120px) {
   .global-mouse-fx-toggle-btn span:last-child {
     display: none;
   }

@@ -8,6 +8,8 @@ interface ThemeSelectorModalProps {
   onSelectTheme: (theme: AppTheme) => void;
   mouseEffectsEnabled?: boolean;
   onToggleMouseEffects?: (enabled: boolean) => void;
+  hoverTranslateEnabled?: boolean;
+  onToggleHoverTranslate?: (enabled: boolean) => void;
 }
 
 export default function ThemeSelectorModal({
@@ -17,6 +19,8 @@ export default function ThemeSelectorModal({
   onSelectTheme,
   mouseEffectsEnabled = true,
   onToggleMouseEffects,
+  hoverTranslateEnabled = false,
+  onToggleHoverTranslate,
 }: ThemeSelectorModalProps) {
   if (!isOpen) return null;
 
@@ -27,9 +31,9 @@ export default function ThemeSelectorModal({
           <div className="theme-modal-title-group">
             <span className="theme-modal-icon">🎨</span>
             <div>
-              <h3 className="theme-modal-title">Chọn Giao Diện Học Tập</h3>
+              <h3 className="theme-modal-title">Giao Diện &amp; Cài Đặt Học Tập</h3>
               <p className="theme-modal-subtitle">
-                Tùy biến không gian để bạn có cảm hứng học tập và cày đề tốt nhất
+                Tùy biến không gian, hiệu ứng chuột và chế độ dịch nhanh khi ôn thi
               </p>
             </div>
           </div>
@@ -43,38 +47,79 @@ export default function ThemeSelectorModal({
           </button>
         </div>
 
-        {/* Setting Toggle: Mouse Sparkle & Interactive Cursor Effects */}
-        {onToggleMouseEffects && (
-          <div className={`theme-fx-setting-bar ${mouseEffectsEnabled ? 'is-enabled' : 'is-disabled'}`}>
-            <div className="theme-fx-setting-info">
-              <span className="theme-fx-setting-icon">{mouseEffectsEnabled ? '✨' : '🛡️'}</span>
-              <div>
-                <div className="theme-fx-setting-title">
-                  Hiệu ứng di chuột lấp lánh & Hạt tương tác
-                  <span className={`theme-fx-status-pill ${mouseEffectsEnabled ? 'on' : 'off'}`}>
-                    {mouseEffectsEnabled ? 'Đang bật' : 'Đã tắt'}
-                  </span>
+        {(onToggleMouseEffects || onToggleHoverTranslate) && (
+          <div className="theme-settings-stack">
+            {/* Setting Toggle 1: Mouse Sparkle & Interactive Cursor Effects */}
+            {onToggleMouseEffects && (
+              <div className={`theme-fx-setting-bar ${mouseEffectsEnabled ? 'is-enabled' : 'is-disabled'}`}>
+                <div className="theme-fx-setting-info">
+                  <span className="theme-fx-setting-icon">{mouseEffectsEnabled ? '✨' : '🛡️'}</span>
+                  <div>
+                    <div className="theme-fx-setting-title">
+                      Hiệu ứng di chuột lấp lánh &amp; Hạt tương tác
+                      <span className={`theme-fx-status-pill ${mouseEffectsEnabled ? 'on' : 'off'}`}>
+                        {mouseEffectsEnabled ? 'Đang bật' : 'Đã tắt'}
+                      </span>
+                    </div>
+                    <p className="theme-fx-setting-desc">
+                      {mouseEffectsEnabled
+                        ? 'Tạo vệt sáng theo con trỏ chuột, hạt lơ lửng và nghiêng thẻ 3D. Bấm tắt nếu bạn thấy rối mắt khi đọc đề.'
+                        : 'Đã tắt toàn bộ hạt lấp lánh theo trỏ chuột và nghiêng thẻ để giao diện tĩnh, chống mỏi mắt tối đa.'}
+                    </p>
+                  </div>
                 </div>
-                <p className="theme-fx-setting-desc">
-                  {mouseEffectsEnabled
-                    ? 'Tạo vệt sáng theo con trỏ chuột, hạt lơ lửng và nghiêng thẻ 3D. Bấm tắt nếu bạn thấy rối mắt khi đọc đề.'
-                    : 'Đã tắt toàn bộ hạt lấp lánh theo trỏ chuột và nghiêng thẻ để giao diện tĩnh, chống mỏi mắt tối đa.'}
-                </p>
-              </div>
-            </div>
 
-            <button
-              type="button"
-              role="switch"
-              aria-checked={mouseEffectsEnabled}
-              className={`theme-fx-switch-btn ${mouseEffectsEnabled ? 'is-on' : 'is-off'}`}
-              onClick={() => onToggleMouseEffects(!mouseEffectsEnabled)}
-            >
-              <span className="theme-fx-switch-thumb" />
-              <span className="theme-fx-switch-label">
-                {mouseEffectsEnabled ? 'Bật ✨' : 'Tắt'}
-              </span>
-            </button>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={mouseEffectsEnabled}
+                  className={`theme-fx-switch-btn ${mouseEffectsEnabled ? 'is-on' : 'is-off'}`}
+                  onClick={() => onToggleMouseEffects(!mouseEffectsEnabled)}
+                >
+                  <span className="theme-fx-switch-thumb" />
+                  <span className="theme-fx-switch-label">
+                    {mouseEffectsEnabled ? 'Bật ✨' : 'Tắt'}
+                  </span>
+                </button>
+              </div>
+            )}
+
+            {/* Setting Toggle 2: Hover Auto-Translate (Default OFF) */}
+            {onToggleHoverTranslate && (
+              <div
+                className={`theme-fx-setting-bar is-translate-bar ${hoverTranslateEnabled ? 'is-enabled' : 'is-disabled'}`}
+              >
+                <div className="theme-fx-setting-info">
+                  <span className="theme-fx-setting-icon">🌐</span>
+                  <div>
+                    <div className="theme-fx-setting-title">
+                      Di chuột tự dịch câu hỏi &amp; đáp án (Anh → Việt)
+                      <span className={`theme-fx-status-pill ${hoverTranslateEnabled ? 'on' : 'off'}`}>
+                        {hoverTranslateEnabled ? 'Đang bật' : 'Đã tắt'}
+                      </span>
+                    </div>
+                    <p className="theme-fx-setting-desc">
+                      {hoverTranslateEnabled
+                        ? 'Rê chuột vào câu hỏi hoặc đáp án tiếng Anh sẽ tự hiện khung dịch sang tiếng Việt. Bấm tắt để tránh che chữ khi làm bài.'
+                        : 'Mặc định tắt để tránh hiện khung dịch làm vướng mắt khi di chuột. Bật lên nếu bạn muốn dịch nhanh câu hỏi tiếng Anh.'}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={hoverTranslateEnabled}
+                  className={`theme-fx-switch-btn is-translate-switch ${hoverTranslateEnabled ? 'is-on' : 'is-off'}`}
+                  onClick={() => onToggleHoverTranslate(!hoverTranslateEnabled)}
+                >
+                  <span className="theme-fx-switch-thumb" />
+                  <span className="theme-fx-switch-label">
+                    {hoverTranslateEnabled ? 'Bật 🌐' : 'Tắt'}
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
         )}
 

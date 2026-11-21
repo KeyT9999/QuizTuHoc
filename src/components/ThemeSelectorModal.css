@@ -103,23 +103,45 @@
   transform: rotate(90deg);
 }
 
-/* Mouse Effects Toggle Setting Bar inside Modal */
+/* Settings Toggle Stack inside Modal */
+.theme-settings-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
 .theme-fx-setting-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   padding: 14px 18px;
-  margin-bottom: 20px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.05);
   border: 1.5px solid rgba(129, 140, 248, 0.28);
   transition: all 0.22s ease;
 }
 
+.theme-fx-setting-bar.is-translate-bar.is-enabled {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.theme-fx-switch-btn.is-translate-switch.is-on {
+  background: linear-gradient(135deg, #0284c7, #06b6d4);
+  border-color: rgba(186, 230, 253, 0.55);
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+}
+
 .theme-fx-setting-bar.is-disabled {
   background: rgba(15, 23, 42, 0.65);
   border-color: rgba(148, 163, 184, 0.22);
+}
+
+.theme-fx-setting-bar.is-disabled .theme-fx-setting-icon {
+  opacity: 0.65;
+  filter: grayscale(0.5);
 }
 
 .theme-fx-setting-info {
@@ -619,12 +641,16 @@
     line-height: 1.4;
   }
 
+  .theme-settings-stack {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
   .theme-fx-setting-bar {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
     padding: 12px;
-    margin-bottom: 14px;
   }
 
   .theme-fx-switch-btn {

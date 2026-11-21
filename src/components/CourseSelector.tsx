@@ -360,7 +360,14 @@ export default function CourseSelector({
   onCreateCourseClick,
   onDeleteCourse,
 }: CourseSelectorProps) {
-  const { theme, openThemeModal, mouseEffectsEnabled, toggleMouseEffects } = useTheme();
+  const {
+    theme,
+    openThemeModal,
+    mouseEffectsEnabled,
+    toggleMouseEffects,
+    hoverTranslateEnabled,
+    toggleHoverTranslate,
+  } = useTheme();
   const heroDetails = getHomeHeroDetails(theme);
   const [activeTab, setActiveTab] = useState<HomeNavTab>(activeNavTab);
   const [searchQuery, setSearchQuery] = useState('');
@@ -967,6 +974,22 @@ export default function CourseSelector({
                 <line x1="6" y1="20" x2="6" y2="14" />
               </svg>
               <span>Thống kê</span>
+            </button>
+
+            {/* Quick Toggle: Hover Auto-Translate (Default OFF) */}
+            <button
+              type="button"
+              className={`global-mouse-fx-toggle-btn global-translate-toggle-btn ${hoverTranslateEnabled ? 'is-on' : 'is-off'}`}
+              onClick={toggleHoverTranslate}
+              title={
+                hoverTranslateEnabled
+                  ? 'Đang BẬT chế độ di chuột vào tự dịch tiếng Việt (Bấm để tắt)'
+                  : 'Đang TẮT chế độ di chuột vào tự dịch (Mặc định tắt — Bấm để bật)'
+              }
+              aria-pressed={hoverTranslateEnabled}
+            >
+              <span>🌐</span>
+              <span>{hoverTranslateEnabled ? 'Tự dịch: Bật' : 'Tự dịch: Tắt'}</span>
             </button>
 
             {/* Quick Toggle: Mouse Sparkle Effect */}
