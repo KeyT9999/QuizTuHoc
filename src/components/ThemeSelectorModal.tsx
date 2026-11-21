@@ -79,6 +79,48 @@ export default function ThemeSelectorModal({
         )}
 
         <div className="theme-grid">
+          {/* Option: Spidey Night-Verse */}
+          <div
+            className={`theme-card ${currentTheme === 'spidey-night' ? 'is-active' : ''}`}
+            onClick={() => {
+              onSelectTheme('spidey-night');
+              onClose();
+            }}
+          >
+            <div className="theme-card-preview spidey-preview">
+              <div className="theme-preview-overlay">
+                <span className="theme-preview-badge spidey">🕷️ Mới · Spidey Night-Verse</span>
+              </div>
+              <div className="theme-preview-mockup">
+                <div className="mockup-sidebar-left spidey-sidebar"></div>
+                <div className="mockup-card-center spidey-card">
+                  <div className="mockup-line-title spidey-title"></div>
+                  <div className="mockup-line-option spidey-option"></div>
+                  <div className="mockup-line-option spidey-option active"></div>
+                </div>
+                <div className="mockup-sidebar-right spidey-sidebar"></div>
+              </div>
+            </div>
+
+            <div className="theme-card-info">
+              <div className="theme-card-header">
+                <h4 className="theme-card-name">Spidey Night-Verse (Spider-Man)</h4>
+                {currentTheme === 'spidey-night' && (
+                  <span className="theme-active-tag">✓ Đang dùng</span>
+                )}
+              </div>
+              <p className="theme-card-desc">
+                Thành phố đêm New York bokeh rực rỡ, điểm nhấn Spider-Verse Comic, Chibi Spidey đu dây tơ tương tác, hiệu ứng THWIP! & Spider-Sense.
+              </p>
+              <div className="theme-card-tags">
+                <span className="theme-tag">Night City</span>
+                <span className="theme-tag">Comic THWIP!</span>
+                <span className="theme-tag">Chibi Đu Tơ</span>
+                <span className="theme-tag">Web Shooter</span>
+              </div>
+            </div>
+          </div>
+
           {/* Option: Liên Hoa Phật Quốc (Zen Sanctuary) */}
           <div
             className={`theme-card ${currentTheme === 'lotus-zen-sanctuary' ? 'is-active' : ''}`}

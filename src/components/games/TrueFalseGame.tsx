@@ -233,6 +233,16 @@ export default function TrueFalseGame({
         rule2Desc: 'Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI',
         buttonText: '🌙 BẮT ĐẦU LUYỆN 5S (Space)',
       },
+      'spidey-night': {
+        orb: '🕷️',
+        title: '5 GIÂY SPIDER-SENSE — ĐÚNG HAY SAI?',
+        subtitle: 'Thử phản xạ giác quan nhện! Hệ thống ghép câu hỏi với một đáp án bất kỳ — Phán đoán Đúng hay Sai chỉ trong 5 giây!',
+        rule1Title: '5s Giác Quan Nhện',
+        rule1Desc: 'Đọc nhanh mệnh đề cốt lõi, né bẫy trong chớp mắt',
+        rule2Title: 'Bắn Tơ Phím 1 & 2',
+        rule2Desc: 'Bấm [1] hoặc [←] cho ĐÚNG · Bấm [2] hoặc [→] cho SAI',
+        buttonText: '🕸️ THWIP! BẮT ĐẦU BLITZ 5S (Space)',
+      },
       'lotus-zen-sanctuary': {
         orb: '🪷',
         title: '5 GIÂY QUYẾT ĐỊNH — KHOẢNH KHẮC GIÁC NGỘ',
@@ -305,6 +315,7 @@ export default function TrueFalseGame({
     const crownTitles = {
       'hon-viet': '🏛️ BẢNG VÀNG QUANG VINH — HOÀN THÀNH 5S BLITZ!',
       'fantasy-academy': '⚡ THẨM ĐỊNH HOÀN TẤT — DANH HIỆU ĐẠI TRIẾT GIA!',
+      'spidey-night': '🕷️ THWIP! HOÀN THÀNH 5S SPIDER-SENSE BLITZ!',
       'cozy-night': '🌙 HOÀN THÀNH PHIÊN TẬP TRUNG ĐÊM 5S!',
       'lotus-zen-sanctuary': '🪷 CHỨNG ĐẮC TUỆ GIÁC — HOÀN THÀNH 5S ĐỊNH TÂM!',
       default: '🎉 HOÀN THÀNH BLITZ!',

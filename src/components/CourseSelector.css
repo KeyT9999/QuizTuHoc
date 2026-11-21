@@ -1832,10 +1832,15 @@
 
 /* Dark Themes Compatibility (Cozy Night & Fantasy Academy) */
 .home-cozy-night .home-overview-card,
+.home-spidey-night .home-overview-card,
 .home-cozy-night .home-major-card,
+.home-spidey-night .home-major-card,
 .home-cozy-night .stats-kpi-card,
+.home-spidey-night .stats-kpi-card,
 .home-cozy-night .stats-panel-card,
+.home-spidey-night .stats-panel-card,
 .home-cozy-night .home-empty-progress-banner,
+.home-spidey-night .home-empty-progress-banner,
 .home-fantasy-academy .home-overview-card,
 .home-fantasy-academy .home-major-card,
 .home-fantasy-academy .stats-kpi-card,
@@ -1847,20 +1852,30 @@
 }
 
 .home-cozy-night .stats-hero-banner,
+.home-spidey-night .stats-hero-banner,
 .home-fantasy-academy .stats-hero-banner {
   background: rgba(30, 41, 59, 0.85);
   border-color: rgba(148, 163, 184, 0.28);
 }
 
 .home-cozy-night .home-overview-value,
+.home-spidey-night .home-overview-value,
 .home-cozy-night .home-section-title,
+.home-spidey-night .home-section-title,
 .home-cozy-night .home-major-title,
+.home-spidey-night .home-major-title,
 .home-cozy-night .stats-hero-title,
+.home-spidey-night .stats-hero-title,
 .home-cozy-night .stats-kpi-value,
+.home-spidey-night .stats-kpi-value,
 .home-cozy-night .stats-panel-title,
+.home-spidey-night .stats-panel-title,
 .home-cozy-night .stats-major-name,
+.home-spidey-night .stats-major-name,
 .home-cozy-night .stats-item-code,
+.home-spidey-night .stats-item-code,
 .home-cozy-night .home-empty-progress-left h3,
+.home-spidey-night .home-empty-progress-left h3,
 .home-fantasy-academy .home-overview-value,
 .home-fantasy-academy .home-section-title,
 .home-fantasy-academy .home-major-title,
@@ -1874,18 +1889,31 @@
 }
 
 .home-cozy-night .home-overview-label,
+.home-spidey-night .home-overview-label,
 .home-cozy-night .home-overview-sub,
+.home-spidey-night .home-overview-sub,
 .home-cozy-night .home-section-subtitle,
+.home-spidey-night .home-section-subtitle,
 .home-cozy-night .home-major-meta,
+.home-spidey-night .home-major-meta,
 .home-cozy-night .home-major-progress-row,
+.home-spidey-night .home-major-progress-row,
 .home-cozy-night .stats-hero-desc,
+.home-spidey-night .stats-hero-desc,
 .home-cozy-night .stats-kpi-label,
+.home-spidey-night .stats-kpi-label,
 .home-cozy-night .stats-kpi-sub,
+.home-spidey-night .stats-kpi-sub,
 .home-cozy-night .stats-panel-subtitle,
+.home-spidey-night .stats-panel-subtitle,
 .home-cozy-night .stats-major-row-metrics,
+.home-spidey-night .stats-major-row-metrics,
 .home-cozy-night .stats-item-name,
+.home-spidey-night .stats-item-name,
 .home-cozy-night .stats-item-sub,
+.home-spidey-night .stats-item-sub,
 .home-cozy-night .home-empty-progress-left p,
+.home-spidey-night .home-empty-progress-left p,
 .home-fantasy-academy .home-overview-label,
 .home-fantasy-academy .home-overview-sub,
 .home-fantasy-academy .home-section-subtitle,
@@ -1903,7 +1931,9 @@
 }
 
 .home-cozy-night .stats-major-row,
+.home-spidey-night .stats-major-row,
 .home-cozy-night .stats-item-row,
+.home-spidey-night .stats-item-row,
 .home-fantasy-academy .stats-major-row,
 .home-fantasy-academy .stats-item-row {
   background: rgba(30, 41, 59, 0.65);

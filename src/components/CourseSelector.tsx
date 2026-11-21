@@ -88,6 +88,16 @@ function getCourseTheme(course: Course, activeTheme = 'default'): SubjectTheme {
     };
   }
 
+  if (activeTheme === 'spidey-night') {
+    return {
+      primary: '#f43f5e',
+      soft: 'rgba(225, 29, 72, 0.2)',
+      border: 'rgba(56, 189, 248, 0.42)',
+      hoverShadow: 'rgba(225, 29, 72, 0.34)',
+      icon,
+    };
+  }
+
   if (activeTheme === 'cozy-night') {
     return {
       primary: '#38bdf8',
@@ -307,6 +317,15 @@ function getHomeHeroDetails(theme: string) {
         desc: 'Mở khóa từng pho cổ thư, tích lũy điểm kinh nghiệm và thăng hạng học giả thượng thừa.',
         badgeIcon: '📜',
         badgeTitle: 'Học Viện Ma Pháp',
+      };
+    case 'spidey-night':
+      return {
+        eyebrow: '🕷️ SPIDEY NIGHT-VERSE · NEW YORK STUDY HUB',
+        titlePre: 'Đêm nay bạn muốn ',
+        titleHighlight: 'bắn tơ chinh phục môn nào?',
+        desc: 'With great GPA comes great responsibility! Chọn môn học để kích hoạt Spider-Sense và cày đề xuyên màn đêm.',
+        badgeIcon: '🕸️',
+        badgeTitle: 'Spidey Night-Verse',
       };
     case 'cozy-night':
       return {

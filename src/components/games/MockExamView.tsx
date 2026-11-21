@@ -397,6 +397,12 @@ export default function MockExamView({
         desc: 'Bước vào đại sảnh khảo hạch ma thuật bí truyền dưới áp lực thời gian thực tế. Giải mã trọn vẹn bộ đề thi để ghi danh vào bảng vàng huyền thoại.',
         startBtn: '⚡ BẮT ĐẦU KHẢO HẠCH MA PHÁP',
       },
+      'spidey-night': {
+        tag: '🕷️ SPIDEY NIGHT-VERSE · MÔ PHỎNG PHÒNG THI',
+        title: 'THI THỬ FE · SPIDER-VERSE',
+        desc: 'Kích hoạt Spider-Sense với thời gian đếm ngược thực tế. Bốc ngẫu nhiên câu hỏi từ ngân hàng đề, chấm điểm thang 10 và xem lại từng câu sai chi tiết.',
+        startBtn: '🕸️ THWIP! BẮT ĐẦU THI THỬ',
+      },
       'cozy-night': {
         tag: '🌙 PHÒNG THI THỬ BAN ĐÊM · LOFI FOCUS',
         title: 'THI THỬ FE PHÒNG HỌC ĐÊM',
@@ -606,6 +612,7 @@ export default function MockExamView({
     const examBadges = {
       'hon-viet': '🏛️ KHẢO THÍ FE',
       'fantasy-academy': '⚡ KHẢO HẠCH FE',
+      'spidey-night': '🕷️ SPIDEY FE',
       'cozy-night': '🌙 THI ĐÊM FE',
       'lotus-zen-sanctuary': '🪷 KHẢO THÍ FE',
       default: 'THI THỬ FE',

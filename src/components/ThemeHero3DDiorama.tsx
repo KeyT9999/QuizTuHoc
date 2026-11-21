@@ -811,6 +811,147 @@ export default function ThemeHero3DDiorama({
     }
 
     // =========================================================================
+    // SCENE 4b: SPIDEY NIGHT-VERSE (NEW YORK SKYLINE + 3D WEB + SPIDER CORE)
+    // =========================================================================
+    else if (theme === 'spidey-night') {
+      camera.position.set(0, 0.55, 5.4);
+      camera.lookAt(0, 0, 0);
+      keyLight.color.setHex(0xfb7185);
+      rimLight.color.setHex(0x38bdf8);
+      cursorLight.color.setHex(0xe11d48);
+
+      const spideyGroup = new THREE.Group();
+      rootGroup.add(spideyGroup);
+
+      // Central Crimson-Cobalt Spider Core Emblem
+      const coreGeo = track(new THREE.OctahedronGeometry(0.72, 1));
+      const coreMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xe11d48,
+          emissive: 0x881337,
+          emissiveIntensity: 0.55,
+          roughness: 0.16,
+          metalness: 0.45,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.08,
+        })
+      );
+      const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+      spideyGroup.add(coreMesh);
+
+      // Wireframe Cobalt Spider-Suit Mesh wrapping the core
+      const suitWireGeo = track(new THREE.IcosahedronGeometry(0.92, 1));
+      const suitWireMat = track(
+        new THREE.MeshBasicMaterial({
+          color: 0x38bdf8,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.42,
+        })
+      );
+      const suitWire = new THREE.Mesh(suitWireGeo, suitWireMat);
+      spideyGroup.add(suitWire);
+
+      // 3D Geometric Spider-Web Mandala (spokes + 3 concentric web rings)
+      const webGroup = new THREE.Group();
+      const webLineMat = track(
+        new THREE.LineBasicMaterial({
+          color: 0xf8fafc,
+          transparent: true,
+          opacity: 0.46,
+        })
+      );
+      const spokeCount = 10;
+      for (let i = 0; i < spokeCount; i++) {
+        const a = (i / spokeCount) * Math.PI * 2;
+        const pts = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(Math.cos(a) * 1.95, Math.sin(a) * 1.95, 0)];
+        const geo = track(new THREE.BufferGeometry().setFromPoints(pts));
+        webGroup.add(new THREE.Line(geo, webLineMat));
+      }
+      [0.65, 1.18, 1.72].forEach((r) => {
+        const ringPts: THREE.Vector3[] = [];
+        for (let i = 0; i <= spokeCount; i++) {
+          const a = (i / spokeCount) * Math.PI * 2;
+          ringPts.push(new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0));
+        }
+        const geo = track(new THREE.BufferGeometry().setFromPoints(ringPts));
+        webGroup.add(new THREE.Line(geo, webLineMat));
+      });
+      webGroup.position.z = -0.35;
+      spideyGroup.add(webGroup);
+
+      // Dual Spider-Verse Chromatic Orbit Rings (Red & Cyan)
+      const redRingGeo = track(new THREE.TorusGeometry(1.52, 0.032, 20, 96));
+      const redRingMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xe11d48,
+          emissive: 0xe11d48,
+          emissiveIntensity: 0.45,
+          roughness: 0.2,
+          metalness: 0.5,
+        })
+      );
+      const redRing = new THREE.Mesh(redRingGeo, redRingMat);
+      redRing.rotation.x = 1.15;
+      spideyGroup.add(redRing);
+
+      const cyanRingGeo = track(new THREE.TorusGeometry(1.68, 0.026, 20, 96));
+      const cyanRingMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0x38bdf8,
+          emissive: 0x0284c7,
+          emissiveIntensity: 0.45,
+          roughness: 0.2,
+          metalness: 0.5,
+        })
+      );
+      const cyanRing = new THREE.Mesh(cyanRingGeo, cyanRingMat);
+      cyanRing.rotation.x = -1.05;
+      cyanRing.rotation.y = 0.4;
+      spideyGroup.add(cyanRing);
+
+      // Stylized New York Night City Skyline Base
+      const skylineGroup = new THREE.Group();
+      const bldgMat = track(
+        new THREE.MeshStandardMaterial({
+          color: 0x0f172a,
+          emissive: 0x1e293b,
+          emissiveIntensity: 0.35,
+          roughness: 0.4,
+          metalness: 0.65,
+        })
+      );
+      const winAmberMat = track(new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+      const winCyanMat = track(new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+      const heights = [0.65, 1.05, 0.8, 1.25, 0.72, 0.95, 1.15, 0.7];
+      heights.forEach((bh, idx) => {
+        const angle = (idx / heights.length) * Math.PI * 2;
+        const radius = 1.55;
+        const bGeo = track(new THREE.BoxGeometry(0.28, bh, 0.28));
+        const bMesh = new THREE.Mesh(bGeo, bldgMat);
+        bMesh.position.set(Math.cos(angle) * radius, -1.45 + bh / 2, Math.sin(angle) * radius);
+        skylineGroup.add(bMesh);
+
+        const capGeo = track(new THREE.BoxGeometry(0.22, 0.04, 0.22));
+        const capMesh = new THREE.Mesh(capGeo, idx % 2 === 0 ? winAmberMat : winCyanMat);
+        capMesh.position.set(Math.cos(angle) * radius, -1.45 + bh + 0.02, Math.sin(angle) * radius);
+        skylineGroup.add(capMesh);
+      });
+      spideyGroup.add(skylineGroup);
+
+      updaters.push((t) => {
+        coreMesh.rotation.y = t * 0.55;
+        coreMesh.rotation.x = Math.sin(t * 0.9) * 0.25;
+        suitWire.rotation.y = -t * 0.38;
+        webGroup.rotation.z = t * 0.14;
+        redRing.rotation.z = t * 0.45;
+        cyanRing.rotation.z = -t * 0.38;
+        skylineGroup.rotation.y = t * 0.16;
+        spideyGroup.position.y = Math.sin(t * 1.6) * 0.08;
+      });
+    }
+
+    // =========================================================================
     // SCENE 5: CLASSIC DEFAULT (3D INTERACTIVE FROSTED GLASS BENTO SCULPTURE)
     // =========================================================================
     else {
@@ -913,6 +1054,7 @@ export default function ThemeHero3DDiorama({
     // SHARED LUMINOUS PARTICLE FIELD (THEME-COLORED)
     // =========================================================================
     const paletteMap: Record<AppTheme, [string, string, number]> = {
+      'spidey-night': ['#fb7185', '#38bdf8', 0xfbbf24],
       'lotus-zen-sanctuary': ['#fef08a', '#d97706', 0xfbbf24],
       'hon-viet': ['#fef08a', '#dc2626', 0xf59e0b],
       'fantasy-academy': ['#6ee7b7', '#f59e0b', 0x34d399],
@@ -1038,6 +1180,7 @@ export default function ThemeHero3DDiorama({
   };
 
   const hintLabel: Record<AppTheme, string> = {
+    'spidey-night': '🕷️ Di chuột xoay Lưới Tơ New York · Chạm bắn tơ Spider-Verse',
     'lotus-zen-sanctuary': '🪷 Di chuột xoay Liên Hoa · Chạm kích hoạt hào quang',
     'hon-viet': '🥁 Di chuột nghiêng Trống Đồng · Chạm tỏa hào quang Lạc Việt',
     'fantasy-academy': '🔮 Di chuột xoay Tinh Thể Cổ Ngữ · Chạm phóng ma pháp',

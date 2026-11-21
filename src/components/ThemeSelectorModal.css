@@ -336,6 +336,46 @@
   color: #ffffff;
 }
 
+/* Spidey Night-Verse Preview Mockup */
+.theme-card-preview.spidey-preview {
+  background:
+    radial-gradient(circle at 20% 25%, rgba(225, 29, 72, 0.45), transparent 52%),
+    radial-gradient(circle at 82% 75%, rgba(56, 189, 248, 0.35), transparent 52%),
+    linear-gradient(135deg, #060918 0%, #111834 100%);
+  border-bottom: 2px solid #e11d48;
+}
+
+.mockup-sidebar-left.spidey-sidebar,
+.mockup-sidebar-right.spidey-sidebar {
+  background: rgba(225, 29, 72, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.mockup-card-center.spidey-card {
+  background: rgba(11, 17, 38, 0.95);
+  border: 1.5px solid #e11d48;
+  box-shadow: -2px 2px 0 rgba(56, 189, 248, 0.45);
+}
+
+.mockup-line-title.spidey-title {
+  background: #f8fafc;
+}
+
+.mockup-line-option.spidey-option {
+  background: rgba(148, 163, 184, 0.25);
+}
+
+.mockup-line-option.spidey-option.active {
+  background: linear-gradient(90deg, #e11d48, #38bdf8);
+}
+
+.theme-preview-badge.spidey {
+  background: linear-gradient(135deg, #e11d48 0%, #1d4ed8 100%);
+  border: 1px solid rgba(254, 240, 138, 0.55);
+  color: #ffffff;
+  box-shadow: -2px 2px 0 rgba(56, 189, 248, 0.45);
+}
+
 /* Lotus Zen Sanctuary Preview Mockup */
 .theme-card-preview.lotus-preview {
   background: radial-gradient(circle at 50% 30%, #3b2014 0%, #1a0f0a 100%);

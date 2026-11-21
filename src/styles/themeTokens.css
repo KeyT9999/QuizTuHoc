@@ -167,6 +167,169 @@
 }
 
 /* --------------------------------------------------------------------------
+   3b. SPIDEY NIGHT-VERSE — NIGHT CITY + SPIDER-VERSE COMIC ACCENTS
+   -------------------------------------------------------------------------- */
+[data-theme="spidey-night"] {
+  --theme-id: "spidey-night";
+  --theme-bg-body: #060918;
+  --theme-bg-body-img:
+    radial-gradient(circle at 14% 16%, rgba(225, 29, 72, 0.2), transparent 36%),
+    radial-gradient(circle at 86% 24%, rgba(37, 99, 235, 0.22), transparent 40%),
+    radial-gradient(circle at 74% 82%, rgba(245, 158, 11, 0.14), transparent 38%),
+    linear-gradient(155deg, rgba(6, 9, 24, 0.94) 0%, rgba(10, 15, 36, 0.88) 55%, rgba(15, 9, 24, 0.94) 100%);
+  --theme-bg-surface: rgba(11, 17, 38, 0.9);
+  --theme-bg-card: rgba(14, 21, 46, 0.86);
+  --theme-bg-card-hover: rgba(20, 29, 62, 0.95);
+  --theme-bg-header: rgba(8, 12, 28, 0.94);
+  --theme-bg-subtle: rgba(255, 255, 255, 0.06);
+  --theme-bg-input: rgba(10, 15, 34, 0.92);
+  --theme-border: rgba(244, 63, 94, 0.28);
+  --theme-border-hover: rgba(56, 189, 248, 0.62);
+  --theme-border-accent: #e11d48;
+  --theme-text-primary: #f8fafc;
+  --theme-text-secondary: #cbd5e1;
+  --theme-text-muted: #94a3b8;
+  --theme-text-sub: #64748b;
+  --theme-accent-primary: #e11d48;
+  --theme-accent-primary-hover: #be123c;
+  --theme-accent-soft: rgba(225, 29, 72, 0.18);
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.42);
+  --theme-shadow-md: 0 10px 26px rgba(0, 0, 0, 0.56), -2px 0 0 rgba(225, 29, 72, 0.25), 2px 0 0 rgba(56, 189, 248, 0.22);
+  --theme-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.72), -3px 0 0 rgba(225, 29, 72, 0.35), 3px 0 0 rgba(56, 189, 248, 0.3);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* Cinematic Spidey Night artwork backdrop (blended gracefully on wide desktop & full-bleed on mobile) */
+[data-theme="spidey-night"] .app {
+  position: relative;
+}
+
+[data-theme="spidey-night"] .app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(6, 9, 24, 0.94) 0%, rgba(6, 9, 24, 0.84) 48%, rgba(6, 9, 24, 0.56) 100%),
+    url('../assets/spidey_night_bg.jpg');
+  background-size: cover, auto 105%;
+  background-position: center, right -30px center;
+  background-repeat: no-repeat;
+  opacity: 0.52;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-theme="spidey-night"] .app::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(248, 250, 252, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-theme="spidey-night"] .app > main,
+[data-theme="spidey-night"] .app > header {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  [data-theme="spidey-night"] .app::before {
+    background-image:
+      linear-gradient(180deg, rgba(6, 9, 24, 0.78) 0%, rgba(6, 9, 24, 0.9) 100%),
+      url('../assets/spidey_night_bg.jpg');
+    background-size: cover, cover;
+    background-position: center, center top;
+    opacity: 0.45;
+  }
+}
+
+/* Signature Spider-Verse Comic accents on Navbar, Hero & Cards */
+[data-theme="spidey-night"] .home-navbar,
+[data-theme="spidey-night"] .course-nav {
+  background: linear-gradient(90deg, rgba(8, 12, 28, 0.96) 0%, rgba(22, 10, 28, 0.94) 55%, rgba(8, 15, 36, 0.96) 100%) !important;
+  border-bottom: 1.5px solid rgba(225, 29, 72, 0.38) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(56, 189, 248, 0.25) !important;
+}
+
+[data-theme="spidey-night"] .home-nav-item.active,
+[data-theme="spidey-night"] .course-nav-item.active {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.28), rgba(37, 99, 235, 0.24)) !important;
+  border-color: rgba(244, 63, 94, 0.6) !important;
+  color: #ffffff !important;
+  box-shadow: -2px 0 0 rgba(225, 29, 72, 0.5), 2px 0 0 rgba(56, 189, 248, 0.45) !important;
+}
+
+[data-theme="spidey-night"] .home-hero-eyebrow,
+[data-theme="spidey-night"] .course-hero-badge {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.22), rgba(37, 99, 235, 0.22)) !important;
+  border: 1.5px solid rgba(244, 63, 94, 0.5) !important;
+  color: #fda4af !important;
+  box-shadow: -2px 2px 0 rgba(56, 189, 248, 0.35) !important;
+}
+
+[data-theme="spidey-night"] .home-gradient-text {
+  background: linear-gradient(110deg, #ff3b5c 0%, #fb7185 38%, #38bdf8 82%, #fbbf24 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="spidey-night"] .subject-card,
+[data-theme="spidey-night"] .exam-card {
+  border: 1.5px solid rgba(244, 63, 94, 0.24) !important;
+  background: linear-gradient(160deg, rgba(14, 21, 46, 0.9), rgba(10, 14, 34, 0.92)) !important;
+}
+
+[data-theme="spidey-night"] .subject-card:hover,
+[data-theme="spidey-night"] .exam-card:hover {
+  border-color: rgba(56, 189, 248, 0.65) !important;
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.62),
+    -3px 0 0 rgba(225, 29, 72, 0.55),
+    3px 0 0 rgba(56, 189, 248, 0.5) !important;
+}
+
+[data-theme="spidey-night"] .subject-cta-btn,
+[data-theme="spidey-night"] .exam-cta-btn {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 55%, #1d4ed8 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35), -2px 2px 0 rgba(56, 189, 248, 0.35) !important;
+}
+
+[data-theme="spidey-night"] .subject-cta-btn:hover,
+[data-theme="spidey-night"] .exam-cta-btn:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.48), -3px 3px 0 rgba(56, 189, 248, 0.5) !important;
+}
+
+/* --------------------------------------------------------------------------
    4. HỒN VIỆT — VIETNAM HERITAGE (Đỏ Son, Vàng Kim, Trống Đồng, Hoa Sen)
    -------------------------------------------------------------------------- */
 [data-theme="hon-viet"] {
@@ -255,7 +418,9 @@ body,
 [data-theme="fantasy-academy"] .home-navbar,
 [data-theme="fantasy-academy"] .course-nav,
 [data-theme="cozy-night"] .home-navbar,
-[data-theme="cozy-night"] .course-nav {
+[data-theme="spidey-night"] .home-navbar,
+[data-theme="cozy-night"] .course-nav,
+[data-theme="spidey-night"] .course-nav {
   background-color: var(--theme-bg-header) !important;
   border-bottom: 1px solid var(--theme-border) !important;
   backdrop-filter: blur(14px) !important;
@@ -308,19 +473,24 @@ body,
 [data-theme="fantasy-academy"] .home-brand-name,
 [data-theme="fantasy-academy"] .course-brand-name,
 [data-theme="cozy-night"] .home-brand-name,
-[data-theme="cozy-night"] .course-brand-name {
+[data-theme="spidey-night"] .home-brand-name,
+[data-theme="cozy-night"] .course-brand-name,
+[data-theme="spidey-night"] .course-brand-name {
   color: var(--theme-text-primary) !important;
 }
 
 [data-theme="fantasy-academy"] .home-nav-item,
 [data-theme="fantasy-academy"] .course-nav-item,
 [data-theme="cozy-night"] .home-nav-item,
-[data-theme="cozy-night"] .course-nav-item {
+[data-theme="spidey-night"] .home-nav-item,
+[data-theme="cozy-night"] .course-nav-item,
+[data-theme="spidey-night"] .course-nav-item {
   color: var(--theme-text-secondary) !important;
 }
 
 [data-theme="fantasy-academy"] .course-back-btn,
-[data-theme="cozy-night"] .course-back-btn {
+[data-theme="cozy-night"] .course-back-btn,
+[data-theme="spidey-night"] .course-back-btn {
   color: var(--theme-text-primary) !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-color: rgba(255, 255, 255, 0.22) !important;
@@ -330,8 +500,11 @@ body,
 [data-theme="fantasy-academy"] .course-nav-item:hover,
 [data-theme="fantasy-academy"] .course-back-btn:hover,
 [data-theme="cozy-night"] .home-nav-item:hover,
+[data-theme="spidey-night"] .home-nav-item:hover,
 [data-theme="cozy-night"] .course-nav-item:hover,
-[data-theme="cozy-night"] .course-back-btn:hover {
+[data-theme="spidey-night"] .course-nav-item:hover,
+[data-theme="cozy-night"] .course-back-btn:hover,
+[data-theme="spidey-night"] .course-back-btn:hover {
   color: var(--theme-text-primary) !important;
   background: rgba(255, 255, 255, 0.14) !important;
 }
@@ -339,7 +512,9 @@ body,
 [data-theme="fantasy-academy"] .home-nav-item.active,
 [data-theme="fantasy-academy"] .course-nav-item.active,
 [data-theme="cozy-night"] .home-nav-item.active,
-[data-theme="cozy-night"] .course-nav-item.active {
+[data-theme="spidey-night"] .home-nav-item.active,
+[data-theme="cozy-night"] .course-nav-item.active,
+[data-theme="spidey-night"] .course-nav-item.active {
   color: #ffffff !important;
   background: var(--theme-accent-primary) !important;
 }
@@ -752,9 +927,13 @@ body,
    3. COZY NIGHT (Lofi Anime Dark / Kính Mờ & Neon Đêm)
    -------------------------------------------------------------------------- */
 [data-theme="cozy-night"] .home-hero-eyebrow,
+[data-theme="spidey-night"] .home-hero-eyebrow,
 [data-theme="cozy-night"] .course-hero-badge,
+[data-theme="spidey-night"] .course-hero-badge,
 .theme-cozy-night .home-hero-eyebrow,
-.theme-cozy-night .course-hero-badge {
+.theme-spidey-night .home-hero-eyebrow,
+.theme-cozy-night .course-hero-badge,
+.theme-spidey-night .course-hero-badge {
   background: rgba(99, 102, 241, 0.18) !important;
   border: 1.5px solid rgba(129, 140, 248, 0.45) !important;
   color: #c7d2fe !important;
@@ -763,15 +942,21 @@ body,
 }
 
 [data-theme="cozy-night"] .home-hero-title,
+[data-theme="spidey-night"] .home-hero-title,
 [data-theme="cozy-night"] .course-hero-title,
+[data-theme="spidey-night"] .course-hero-title,
 .theme-cozy-night .home-hero-title,
-.theme-cozy-night .course-hero-title {
+.theme-spidey-night .home-hero-title,
+.theme-cozy-night .course-hero-title,
+.theme-spidey-night .course-hero-title {
   color: #f8fafc !important;
   text-shadow: 0 0 16px rgba(129, 140, 248, 0.35) !important;
 }
 
 [data-theme="cozy-night"] .home-gradient-text,
-.theme-cozy-night .home-gradient-text {
+[data-theme="spidey-night"] .home-gradient-text,
+.theme-cozy-night .home-gradient-text,
+.theme-spidey-night .home-gradient-text {
   background: linear-gradient(135deg, #f8fafc 0%, #38bdf8 50%, #c084fc 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -779,14 +964,20 @@ body,
 }
 
 [data-theme="cozy-night"] .home-hero-desc,
+[data-theme="spidey-night"] .home-hero-desc,
 [data-theme="cozy-night"] .course-hero-desc,
+[data-theme="spidey-night"] .course-hero-desc,
 .theme-cozy-night .home-hero-desc,
-.theme-cozy-night .course-hero-desc {
+.theme-spidey-night .home-hero-desc,
+.theme-cozy-night .course-hero-desc,
+.theme-spidey-night .course-hero-desc {
   color: #cbd5e1 !important;
 }
 
 [data-theme="cozy-night"] .home-floating-grad-cap,
-.theme-cozy-night .home-floating-grad-cap {
+[data-theme="spidey-night"] .home-floating-grad-cap,
+.theme-cozy-night .home-floating-grad-cap,
+.theme-spidey-night .home-floating-grad-cap {
   background: rgba(20, 28, 46, 0.88) !important;
   border: 1.5px solid rgba(129, 140, 248, 0.45) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 16px rgba(99, 102, 241, 0.25) !important;
@@ -794,9 +985,13 @@ body,
 
 /* Frosted Midnight Glass Cards */
 [data-theme="cozy-night"] .subject-card,
+[data-theme="spidey-night"] .subject-card,
 [data-theme="cozy-night"] .exam-card,
+[data-theme="spidey-night"] .exam-card,
 .theme-cozy-night .subject-card,
-.theme-cozy-night .exam-card {
+.theme-spidey-night .subject-card,
+.theme-cozy-night .exam-card,
+.theme-spidey-night .exam-card {
   background: rgba(20, 28, 46, 0.88) !important;
   border: 1.5px solid rgba(129, 140, 248, 0.32) !important;
   backdrop-filter: blur(18px) !important;
@@ -806,73 +1001,111 @@ body,
 }
 
 [data-theme="cozy-night"] .subject-card:hover,
+[data-theme="spidey-night"] .subject-card:hover,
 [data-theme="cozy-night"] .exam-card:hover,
+[data-theme="spidey-night"] .exam-card:hover,
 .theme-cozy-night .subject-card:hover,
-.theme-cozy-night .exam-card:hover {
+.theme-spidey-night .subject-card:hover,
+.theme-cozy-night .exam-card:hover,
+.theme-spidey-night .exam-card:hover {
   border-color: #38bdf8 !important;
   transform: translateY(-4px) !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 28px rgba(56, 189, 248, 0.32) !important;
 }
 
 [data-theme="cozy-night"] .subject-code-title,
+[data-theme="spidey-night"] .subject-code-title,
 [data-theme="cozy-night"] .exam-title,
+[data-theme="spidey-night"] .exam-title,
 .theme-cozy-night .subject-code-title,
-.theme-cozy-night .exam-title {
+.theme-spidey-night .subject-code-title,
+.theme-cozy-night .exam-title,
+.theme-spidey-night .exam-title {
   color: #f8fafc !important;
   text-shadow: 0 0 10px rgba(129, 140, 248, 0.25) !important;
   font-weight: 850 !important;
 }
 
 [data-theme="cozy-night"] .subject-name-text,
+[data-theme="spidey-night"] .subject-name-text,
 [data-theme="cozy-night"] .exam-subject-sub,
+[data-theme="spidey-night"] .exam-subject-sub,
 .theme-cozy-night .subject-name-text,
-.theme-cozy-night .exam-subject-sub {
+.theme-spidey-night .subject-name-text,
+.theme-cozy-night .exam-subject-sub,
+.theme-spidey-night .exam-subject-sub {
   color: #c7d2fe !important;
   font-weight: 700 !important;
 }
 
 [data-theme="cozy-night"] .subject-desc-text,
+[data-theme="spidey-night"] .subject-desc-text,
 [data-theme="cozy-night"] .exam-desc,
+[data-theme="spidey-night"] .exam-desc,
 .theme-cozy-night .subject-desc-text,
-.theme-cozy-night .exam-desc {
+.theme-spidey-night .subject-desc-text,
+.theme-cozy-night .exam-desc,
+.theme-spidey-night .exam-desc {
   color: #94a3b8 !important;
   line-height: 1.55 !important;
 }
 
 [data-theme="cozy-night"] .subject-stat-value,
+[data-theme="spidey-night"] .subject-stat-value,
 [data-theme="cozy-night"] .exam-stat-num,
+[data-theme="spidey-night"] .exam-stat-num,
 [data-theme="cozy-night"] .exam-progress-val,
+[data-theme="spidey-night"] .exam-progress-val,
 [data-theme="cozy-night"] .course-stat-number,
+[data-theme="spidey-night"] .course-stat-number,
 .theme-cozy-night .subject-stat-value,
+.theme-spidey-night .subject-stat-value,
 .theme-cozy-night .exam-stat-num,
+.theme-spidey-night .exam-stat-num,
 .theme-cozy-night .exam-progress-val,
-.theme-cozy-night .course-stat-number {
+.theme-spidey-night .exam-progress-val,
+.theme-cozy-night .course-stat-number,
+.theme-spidey-night .course-stat-number {
   color: #38bdf8 !important;
   font-weight: 850 !important;
 }
 
 [data-theme="cozy-night"] .subject-stat-label,
+[data-theme="spidey-night"] .subject-stat-label,
 [data-theme="cozy-night"] .exam-stat-label,
+[data-theme="spidey-night"] .exam-stat-label,
 [data-theme="cozy-night"] .exam-progress-label,
+[data-theme="spidey-night"] .exam-progress-label,
 [data-theme="cozy-night"] .course-stat-label,
+[data-theme="spidey-night"] .course-stat-label,
 .theme-cozy-night .subject-stat-label,
+.theme-spidey-night .subject-stat-label,
 .theme-cozy-night .exam-stat-label,
+.theme-spidey-night .exam-stat-label,
 .theme-cozy-night .exam-progress-label,
-.theme-cozy-night .course-stat-label {
+.theme-spidey-night .exam-progress-label,
+.theme-cozy-night .course-stat-label,
+.theme-spidey-night .course-stat-label {
   color: #64748b !important;
 }
 
 [data-theme="cozy-night"] .subject-stat-icon-wrap,
+[data-theme="spidey-night"] .subject-stat-icon-wrap,
 [data-theme="cozy-night"] .exam-stat-pill,
+[data-theme="spidey-night"] .exam-stat-pill,
 .theme-cozy-night .subject-stat-icon-wrap,
-.theme-cozy-night .exam-stat-pill {
+.theme-spidey-night .subject-stat-icon-wrap,
+.theme-cozy-night .exam-stat-pill,
+.theme-spidey-night .exam-stat-pill {
   background: rgba(255, 255, 255, 0.06) !important;
   border: 1px solid rgba(129, 140, 248, 0.25) !important;
   color: #cbd5e1 !important;
 }
 
 [data-theme="cozy-night"] .subject-icon-box,
-.theme-cozy-night .subject-icon-box {
+[data-theme="spidey-night"] .subject-icon-box,
+.theme-cozy-night .subject-icon-box,
+.theme-spidey-night .subject-icon-box {
   background: rgba(56, 189, 248, 0.12) !important;
   border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
   color: #38bdf8 !important;
@@ -880,18 +1113,26 @@ body,
 }
 
 [data-theme="cozy-night"] .subject-code-badge,
+[data-theme="spidey-night"] .subject-code-badge,
 [data-theme="cozy-night"] .exam-badge,
+[data-theme="spidey-night"] .exam-badge,
 .theme-cozy-night .subject-code-badge,
-.theme-cozy-night .exam-badge {
+.theme-spidey-night .subject-code-badge,
+.theme-cozy-night .exam-badge,
+.theme-spidey-night .exam-badge {
   background: rgba(99, 102, 241, 0.18) !important;
   color: #a5b4fc !important;
   border: 1px solid rgba(129, 140, 248, 0.35) !important;
 }
 
 [data-theme="cozy-night"] .subject-cta-btn,
+[data-theme="spidey-night"] .subject-cta-btn,
 [data-theme="cozy-night"] .exam-cta-btn,
+[data-theme="spidey-night"] .exam-cta-btn,
 .theme-cozy-night .subject-cta-btn,
-.theme-cozy-night .exam-cta-btn {
+.theme-spidey-night .subject-cta-btn,
+.theme-cozy-night .exam-cta-btn,
+.theme-spidey-night .exam-cta-btn {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
   color: #ffffff !important;
   border: 1px solid rgba(165, 180, 252, 0.4) !important;
@@ -899,27 +1140,39 @@ body,
 }
 
 [data-theme="cozy-night"] .subject-cta-btn:hover,
+[data-theme="spidey-night"] .subject-cta-btn:hover,
 [data-theme="cozy-night"] .exam-cta-btn:hover,
+[data-theme="spidey-night"] .exam-cta-btn:hover,
 .theme-cozy-night .subject-cta-btn:hover,
-.theme-cozy-night .exam-cta-btn:hover {
+.theme-spidey-night .subject-cta-btn:hover,
+.theme-cozy-night .exam-cta-btn:hover,
+.theme-spidey-night .exam-cta-btn:hover {
   background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%) !important;
   box-shadow: 0 6px 22px rgba(99, 102, 241, 0.55) !important;
   transform: translateY(-2px) !important;
 }
 
 [data-theme="cozy-night"] .course-stat-card,
-.theme-cozy-night .course-stat-card {
+[data-theme="spidey-night"] .course-stat-card,
+.theme-cozy-night .course-stat-card,
+.theme-spidey-night .course-stat-card {
   background: rgba(20, 28, 46, 0.88) !important;
   border: 1.5px solid rgba(129, 140, 248, 0.3) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
 }
 
 [data-theme="cozy-night"] .course-stat-icon-wrap.purple,
+[data-theme="spidey-night"] .course-stat-icon-wrap.purple,
 [data-theme="cozy-night"] .course-stat-icon-wrap.blue,
+[data-theme="spidey-night"] .course-stat-icon-wrap.blue,
 [data-theme="cozy-night"] .course-stat-icon-wrap.ring-box,
+[data-theme="spidey-night"] .course-stat-icon-wrap.ring-box,
 .theme-cozy-night .course-stat-icon-wrap.purple,
+.theme-spidey-night .course-stat-icon-wrap.purple,
 .theme-cozy-night .course-stat-icon-wrap.blue,
-.theme-cozy-night .course-stat-icon-wrap.ring-box {
+.theme-spidey-night .course-stat-icon-wrap.blue,
+.theme-cozy-night .course-stat-icon-wrap.ring-box,
+.theme-spidey-night .course-stat-icon-wrap.ring-box {
   background: rgba(99, 102, 241, 0.15) !important;
   border: 1px solid rgba(129, 140, 248, 0.3) !important;
   color: #38bdf8 !important;
@@ -1038,7 +1291,9 @@ body,
 
 /* Cozy Night */
 [data-theme="cozy-night"] .subject-card-add,
-.theme-cozy-night .subject-card-add {
+[data-theme="spidey-night"] .subject-card-add,
+.theme-cozy-night .subject-card-add,
+.theme-spidey-night .subject-card-add {
   background: rgba(20, 28, 46, 0.88) !important;
   border: 1.5px dashed rgba(129, 140, 248, 0.4) !important;
   backdrop-filter: blur(18px) !important;
@@ -1047,7 +1302,9 @@ body,
 }
 
 [data-theme="cozy-night"] .subject-card-add:hover,
-.theme-cozy-night .subject-card-add:hover {
+[data-theme="spidey-night"] .subject-card-add:hover,
+.theme-cozy-night .subject-card-add:hover,
+.theme-spidey-night .subject-card-add:hover {
   border-color: #38bdf8 !important;
   background: rgba(26, 38, 64, 0.94) !important;
   transform: translateY(-3px) !important;
@@ -1055,24 +1312,32 @@ body,
 }
 
 [data-theme="cozy-night"] .add-info-text h3,
-.theme-cozy-night .add-info-text h3 {
+[data-theme="spidey-night"] .add-info-text h3,
+.theme-cozy-night .add-info-text h3,
+.theme-spidey-night .add-info-text h3 {
   color: #f8fafc !important;
 }
 
 [data-theme="cozy-night"] .add-info-text p,
-.theme-cozy-night .add-info-text p {
+[data-theme="spidey-night"] .add-info-text p,
+.theme-cozy-night .add-info-text p,
+.theme-spidey-night .add-info-text p {
   color: #94a3b8 !important;
 }
 
 [data-theme="cozy-night"] .add-icon-circle,
-.theme-cozy-night .add-icon-circle {
+[data-theme="spidey-night"] .add-icon-circle,
+.theme-cozy-night .add-icon-circle,
+.theme-spidey-night .add-icon-circle {
   background: rgba(99, 102, 241, 0.18) !important;
   border: 1.5px solid rgba(129, 140, 248, 0.35) !important;
   color: #38bdf8 !important;
 }
 
 [data-theme="cozy-night"] .add-btn,
-.theme-cozy-night .add-btn {
+[data-theme="spidey-night"] .add-btn,
+.theme-cozy-night .add-btn,
+.theme-spidey-night .add-btn {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
   color: #ffffff !important;
   border: 1px solid rgba(165, 180, 252, 0.4) !important;
@@ -1080,14 +1345,18 @@ body,
 }
 
 [data-theme="cozy-night"] .home-empty-state,
-.theme-cozy-night .home-empty-state {
+[data-theme="spidey-night"] .home-empty-state,
+.theme-cozy-night .home-empty-state,
+.theme-spidey-night .home-empty-state {
   background: rgba(20, 28, 46, 0.88) !important;
   border: 1.5px dashed rgba(129, 140, 248, 0.4) !important;
   color: #94a3b8 !important;
 }
 
 [data-theme="cozy-night"] .home-empty-state h3,
-.theme-cozy-night .home-empty-state h3 {
+[data-theme="spidey-night"] .home-empty-state h3,
+.theme-cozy-night .home-empty-state h3,
+.theme-spidey-night .home-empty-state h3 {
   color: #f8fafc !important;
 }
 
@@ -1097,7 +1366,9 @@ body,
 [data-theme="fantasy-academy"] .home-search-input,
 [data-theme="fantasy-academy"] .exam-search-input,
 [data-theme="cozy-night"] .home-search-input,
-[data-theme="cozy-night"] .exam-search-input {
+[data-theme="spidey-night"] .home-search-input,
+[data-theme="cozy-night"] .exam-search-input,
+[data-theme="spidey-night"] .exam-search-input {
   background: var(--theme-bg-input) !important;
   border-color: var(--theme-border) !important;
   color: var(--theme-text-primary) !important;
@@ -1106,7 +1377,9 @@ body,
 [data-theme="fantasy-academy"] .home-search-input:focus,
 [data-theme="fantasy-academy"] .exam-search-input:focus,
 [data-theme="cozy-night"] .home-search-input:focus,
-[data-theme="cozy-night"] .exam-search-input:focus {
+[data-theme="spidey-night"] .home-search-input:focus,
+[data-theme="cozy-night"] .exam-search-input:focus,
+[data-theme="spidey-night"] .exam-search-input:focus {
   border-color: var(--theme-border-accent) !important;
   box-shadow: 0 0 0 3px var(--theme-accent-soft) !important;
 }
@@ -1114,7 +1387,9 @@ body,
 [data-theme="fantasy-academy"] .home-sort-btn,
 [data-theme="fantasy-academy"] .exam-sort-btn,
 [data-theme="cozy-night"] .home-sort-btn,
-[data-theme="cozy-night"] .exam-sort-btn {
+[data-theme="spidey-night"] .home-sort-btn,
+[data-theme="cozy-night"] .exam-sort-btn,
+[data-theme="spidey-night"] .exam-sort-btn {
   background: var(--theme-bg-input) !important;
   border-color: var(--theme-border) !important;
   color: var(--theme-text-secondary) !important;
@@ -1123,7 +1398,9 @@ body,
 [data-theme="fantasy-academy"] .home-category-chip,
 [data-theme="fantasy-academy"] .exam-filter-chip,
 [data-theme="cozy-night"] .home-category-chip,
-[data-theme="cozy-night"] .exam-filter-chip {
+[data-theme="spidey-night"] .home-category-chip,
+[data-theme="cozy-night"] .exam-filter-chip,
+[data-theme="spidey-night"] .exam-filter-chip {
   background: rgba(255, 255, 255, 0.06) !important;
   border-color: var(--theme-border) !important;
   color: var(--theme-text-secondary) !important;
@@ -1132,7 +1409,9 @@ body,
 [data-theme="fantasy-academy"] .home-category-chip.active,
 [data-theme="fantasy-academy"] .exam-filter-chip.active,
 [data-theme="cozy-night"] .home-category-chip.active,
-[data-theme="cozy-night"] .exam-filter-chip.active {
+[data-theme="spidey-night"] .home-category-chip.active,
+[data-theme="cozy-night"] .exam-filter-chip.active,
+[data-theme="spidey-night"] .exam-filter-chip.active {
   background: var(--theme-accent-primary) !important;
   color: #ffffff !important;
   border-color: var(--theme-accent-primary) !important;
@@ -1142,7 +1421,9 @@ body,
 [data-theme="fantasy-academy"] .home-sort-menu,
 [data-theme="fantasy-academy"] .exam-sort-dropdown,
 [data-theme="cozy-night"] .home-sort-menu,
-[data-theme="cozy-night"] .exam-sort-dropdown {
+[data-theme="spidey-night"] .home-sort-menu,
+[data-theme="cozy-night"] .exam-sort-dropdown,
+[data-theme="spidey-night"] .exam-sort-dropdown {
   background: var(--theme-bg-surface) !important;
   border-color: var(--theme-border) !important;
   box-shadow: var(--theme-shadow-lg) !important;
@@ -1151,14 +1432,18 @@ body,
 [data-theme="fantasy-academy"] .home-sort-option,
 [data-theme="fantasy-academy"] .exam-sort-item,
 [data-theme="cozy-night"] .home-sort-option,
-[data-theme="cozy-night"] .exam-sort-item {
+[data-theme="spidey-night"] .home-sort-option,
+[data-theme="cozy-night"] .exam-sort-item,
+[data-theme="spidey-night"] .exam-sort-item {
   color: var(--theme-text-secondary) !important;
 }
 
 [data-theme="fantasy-academy"] .home-sort-option:hover,
 [data-theme="fantasy-academy"] .exam-sort-item:hover,
 [data-theme="cozy-night"] .home-sort-option:hover,
-[data-theme="cozy-night"] .exam-sort-item:hover {
+[data-theme="spidey-night"] .home-sort-option:hover,
+[data-theme="cozy-night"] .exam-sort-item:hover,
+[data-theme="spidey-night"] .exam-sort-item:hover {
   background: rgba(255, 255, 255, 0.08) !important;
   color: var(--theme-text-primary) !important;
 }
@@ -1168,6 +1453,7 @@ body,
    ========================================================================== */
 [data-theme="fantasy-academy"] .result-page,
 [data-theme="cozy-night"] .result-page,
+[data-theme="spidey-night"] .result-page,
 [data-theme="hon-viet"] .result-page {
   background: transparent !important;
 }
@@ -1175,7 +1461,9 @@ body,
 [data-theme="fantasy-academy"] .result-overview-card,
 [data-theme="fantasy-academy"] .result-question-card,
 [data-theme="cozy-night"] .result-overview-card,
-[data-theme="cozy-night"] .result-question-card {
+[data-theme="spidey-night"] .result-overview-card,
+[data-theme="cozy-night"] .result-question-card,
+[data-theme="spidey-night"] .result-question-card {
   background: var(--theme-bg-card) !important;
   border-color: var(--theme-border) !important;
   color: var(--theme-text-primary) !important;
@@ -1447,59 +1735,83 @@ body,
    3. COZY NIGHT (Lofi Anime Dark)
    -------------------------------------------------------------------------- */
 [data-theme="cozy-night"] .quiz-v2-header,
-.theme-cozy-night .quiz-v2-header {
+[data-theme="spidey-night"] .quiz-v2-header,
+.theme-cozy-night .quiz-v2-header,
+.theme-spidey-night .quiz-v2-header {
   background: linear-gradient(135deg, #090d16 0%, #0f172a 45%, #1e1b4b 100%) !important;
   border-bottom: 1.5px solid rgba(99, 102, 241, 0.3) !important;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.15) !important;
 }
 
 [data-theme="cozy-night"] .quiz-v2-title,
-.theme-cozy-night .quiz-v2-title {
+[data-theme="spidey-night"] .quiz-v2-title,
+.theme-cozy-night .quiz-v2-title,
+.theme-spidey-night .quiz-v2-title {
   color: #c7d2fe !important;
   text-shadow: 0 0 8px rgba(129, 140, 248, 0.35);
 }
 
 [data-theme="cozy-night"] .quiz-progress-ring-text,
-.theme-cozy-night .quiz-progress-ring-text {
+[data-theme="spidey-night"] .quiz-progress-ring-text,
+.theme-cozy-night .quiz-progress-ring-text,
+.theme-spidey-night .quiz-progress-ring-text {
   color: #c7d2fe !important;
 }
 
 [data-theme="cozy-night"] .quiz-progress-ring-label strong,
-.theme-cozy-night .quiz-progress-ring-label strong {
+[data-theme="spidey-night"] .quiz-progress-ring-label strong,
+.theme-cozy-night .quiz-progress-ring-label strong,
+.theme-spidey-night .quiz-progress-ring-label strong {
   color: #e0e7ff !important;
 }
 
 [data-theme="cozy-night"] .quiz-v2-part-selector,
-.theme-cozy-night .quiz-v2-part-selector {
+[data-theme="spidey-night"] .quiz-v2-part-selector,
+.theme-cozy-night .quiz-v2-part-selector,
+.theme-spidey-night .quiz-v2-part-selector {
   background: rgba(15, 23, 42, 0.85) !important;
   border-color: rgba(99, 102, 241, 0.35) !important;
 }
 
 [data-theme="cozy-night"] .quiz-v2-part-nav-btn,
-.theme-cozy-night .quiz-v2-part-nav-btn {
+[data-theme="spidey-night"] .quiz-v2-part-nav-btn,
+.theme-cozy-night .quiz-v2-part-nav-btn,
+.theme-spidey-night .quiz-v2-part-nav-btn {
   color: #c7d2fe !important;
 }
 
 [data-theme="cozy-night"] .quiz-v2-part-select,
+[data-theme="spidey-night"] .quiz-v2-part-select,
 .theme-cozy-night .quiz-v2-part-select,
+.theme-spidey-night .quiz-v2-part-select,
 [data-theme="cozy-night"] .quiz-v2-part-select-btn,
-.theme-cozy-night .quiz-v2-part-select-btn {
+[data-theme="spidey-night"] .quiz-v2-part-select-btn,
+.theme-cozy-night .quiz-v2-part-select-btn,
+.theme-spidey-night .quiz-v2-part-select-btn {
   color: #e0e7ff !important;
 }
 
 [data-theme="cozy-night"] .quiz-v2-header-btn,
+[data-theme="spidey-night"] .quiz-v2-header-btn,
 .theme-cozy-night .quiz-v2-header-btn,
+.theme-spidey-night .quiz-v2-header-btn,
 [data-theme="cozy-night"] .quiz-v2-header-icon-btn,
-.theme-cozy-night .quiz-v2-header-icon-btn {
+[data-theme="spidey-night"] .quiz-v2-header-icon-btn,
+.theme-cozy-night .quiz-v2-header-icon-btn,
+.theme-spidey-night .quiz-v2-header-icon-btn {
   background: rgba(255, 255, 255, 0.07) !important;
   border-color: rgba(99, 102, 241, 0.25) !important;
   color: #e0e7ff !important;
 }
 
 [data-theme="cozy-night"] .quiz-v2-header-btn:hover,
+[data-theme="spidey-night"] .quiz-v2-header-btn:hover,
 .theme-cozy-night .quiz-v2-header-btn:hover,
+.theme-spidey-night .quiz-v2-header-btn:hover,
 [data-theme="cozy-night"] .quiz-v2-header-icon-btn:hover,
-.theme-cozy-night .quiz-v2-header-icon-btn:hover {
+[data-theme="spidey-night"] .quiz-v2-header-icon-btn:hover,
+.theme-cozy-night .quiz-v2-header-icon-btn:hover,
+.theme-spidey-night .quiz-v2-header-icon-btn:hover {
   background: rgba(99, 102, 241, 0.25) !important;
   border-color: #818cf8 !important;
   color: #ffffff !important;
@@ -1507,24 +1819,32 @@ body,
 }
 
 [data-theme="cozy-night"] .quiz-mode-hub,
-.theme-cozy-night .quiz-mode-hub {
+[data-theme="spidey-night"] .quiz-mode-hub,
+.theme-cozy-night .quiz-mode-hub,
+.theme-spidey-night .quiz-mode-hub {
   background: rgba(15, 23, 42, 0.96) !important;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-theme="cozy-night"] .quiz-mode-pill-btn,
-.theme-cozy-night .quiz-mode-pill-btn {
+[data-theme="spidey-night"] .quiz-mode-pill-btn,
+.theme-cozy-night .quiz-mode-pill-btn,
+.theme-spidey-night .quiz-mode-pill-btn {
   color: #94a3b8 !important;
 }
 
 [data-theme="cozy-night"] .quiz-mode-pill-btn:hover,
-.theme-cozy-night .quiz-mode-pill-btn:hover {
+[data-theme="spidey-night"] .quiz-mode-pill-btn:hover,
+.theme-cozy-night .quiz-mode-pill-btn:hover,
+.theme-spidey-night .quiz-mode-pill-btn:hover {
   background: rgba(255, 255, 255, 0.06) !important;
   color: #f1f5f9 !important;
 }
 
 [data-theme="cozy-night"] .quiz-mode-pill-btn.is-active,
-.theme-cozy-night .quiz-mode-pill-btn.is-active {
+[data-theme="spidey-night"] .quiz-mode-pill-btn.is-active,
+.theme-cozy-night .quiz-mode-pill-btn.is-active,
+.theme-spidey-night .quiz-mode-pill-btn.is-active {
   background: rgba(99, 102, 241, 0.22) !important;
   color: #a5b4fc !important;
   border-color: #6366f1 !important;
@@ -1566,6 +1886,10 @@ body,
 
 .theme-diorama-aura.aura-fantasy-academy {
   background: radial-gradient(circle, rgba(16, 185, 129, 0.38) 0%, rgba(217, 119, 6, 0.24) 55%, transparent 75%);
+}
+
+.theme-diorama-aura.aura-spidey-night {
+  background: radial-gradient(circle, rgba(225, 29, 72, 0.42) 0%, rgba(56, 189, 248, 0.28) 52%, transparent 76%);
 }
 
 .theme-diorama-aura.aura-cozy-night {
@@ -1674,18 +1998,21 @@ body,
   border: 1px solid rgba(217, 119, 6, 0.25);
 }
 
-[data-theme="cozy-night"] .subject-progress-label {
+[data-theme="cozy-night"] .subject-progress-label,
+[data-theme="spidey-night"] .subject-progress-label {
   color: #cbd5e1 !important;
   font-weight: 600 !important;
 }
 
-[data-theme="cozy-night"] .subject-progress-percent {
+[data-theme="cozy-night"] .subject-progress-percent,
+[data-theme="spidey-night"] .subject-progress-percent {
   color: #38bdf8 !important;
   font-weight: 800 !important;
   text-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
 }
 
-[data-theme="cozy-night"] .subject-progress-track {
+[data-theme="cozy-night"] .subject-progress-track,
+[data-theme="spidey-night"] .subject-progress-track {
   background: rgba(255, 255, 255, 0.1) !important;
   border: 1px solid rgba(129, 140, 248, 0.22);
 }
@@ -1716,7 +2043,8 @@ body,
 [data-theme="lotus-zen-sanctuary"] .ask-ai,
 [data-theme="hon-viet"] .ask-ai,
 [data-theme="fantasy-academy"] .ask-ai,
-[data-theme="cozy-night"] .ask-ai {
+[data-theme="cozy-night"] .ask-ai,
+[data-theme="spidey-night"] .ask-ai {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -1834,6 +2162,7 @@ body,
 
 /* 4. Phòng Học Cozy Night (Lofi Study Buddy AI) */
 [data-theme="cozy-night"] .ask-ai-toolbar,
+[data-theme="spidey-night"] .ask-ai-toolbar,
 .ask-ai-theme-cozy-night .ask-ai-toolbar {
   background: linear-gradient(135deg, #11182f 0%, #1e1b4b 100%) !important;
   border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
@@ -1842,6 +2171,7 @@ body,
 }
 
 [data-theme="cozy-night"] .ask-ai-toolbar-icon,
+[data-theme="spidey-night"] .ask-ai-toolbar-icon,
 .ask-ai-theme-cozy-night .ask-ai-toolbar-icon {
   background: rgba(56, 189, 248, 0.18) !important;
   border: 1px solid rgba(56, 189, 248, 0.45) !important;
@@ -1849,18 +2179,22 @@ body,
 }
 
 [data-theme="cozy-night"] .ask-ai-toolbar-copy strong,
+[data-theme="spidey-night"] .ask-ai-toolbar-copy strong,
 .ask-ai-theme-cozy-night .ask-ai-toolbar-copy strong {
   color: #f8fafc !important;
 }
 
 [data-theme="cozy-night"] .ask-ai-toolbar-copy span,
+[data-theme="spidey-night"] .ask-ai-toolbar-copy span,
 [data-theme="cozy-night"] .ask-ai-toolbar-copy span:last-child,
+[data-theme="spidey-night"] .ask-ai-toolbar-copy span:last-child,
 .ask-ai-theme-cozy-night .ask-ai-toolbar-copy span,
 .ask-ai-theme-cozy-night .ask-ai-toolbar-copy span:last-child {
   color: #cbd5e1 !important;
 }
 
 [data-theme="cozy-night"] .ask-ai-toggle,
+[data-theme="spidey-night"] .ask-ai-toggle,
 .ask-ai-theme-cozy-night .ask-ai-toggle {
   background: linear-gradient(135deg, #6366f1 0%, #0284c7 100%) !important;
   border: 1px solid rgba(186, 230, 253, 0.45) !important;
@@ -2031,42 +2365,56 @@ body,
 
   /* Cozy Night Header & Drawer */
   [data-theme="cozy-night"] .quiz-mobile-back-btn,
+  [data-theme="spidey-night"] .quiz-mobile-back-btn,
   .theme-cozy-night .quiz-mobile-back-btn,
+  .theme-spidey-night .quiz-mobile-back-btn,
   [data-theme="cozy-night"] .quiz-mobile-icon-btn,
-  .theme-cozy-night .quiz-mobile-icon-btn {
+  [data-theme="spidey-night"] .quiz-mobile-icon-btn,
+  .theme-cozy-night .quiz-mobile-icon-btn,
+  .theme-spidey-night .quiz-mobile-icon-btn {
     background: rgba(255, 255, 255, 0.08) !important;
     border-color: rgba(99, 102, 241, 0.38) !important;
     color: #e0e7ff !important;
   }
 
   [data-theme="cozy-night"] .quiz-mobile-count-pill,
-  .theme-cozy-night .quiz-mobile-count-pill {
+  [data-theme="spidey-night"] .quiz-mobile-count-pill,
+  .theme-cozy-night .quiz-mobile-count-pill,
+  .theme-spidey-night .quiz-mobile-count-pill {
     background: rgba(99, 102, 241, 0.35) !important;
     color: #e0e7ff !important;
   }
 
   [data-theme="cozy-night"] .quiz-mobile-more-btn.is-open,
-  .theme-cozy-night .quiz-mobile-more-btn.is-open {
+  [data-theme="spidey-night"] .quiz-mobile-more-btn.is-open,
+  .theme-cozy-night .quiz-mobile-more-btn.is-open,
+  .theme-spidey-night .quiz-mobile-more-btn.is-open {
     background: rgba(99, 102, 241, 0.35) !important;
     border-color: #818cf8 !important;
     color: #ffffff !important;
   }
 
   [data-theme="cozy-night"] .quiz-mobile-tools-drawer,
-  .theme-cozy-night .quiz-mobile-tools-drawer {
+  [data-theme="spidey-night"] .quiz-mobile-tools-drawer,
+  .theme-cozy-night .quiz-mobile-tools-drawer,
+  .theme-spidey-night .quiz-mobile-tools-drawer {
     background: rgba(15, 23, 42, 0.98) !important;
     border-bottom: 1.5px solid rgba(99, 102, 241, 0.35) !important;
   }
 
   [data-theme="cozy-night"] .quiz-mobile-tool-chip,
-  .theme-cozy-night .quiz-mobile-tool-chip {
+  [data-theme="spidey-night"] .quiz-mobile-tool-chip,
+  .theme-cozy-night .quiz-mobile-tool-chip,
+  .theme-spidey-night .quiz-mobile-tool-chip {
     background: rgba(30, 41, 59, 0.9) !important;
     border-color: rgba(99, 102, 241, 0.35) !important;
     color: #e2e8f0 !important;
   }
 
   [data-theme="cozy-night"] .quiz-mobile-tool-chip.is-highlighted,
-  .theme-cozy-night .quiz-mobile-tool-chip.is-highlighted {
+  [data-theme="spidey-night"] .quiz-mobile-tool-chip.is-highlighted,
+  .theme-cozy-night .quiz-mobile-tool-chip.is-highlighted,
+  .theme-spidey-night .quiz-mobile-tool-chip.is-highlighted {
     background: rgba(99, 102, 241, 0.25) !important;
     border-color: #818cf8 !important;
     color: #ffffff !important;

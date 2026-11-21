@@ -223,6 +223,10 @@ export default function TimeAttackGame({
         title: '⚡ ĐẤU TRƯỜNG PHÁP LỰC 60S',
         desc: 'Tích lũy ma lực thần tốc! Thi triển pháp thuật chuẩn xác để kích hoạt Mana Surge x3 và vượt qua giới hạn thời gian.',
       },
+      'spidey-night': {
+        title: '🕷️ ĐẤU TRÍ 60S · SPIDER-VERSE',
+        desc: 'Đu tơ tốc độ ánh sáng qua 60 giây! Bắn đáp án chuẩn xác liên tiếp để kích hoạt Combo x3 điểm và phá kỷ lục đêm New York.',
+      },
       'cozy-night': {
         title: '⚡ ĐẤU TRÍ 60 GIÂY LOFI NIGHT',
         desc: 'Trải nghiệm phản xạ nhanh trong không gian ánh đèn đêm ấm áp. Tích lũy chuỗi combo êm dịu bứt phá kỷ lục.',

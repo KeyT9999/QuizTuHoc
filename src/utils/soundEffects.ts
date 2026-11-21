@@ -281,3 +281,63 @@ export function playTempleBellSound(force = true): void {
   }
 }
 
+
+/**
+ * Crisp Spider-Man web-shooter "THWIP!" sound (Web Audio synthesis)
+ */
+export function playWebThwipSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+
+    // 1. Short band-pass noise snap ("THW-")
+    const bufferSize = Math.floor(ctx.sampleRate * 0.14);
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      const env = Math.pow(1 - i / bufferSize, 1.8);
+      data[i] = (Math.random() * 2 - 1) * env;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(2600, now);
+    filter.frequency.exponentialRampToValueAtTime(900, now + 0.12);
+    filter.Q.setValueAtTime(1.8, now);
+
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.24, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+
+    // 2. Crisp elastic zip ("-WIP!")
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(980, now);
+    osc.frequency.exponentialRampToValueAtTime(2100, now + 0.035);
+    osc.frequency.exponentialRampToValueAtTime(420, now + 0.12);
+
+    oscGain.gain.setValueAtTime(0.11, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.125);
+
+    osc.connect(oscGain);
+    oscGain.connect(ctx.destination);
+
+    noise.start(now);
+    osc.start(now);
+    noise.stop(now + 0.14);
+    osc.stop(now + 0.13);
+  } catch {
+    // ignore
+  }
+}

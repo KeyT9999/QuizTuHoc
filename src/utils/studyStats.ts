@@ -1,4 +1,4 @@
-export type AppTheme = 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
+export type AppTheme = 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
 
 const THEME_STORAGE_KEY = 'keyt_selected_ui_theme';
 const MOUSE_EFFECTS_KEY = 'keyt_mouse_effects_enabled';
@@ -13,6 +13,7 @@ export function getAppTheme(): AppTheme {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (
       saved === 'default' ||
+      saved === 'spidey-night' ||
       saved === 'cozy-night' ||
       saved === 'fantasy-academy' ||
       saved === 'hon-viet' ||

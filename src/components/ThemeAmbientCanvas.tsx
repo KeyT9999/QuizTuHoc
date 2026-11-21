@@ -28,6 +28,15 @@ interface TrailSpark {
   color: string;
 }
 
+interface WebBurst {
+  x: number;
+  y: number;
+  life: number;
+  maxLife: number;
+  rotation: number;
+  maxRadius: number;
+}
+
 const THEME_CONFIG: Record<
   AppTheme,
   {
@@ -35,9 +44,16 @@ const THEME_CONFIG: Record<
     glowColor: string;
     glyphs?: string[];
     isRain?: boolean;
+    isWebBurst?: boolean;
     moteCount: number;
   }
 > = {
+  'spidey-night': {
+    colors: ['#fb7185', '#38bdf8', '#fbbf24', '#60a5fa', '#e11d48'],
+    glowColor: 'rgba(225, 29, 72, 0.14)',
+    isWebBurst: true,
+    moteCount: 40,
+  },
   'lotus-zen-sanctuary': {
     colors: ['#fef08a', '#f59e0b', '#d8b36a', '#fde68a'],
     glowColor: 'rgba(216, 179, 106, 0.14)',
@@ -106,6 +122,7 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
     });
 
     const trailSparks: TrailSpark[] = [];
+    const webBursts: WebBurst[] = [];
 
     let mouseX = width * 0.5;
     let mouseY = height * 0.35;
@@ -159,10 +176,30 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
 
     const handlePointerDown = (e: PointerEvent) => {
       spawnBurst(e.clientX, e.clientY, 14);
+      if (cfg.isWebBurst && webBursts.length < 6) {
+        webBursts.push({
+          x: e.clientX,
+          y: e.clientY,
+          life: 0,
+          maxLife: 28,
+          rotation: Math.random() * Math.PI,
+          maxRadius: 42 + Math.random() * 14,
+        });
+      }
     };
 
     const handleCustomBurst = () => {
       spawnBurst(smoothMouseX, smoothMouseY, 26);
+      if (cfg.isWebBurst && webBursts.length < 6) {
+        webBursts.push({
+          x: smoothMouseX,
+          y: smoothMouseY,
+          life: 0,
+          maxLife: 32,
+          rotation: Math.random() * Math.PI,
+          maxRadius: 56,
+        });
+      }
     };
 
     const handleResize = () => {
@@ -286,6 +323,52 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
         ctx.beginPath();
         ctx.arc(s.x, s.y, Math.max(0.5, radius), 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
+      }
+
+      // Draw expanding mini spider-webs on click for spidey-night theme
+      for (let i = webBursts.length - 1; i >= 0; i--) {
+        const wb = webBursts[i];
+        wb.life += 1;
+        if (wb.life >= wb.maxLife) {
+          webBursts.splice(i, 1);
+          continue;
+        }
+        const progress = wb.life / wb.maxLife;
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const radius = wb.maxRadius * ease;
+        const alpha = (1 - progress) * 0.65;
+        const spokes = 8;
+
+        ctx.save();
+        ctx.translate(wb.x, wb.y);
+        ctx.rotate(wb.rotation);
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = 'rgba(248, 250, 252, 0.9)';
+        ctx.shadowColor = '#38bdf8';
+        ctx.shadowBlur = 8;
+        ctx.lineWidth = 1.1;
+
+        for (let s = 0; s < spokes; s++) {
+          const a = (s / spokes) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(Math.cos(a) * radius, Math.sin(a) * radius);
+          ctx.stroke();
+        }
+
+        [0.45, 0.82].forEach((ringScale) => {
+          const r = radius * ringScale;
+          ctx.beginPath();
+          for (let s = 0; s <= spokes; s++) {
+            const a = (s / spokes) * Math.PI * 2;
+            const px = Math.cos(a) * r;
+            const py = Math.sin(a) * r;
+            if (s === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.stroke();
+        });
         ctx.restore();
       }
     };

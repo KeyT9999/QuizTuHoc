@@ -1705,12 +1705,16 @@
 
 /* --- Mode 1: Question List — Cozy Night --- */
 .theme-qlist-container.theme-cozy-night,
-[data-theme="cozy-night"] .theme-qlist-container {
+.theme-qlist-container.theme-spidey-night,
+[data-theme="cozy-night"] .theme-qlist-container,
+[data-theme="spidey-night"] .theme-qlist-container {
   background: transparent;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-hero,
-[data-theme="cozy-night"] .theme-qlist-hero {
+.theme-qlist-container.theme-spidey-night .theme-qlist-hero,
+[data-theme="cozy-night"] .theme-qlist-hero,
+[data-theme="spidey-night"] .theme-qlist-hero {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.35);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(99, 102, 241, 0.15);
@@ -1718,83 +1722,111 @@
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-eyebrow,
-[data-theme="cozy-night"] .theme-qlist-eyebrow {
+.theme-qlist-container.theme-spidey-night .theme-qlist-eyebrow,
+[data-theme="cozy-night"] .theme-qlist-eyebrow,
+[data-theme="spidey-night"] .theme-qlist-eyebrow {
   color: #a5b4fc;
   font-weight: 800;
   letter-spacing: 1px;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-title,
-[data-theme="cozy-night"] .theme-qlist-title {
+.theme-qlist-container.theme-spidey-night .theme-qlist-title,
+[data-theme="cozy-night"] .theme-qlist-title,
+[data-theme="spidey-night"] .theme-qlist-title {
   color: #f1f5f9;
   text-shadow: 0 0 12px rgba(129, 140, 248, 0.4);
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-desc,
-[data-theme="cozy-night"] .theme-qlist-desc {
+.theme-qlist-container.theme-spidey-night .theme-qlist-desc,
+[data-theme="cozy-night"] .theme-qlist-desc,
+[data-theme="spidey-night"] .theme-qlist-desc {
   color: #94a3b8;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-stats-pill,
-[data-theme="cozy-night"] .theme-qlist-stats-pill {
+.theme-qlist-container.theme-spidey-night .theme-qlist-stats-pill,
+[data-theme="cozy-night"] .theme-qlist-stats-pill,
+[data-theme="spidey-night"] .theme-qlist-stats-pill {
   background: rgba(30, 41, 59, 0.7);
   border: 1px solid rgba(99, 102, 241, 0.3);
   backdrop-filter: blur(12px);
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .stat-label,
-[data-theme="cozy-night"] .theme-qlist-stat-item .stat-label {
+.theme-qlist-container.theme-spidey-night .theme-qlist-stat-item .stat-label,
+[data-theme="cozy-night"] .theme-qlist-stat-item .stat-label,
+[data-theme="spidey-night"] .theme-qlist-stat-item .stat-label {
   color: #94a3b8;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .stat-value,
-[data-theme="cozy-night"] .theme-qlist-stat-item .stat-value {
+.theme-qlist-container.theme-spidey-night .theme-qlist-stat-item .stat-value,
+[data-theme="cozy-night"] .theme-qlist-stat-item .stat-value,
+[data-theme="spidey-night"] .theme-qlist-stat-item .stat-value {
   color: #f8fafc;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .val-mastered,
-[data-theme="cozy-night"] .theme-qlist-stat-item .val-mastered {
+.theme-qlist-container.theme-spidey-night .theme-qlist-stat-item .val-mastered,
+[data-theme="cozy-night"] .theme-qlist-stat-item .val-mastered,
+[data-theme="spidey-night"] .theme-qlist-stat-item .val-mastered {
   color: #34d399;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-stat-item .val-answered,
-[data-theme="cozy-night"] .theme-qlist-stat-item .val-answered {
+.theme-qlist-container.theme-spidey-night .theme-qlist-stat-item .val-answered,
+[data-theme="cozy-night"] .theme-qlist-stat-item .val-answered,
+[data-theme="spidey-night"] .theme-qlist-stat-item .val-answered {
   color: #818cf8;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-stat-sep,
-[data-theme="cozy-night"] .theme-qlist-stat-sep {
+.theme-qlist-container.theme-spidey-night .theme-qlist-stat-sep,
+[data-theme="cozy-night"] .theme-qlist-stat-sep,
+[data-theme="spidey-night"] .theme-qlist-stat-sep {
   background: rgba(255, 255, 255, 0.1);
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-search-input,
-[data-theme="cozy-night"] .theme-qlist-search-input {
+.theme-qlist-container.theme-spidey-night .theme-qlist-search-input,
+[data-theme="cozy-night"] .theme-qlist-search-input,
+[data-theme="spidey-night"] .theme-qlist-search-input {
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(99, 102, 241, 0.35);
   color: #f1f5f9;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-search-input:focus,
-[data-theme="cozy-night"] .theme-qlist-search-input:focus {
+.theme-qlist-container.theme-spidey-night .theme-qlist-search-input:focus,
+[data-theme="cozy-night"] .theme-qlist-search-input:focus,
+[data-theme="spidey-night"] .theme-qlist-search-input:focus {
   border-color: #818cf8;
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-tab,
-[data-theme="cozy-night"] .theme-qlist-tab {
+.theme-qlist-container.theme-spidey-night .theme-qlist-tab,
+[data-theme="cozy-night"] .theme-qlist-tab,
+[data-theme="spidey-night"] .theme-qlist-tab {
   background: rgba(30, 41, 59, 0.7);
   border: 1px solid rgba(99, 102, 241, 0.25);
   color: #94a3b8;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-tab:hover,
-[data-theme="cozy-night"] .theme-qlist-tab:hover {
+.theme-qlist-container.theme-spidey-night .theme-qlist-tab:hover,
+[data-theme="cozy-night"] .theme-qlist-tab:hover,
+[data-theme="spidey-night"] .theme-qlist-tab:hover {
   background: rgba(99, 102, 241, 0.2);
   color: #f1f5f9;
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-tab.is-active,
-[data-theme="cozy-night"] .theme-qlist-tab.is-active {
+.theme-qlist-container.theme-spidey-night .theme-qlist-tab.is-active,
+[data-theme="cozy-night"] .theme-qlist-tab.is-active,
+[data-theme="spidey-night"] .theme-qlist-tab.is-active {
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
   border-color: #818cf8;
   color: #ffffff;
@@ -1802,7 +1834,9 @@
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-card,
-[data-theme="cozy-night"] .theme-qlist-card {
+.theme-qlist-container.theme-spidey-night .theme-qlist-card,
+[data-theme="cozy-night"] .theme-qlist-card,
+[data-theme="spidey-night"] .theme-qlist-card {
   background: rgba(15, 23, 42, 0.82);
   border: 1.5px solid rgba(99, 102, 241, 0.25);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
@@ -1810,78 +1844,104 @@
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-card:hover,
-[data-theme="cozy-night"] .theme-qlist-card:hover {
+.theme-qlist-container.theme-spidey-night .theme-qlist-card:hover,
+[data-theme="cozy-night"] .theme-qlist-card:hover,
+[data-theme="spidey-night"] .theme-qlist-card:hover {
   border-color: #818cf8;
   transform: translateY(-2px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 15px rgba(129, 140, 248, 0.2);
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-card.is-current-active,
-[data-theme="cozy-night"] .theme-qlist-card.is-current-active {
+.theme-qlist-container.theme-spidey-night .theme-qlist-card.is-current-active,
+[data-theme="cozy-night"] .theme-qlist-card.is-current-active,
+[data-theme="spidey-night"] .theme-qlist-card.is-current-active {
   border-color: #818cf8;
   box-shadow: 0 0 0 2px #818cf8, 0 0 18px rgba(129, 140, 248, 0.35);
 }
 
 .theme-qlist-container.theme-cozy-night .theme-qlist-card.is-mastered,
-[data-theme="cozy-night"] .theme-qlist-card.is-mastered {
+.theme-qlist-container.theme-spidey-night .theme-qlist-card.is-mastered,
+[data-theme="cozy-night"] .theme-qlist-card.is-mastered,
+[data-theme="spidey-night"] .theme-qlist-card.is-mastered {
   border-left: 4px solid #10b981;
 }
 
 .theme-qlist-container.theme-cozy-night .q-num-badge,
-[data-theme="cozy-night"] .q-num-badge {
+.theme-qlist-container.theme-spidey-night .q-num-badge,
+[data-theme="cozy-night"] .q-num-badge,
+[data-theme="spidey-night"] .q-num-badge {
   background: rgba(99, 102, 241, 0.2);
   color: #c7d2fe;
   border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .theme-qlist-container.theme-cozy-night .card-mastered-indicator,
-[data-theme="cozy-night"] .card-mastered-indicator {
+.theme-qlist-container.theme-spidey-night .card-mastered-indicator,
+[data-theme="cozy-night"] .card-mastered-indicator,
+[data-theme="spidey-night"] .card-mastered-indicator {
   background: rgba(16, 185, 129, 0.2);
   color: #6ee7b7;
   border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
 .theme-qlist-container.theme-cozy-night .card-answered-badge,
-[data-theme="cozy-night"] .card-answered-badge {
+.theme-qlist-container.theme-spidey-night .card-answered-badge,
+[data-theme="cozy-night"] .card-answered-badge,
+[data-theme="spidey-night"] .card-answered-badge {
   background: rgba(99, 102, 241, 0.25);
   color: #a5b4fc;
   border: 1px solid rgba(99, 102, 241, 0.4);
 }
 
 .theme-qlist-container.theme-cozy-night .card-q-text,
-[data-theme="cozy-night"] .card-q-text {
+.theme-qlist-container.theme-spidey-night .card-q-text,
+[data-theme="cozy-night"] .card-q-text,
+[data-theme="spidey-night"] .card-q-text {
   color: #f1f5f9;
 }
 
 .theme-qlist-container.theme-cozy-night .card-opt-chip,
-[data-theme="cozy-night"] .card-opt-chip {
+.theme-qlist-container.theme-spidey-night .card-opt-chip,
+[data-theme="cozy-night"] .card-opt-chip,
+[data-theme="spidey-night"] .card-opt-chip {
   background: rgba(30, 41, 59, 0.6);
   border-color: rgba(99, 102, 241, 0.2);
 }
 
 .theme-qlist-container.theme-cozy-night .card-opt-chip .opt-key,
-[data-theme="cozy-night"] .card-opt-chip .opt-key {
+.theme-qlist-container.theme-spidey-night .card-opt-chip .opt-key,
+[data-theme="cozy-night"] .card-opt-chip .opt-key,
+[data-theme="spidey-night"] .card-opt-chip .opt-key {
   color: #a5b4fc;
 }
 
 .theme-qlist-container.theme-cozy-night .card-opt-chip .opt-txt,
-[data-theme="cozy-night"] .card-opt-chip .opt-txt {
+.theme-qlist-container.theme-spidey-night .card-opt-chip .opt-txt,
+[data-theme="cozy-night"] .card-opt-chip .opt-txt,
+[data-theme="spidey-night"] .card-opt-chip .opt-txt {
   color: #cbd5e1;
 }
 
 .theme-qlist-container.theme-cozy-night .card-action-hint,
-[data-theme="cozy-night"] .card-action-hint {
+.theme-qlist-container.theme-spidey-night .card-action-hint,
+[data-theme="cozy-night"] .card-action-hint,
+[data-theme="spidey-night"] .card-action-hint {
   color: #818cf8;
 }
 
 /* --- Mode 2: Grouped Learning — Cozy Night --- */
 .knowledge-groups-page.theme-cozy-night,
-[data-theme="cozy-night"] .knowledge-groups-page {
+.knowledge-groups-page.theme-spidey-night,
+[data-theme="cozy-night"] .knowledge-groups-page,
+[data-theme="spidey-night"] .knowledge-groups-page {
   background: transparent;
 }
 
 .knowledge-groups-page.theme-cozy-night .tesla-nav,
-[data-theme="cozy-night"] .knowledge-groups-page .tesla-nav {
+.knowledge-groups-page.theme-spidey-night .tesla-nav,
+[data-theme="cozy-night"] .knowledge-groups-page .tesla-nav,
+[data-theme="spidey-night"] .knowledge-groups-page .tesla-nav {
   background: rgba(15, 23, 42, 0.94) !important;
   border-bottom: 1.5px solid rgba(148, 163, 184, 0.25) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
@@ -1889,7 +1949,9 @@
 }
 
 .knowledge-groups-page.theme-cozy-night .keyt-back-nav-btn,
-[data-theme="cozy-night"] .knowledge-groups-page .keyt-back-nav-btn {
+.knowledge-groups-page.theme-spidey-night .keyt-back-nav-btn,
+[data-theme="cozy-night"] .knowledge-groups-page .keyt-back-nav-btn,
+[data-theme="spidey-night"] .knowledge-groups-page .keyt-back-nav-btn {
   background: rgba(30, 41, 59, 0.88) !important;
   border: 1.2px solid rgba(148, 163, 184, 0.3) !important;
   color: #f8fafc !important;
@@ -1900,38 +1962,50 @@
 }
 
 .knowledge-groups-page.theme-cozy-night .keyt-back-nav-btn:hover,
-[data-theme="cozy-night"] .knowledge-groups-page .keyt-back-nav-btn:hover {
+.knowledge-groups-page.theme-spidey-night .keyt-back-nav-btn:hover,
+[data-theme="cozy-night"] .knowledge-groups-page .keyt-back-nav-btn:hover,
+[data-theme="spidey-night"] .knowledge-groups-page .keyt-back-nav-btn:hover {
   background: rgba(148, 163, 184, 0.2) !important;
   border-color: #94a3b8 !important;
   color: #38bdf8 !important;
 }
 
 .knowledge-groups-page.theme-cozy-night .tesla-logo-mark,
-[data-theme="cozy-night"] .knowledge-groups-page .tesla-logo-mark {
+.knowledge-groups-page.theme-spidey-night .tesla-logo-mark,
+[data-theme="cozy-night"] .knowledge-groups-page .tesla-logo-mark,
+[data-theme="spidey-night"] .knowledge-groups-page .tesla-logo-mark {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
   border: 1.2px solid #64748b !important;
   box-shadow: 0 0 12px rgba(100, 116, 139, 0.3) !important;
 }
 
 .knowledge-groups-page.theme-cozy-night .tesla-logo,
-[data-theme="cozy-night"] .knowledge-groups-page .tesla-logo {
+.knowledge-groups-page.theme-spidey-night .tesla-logo,
+[data-theme="cozy-night"] .knowledge-groups-page .tesla-logo,
+[data-theme="spidey-night"] .knowledge-groups-page .tesla-logo {
   color: #cbd5e1 !important;
   letter-spacing: 2px !important;
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-groups-heading h1,
-[data-theme="cozy-night"] .knowledge-groups-heading h1 {
+.knowledge-groups-page.theme-spidey-night .knowledge-groups-heading h1,
+[data-theme="cozy-night"] .knowledge-groups-heading h1,
+[data-theme="spidey-night"] .knowledge-groups-heading h1 {
   color: #f1f5f9;
   text-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-groups-eyebrow,
-[data-theme="cozy-night"] .knowledge-groups-eyebrow {
+.knowledge-groups-page.theme-spidey-night .knowledge-groups-eyebrow,
+[data-theme="cozy-night"] .knowledge-groups-eyebrow,
+[data-theme="spidey-night"] .knowledge-groups-eyebrow {
   color: #a5b4fc;
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-groups-note,
-[data-theme="cozy-night"] .knowledge-groups-note {
+.knowledge-groups-page.theme-spidey-night .knowledge-groups-note,
+[data-theme="cozy-night"] .knowledge-groups-note,
+[data-theme="spidey-night"] .knowledge-groups-note {
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(99, 102, 241, 0.3);
   color: #94a3b8;
@@ -1939,7 +2013,9 @@
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-card,
-[data-theme="cozy-night"] .knowledge-group-card {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-card,
+[data-theme="cozy-night"] .knowledge-group-card,
+[data-theme="spidey-night"] .knowledge-group-card {
   background: rgba(15, 23, 42, 0.82);
   border: 1.5px solid rgba(99, 102, 241, 0.3);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
@@ -1947,46 +2023,62 @@
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-card:hover:not(:disabled),
-[data-theme="cozy-night"] .knowledge-group-card:hover:not(:disabled) {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-card:hover:not(:disabled),
+[data-theme="cozy-night"] .knowledge-group-card:hover:not(:disabled),
+[data-theme="spidey-night"] .knowledge-group-card:hover:not(:disabled) {
   border-color: #818cf8;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 18px rgba(129, 140, 248, 0.25);
   transform: translateY(-2px);
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-number,
-[data-theme="cozy-night"] .knowledge-group-number {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-number,
+[data-theme="cozy-night"] .knowledge-group-number,
+[data-theme="spidey-night"] .knowledge-group-number {
   color: #a5b4fc;
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-title,
-[data-theme="cozy-night"] .knowledge-group-title {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-title,
+[data-theme="cozy-night"] .knowledge-group-title,
+[data-theme="spidey-night"] .knowledge-group-title {
   color: #f8fafc;
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-summary,
-[data-theme="cozy-night"] .knowledge-group-summary {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-summary,
+[data-theme="cozy-night"] .knowledge-group-summary,
+[data-theme="spidey-night"] .knowledge-group-summary {
   color: #94a3b8;
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-progress-copy,
-[data-theme="cozy-night"] .knowledge-group-progress-copy {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-progress-copy,
+[data-theme="cozy-night"] .knowledge-group-progress-copy,
+[data-theme="spidey-night"] .knowledge-group-progress-copy {
   color: #cbd5e1;
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-progress-track span,
-[data-theme="cozy-night"] .knowledge-group-progress-track span {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-progress-track span,
+[data-theme="cozy-night"] .knowledge-group-progress-track span,
+[data-theme="spidey-night"] .knowledge-group-progress-track span {
   background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
   box-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
 }
 
 .knowledge-groups-page.theme-cozy-night .knowledge-group-action,
-[data-theme="cozy-night"] .knowledge-group-action {
+.knowledge-groups-page.theme-spidey-night .knowledge-group-action,
+[data-theme="cozy-night"] .knowledge-group-action,
+[data-theme="spidey-night"] .knowledge-group-action {
   color: #818cf8;
 }
 
 /* --- Mode 3: Mistake Review — Cozy Night --- */
 .game-card-surface.theme-cozy-night,
-[data-theme="cozy-night"] .game-card-surface {
+.game-card-surface.theme-spidey-night,
+[data-theme="cozy-night"] .game-card-surface,
+[data-theme="spidey-night"] .game-card-surface {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.35);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 25px rgba(99, 102, 241, 0.15);
@@ -1994,16 +2086,21 @@
 }
 
 .theme-cozy-night .game-splash-title,
-[data-theme="cozy-night"] .game-splash-title {
+.theme-spidey-night .game-splash-title,
+[data-theme="cozy-night"] .game-splash-title,
+[data-theme="spidey-night"] .game-splash-title {
   color: #f1f5f9;
 }
 
 .theme-cozy-night .game-splash-subtitle,
-[data-theme="cozy-night"] .game-splash-subtitle {
+.theme-spidey-night .game-splash-subtitle,
+[data-theme="cozy-night"] .game-splash-subtitle,
+[data-theme="spidey-night"] .game-splash-subtitle {
   color: #94a3b8;
 }
 
-.theme-cozy-night .game-hud-mistakes {
+.theme-cozy-night .game-hud-mistakes,
+.theme-spidey-night .game-hud-mistakes {
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(99, 102, 241, 0.3);
   border-radius: 16px;
@@ -2011,12 +2108,15 @@
   backdrop-filter: blur(14px);
 }
 
-.theme-cozy-night .mistake-counter-pill {
+.theme-cozy-night .mistake-counter-pill,
+.theme-spidey-night .mistake-counter-pill {
   color: #c7d2fe;
 }
 
 .theme-cozy-night .game-question-card,
-[data-theme="cozy-night"] .game-question-card {
+.theme-spidey-night .game-question-card,
+[data-theme="cozy-night"] .game-question-card,
+[data-theme="spidey-night"] .game-question-card {
   background: rgba(15, 23, 42, 0.85);
   border: 1.5px solid rgba(99, 102, 241, 0.3);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
@@ -2024,31 +2124,41 @@
 }
 
 .theme-cozy-night .game-q-text,
-[data-theme="cozy-night"] .game-q-text {
+.theme-spidey-night .game-q-text,
+[data-theme="cozy-night"] .game-q-text,
+[data-theme="spidey-night"] .game-q-text {
   color: #f8fafc;
 }
 
 .theme-cozy-night .game-q-opt-btn,
-[data-theme="cozy-night"] .game-q-opt-btn {
+.theme-spidey-night .game-q-opt-btn,
+[data-theme="cozy-night"] .game-q-opt-btn,
+[data-theme="spidey-night"] .game-q-opt-btn {
   background: rgba(30, 41, 59, 0.78);
   border: 1.5px solid rgba(129, 140, 248, 0.32);
   color: #f8fafc;
 }
 
 .theme-cozy-night .game-q-opt-btn .opt-label-text,
-[data-theme="cozy-night"] .game-q-opt-btn .opt-label-text {
+.theme-spidey-night .game-q-opt-btn .opt-label-text,
+[data-theme="cozy-night"] .game-q-opt-btn .opt-label-text,
+[data-theme="spidey-night"] .game-q-opt-btn .opt-label-text {
   color: #f1f5f9;
 }
 
 .theme-cozy-night .game-q-opt-btn .opt-key-circle,
-[data-theme="cozy-night"] .game-q-opt-btn .opt-key-circle {
+.theme-spidey-night .game-q-opt-btn .opt-key-circle,
+[data-theme="cozy-night"] .game-q-opt-btn .opt-key-circle,
+[data-theme="spidey-night"] .game-q-opt-btn .opt-key-circle {
   background: rgba(99, 102, 241, 0.25);
   border-color: rgba(129, 140, 248, 0.45);
   color: #e0e7ff;
 }
 
 .theme-cozy-night .game-q-opt-btn:hover:not(:disabled),
-[data-theme="cozy-night"] .game-q-opt-btn:hover:not(:disabled) {
+.theme-spidey-night .game-q-opt-btn:hover:not(:disabled),
+[data-theme="cozy-night"] .game-q-opt-btn:hover:not(:disabled),
+[data-theme="spidey-night"] .game-q-opt-btn:hover:not(:disabled) {
   border-color: #818cf8;
   background: rgba(99, 102, 241, 0.25);
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.2);
@@ -2056,12 +2166,16 @@
 
 /* --- Mode 4: Mock Exam FE — Cozy Night --- */
 .mock-exam-container.theme-cozy-night,
-[data-theme="cozy-night"] .mock-exam-container {
+.mock-exam-container.theme-spidey-night,
+[data-theme="cozy-night"] .mock-exam-container,
+[data-theme="spidey-night"] .mock-exam-container {
   color: #f1f5f9;
 }
 
 .theme-cozy-night .mock-exam-setup-card,
-[data-theme="cozy-night"] .mock-exam-setup-card {
+.theme-spidey-night .mock-exam-setup-card,
+[data-theme="cozy-night"] .mock-exam-setup-card,
+[data-theme="spidey-night"] .mock-exam-setup-card {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.35);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
@@ -2069,37 +2183,49 @@
 }
 
 .theme-cozy-night .mock-exam-badge-tag,
-[data-theme="cozy-night"] .mock-exam-badge-tag {
+.theme-spidey-night .mock-exam-badge-tag,
+[data-theme="cozy-night"] .mock-exam-badge-tag,
+[data-theme="spidey-night"] .mock-exam-badge-tag {
   background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
   color: #ffffff;
   box-shadow: 0 0 12px rgba(79, 70, 229, 0.4);
 }
 
 .theme-cozy-night .mock-exam-title,
-[data-theme="cozy-night"] .mock-exam-title {
+.theme-spidey-night .mock-exam-title,
+[data-theme="cozy-night"] .mock-exam-title,
+[data-theme="spidey-night"] .mock-exam-title {
   color: #f8fafc;
 }
 
 .theme-cozy-night .mock-exam-desc,
-[data-theme="cozy-night"] .mock-exam-desc {
+.theme-spidey-night .mock-exam-desc,
+[data-theme="cozy-night"] .mock-exam-desc,
+[data-theme="spidey-night"] .mock-exam-desc {
   color: #94a3b8;
 }
 
 .theme-cozy-night .mock-exam-number-input,
-[data-theme="cozy-night"] .mock-exam-number-input {
+.theme-spidey-night .mock-exam-number-input,
+[data-theme="cozy-night"] .mock-exam-number-input,
+[data-theme="spidey-night"] .mock-exam-number-input {
   background: rgba(30, 41, 59, 0.7);
   border-color: rgba(99, 102, 241, 0.35);
   color: #f8fafc;
 }
 
 .theme-cozy-night .mock-exam-number-input:focus,
-[data-theme="cozy-night"] .mock-exam-number-input:focus {
+.theme-spidey-night .mock-exam-number-input:focus,
+[data-theme="cozy-night"] .mock-exam-number-input:focus,
+[data-theme="spidey-night"] .mock-exam-number-input:focus {
   border-color: #818cf8;
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
 }
 
 .theme-cozy-night .mock-exam-btn.primary,
-[data-theme="cozy-night"] .mock-exam-btn.primary {
+.theme-spidey-night .mock-exam-btn.primary,
+[data-theme="cozy-night"] .mock-exam-btn.primary,
+[data-theme="spidey-night"] .mock-exam-btn.primary {
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
   border: 1px solid #818cf8;
   color: #ffffff;
@@ -2107,39 +2233,55 @@
 }
 
 .theme-cozy-night .mock-exam-btn.primary:hover,
-[data-theme="cozy-night"] .mock-exam-btn.primary:hover {
+.theme-spidey-night .mock-exam-btn.primary:hover,
+[data-theme="cozy-night"] .mock-exam-btn.primary:hover,
+[data-theme="spidey-night"] .mock-exam-btn.primary:hover {
   background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
 }
 
 .theme-cozy-night .mock-exam-header-bar,
-[data-theme="cozy-night"] .mock-exam-header-bar {
+.theme-spidey-night .mock-exam-header-bar,
+[data-theme="cozy-night"] .mock-exam-header-bar,
+[data-theme="spidey-night"] .mock-exam-header-bar {
   background: rgba(15, 23, 42, 0.9);
   border: 1.5px solid rgba(99, 102, 241, 0.35);
   backdrop-filter: blur(16px);
 }
 
 .theme-cozy-night .header-exam-badge,
-[data-theme="cozy-night"] .header-exam-badge {
+.theme-spidey-night .header-exam-badge,
+[data-theme="cozy-night"] .header-exam-badge,
+[data-theme="spidey-night"] .header-exam-badge {
   background: #6366f1;
   color: #ffffff;
 }
 
 .theme-cozy-night .header-set-title,
-[data-theme="cozy-night"] .header-set-title {
+.theme-spidey-night .header-set-title,
+[data-theme="cozy-night"] .header-set-title,
+[data-theme="spidey-night"] .header-set-title {
   color: #f1f5f9;
 }
 
 .theme-cozy-night .header-progress-text,
-[data-theme="cozy-night"] .header-progress-text {
+.theme-spidey-night .header-progress-text,
+[data-theme="cozy-night"] .header-progress-text,
+[data-theme="spidey-night"] .header-progress-text {
   color: #94a3b8;
 }
 
 .theme-cozy-night .exam-q-box,
+.theme-spidey-night .exam-q-box,
 [data-theme="cozy-night"] .exam-q-box,
+[data-theme="spidey-night"] .exam-q-box,
 .theme-cozy-night .exam-navigator-box,
+.theme-spidey-night .exam-navigator-box,
 [data-theme="cozy-night"] .exam-navigator-box,
+[data-theme="spidey-night"] .exam-navigator-box,
 .theme-cozy-night .mock-exam-result-card,
-[data-theme="cozy-night"] .mock-exam-result-card {
+.theme-spidey-night .mock-exam-result-card,
+[data-theme="cozy-night"] .mock-exam-result-card,
+[data-theme="spidey-night"] .mock-exam-result-card {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.3);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
@@ -2147,61 +2289,81 @@
 }
 
 .theme-cozy-night .exam-q-content,
-[data-theme="cozy-night"] .exam-q-content {
+.theme-spidey-night .exam-q-content,
+[data-theme="cozy-night"] .exam-q-content,
+[data-theme="spidey-night"] .exam-q-content {
   color: #f8fafc;
 }
 
 .theme-cozy-night .exam-option-item,
-[data-theme="cozy-night"] .exam-option-item {
+.theme-spidey-night .exam-option-item,
+[data-theme="cozy-night"] .exam-option-item,
+[data-theme="spidey-night"] .exam-option-item {
   background: rgba(30, 41, 59, 0.7);
   border-color: rgba(99, 102, 241, 0.25);
   color: #f1f5f9;
 }
 
 .theme-cozy-night .exam-option-item:hover,
-[data-theme="cozy-night"] .exam-option-item:hover {
+.theme-spidey-night .exam-option-item:hover,
+[data-theme="cozy-night"] .exam-option-item:hover,
+[data-theme="spidey-night"] .exam-option-item:hover {
   border-color: #818cf8;
   background: rgba(99, 102, 241, 0.2);
 }
 
 .theme-cozy-night .exam-option-item.is-selected,
-[data-theme="cozy-night"] .exam-option-item.is-selected {
+.theme-spidey-night .exam-option-item.is-selected,
+[data-theme="cozy-night"] .exam-option-item.is-selected,
+[data-theme="spidey-night"] .exam-option-item.is-selected {
   background: rgba(99, 102, 241, 0.35);
   border-color: #818cf8;
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
 }
 
 .theme-cozy-night .nav-dot-btn.is-answered,
-[data-theme="cozy-night"] .nav-dot-btn.is-answered {
+.theme-spidey-night .nav-dot-btn.is-answered,
+[data-theme="cozy-night"] .nav-dot-btn.is-answered,
+[data-theme="spidey-night"] .nav-dot-btn.is-answered {
   background: #6366f1;
   color: #ffffff;
 }
 
 /* --- Mode 5: 60-Second Challenge — Cozy Night --- */
 .theme-cozy-night .game-hud-score-value,
-[data-theme="cozy-night"] .game-hud-score-value {
+.theme-spidey-night .game-hud-score-value,
+[data-theme="cozy-night"] .game-hud-score-value,
+[data-theme="spidey-night"] .game-hud-score-value {
   color: #818cf8;
 }
 
 .theme-cozy-night .game-hud-streak-box,
-[data-theme="cozy-night"] .game-hud-streak-box {
+.theme-spidey-night .game-hud-streak-box,
+[data-theme="cozy-night"] .game-hud-streak-box,
+[data-theme="spidey-night"] .game-hud-streak-box {
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(99, 102, 241, 0.35);
 }
 
 .theme-cozy-night .streak-count,
-[data-theme="cozy-night"] .streak-count {
+.theme-spidey-night .streak-count,
+[data-theme="cozy-night"] .streak-count,
+[data-theme="spidey-night"] .streak-count {
   color: #a5b4fc;
 }
 
 .theme-cozy-night .game-hud-time-fill.timer-neon,
-[data-theme="cozy-night"] .game-hud-time-fill.timer-neon {
+.theme-spidey-night .game-hud-time-fill.timer-neon,
+[data-theme="cozy-night"] .game-hud-time-fill.timer-neon,
+[data-theme="spidey-night"] .game-hud-time-fill.timer-neon {
   background: linear-gradient(90deg, #6366f1 0%, #38bdf8 100%);
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
 }
 
 .theme-cozy-night .game-btn-primary,
-[data-theme="cozy-night"] .game-btn-primary {
+.theme-spidey-night .game-btn-primary,
+[data-theme="cozy-night"] .game-btn-primary,
+[data-theme="spidey-night"] .game-btn-primary {
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
   border: 1px solid #818cf8;
   color: #ffffff;
@@ -2209,13 +2371,17 @@
 }
 
 .theme-cozy-night .game-btn-primary:hover,
-[data-theme="cozy-night"] .game-btn-primary:hover {
+.theme-spidey-night .game-btn-primary:hover,
+[data-theme="cozy-night"] .game-btn-primary:hover,
+[data-theme="spidey-night"] .game-btn-primary:hover {
   background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
 }
 
 /* --- Mode 6: Leo Tháp 50 — Cozy Night --- */
 .tower-splash-card.theme-cozy-night,
-[data-theme="cozy-night"] .tower-splash-card {
+.tower-splash-card.theme-spidey-night,
+[data-theme="cozy-night"] .tower-splash-card,
+[data-theme="spidey-night"] .tower-splash-card {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.35);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
@@ -2223,30 +2389,40 @@
 }
 
 .theme-cozy-night .tower-splash-title,
-[data-theme="cozy-night"] .tower-splash-title {
+.theme-spidey-night .tower-splash-title,
+[data-theme="cozy-night"] .tower-splash-title,
+[data-theme="spidey-night"] .tower-splash-title {
   color: #f8fafc;
 }
 
 .theme-cozy-night .tower-splash-tagline,
-[data-theme="cozy-night"] .tower-splash-tagline {
+.theme-spidey-night .tower-splash-tagline,
+[data-theme="cozy-night"] .tower-splash-tagline,
+[data-theme="spidey-night"] .tower-splash-tagline {
   color: #94a3b8;
 }
 
 .theme-cozy-night .avatar-pick-card,
-[data-theme="cozy-night"] .avatar-pick-card {
+.theme-spidey-night .avatar-pick-card,
+[data-theme="cozy-night"] .avatar-pick-card,
+[data-theme="spidey-night"] .avatar-pick-card {
   background: rgba(30, 41, 59, 0.6);
   border-color: rgba(99, 102, 241, 0.25);
 }
 
 .theme-cozy-night .avatar-pick-card.is-selected,
-[data-theme="cozy-night"] .avatar-pick-card.is-selected {
+.theme-spidey-night .avatar-pick-card.is-selected,
+[data-theme="cozy-night"] .avatar-pick-card.is-selected,
+[data-theme="spidey-night"] .avatar-pick-card.is-selected {
   border-color: #818cf8;
   background: rgba(99, 102, 241, 0.25);
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.35);
 }
 
 .theme-cozy-night .tower-btn-start,
-[data-theme="cozy-night"] .tower-btn-start {
+.theme-spidey-night .tower-btn-start,
+[data-theme="cozy-night"] .tower-btn-start,
+[data-theme="spidey-night"] .tower-btn-start {
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
   border: 1px solid #818cf8;
   color: #ffffff;
@@ -2254,19 +2430,25 @@
 }
 
 .theme-cozy-night .tower-btn-start:hover,
-[data-theme="cozy-night"] .tower-btn-start:hover {
+.theme-spidey-night .tower-btn-start:hover,
+[data-theme="cozy-night"] .tower-btn-start:hover,
+[data-theme="spidey-night"] .tower-btn-start:hover {
   background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
 }
 
 .tower-game-wrapper.theme-cozy-night .tower-side-pane,
-[data-theme="cozy-night"] .tower-side-pane {
+.tower-game-wrapper.theme-spidey-night .tower-side-pane,
+[data-theme="cozy-night"] .tower-side-pane,
+[data-theme="spidey-night"] .tower-side-pane {
   background: rgba(15, 23, 42, 0.9);
   border: 1.5px solid rgba(99, 102, 241, 0.3);
   backdrop-filter: blur(16px);
 }
 
 .tower-game-wrapper.theme-cozy-night .tower-battle-pane,
-[data-theme="cozy-night"] .tower-battle-pane {
+.tower-game-wrapper.theme-spidey-night .tower-battle-pane,
+[data-theme="cozy-night"] .tower-battle-pane,
+[data-theme="spidey-night"] .tower-battle-pane {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.3);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
@@ -2274,20 +2456,26 @@
 }
 
 .tower-game-wrapper.theme-cozy-night .tower-opt-btn,
-[data-theme="cozy-night"] .tower-opt-btn {
+.tower-game-wrapper.theme-spidey-night .tower-opt-btn,
+[data-theme="cozy-night"] .tower-opt-btn,
+[data-theme="spidey-night"] .tower-opt-btn {
   background: rgba(30, 41, 59, 0.7);
   border: 1.5px solid rgba(99, 102, 241, 0.25);
   color: #f1f5f9;
 }
 
 .tower-game-wrapper.theme-cozy-night .tower-opt-btn:hover:not(:disabled),
-[data-theme="cozy-night"] .tower-opt-btn:hover:not(:disabled) {
+.tower-game-wrapper.theme-spidey-night .tower-opt-btn:hover:not(:disabled),
+[data-theme="cozy-night"] .tower-opt-btn:hover:not(:disabled),
+[data-theme="spidey-night"] .tower-opt-btn:hover:not(:disabled) {
   border-color: #818cf8;
   background: rgba(99, 102, 241, 0.25);
 }
 
 .tower-result-card.theme-cozy-night,
-[data-theme="cozy-night"] .tower-result-card {
+.tower-result-card.theme-spidey-night,
+[data-theme="cozy-night"] .tower-result-card,
+[data-theme="spidey-night"] .tower-result-card {
   background: rgba(15, 23, 42, 0.88);
   border: 1.5px solid rgba(99, 102, 241, 0.35);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
@@ -2296,36 +2484,48 @@
 
 /* --- Mode 7: Đúng/Sai 5s — Cozy Night --- */
 .theme-cozy-night .truefalse-context-box,
-[data-theme="cozy-night"] .truefalse-context-box {
+.theme-spidey-night .truefalse-context-box,
+[data-theme="cozy-night"] .truefalse-context-box,
+[data-theme="spidey-night"] .truefalse-context-box {
   background: rgba(30, 41, 59, 0.6);
   border: 1px solid rgba(99, 102, 241, 0.25);
 }
 
 .theme-cozy-night .truefalse-label,
-[data-theme="cozy-night"] .truefalse-label {
+.theme-spidey-night .truefalse-label,
+[data-theme="cozy-night"] .truefalse-label,
+[data-theme="spidey-night"] .truefalse-label {
   color: #a5b4fc;
   font-weight: 800;
 }
 
 .theme-cozy-night .truefalse-question-text,
-[data-theme="cozy-night"] .truefalse-question-text {
+.theme-spidey-night .truefalse-question-text,
+[data-theme="cozy-night"] .truefalse-question-text,
+[data-theme="spidey-night"] .truefalse-question-text {
   color: #f1f5f9;
 }
 
 .theme-cozy-night .truefalse-statement-box,
-[data-theme="cozy-night"] .truefalse-statement-box {
+.theme-spidey-night .truefalse-statement-box,
+[data-theme="cozy-night"] .truefalse-statement-box,
+[data-theme="spidey-night"] .truefalse-statement-box {
   background: rgba(15, 23, 42, 0.85);
   border: 1.5px dashed rgba(129, 140, 248, 0.4);
 }
 
 .theme-cozy-night .truefalse-statement-text,
-[data-theme="cozy-night"] .truefalse-statement-text {
+.theme-spidey-night .truefalse-statement-text,
+[data-theme="cozy-night"] .truefalse-statement-text,
+[data-theme="spidey-night"] .truefalse-statement-text {
   color: #e0e7ff;
   font-weight: 800;
 }
 
 .theme-cozy-night .tf-btn.tf-btn-true,
-[data-theme="cozy-night"] .tf-btn.tf-btn-true {
+.theme-spidey-night .tf-btn.tf-btn-true,
+[data-theme="cozy-night"] .tf-btn.tf-btn-true,
+[data-theme="spidey-night"] .tf-btn.tf-btn-true {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.85) 0%, rgba(5, 150, 105, 0.9) 100%);
   border: 1.5px solid #34d399;
   color: #ffffff;
@@ -2333,7 +2533,9 @@
 }
 
 .theme-cozy-night .tf-btn.tf-btn-false,
-[data-theme="cozy-night"] .tf-btn.tf-btn-false {
+.theme-spidey-night .tf-btn.tf-btn-false,
+[data-theme="cozy-night"] .tf-btn.tf-btn-false,
+[data-theme="spidey-night"] .tf-btn.tf-btn-false {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.85) 0%, rgba(220, 38, 38, 0.9) 100%);
   border: 1.5px solid #f87171;
   color: #ffffff;

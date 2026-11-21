@@ -149,6 +149,48 @@ function getCardColorTheme(index: number, activeTheme: string) {
     return FANTASY_ACCENTS[index % FANTASY_ACCENTS.length];
   }
 
+  if (activeTheme === 'spidey-night') {
+    const SPIDEY_ACCENTS = [
+      {
+        accent: '#f43f5e',
+        borderLeft: '#e11d48',
+        badgeBg: 'rgba(225, 29, 72, 0.2)',
+        badgeText: '#fecdd3',
+        badgeBorder: 'rgba(244, 63, 94, 0.48)',
+        btnBg: '#e11d48',
+        btnHover: '#be123c',
+      },
+      {
+        accent: '#38bdf8',
+        borderLeft: '#2563eb',
+        badgeBg: 'rgba(56, 189, 248, 0.18)',
+        badgeText: '#bae6fd',
+        badgeBorder: 'rgba(56, 189, 248, 0.45)',
+        btnBg: '#2563eb',
+        btnHover: '#1d4ed8',
+      },
+      {
+        accent: '#fbbf24',
+        borderLeft: '#f59e0b',
+        badgeBg: 'rgba(245, 158, 11, 0.18)',
+        badgeText: '#fef3c7',
+        badgeBorder: 'rgba(251, 191, 36, 0.45)',
+        btnBg: '#d97706',
+        btnHover: '#b45309',
+      },
+      {
+        accent: '#a78bfa',
+        borderLeft: '#7c3aed',
+        badgeBg: 'rgba(139, 92, 246, 0.18)',
+        badgeText: '#ede9fe',
+        badgeBorder: 'rgba(167, 139, 250, 0.45)',
+        btnBg: '#7c3aed',
+        btnHover: '#6d28d9',
+      },
+    ];
+    return SPIDEY_ACCENTS[index % SPIDEY_ACCENTS.length];
+  }
+
   if (activeTheme === 'cozy-night') {
     const COZY_ACCENTS = [
       {
@@ -671,6 +713,8 @@ export default function CourseQuizList({
                   ? `🇻🇳 DI SẢN · MÔN ${course.code}`
                   : activeTheme === 'fantasy-academy'
                   ? `⚔️ BÍ TỊCH · PHÓ BẢN ${course.code}`
+                  : activeTheme === 'spidey-night'
+                  ? `🕷️ NIGHT-VERSE · MÔN ${course.code}`
                   : activeTheme === 'cozy-night'
                   ? `☕ GÓC HỌC · MÔN ${course.code}`
                   : activeTheme === 'lotus-zen-sanctuary'

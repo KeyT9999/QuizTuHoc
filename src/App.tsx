@@ -107,6 +107,7 @@ import { useAppRouter, type HomeNavTab } from './utils/router';
 import { clearQuizAttemptStorage } from './utils/quizSplit';
 import { useDailyShopeeRedirect } from './utils/dailyShopeeRedirect';
 import WoodenFish from './components/WoodenFish';
+import SpideyChibiMascot from './components/SpideyChibiMascot';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
 import './App.css';
@@ -258,7 +259,7 @@ function updateKnowledgeGroupUrlState(
 
 export default function App() {
   const { route, navigate } = useAppRouter();
-  const { theme } = useTheme();
+  const { theme, mouseEffectsEnabled } = useTheme();
   useDailyShopeeRedirect();
 
   const [courses, setCourses] = useState<Course[]>(() => [
@@ -747,7 +748,13 @@ export default function App() {
       {/* Ambient WebGL / Interactive Particle & Cursor Layer */}
       <ThemeAmbientCanvas theme={theme} />
 
-      {/* Widget Gõ Mõ Tịnh Tâm & Cầu May */}
+      {/* Floating Chibi Spidey Đu Tơ (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Chibi) */}
+      {theme === 'spidey-night' &&
+        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+          <SpideyChibiMascot variant="floating" mouseEffectsEnabled={mouseEffectsEnabled} />
+        )}
+
+      {/* Widget Gõ Mõ Tịnh Tâm / Nút Bắn Tơ Spidey */}
       <WoodenFish />
     </div>
   );

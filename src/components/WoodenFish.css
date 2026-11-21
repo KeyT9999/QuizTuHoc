@@ -641,3 +641,41 @@
     gap: 6px;
   }
 }
+
+/* ==========================================================================
+   SPIDEY NIGHT-VERSE WEB-SHOOTER BUBBLE OVERRIDE
+   ========================================================================== */
+[data-theme="spidey-night"] .woodfish-float-bubble.is-spidey-webshooter {
+  background: radial-gradient(circle at 30% 25%, #1e293b 0%, #090d1f 100%) !important;
+  border: 2px solid #e11d48 !important;
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.55),
+    -2px 2px 0 rgba(56, 189, 248, 0.55),
+    0 0 18px rgba(225, 29, 72, 0.4) !important;
+}
+
+[data-theme="spidey-night"] .woodfish-float-bubble.is-spidey-webshooter:hover {
+  transform: translateY(-2px) scale(1.06);
+  border-color: #38bdf8 !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.65),
+    -3px 3px 0 rgba(225, 29, 72, 0.65),
+    0 0 24px rgba(56, 189, 248, 0.45) !important;
+}
+
+[data-theme="spidey-night"] .woodfish-float-badge {
+  background: linear-gradient(135deg, #e11d48, #2563eb) !important;
+  color: #ffffff !important;
+  border-color: rgba(254, 240, 138, 0.65) !important;
+}
+
+[data-theme="spidey-night"] .woodfish-floating-item {
+  color: #fde047 !important;
+  text-shadow: -1.5px 1.5px 0 #e11d48, 1.5px -1px 0 #0284c7, 0 4px 12px rgba(0, 0, 0, 0.75) !important;
+}
+
+[data-theme="spidey-night"] .woodfish-modal-card {
+  background: linear-gradient(160deg, #0b1126 0%, #140b1d 55%, #070b1a 100%) !important;
+  border: 1.5px solid rgba(244, 63, 94, 0.5) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78), -3px 3px 0 rgba(56, 189, 248, 0.45) !important;
+}

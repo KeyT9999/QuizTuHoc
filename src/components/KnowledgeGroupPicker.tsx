@@ -80,6 +80,11 @@ export default function KnowledgeGroupPicker({
       title: 'Phân Nhánh Kỹ Năng Cổ Thư Viện',
       desc: 'Mỗi nhóm kiến thức là một nhánh kỹ năng ma thuật. Tích lũy tri thức để nâng cao pháp lực học thuật.',
     },
+    'spidey-night': {
+      eyebrow: `🕷️ ${courseLabel} · BẢN ĐỒ TUẦN TRA SPIDER-VERSE`,
+      title: 'Chọn Khu Vực Chuyên Đề Đêm Nay',
+      desc: 'Bắn tơ quét sạch từng chuyên đề trọng tâm, tích lũy Combo và làm chủ toàn bộ ngân hàng câu hỏi.',
+    },
     'cozy-night': {
       eyebrow: `☕ ${courseLabel} · GÓC HỌC NHÓM BAN ĐÊM`,
       title: 'Chọn Chủ Đề Ôn Tập Đêm Nay',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { playWoodFishSound, playTempleBellSound, type WoodFishTone } from '../utils/soundEffects';
+import { playWoodFishSound, playTempleBellSound, playWebThwipSound, type WoodFishTone } from '../utils/soundEffects';
+import { useTheme } from '../context/ThemeContext';
 import './WoodenFish.css';
 
 interface FloatingItem {
@@ -8,6 +9,17 @@ interface FloatingItem {
   x: number;
   y: number;
 }
+
+const SPIDEY_BLESSINGS = [
+  'THWIP! +1 Vía qua môn 🕷️',
+  '+1 Spider-Sense né bẫy ⚡',
+  '+1 GPA 4.0 Spider-Verse 🌟',
+  '+1 Combo bất bại 🕸️',
+  '+1 Bắn trúng đề tủ 🎯',
+  '+1 Đỗ FE cực mượt 🏆',
+  '+1 Tốc độ ánh sáng 🚀',
+  '+1 Năng lượng Peter Parker 💥',
+];
 
 const BLESSINGS = [
   '+1 Pass môn 🎓',
@@ -40,6 +52,9 @@ export default function WoodenFish({
   onOpenModal,
   customMantra,
 }: WoodenFishProps) {
+  const { theme } = useTheme();
+  const isSpidey = theme === 'spidey-night';
+
   // Total Merit Count stored in localStorage
   const [merits, setMerits] = useState<number>(() => {
     try {
@@ -93,7 +108,12 @@ export default function WoodenFish({
   // Perform a single strike
   const strike = useCallback((coords?: { x: number; y: number }) => {
     // 1. Audio
-    playWoodFishSound(tone, true);
+    if (isSpidey) {
+      playWebThwipSound(true);
+      window.dispatchEvent(new CustomEvent('theme-particle-burst'));
+    } else {
+      playWoodFishSound(tone, true);
+    }
 
     // 2. Visual bounce animation
     setIsStruck(true);
@@ -123,7 +143,10 @@ export default function WoodenFish({
     // 5. Floating blessing text
     let blessingText = customMantra;
     if (!blessingText) {
-      if (selectedMantra === 'random') {
+      if (isSpidey) {
+        const randIdx = Math.floor(Math.random() * SPIDEY_BLESSINGS.length);
+        blessingText = SPIDEY_BLESSINGS[randIdx];
+      } else if (selectedMantra === 'random') {
         const randIdx = Math.floor(Math.random() * BLESSINGS.length);
         blessingText = BLESSINGS[randIdx];
       } else {
@@ -133,13 +156,13 @@ export default function WoodenFish({
 
     const newItem: FloatingItem = {
       id: Date.now() + Math.random(),
-      text: blessingText || '+1 Công đức 🪷',
+      text: blessingText || (isSpidey ? 'THWIP! +1 Vía qua môn 🕷️' : '+1 Công đức 🪷'),
       x: coords ? coords.x : 130 + (Math.random() - 0.5) * 50,
       y: coords ? coords.y : 80 + (Math.random() - 0.5) * 30,
     };
 
     setFloatingItems((prev) => [...prev.slice(-12), newItem]);
-  }, [tone, selectedMantra, customMantra]);
+  }, [tone, selectedMantra, customMantra, isSpidey]);
 
   // Clean up floating items
   useEffect(() => {
@@ -230,63 +253,105 @@ export default function WoodenFish({
         {/* Floating Bubble */}
         <button
           type="button"
-          className={`woodfish-float-bubble ${isBubblePressed ? 'is-pressed' : ''}`}
+          className={`woodfish-float-bubble ${isSpidey ? 'is-spidey-webshooter' : ''} ${isBubblePressed ? 'is-pressed' : ''}`}
           onClick={handleBubbleClick}
-          title="Bấm để Gõ Mõ · Nhấn icon góc để phóng to"
-          aria-label="Gõ Mõ Cầu May"
+          title={
+            isSpidey
+              ? 'Bấm để Bắn Tơ THWIP! xả stress · Nhấn icon góc để phóng to'
+              : 'Bấm để Gõ Mõ · Nhấn icon góc để phóng to'
+          }
+          aria-label={isSpidey ? 'Bắn Tơ Spidey THWIP' : 'Gõ Mõ Cầu May'}
         >
-          {/* Mini Woodfish SVG */}
-          <svg className="woodfish-bubble-svg" viewBox="0 0 100 90">
-            <defs>
-              <linearGradient id="bubble-cushion" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ef4444" />
-                <stop offset="100%" stopColor="#7f1d1d" />
-              </linearGradient>
-              <radialGradient id="bubble-wood" cx="40%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#c25e1a" />
-                <stop offset="45%" stopColor="#85380c" />
-                <stop offset="100%" stopColor="#3d1403" />
-              </radialGradient>
-            </defs>
-            {/* Đệm lót */}
-            <ellipse cx="50" cy="74" rx="34" ry="10" fill="url(#bubble-cushion)" />
-            <path d="M 22 74 Q 50 82 78 74" stroke="#fbbf24" strokeWidth="1.2" fill="none" opacity="0.8" />
-            <circle cx="18" cy="74" r="2.5" fill="#facc15" />
-            <circle cx="82" cy="74" r="2.5" fill="#facc15" />
+          {isSpidey ? (
+            /* Crisp Spider-Man Mask / Web-Shooter Emblem SVG */
+            <svg className="woodfish-bubble-svg spidey-shooter-svg" viewBox="0 0 100 100">
+              <defs>
+                <radialGradient id="spidey-mask-bg" cx="40%" cy="35%" r="65%">
+                  <stop offset="0%" stopColor="#fb7185" />
+                  <stop offset="48%" stopColor="#e11d48" />
+                  <stop offset="100%" stopColor="#881337" />
+                </radialGradient>
+              </defs>
+              {/* Web spokes */}
+              <circle cx="50" cy="50" r="42" fill="url(#spidey-mask-bg)" stroke="#060918" strokeWidth="3.5" />
+              <g stroke="rgba(6,9,24,0.65)" strokeWidth="1.8" fill="none">
+                <line x1="50" y1="8" x2="50" y2="92" />
+                <line x1="8" y1="50" x2="92" y2="50" />
+                <line x1="20" y1="20" x2="80" y2="80" />
+                <line x1="80" y1="20" x2="20" y2="80" />
+                <circle cx="50" cy="50" r="16" />
+                <circle cx="50" cy="50" r="30" />
+              </g>
+              {/* Iconic Spider Eyes */}
+              <path
+                d="M 19 42 Q 33 43 44 58 Q 28 62 20 51 Z"
+                fill="#ffffff"
+                stroke="#060918"
+                strokeWidth="3.5"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M 81 42 Q 67 43 56 58 Q 72 62 80 51 Z"
+                fill="#ffffff"
+                stroke="#060918"
+                strokeWidth="3.5"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ) : (
+            /* Mini Woodfish SVG */
+            <svg className="woodfish-bubble-svg" viewBox="0 0 100 90">
+              <defs>
+                <linearGradient id="bubble-cushion" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#ef4444" />
+                  <stop offset="100%" stopColor="#7f1d1d" />
+                </linearGradient>
+                <radialGradient id="bubble-wood" cx="40%" cy="35%" r="65%">
+                  <stop offset="0%" stopColor="#c25e1a" />
+                  <stop offset="45%" stopColor="#85380c" />
+                  <stop offset="100%" stopColor="#3d1403" />
+                </radialGradient>
+              </defs>
+              {/* Đệm lót */}
+              <ellipse cx="50" cy="74" rx="34" ry="10" fill="url(#bubble-cushion)" />
+              <path d="M 22 74 Q 50 82 78 74" stroke="#fbbf24" strokeWidth="1.2" fill="none" opacity="0.8" />
+              <circle cx="18" cy="74" r="2.5" fill="#facc15" />
+              <circle cx="82" cy="74" r="2.5" fill="#facc15" />
 
-            {/* Thân mõ */}
-            <path
-              d="M 24 56 C 18 36, 30 18, 52 16 C 72 14, 86 28, 84 50 C 82 66, 68 72, 50 72 C 34 72, 26 66, 24 56 Z"
-              fill="url(#bubble-wood)"
-            />
-            {/* Sống lưng ánh sáng */}
-            <path d="M 38 18 Q 58 14 74 24" stroke="#fde68a" strokeWidth="1.5" fill="none" opacity="0.6" strokeLinecap="round" />
-            {/* Khe há miệng */}
-            <path
-              d="M 42 50 C 54 46, 74 46, 82 53 C 76 58, 54 58, 42 50 Z"
-              fill="#180502"
-            />
-            {/* Ngọc minh châu */}
-            <circle cx="68" cy="52" r="2.5" fill="#f59e0b" />
-            {/* Mắt cá */}
-            <circle cx="72" cy="34" r="4" fill="#5c1d06" stroke="#b45309" strokeWidth="1" />
-            <circle cx="72" cy="34" r="2" fill="#1a0601" />
-            <circle cx="73" cy="33" r="0.8" fill="#fef08a" />
-          </svg>
+              {/* Thân mõ */}
+              <path
+                d="M 24 56 C 18 36, 30 18, 52 16 C 72 14, 86 28, 84 50 C 82 66, 68 72, 50 72 C 34 72, 26 66, 24 56 Z"
+                fill="url(#bubble-wood)"
+              />
+              {/* Sống lưng ánh sáng */}
+              <path d="M 38 18 Q 58 14 74 24" stroke="#fde68a" strokeWidth="1.5" fill="none" opacity="0.6" strokeLinecap="round" />
+              {/* Khe há miệng */}
+              <path
+                d="M 42 50 C 54 46, 74 46, 82 53 C 76 58, 54 58, 42 50 Z"
+                fill="#180502"
+              />
+              {/* Ngọc minh châu */}
+              <circle cx="68" cy="52" r="2.5" fill="#f59e0b" />
+              {/* Mắt cá */}
+              <circle cx="72" cy="34" r="4" fill="#5c1d06" stroke="#b45309" strokeWidth="1" />
+              <circle cx="72" cy="34" r="2" fill="#1a0601" />
+              <circle cx="73" cy="33" r="0.8" fill="#fef08a" />
+            </svg>
+          )}
 
-          {/* Badge hiển thị công đức */}
+          {/* Badge hiển thị số lần bấm */}
           <span className="woodfish-float-badge">
             {merits > 9999 ? `${(merits / 1000).toFixed(1)}k` : merits}
           </span>
 
-          {/* Nút phóng to Chánh Điện */}
+          {/* Nút phóng to */}
           <span
             className="woodfish-float-expand-btn"
             onClick={(e) => {
               e.stopPropagation();
               handleOpen();
             }}
-            title="Mở Chánh Điện Gõ Mõ"
+            title={isSpidey ? 'Mở Bàn Bắn Tơ Xả Stress' : 'Mở Chánh Điện Gõ Mõ'}
           >
             ⛶
           </span>
@@ -310,8 +375,8 @@ export default function WoodenFish({
             {/* Header */}
             <div className="woodfish-modal-header">
               <div className="woodfish-modal-title">
-                <span className="woodfish-modal-title-icon">🪷</span>
-                <span>Gõ Mõ Cầu May & Tịnh Tâm</span>
+                <span className="woodfish-modal-title-icon">{isSpidey ? '🕷️' : '🪷'}</span>
+                <span>{isSpidey ? 'Spidey Web-Shooter · Bắn Tơ Xả Stress' : 'Gõ Mõ Cầu May & Tịnh Tâm'}</span>
               </div>
               <button
                 type="button"
@@ -327,7 +392,9 @@ export default function WoodenFish({
             <div className="woodfish-stats-ribbon">
               <div className="woodfish-merit-counter">
                 <span className="woodfish-merit-num">{merits.toLocaleString()}</span>
-                <span className="woodfish-merit-label">Công đức tích lũy</span>
+                <span className="woodfish-merit-label">
+                  {isSpidey ? 'Phát bắn tơ THWIP!' : 'Công đức tích lũy'}
+                </span>
               </div>
 
               {combo > 2 && (

@@ -87,6 +87,12 @@ export default function QuestionListView({
       title: 'Bí Thư Toàn Bộ Câu Hỏi',
       desc: 'Kho lưu trữ toàn bộ phong ấn câu hỏi học viện. Nhấn vào bất kỳ câu nào để bắt đầu giải mã phong ấn.',
     },
+    'spidey-night': {
+      icon: '🕷️',
+      tag: 'SPIDEY NIGHT-VERSE · HỒ SƠ CÂU HỎI',
+      title: 'Toàn Bộ Hồ Sơ Câu Hỏi',
+      desc: 'Tra cứu nhanh toàn bộ câu hỏi trong bộ đề. Bấm vào bất kỳ câu nào để bắn tơ nhảy thẳng tới ngay lập tức.',
+    },
     'cozy-night': {
       icon: '☕',
       tag: 'GÓC HỌC TẬP ĐÊM · THƯ VIỆN CÂU HỎI',

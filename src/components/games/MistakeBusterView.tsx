@@ -168,6 +168,11 @@ export default function MistakeBusterView({
         title: 'Phong Ấn Đã Được Thanh Tẩy!',
         desc: 'Tuyệt đỉnh pháp sư! Toàn bộ câu hỏi sai đã được thanh tẩy hoàn toàn khỏi Cổ Thư Viện.',
       },
+      'spidey-night': {
+        icon: '🕸️',
+        title: 'Đã Quét Sạch Toàn Bộ Câu Sai!',
+        desc: 'Spider-Sense hoàn toàn yên bình! Bạn đã làm chủ mọi câu hay sai trong bộ đề này rồi.',
+      },
       'cozy-night': {
         icon: '🌟',
         title: 'Sổ Tay Đêm Đã Hoàn Toàn Sạch Lỗi!',

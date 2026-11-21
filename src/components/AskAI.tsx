@@ -27,6 +27,13 @@ const AI_PERSONAS: Record<
     subtitle: 'Giải mã cổ ngữ · Chỉ dẫn đáp án & ma pháp',
     cta: 'Triệu hồi AI',
   },
+  'spidey-night': {
+    icon: '🕷️',
+    btnIcon: '⚡',
+    title: 'KAREN / E.D.I.T.H. AI Assistant',
+    subtitle: 'Quét Spider-Sense · Phân tích & giải thích đáp án tức thì',
+    cta: 'Hỏi AI ngay',
+  },
   'cozy-night': {
     icon: '🎧',
     btnIcon: '🌙',
