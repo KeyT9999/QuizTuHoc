@@ -332,7 +332,7 @@ function getHomeHeroDetails(theme: string) {
       return {
         eyebrow: '🖍️ SHIN KASUKABE · 4 CẢNH 3D & CHOCOBI STUDY HUB',
         titlePre: 'Hôm nay cùng Shin ',
-        titleHighlight: 'cày qua môn nào nào?',
+        titleHighlight: 'chinh phục môn nào?',
         desc: 'Đội Phòng Vệ Kasukabe sẵn sàng! Chọn môn học, đổi giữa 4 khung cảnh 3D và gom sao ChocoBi để qua môn cực mượt.',
       };
     case 'spidey-night':
@@ -1349,6 +1349,30 @@ export default function CourseSelector({
                 <span className="home-gradient-text">{heroDetails.titleHighlight}</span>
               </h1>
               <p className="home-hero-desc">{heroDetails.desc}</p>
+
+              {theme === 'shin-kasukabe' && (
+                <div className="shin-home-scene-bar" role="group" aria-label="Chọn cảnh Kasukabe">
+                  <span className="shin-home-scene-label">🎬 Đổi cảnh 3D:</span>
+                  {(
+                    [
+                      { id: 'room', label: '📚 Phòng học' },
+                      { id: 'meadow', label: '🌿 Bãi cỏ' },
+                      { id: 'hills', label: '☁️ Đồi cừu' },
+                      { id: 'rain', label: '🌧️ Phố mưa (Dark)' },
+                    ] as const
+                  ).map((sc) => (
+                    <button
+                      key={sc.id}
+                      type="button"
+                      className={`shin-home-scene-chip ${shinScene === sc.id ? 'is-active' : ''}`}
+                      onClick={() => setShinScene(sc.id)}
+                      aria-pressed={shinScene === sc.id}
+                    >
+                      {sc.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="home-hero-right">

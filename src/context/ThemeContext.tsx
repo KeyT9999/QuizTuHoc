@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import {
   getAppTheme,
   setAppTheme,
@@ -44,14 +44,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [shinScene, setShinSceneState] = useState<ShinSceneId>(() => getShinScene());
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
-  // Synchronize document attribute with active theme
-  useEffect(() => {
+  // Synchronize document attribute with active theme synchronously before paint
+  useLayoutEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // Synchronize document attribute with active Shin Kasukabe scene
-  useEffect(() => {
+  // Synchronize document attribute with active Shin Kasukabe scene synchronously before paint
+  useLayoutEffect(() => {
     document.documentElement.setAttribute('data-shin-scene', shinScene);
     document.body.setAttribute('data-shin-scene', shinScene);
   }, [shinScene]);

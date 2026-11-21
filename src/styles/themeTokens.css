@@ -2288,10 +2288,12 @@ body,
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 13px;
+  padding: 7px 12px;
   border-radius: 999px;
   font-size: 12.5px;
   font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid rgba(148, 163, 184, 0.35);
@@ -2720,29 +2722,79 @@ body,
 }
 
 [data-theme="shin-kasukabe"] .home-nav-item.active,
-[data-theme="shin-kasukabe"] .course-nav-item.active {
+[data-theme="shin-kasukabe"] .course-nav-item.active,
+[data-theme="shin-kasukabe"] .home-filter-chip.active,
+[data-theme="shin-kasukabe"] .home-subfilter-pill.active {
   background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  border-color: #ef4444 !important;
   color: #ffffff !important;
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
 }
 
+[data-theme="shin-kasukabe"] .global-theme-toggle-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* Global Toggle Pills contrast on Bright Shin Scenes */
 [data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-mouse-fx-toggle-btn.is-on {
-  background: #fef3c7;
-  border-color: #f59e0b;
-  color: #92400e;
+  background: #fef3c7 !important;
+  border-color: #f59e0b !important;
+  color: #92400e !important;
 }
 
 [data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-mouse-fx-toggle-btn.is-off {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: #cbd5e1;
-  color: #475569;
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
 }
 
 [data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-translate-toggle-btn.is-on {
-  background: #e0f2fe;
-  border-color: #38bdf8;
-  color: #0369a1;
+  background: #e0f2fe !important;
+  border-color: #38bdf8 !important;
+  color: #0369a1 !important;
+}
+
+[data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.45) !important;
+  color: #1e293b !important;
+}
+
+/* Global Navbar Buttons & Brand Contrast on Dark Rainy Kasukabe Scene */
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-brand-subtitle,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-brand-subtitle {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .global-theme-toggle-btn {
+  background: rgba(30, 41, 59, 0.88) !important;
+  border: 1.5px solid rgba(251, 191, 36, 0.5) !important;
+  color: #fef08a !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .global-theme-toggle-btn:hover {
+  background: rgba(251, 191, 36, 0.2) !important;
+  border-color: #fde047 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .global-mouse-fx-toggle-btn.is-on {
+  background: rgba(251, 191, 36, 0.16) !important;
+  border-color: rgba(251, 191, 36, 0.55) !important;
+  color: #fef08a !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .global-mouse-fx-toggle-btn.is-off {
+  background: rgba(30, 41, 59, 0.82) !important;
+  border-color: rgba(148, 163, 184, 0.35) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .global-translate-toggle-btn.is-on {
+  background: rgba(14, 165, 233, 0.2) !important;
+  border-color: rgba(56, 189, 248, 0.65) !important;
+  color: #bae6fd !important;
 }
 
 /* Hero & Course Headers */
@@ -2906,11 +2958,96 @@ body,
 [data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-search-input,
 [data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-search-input,
 [data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-filter-chip,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-category-chip,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-subfilter-pill,
 [data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-sort-btn,
-[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-sort-btn {
-  background: rgba(15, 23, 42, 0.85) !important;
-  border-color: rgba(147, 197, 253, 0.3) !important;
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-sort-btn,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-hero-secondary-btn {
+  background: rgba(15, 23, 42, 0.86) !important;
+  border: 1.5px solid rgba(147, 197, 253, 0.32) !important;
   color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"] .home-category-chip.active,
+[data-theme="shin-kasukabe"] .home-subfilter-pill.active,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-category-chip.active,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-subfilter-pill.active {
+  background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  border-color: #fde047 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.34) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-hero-secondary-btn:hover,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-subfilter-pill:hover {
+  border-color: #fbbf24 !important;
+  color: #fef08a !important;
+}
+
+/* Complete Rainy Dark Mode Fix for Exam Cards, Stat Boxes, Progress Bars & Badges */
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-stat-icon-wrap,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-overview-icon,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-icon-box,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-stat-icon-wrap {
+  background: rgba(30, 41, 59, 0.92) !important;
+  border: 1px solid rgba(147, 197, 253, 0.28) !important;
+  color: #fde047 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-stat-icon-wrap.ring-box svg circle:first-child {
+  stroke: rgba(255, 255, 255, 0.16) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-stat-icon-wrap.ring-box svg circle:last-child {
+  stroke: #fbbf24 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-badge {
+  background: color-mix(in srgb, var(--card-accent, #fbbf24) 20%, rgba(15, 23, 42, 0.92)) !important;
+  border-color: color-mix(in srgb, var(--card-accent, #fbbf24) 55%, transparent) !important;
+  color: color-mix(in srgb, var(--card-accent, #fbbf24) 45%, #ffffff) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-code-badge {
+  background: rgba(251, 191, 36, 0.16) !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  color: #fef08a !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-progress-label,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-progress-label {
+  color: #94a3b8 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-progress-val,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-progress-percent {
+  color: #fef08a !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-progress-track,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-progress-track {
+  background: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-stat-pill {
+  background: rgba(30, 41, 59, 0.88) !important;
+  border: 1px solid rgba(147, 197, 253, 0.24) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-stat-num,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-stat-value {
+  color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-stat-label,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-open-icon {
+  color: #94a3b8 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-card:hover .exam-open-icon {
+  color: #fde047 !important;
 }
 
 /* Shared Quiz Header & Mode Bar — Shin Kasukabe Daylight & Rainy Dark */
@@ -3005,17 +3142,59 @@ body,
 }
 
 /* AskAI Banner — Đội Phòng Vệ Kasukabe AI */
-[data-theme="shin-kasukabe"] .ask-ai-wrapper,
 [data-theme="shin-kasukabe"] .ask-ai-toolbar {
-  background: linear-gradient(135deg, rgba(254, 249, 195, 0.85), rgba(209, 250, 229, 0.8)) !important;
-  border-color: rgba(16, 185, 129, 0.45) !important;
+  background: linear-gradient(135deg, rgba(254, 249, 195, 0.88), rgba(209, 250, 229, 0.84)) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.45) !important;
 }
 
-[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-wrapper,
+[data-theme="shin-kasukabe"] .ask-ai-toolbar-copy strong {
+  color: #065f46 !important;
+}
+
+[data-theme="shin-kasukabe"] .ask-ai-toolbar-copy span {
+  color: #334155 !important;
+}
+
+[data-theme="shin-kasukabe"] .ask-ai-toggle {
+  background: linear-gradient(135deg, #10b981, #0ea5e9) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28) !important;
+}
+
 [data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-toolbar {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.92), rgba(20, 48, 56, 0.88)) !important;
-  border-color: rgba(251, 191, 36, 0.4) !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.92), rgba(20, 48, 56, 0.9)) !important;
+  border: 1.5px solid rgba(251, 191, 36, 0.42) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-toolbar-icon {
+  background: rgba(251, 191, 36, 0.18) !important;
+  border-color: rgba(251, 191, 36, 0.42) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-toolbar-copy strong {
+  color: #fef08a !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-toolbar-copy span {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-toggle {
+  background: linear-gradient(135deg, #f59e0b, #ea580c) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.34) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-panel {
+  background: rgba(15, 23, 42, 0.94) !important;
+  border-color: rgba(147, 197, 253, 0.32) !important;
   color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-answer {
+  background: rgba(30, 41, 59, 0.85) !important;
+  color: #f1f5f9 !important;
 }
 
 /* 3D Diorama Backlight Aura */
