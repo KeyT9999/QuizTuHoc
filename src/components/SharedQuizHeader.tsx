@@ -170,7 +170,11 @@ export default function SharedQuizHeader({
         </div>
 
         {/* CENTER ZONE: SECTION / PART NAVIGATION */}
-        <div className="quiz-v2-header-center">
+        <div
+          className={`quiz-v2-header-center ${
+            splitSettings.enabled && currentPart && parts.length > 0 ? 'is-split-mode' : 'is-full-mode'
+          }`}
+        >
           {splitSettings.enabled && currentPart && parts.length > 0 ? (
             <div className="quiz-v2-part-selector">
               <button

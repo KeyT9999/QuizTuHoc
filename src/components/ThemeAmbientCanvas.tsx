@@ -46,9 +46,17 @@ const THEME_CONFIG: Record<
     isRain?: boolean;
     isWebBurst?: boolean;
     isStarBurst?: boolean;
+    isGoldBurst?: boolean;
     moteCount: number;
   }
 > = {
+  'billionaire-vault': {
+    colors: ['#f3d37a', '#d4af37', '#10b981', '#fef08a'],
+    glowColor: 'rgba(212, 175, 55, 0.14)',
+    glyphs: ['$', '✦', '•'],
+    isGoldBurst: true,
+    moteCount: 36,
+  },
   'shin-kasukabe': {
     colors: ['#facc15', '#ef4444', '#10b981', '#38bdf8', '#fb7185'],
     glowColor: 'rgba(250, 204, 21, 0.16)',
@@ -183,8 +191,8 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
     };
 
     const handlePointerDown = (e: PointerEvent) => {
-      spawnBurst(e.clientX, e.clientY, cfg.isStarBurst ? 18 : 14);
-      if ((cfg.isWebBurst || cfg.isStarBurst) && webBursts.length < 6) {
+      spawnBurst(e.clientX, e.clientY, cfg.isStarBurst || cfg.isGoldBurst ? 18 : 14);
+      if ((cfg.isWebBurst || cfg.isStarBurst || cfg.isGoldBurst) && webBursts.length < 6) {
         webBursts.push({
           x: e.clientX,
           y: e.clientY,
@@ -198,7 +206,7 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
 
     const handleCustomBurst = () => {
       spawnBurst(smoothMouseX, smoothMouseY, 26);
-      if ((cfg.isWebBurst || cfg.isStarBurst) && webBursts.length < 6) {
+      if ((cfg.isWebBurst || cfg.isStarBurst || cfg.isGoldBurst) && webBursts.length < 6) {
         webBursts.push({
           x: smoothMouseX,
           y: smoothMouseY,
@@ -352,7 +360,27 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
         ctx.rotate(wb.rotation + (cfg.isStarBurst ? progress * 0.9 : 0));
         ctx.globalAlpha = alpha;
 
-        if (cfg.isStarBurst) {
+        if (cfg.isGoldBurst) {
+          // Luxury champagne gold concentric ring + Art-Deco diamond outline
+          ctx.strokeStyle = '#f3d37a';
+          ctx.shadowColor = '#d4af37';
+          ctx.shadowBlur = 10;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.arc(0, 0, radius, 0, Math.PI * 2);
+          ctx.stroke();
+
+          const d = radius * 0.72;
+          ctx.strokeStyle = 'rgba(52, 211, 153, 0.85)';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          ctx.moveTo(0, -d);
+          ctx.lineTo(d, 0);
+          ctx.lineTo(0, d);
+          ctx.lineTo(-d, 0);
+          ctx.closePath();
+          ctx.stroke();
+        } else if (cfg.isStarBurst) {
           // Expanding golden ChocoBi 5-point star outline
           const spikes = 5;
           const innerR = radius * 0.45;

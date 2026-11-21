@@ -643,9 +643,6 @@ export default function ShinQuizView({
             </h2>
             <QuestionImages images={question.images} />
 
-            {/* Đội Phòng Vệ Kasukabe AI Assistant */}
-            <AskAI question={question} />
-
             {/* Answer Options / Free Response */}
             {isFreeResponse ? (
               <div className="shin-free-response-wrap">
@@ -785,6 +782,9 @@ export default function ShinQuizView({
                   : 'Câu tiếp →'}
               </button>
             </div>
+
+            {/* Đội Phòng Vệ Kasukabe AI Assistant */}
+            <AskAI question={question} />
 
             {/* Keyboard Shortcuts Hint */}
             <div className="shin-keyboard-hints">

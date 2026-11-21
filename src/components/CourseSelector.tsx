@@ -88,6 +88,16 @@ function getCourseTheme(course: Course, activeTheme = 'default'): SubjectTheme {
     };
   }
 
+  if (activeTheme === 'billionaire-vault') {
+    return {
+      primary: '#d4af37',
+      soft: 'rgba(212, 175, 55, 0.14)',
+      border: 'rgba(212, 175, 55, 0.36)',
+      hoverShadow: 'rgba(212, 175, 55, 0.28)',
+      icon,
+    };
+  }
+
   if (activeTheme === 'shin-kasukabe') {
     return {
       primary: '#ef4444',
@@ -328,6 +338,15 @@ function getHomeHeroDetails(theme: string) {
         badgeIcon: '📜',
         badgeTitle: 'Học Viện Ma Pháp',
       };
+    case 'billionaire-vault':
+      return {
+        eyebrow: '💎 BILLIONAIRE VAULT · BLACK CARD & $100 USD STUDY HUB',
+        titlePre: 'Hôm nay đầu tư trí tuệ vào ',
+        titleHighlight: 'môn học sinh lời nào?',
+        desc: 'Không gian Private Banking đẳng cấp: 3 chất liệu thẻ (Obsidian · Emerald · 24K Gold), Thẻ Đen 3D xoay tương tác, tài sản USD nhảy số và mưa tờ $100 USD thật khi chốt Combo!',
+        badgeIcon: '💎',
+        badgeTitle: 'Billionaire Vault',
+      };
     case 'shin-kasukabe':
       return {
         eyebrow: '🖍️ SHIN KASUKABE · 4 CẢNH 3D & CHOCOBI STUDY HUB',
@@ -386,6 +405,8 @@ export default function CourseSelector({
     toggleHoverTranslate,
     shinScene,
     setShinScene,
+    moneyFinish,
+    setMoneyFinish,
   } = useTheme();
   const heroDetails = getHomeHeroDetails(theme);
   const [activeTab, setActiveTab] = useState<HomeNavTab>(activeNavTab);
@@ -1107,6 +1128,29 @@ export default function CourseSelector({
                   ))}
                 </div>
               )}
+
+              {theme === 'billionaire-vault' && (
+                <div className="money-home-finish-bar" role="group" aria-label="Chọn chất liệu Billionaire Vault">
+                  <span className="money-home-finish-label">💳 Chất liệu thẻ:</span>
+                  {(
+                    [
+                      { id: 'obsidian', label: '🖤 Obsidian Black' },
+                      { id: 'emerald', label: '💚 Emerald Old Money' },
+                      { id: 'gold', label: '🏆 24K Gold Vault' },
+                    ] as const
+                  ).map((fin) => (
+                    <button
+                      key={fin.id}
+                      type="button"
+                      className={`money-home-finish-chip ${moneyFinish === fin.id ? 'is-active' : ''}`}
+                      onClick={() => setMoneyFinish(fin.id)}
+                      aria-pressed={moneyFinish === fin.id}
+                    >
+                      {fin.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="home-hero-right">
@@ -1369,6 +1413,29 @@ export default function CourseSelector({
                       aria-pressed={shinScene === sc.id}
                     >
                       {sc.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {theme === 'billionaire-vault' && (
+                <div className="money-home-finish-bar" role="group" aria-label="Chọn chất liệu Billionaire Vault">
+                  <span className="money-home-finish-label">💳 Chất liệu thẻ:</span>
+                  {(
+                    [
+                      { id: 'obsidian', label: '🖤 Obsidian Black' },
+                      { id: 'emerald', label: '💚 Emerald Old Money' },
+                      { id: 'gold', label: '🏆 24K Gold Vault' },
+                    ] as const
+                  ).map((fin) => (
+                    <button
+                      key={fin.id}
+                      type="button"
+                      className={`money-home-finish-chip ${moneyFinish === fin.id ? 'is-active' : ''}`}
+                      onClick={() => setMoneyFinish(fin.id)}
+                      aria-pressed={moneyFinish === fin.id}
+                    >
+                      {fin.label}
                     </button>
                   ))}
                 </div>

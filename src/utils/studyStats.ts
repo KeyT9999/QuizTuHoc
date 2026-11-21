@@ -1,10 +1,13 @@
-export type AppTheme = 'shin-kasukabe' | 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
+export type AppTheme = 'billionaire-vault' | 'shin-kasukabe' | 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
 export type ShinSceneId = 'room' | 'meadow' | 'hills' | 'rain';
+export type MoneyVaultFinish = 'obsidian' | 'emerald' | 'gold';
 
 const THEME_STORAGE_KEY = 'keyt_selected_ui_theme';
 const MOUSE_EFFECTS_KEY = 'keyt_mouse_effects_enabled';
 const HOVER_TRANSLATE_KEY = 'keyt_hover_translate_enabled';
 const SHIN_SCENE_KEY = 'keyt_shin_scene_id';
+const MONEY_FINISH_KEY = 'keyt_money_vault_finish';
+const MONEY_NETWORTH_KEY = 'keyt_money_usd_networth';
 const FOCUS_MODE_KEY = 'keyt_focus_mode_enabled';
 const XP_STORAGE_KEY = 'keyt_user_total_xp';
 const STREAK_DAYS_KEY = 'keyt_study_streak_days';
@@ -16,6 +19,7 @@ export function getAppTheme(): AppTheme {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (
       saved === 'default' ||
+      saved === 'billionaire-vault' ||
       saved === 'shin-kasukabe' ||
       saved === 'spidey-night' ||
       saved === 'cozy-night' ||
@@ -99,6 +103,55 @@ export function setShinScene(scene: ShinSceneId): void {
   } catch {
     // ignore
   }
+}
+
+// Billionaire Vault Active Material Finish ('obsidian' | 'emerald' | 'gold')
+export function getMoneyVaultFinish(): MoneyVaultFinish {
+  try {
+    const saved = localStorage.getItem(MONEY_FINISH_KEY);
+    if (saved === 'obsidian' || saved === 'emerald' || saved === 'gold') {
+      return saved;
+    }
+  } catch {
+    // ignore
+  }
+  return 'obsidian';
+}
+
+export function setMoneyVaultFinish(finish: MoneyVaultFinish): void {
+  try {
+    localStorage.setItem(MONEY_FINISH_KEY, finish);
+    window.dispatchEvent(new CustomEvent('keyt-money-finish-changed', { detail: finish }));
+  } catch {
+    // ignore
+  }
+}
+
+// Billionaire Vault Persistent USD Net Worth (Starts at $100,000 Private Seed Capital)
+export function getUserNetWorth(): number {
+  try {
+    const raw = localStorage.getItem(MONEY_NETWORTH_KEY);
+    if (raw) {
+      const val = parseInt(raw, 10);
+      if (!isNaN(val) && val >= 0) return val;
+    }
+  } catch {
+    // ignore
+  }
+  return 100000;
+}
+
+export function addUserNetWorth(delta: number): number {
+  const current = getUserNetWorth();
+  const next = Math.max(10000, current + delta);
+  try {
+    localStorage.setItem(MONEY_NETWORTH_KEY, next.toString());
+    window.dispatchEvent(new CustomEvent('keyt-networth-changed', { detail: next }));
+    window.dispatchEvent(new Event('storage'));
+  } catch {
+    // ignore
+  }
+  return next;
 }
 
 // Focus Mode

@@ -124,6 +124,48 @@ export default function ThemeSelectorModal({
         )}
 
         <div className="theme-grid">
+          {/* Option: Billionaire Vault · Black Card 3D & $100 USD */}
+          <div
+            className={`theme-card ${currentTheme === 'billionaire-vault' ? 'is-active' : ''}`}
+            onClick={() => {
+              onSelectTheme('billionaire-vault');
+              onClose();
+            }}
+          >
+            <div className="theme-card-preview money-preview">
+              <div className="theme-preview-overlay">
+                <span className="theme-preview-badge money">💎 Mới Nhất · Billionaire Vault</span>
+              </div>
+              <div className="theme-preview-mockup">
+                <div className="mockup-sidebar-left money-sidebar"></div>
+                <div className="mockup-card-center money-card">
+                  <div className="mockup-line-title money-title"></div>
+                  <div className="mockup-line-option money-option"></div>
+                  <div className="mockup-line-option money-option active"></div>
+                </div>
+                <div className="mockup-sidebar-right money-sidebar"></div>
+              </div>
+            </div>
+
+            <div className="theme-card-info">
+              <div className="theme-card-header">
+                <h4 className="theme-card-name">Billionaire Vault (Black Card &amp; $100 USD)</h4>
+                {currentTheme === 'billionaire-vault' && (
+                  <span className="theme-active-tag">✓ Đang dùng</span>
+                )}
+              </div>
+              <p className="theme-card-desc">
+                Phong cách Private Banking sang trọng: 3 chất liệu thẻ (Obsidian · Emerald · 24K Gold), Thẻ Đen 3D xoay theo chuột, tài sản USD nhảy số, ticker GPA ▲, mưa tờ $100 USD thật &amp; Cọc Đô Có Cánh!
+              </p>
+              <div className="theme-card-tags">
+                <span className="theme-tag">Black Card 3D</span>
+                <span className="theme-tag">3 Chất Liệu</span>
+                <span className="theme-tag">Mưa $100 USD</span>
+                <span className="theme-tag">Ticker GPA ▲</span>
+              </div>
+            </div>
+          </div>
+
           {/* Option: Shin Kasukabe 4 Cảnh 3D & ChocoBi Pop */}
           <div
             className={`theme-card ${currentTheme === 'shin-kasukabe' ? 'is-active' : ''}`}

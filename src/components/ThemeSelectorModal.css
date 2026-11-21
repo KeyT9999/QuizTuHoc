@@ -358,6 +358,46 @@
   color: #ffffff;
 }
 
+/* Billionaire Vault · Black Card 3D & $100 USD Preview Mockup */
+.theme-card-preview.money-preview {
+  background:
+    radial-gradient(circle at 20% 22%, rgba(212, 175, 55, 0.34), transparent 52%),
+    radial-gradient(circle at 82% 78%, rgba(16, 185, 129, 0.28), transparent 54%),
+    linear-gradient(135deg, #07080b 0%, #12141a 55%, #07140f 100%);
+  border-bottom: 1.5px solid #d4af37;
+}
+
+.mockup-sidebar-left.money-sidebar,
+.mockup-sidebar-right.money-sidebar {
+  background: rgba(12, 14, 20, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+}
+
+.mockup-card-center.money-card {
+  background: linear-gradient(155deg, rgba(16, 19, 26, 0.96), rgba(9, 11, 15, 0.98));
+  border: 1px solid #d4af37;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(243, 211, 122, 0.14);
+}
+
+.mockup-line-title.money-title {
+  background: linear-gradient(90deg, #f3d37a, #fef08a);
+}
+
+.mockup-line-option.money-option {
+  background: rgba(212, 175, 55, 0.18);
+}
+
+.mockup-line-option.money-option.active {
+  background: linear-gradient(90deg, #059669, #d4af37);
+}
+
+.theme-preview-badge.money {
+  background: linear-gradient(135deg, #0a0c10 0%, #1d1709 100%);
+  border: 1px solid #d4af37;
+  color: #f3d37a;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
 /* Shin Kasukabe 3D & ChocoBi Preview Mockup */
 .theme-card-preview.shin-preview {
   background:

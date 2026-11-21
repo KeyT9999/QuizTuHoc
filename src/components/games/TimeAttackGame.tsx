@@ -223,6 +223,10 @@ export default function TimeAttackGame({
         title: '⚡ ĐẤU TRƯỜNG PHÁP LỰC 60S',
         desc: 'Tích lũy ma lực thần tốc! Thi triển pháp thuật chuẩn xác để kích hoạt Mana Surge x3 và vượt qua giới hạn thời gian.',
       },
+      'billionaire-vault': {
+        title: '💵 ĐẤU TRÍ 60S · WALL STREET SPRINT',
+        desc: 'Chạy đua 60 giây trên sàn giao dịch tri thức! Chốt đáp án chuẩn liên tiếp để nhân x3 lợi nhuận điểm số và phá kỷ lục tỷ phú.',
+      },
       'shin-kasukabe': {
         title: '🍪 ĐẤU TRÍ 60S · CHOCOBI FEVER',
         desc: 'Chạy đua 60 giây cùng Đội Phòng Vệ Kasukabe! Trả lời chuẩn xác liên tiếp để kích hoạt Combo ChocoBi x3 điểm và lập kỷ lục mới.',

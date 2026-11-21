@@ -149,6 +149,48 @@ function getCardColorTheme(index: number, activeTheme: string) {
     return FANTASY_ACCENTS[index % FANTASY_ACCENTS.length];
   }
 
+  if (activeTheme === 'billionaire-vault') {
+    const MONEY_ACCENTS = [
+      {
+        accent: '#d4af37',
+        borderLeft: '#d4af37',
+        badgeBg: 'rgba(212, 175, 55, 0.16)',
+        badgeText: '#f3d37a',
+        badgeBorder: 'rgba(212, 175, 55, 0.45)',
+        btnBg: '#b8860b',
+        btnHover: '#d4af37',
+      },
+      {
+        accent: '#10b981',
+        borderLeft: '#10b981',
+        badgeBg: 'rgba(16, 185, 129, 0.16)',
+        badgeText: '#6ee7b7',
+        badgeBorder: 'rgba(16, 185, 129, 0.44)',
+        btnBg: '#047857',
+        btnHover: '#059669',
+      },
+      {
+        accent: '#f59e0b',
+        borderLeft: '#f3d37a',
+        badgeBg: 'rgba(245, 158, 11, 0.16)',
+        badgeText: '#fde68a',
+        badgeBorder: 'rgba(245, 158, 11, 0.44)',
+        btnBg: '#b45309',
+        btnHover: '#d97706',
+      },
+      {
+        accent: '#34d399',
+        borderLeft: '#d4af37',
+        badgeBg: 'rgba(52, 211, 153, 0.15)',
+        badgeText: '#a7f3d0',
+        badgeBorder: 'rgba(52, 211, 153, 0.4)',
+        btnBg: '#065f46',
+        btnHover: '#047857',
+      },
+    ];
+    return MONEY_ACCENTS[index % MONEY_ACCENTS.length];
+  }
+
   if (activeTheme === 'shin-kasukabe') {
     const SHIN_ACCENTS = [
       {
@@ -322,6 +364,98 @@ function getCardColorTheme(index: number, activeTheme: string) {
 
 // Academic study illustration for hero right side
 function CourseHeroVisual({ theme }: { theme?: string }) {
+  if (theme === 'billionaire-vault') {
+    return (
+      <div
+        className="course-hero-money-visual"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '280px',
+          height: '190px',
+          position: 'relative',
+        }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 260 180" width="250" height="175" fill="none">
+          <defs>
+            <radialGradient id="moneyCourseGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#d4af37" stopOpacity="0.34" />
+              <stop offset="55%" stopColor="#10b981" stopOpacity="0.14" />
+              <stop offset="100%" stopColor="#08090c" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="moneyCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#171921" />
+              <stop offset="50%" stopColor="#08090c" />
+              <stop offset="100%" stopColor="#1a150b" />
+            </linearGradient>
+            <linearGradient id="moneyGoldLine" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#fef08a" />
+              <stop offset="50%" stopColor="#d4af37" />
+              <stop offset="100%" stopColor="#9a7322" />
+            </linearGradient>
+          </defs>
+          <circle cx="130" cy="90" r="82" fill="url(#moneyCourseGlow)" />
+          {/* Tilted Emerald $100 Reserve Layer behind card */}
+          <rect
+            x="48"
+            y="42"
+            width="164"
+            height="100"
+            rx="12"
+            transform="rotate(-7 130 92)"
+            fill="#072219"
+            stroke="#10b981"
+            strokeOpacity="0.65"
+            strokeWidth="1.5"
+          />
+          {/* Main Obsidian Titanium Black Card */}
+          <rect
+            x="44"
+            y="42"
+            width="172"
+            height="106"
+            rx="13"
+            fill="url(#moneyCardBg)"
+            stroke="url(#moneyGoldLine)"
+            strokeWidth="2"
+          />
+          <rect
+            x="52"
+            y="50"
+            width="156"
+            height="90"
+            rx="8"
+            fill="none"
+            stroke="rgba(212,175,55,0.35)"
+            strokeWidth="1"
+          />
+          {/* 24K Gold EMV Chip */}
+          <rect x="64" y="76" width="26" height="20" rx="4" fill="url(#moneyGoldLine)" />
+          <line x1="64" y1="86" x2="90" y2="86" stroke="#5c3d08" strokeWidth="1" />
+          <line x1="77" y1="76" x2="77" y2="96" stroke="#5c3d08" strokeWidth="1" />
+          {/* Brand & USD Mark */}
+          <text x="62" y="67" fill="#f3d37a" fontSize="8.8" fontWeight="800" letterSpacing="1.1" fontFamily="Georgia, serif">
+            KEYT PRIVATE
+          </text>
+          <text x="200" y="67" textAnchor="end" fill="#6ee7b7" fontSize="8" fontWeight="800" letterSpacing="0.5" fontFamily="sans-serif">
+            USD · 24K
+          </text>
+          <text x="174" y="114" fill="rgba(243,211,122,0.22)" fontSize="34" fontWeight="900" fontFamily="Georgia, serif">
+            $
+          </text>
+          <text x="64" y="124" fill="#fde68a" fontSize="11" fontWeight="700" fontFamily="monospace" letterSpacing="1.5">
+            4000 8888 0100
+          </text>
+          {/* Floating Gold Sparkles */}
+          <text x="24" y="54" fontSize="15" fill="#f3d37a">✦</text>
+          <text x="224" y="138" fontSize="14" fill="#34d399">✦</text>
+        </svg>
+      </div>
+    );
+  }
+
   if (theme === 'shin-kasukabe') {
     return (
       <div
@@ -882,6 +1016,8 @@ export default function CourseQuizList({
                   ? `🇻🇳 DI SẢN · MÔN ${course.code}`
                   : activeTheme === 'fantasy-academy'
                   ? `⚔️ BÍ TỊCH · PHÓ BẢN ${course.code}`
+                  : activeTheme === 'billionaire-vault'
+                  ? `💎 PRIVATE VAULT · MÔN ${course.code}`
                   : activeTheme === 'shin-kasukabe'
                   ? `🖍️ KASUKABE · MÔN ${course.code}`
                   : activeTheme === 'spidey-night'

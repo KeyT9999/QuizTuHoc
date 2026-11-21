@@ -109,6 +109,7 @@ import { useDailyShopeeRedirect } from './utils/dailyShopeeRedirect';
 import WoodenFish from './components/WoodenFish';
 import SpideyChibiMascot from './components/SpideyChibiMascot';
 import ShinMascot from './components/ShinMascot';
+import MoneyWingsMascot from './components/MoneyWingsMascot';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
 import './App.css';
@@ -260,7 +261,7 @@ function updateKnowledgeGroupUrlState(
 
 export default function App() {
   const { route, navigate } = useAppRouter();
-  const { theme, mouseEffectsEnabled, shinScene } = useTheme();
+  const { theme, mouseEffectsEnabled, shinScene, moneyFinish } = useTheme();
   useDailyShopeeRedirect();
 
   const [courses, setCourses] = useState<Course[]>(() => [
@@ -759,6 +760,12 @@ export default function App() {
       {theme === 'shin-kasukabe' &&
         !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <ShinMascot variant="floating" scene={shinScene} mouseEffectsEnabled={mouseEffectsEnabled} />
+        )}
+
+      {/* Floating Mascot Cọc Đô Có Cánh (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Mascot) */}
+      {theme === 'billionaire-vault' &&
+        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+          <MoneyWingsMascot variant="floating" finish={moneyFinish} mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 
       {/* Widget Gõ Mõ Tịnh Tâm / Nút Bắn Tơ Spidey */}

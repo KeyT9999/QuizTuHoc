@@ -706,9 +706,6 @@ export default function SpideyQuizView({
             </h2>
             <QuestionImages images={question.images} />
 
-            {/* AI Assistant Banner */}
-            <AskAI question={question} />
-
             {/* Options List */}
             {isFreeResponse ? (
               <div className="quiz-v2-free-response" style={{ marginBottom: 20 }}>
@@ -863,6 +860,9 @@ export default function SpideyQuizView({
                   : 'Câu tiếp →'}
               </button>
             </div>
+
+            {/* AI Assistant Banner (below options & actions on desktop; opened from bottom dock on mobile) */}
+            <AskAI question={question} />
 
             {/* Keyboard Shortcuts Hint */}
             <footer className="spidey-keyboard-hints">

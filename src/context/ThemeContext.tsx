@@ -8,10 +8,13 @@ import {
   setHoverTranslateEnabled as saveHoverTranslateEnabled,
   getShinScene,
   setShinScene as saveShinScene,
+  getMoneyVaultFinish,
+  setMoneyVaultFinish as saveMoneyVaultFinish,
   type AppTheme,
   type ShinSceneId,
+  type MoneyVaultFinish,
 } from '../utils/studyStats';
-export type { AppTheme, ShinSceneId };
+export type { AppTheme, ShinSceneId, MoneyVaultFinish };
 import ThemeSelectorModal from '../components/ThemeSelectorModal';
 
 interface ThemeContextValue {
@@ -25,6 +28,8 @@ interface ThemeContextValue {
   toggleHoverTranslate: () => void;
   shinScene: ShinSceneId;
   setShinScene: (scene: ShinSceneId) => void;
+  moneyFinish: MoneyVaultFinish;
+  setMoneyFinish: (finish: MoneyVaultFinish) => void;
   isThemeModalOpen: boolean;
   openThemeModal: () => void;
   closeThemeModal: () => void;
@@ -42,6 +47,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     getHoverTranslateEnabled()
   );
   const [shinScene, setShinSceneState] = useState<ShinSceneId>(() => getShinScene());
+  const [moneyFinish, setMoneyFinishState] = useState<MoneyVaultFinish>(() =>
+    getMoneyVaultFinish()
+  );
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
   // Synchronize document attribute with active theme synchronously before paint
@@ -55,6 +63,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute('data-shin-scene', shinScene);
     document.body.setAttribute('data-shin-scene', shinScene);
   }, [shinScene]);
+
+  // Synchronize document attribute with active Billionaire Vault finish synchronously before paint
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-money-finish', moneyFinish);
+    document.body.setAttribute('data-money-finish', moneyFinish);
+  }, [moneyFinish]);
 
   // Synchronize document attribute with mouse effects setting
   useEffect(() => {
@@ -100,6 +114,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
+    const handleMoneyFinishChange = (e: Event) => {
+      const customEvent = e as CustomEvent<MoneyVaultFinish>;
+      if (customEvent.detail) {
+        setMoneyFinishState(customEvent.detail);
+      }
+    };
+
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'keyt_selected_ui_theme') {
         const nextTheme = getAppTheme();
@@ -110,6 +131,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setHoverTranslateState(getHoverTranslateEnabled());
       } else if (e.key === 'keyt_shin_scene_id') {
         setShinSceneState(getShinScene());
+      } else if (e.key === 'keyt_money_vault_finish') {
+        setMoneyFinishState(getMoneyVaultFinish());
       }
     };
 
@@ -117,12 +140,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     window.addEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
     window.addEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
     window.addEventListener('keyt-shin-scene-changed', handleShinSceneChange);
+    window.addEventListener('keyt-money-finish-changed', handleMoneyFinishChange);
     window.addEventListener('storage', handleStorage);
     return () => {
       window.removeEventListener('keyt-theme-changed', handleThemeChange);
       window.removeEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
       window.removeEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
       window.removeEventListener('keyt-shin-scene-changed', handleShinSceneChange);
+      window.removeEventListener('keyt-money-finish-changed', handleMoneyFinishChange);
       window.removeEventListener('storage', handleStorage);
     };
   }, [theme]);
@@ -163,6 +188,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     saveShinScene(nextScene);
   }, []);
 
+  const changeMoneyFinish = useCallback((nextFinish: MoneyVaultFinish) => {
+    setMoneyFinishState(nextFinish);
+    saveMoneyVaultFinish(nextFinish);
+  }, []);
+
   const openThemeModal = useCallback(() => setIsThemeModalOpen(true), []);
   const closeThemeModal = useCallback(() => setIsThemeModalOpen(false), []);
   const toggleThemeModal = useCallback(() => setIsThemeModalOpen((prev) => !prev), []);
@@ -180,6 +210,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         toggleHoverTranslate,
         shinScene,
         setShinScene: changeShinScene,
+        moneyFinish,
+        setMoneyFinish: changeMoneyFinish,
         isThemeModalOpen,
         openThemeModal,
         closeThemeModal,

@@ -525,11 +525,6 @@ export default function HonVietQuizView({
             </h2>
             <QuestionImages images={question.images} />
 
-            {/* AI Assistant Banner */}
-            <div className="hon-viet-ai-section">
-              <AskAI question={question} />
-            </div>
-
             {/* Free response mode */}
             {isFreeResponse && (
               <div className="hon-viet-free-response-wrap">
@@ -615,7 +610,7 @@ export default function HonVietQuizView({
 
             {/* Multiple Choice Confirm Button */}
             {isMultipleChoice && !isAnswered && (
-              <div style={{ marginBottom: 16 }}>
+              <div className="hon-viet-multi-check-wrap" style={{ marginBottom: 16 }}>
                 <button
                   type="button"
                   className="hon-viet-reveal-btn"
@@ -667,6 +662,11 @@ export default function HonVietQuizView({
               >
                 Câu tiếp →
               </button>
+            </div>
+
+            {/* AI Assistant Banner */}
+            <div className="hon-viet-ai-section">
+              <AskAI question={question} />
             </div>
 
             {/* Keyboard Hint */}

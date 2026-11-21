@@ -168,6 +168,11 @@ export default function MistakeBusterView({
         title: 'Phong Ấn Đã Được Thanh Tẩy!',
         desc: 'Tuyệt đỉnh pháp sư! Toàn bộ câu hỏi sai đã được thanh tẩy hoàn toàn khỏi Cổ Thư Viện.',
       },
+      'billionaire-vault': {
+        icon: '💎',
+        title: 'Danh Mục Đầu Tư Không Còn Rủi Ro!',
+        desc: 'Xuất sắc! Toàn bộ câu hay sai đã được thanh khoản sạch khỏi sổ lỗi — tài sản GPA của bạn đang ở mức AAA.',
+      },
       'shin-kasukabe': {
         icon: '🍪',
         title: 'Đã Diệt Sạch Toàn Bộ Ớt Chuông Xanh!',
@@ -261,6 +266,8 @@ export default function MistakeBusterView({
               ? '🪷 QUÁN CHIẾU:'
               : theme === 'spidey-night'
               ? '🕷️ QUÉT LỖI:'
+              : theme === 'billionaire-vault'
+              ? '💎 RÀ SOÁT RỦI RO:'
               : theme === 'shin-kasukabe'
               ? '🫑 DIỆT ỚT CHUÔNG:'
               : '🛡️ SỬA LỖI:'}

@@ -539,9 +539,12 @@ export default function LotusZenQuizView({
               </div>
 
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                <ZenTempleSeal size={36} text="TU TÂM KHAI TRÍ" />
+                <span className="zen-temple-seal-wrap">
+                  <ZenTempleSeal size={36} text="TU TÂM KHAI TRÍ" />
+                </span>
                 <button
                   type="button"
+                  className="zen-mastered-btn"
                   onClick={() => onToggleMastered(question.id)}
                   style={{
                     background: isMastered ? '#FEF3C7' : '#F7ECD6',
@@ -572,11 +575,6 @@ export default function LotusZenQuizView({
               {question.text}
             </div>
             <QuestionImages images={question.images} />
-
-            {/* Ask AI Assistant */}
-            <div style={{ marginBottom: 20 }}>
-              <AskAI question={question} />
-            </div>
 
             {/* Answer Options */}
             <div className="zen-options-list">
@@ -619,7 +617,7 @@ export default function LotusZenQuizView({
 
             {/* Multiple Choice Submit Action */}
             {isMultipleChoice && !isAnswered && (
-              <div style={{ marginTop: 20, textAlign: 'center' }}>
+              <div className="zen-multi-check-wrap" style={{ marginTop: 20, textAlign: 'center' }}>
                 <button
                   type="button"
                   className="zen-btn-action primary"
@@ -633,7 +631,9 @@ export default function LotusZenQuizView({
 
             {/* Revealed / Answered Feedback Box */}
             {(isAnswered || isRevealed) && (
-              <div style={{
+              <div
+                className="zen-feedback-box"
+                style={{
                 marginTop: 20,
                 padding: '14px 18px',
                 background: isAnswered
@@ -702,6 +702,11 @@ export default function LotusZenQuizView({
               >
                 {currentIndex >= questions.length - 1 ? 'Xem kết quả 🏆' : 'Câu tiếp theo →'}
               </button>
+            </div>
+
+            {/* Ask AI Assistant */}
+            <div className="zen-ai-section">
+              <AskAI question={question} />
             </div>
           </div>
         </main>

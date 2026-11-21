@@ -18,6 +18,9 @@ import MistakeBusterView from './games/MistakeBusterView';
 import MockExamView from './games/MockExamView';
 import QuestionListView from './QuestionListView';
 import AskAI from './AskAI';
+import { MOBILE_ASK_AI_STATE_EVENT } from '../utils/askAIConfig';
+import MobileQuizBottomBar from './MobileQuizBottomBar';
+import { useQuizSwipe } from '../utils/useQuizSwipe';
 import QuestionImages from './QuestionImages';
 import {
   clearMistakes,
@@ -35,10 +38,12 @@ import { useTheme } from '../context/ThemeContext';
 import CozyNightQuizView from './CozyNightQuizView';
 import SpideyQuizView from './SpideyQuizView';
 import ShinQuizView from './ShinQuizView';
+import MoneyQuizView from './MoneyQuizView';
 import FantasyAcademyQuizView from './FantasyAcademyQuizView';
 import HonVietQuizView from './HonVietQuizView';
 import LotusZenQuizView from './LotusZenQuizView';
 import SharedQuizHeader from './SharedQuizHeader';
+import '../styles/mobileQuizCompact.css';
 
 const ACTIVE_STUDY_SECONDS_KEY = 'keyt_active_study_seconds';
 const STUDY_MILESTONE_SECONDS = 30 * 60;
@@ -173,9 +178,26 @@ export default function Quiz({
   );
   const [showStudyRain, setShowStudyRain] = useState(false);
   const closeStudyRain = useCallback(() => setShowStudyRain(false), []);
+  const [isMobileAskAIOpen, setIsMobileAskAIOpen] = useState(false);
+
+  useEffect(() => {
+    const handleAskAIState = (event: Event) => {
+      const detail = (event as CustomEvent<{ isOpen: boolean }>).detail;
+      if (detail) {
+        setIsMobileAskAIOpen(Boolean(detail.isOpen));
+      }
+    };
+    window.addEventListener(MOBILE_ASK_AI_STATE_EVENT, handleAskAIState);
+    return () => window.removeEventListener(MOBILE_ASK_AI_STATE_EVENT, handleAskAIState);
+  }, []);
 
   // Question IDs that have answers revealed via "Xem đáp án"
   const [revealedIds, setRevealedIds] = useState<number[]>([]);
+
+  // Reset scroll to top cleanly when opening a quiz set
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [setId]);
 
   // Sync to localStorage
   useEffect(() => {
@@ -762,6 +784,40 @@ export default function Quiz({
     );
   };
 
+  const canPrev =
+    splitSettings.enabled && currentPart
+      ? currentIndex > currentPart.startIndex
+      : currentIndex > 0;
+
+  const canSwipeNext =
+    splitSettings.enabled && currentPart
+      ? currentIndex < currentPart.endIndex
+      : currentIndex < questions.length - 1;
+
+  const mobileNextLabel =
+    splitSettings.enabled && currentPart
+      ? currentIndex === currentPart.endIndex
+        ? currentPartIndex === parts.length - 1
+          ? 'Nộp bài →'
+          : `Xong ${currentPart.name} →`
+        : 'Câu tiếp →'
+      : currentIndex === questions.length - 1
+      ? 'Nộp bài →'
+      : 'Câu tiếp →';
+
+  const swipeHandlers = useQuizSwipe({
+    onSwipeLeft: handleNext,
+    onSwipeRight: handlePrev,
+    canSwipeLeft: canSwipeNext,
+    canSwipeRight: canPrev,
+    enabled:
+      activeMode === 'study' &&
+      !showQuestionGrid &&
+      !isSplitModalOpen &&
+      !showPartCompleteModal &&
+      !isMobileAskAIOpen,
+  });
+
   if (!question) {
     return (
       <div className="quiz-v2-wrapper">
@@ -776,7 +832,7 @@ export default function Quiz({
   }
 
   return (
-    <div className={`quiz-v2-wrapper theme-${theme} ${theme === 'hon-viet' ? 'quiz-hon-viet-page-wrapper' : ''} ${theme === 'fantasy-academy' ? 'quiz-fantasy-page-wrapper' : ''} ${theme === 'cozy-night' ? 'quiz-cozy-page-wrapper' : ''} ${theme === 'spidey-night' ? 'quiz-spidey-page-wrapper' : ''} ${theme === 'shin-kasukabe' ? 'quiz-shin-page-wrapper' : ''} ${theme === 'lotus-zen-sanctuary' ? 'quiz-lotus-zen-page-wrapper' : ''}`}>
+    <div className={`quiz-v2-wrapper theme-${theme} ${theme === 'hon-viet' ? 'quiz-hon-viet-page-wrapper' : ''} ${theme === 'fantasy-academy' ? 'quiz-fantasy-page-wrapper' : ''} ${theme === 'cozy-night' ? 'quiz-cozy-page-wrapper' : ''} ${theme === 'spidey-night' ? 'quiz-spidey-page-wrapper' : ''} ${theme === 'shin-kasukabe' ? 'quiz-shin-page-wrapper' : ''} ${theme === 'billionaire-vault' ? 'quiz-money-page-wrapper' : ''} ${theme === 'lotus-zen-sanctuary' ? 'quiz-lotus-zen-page-wrapper' : ''}`}>
       {/* Canonical Unified Shared Quiz Header */}
       <SharedQuizHeader
         setTitle={setTitle}
@@ -901,7 +957,7 @@ export default function Quiz({
 
       {/* Main Content (Study Mode) — Theme-Aware Body */}
       {activeMode === 'study' && (
-        <>
+        <div className="quiz-study-swipe-zone" {...swipeHandlers}>
           {theme === 'lotus-zen-sanctuary' ? (
             <LotusZenQuizView
               question={question}
@@ -1063,6 +1119,44 @@ export default function Quiz({
               onOpenThemeModal={openThemeModal}
               slideDirection={slideDirection}
             />
+          ) : theme === 'billionaire-vault' ? (
+            <MoneyQuizView
+              question={question}
+              questions={questions}
+              currentIndex={currentIndex}
+              relativeIndex={relativeIndex}
+              totalCount={splitSettings.enabled && currentPart ? currentPart.totalCount : questions.length}
+              currentPart={currentPart}
+              parts={parts}
+              currentPartIndex={currentPartIndex}
+              splitEnabled={splitSettings.enabled}
+              onSwitchPart={handleSwitchPart}
+              selectedAnswer={selectedAnswer}
+              isAnswered={isAnswered}
+              isMastered={isMastered}
+              isRevealed={isRevealed}
+              isUnresolved={isUnresolved}
+              isMultipleChoice={isMultipleChoice}
+              isFreeResponse={isFreeResponse}
+              masteredIds={masteredIds}
+              answers={answers}
+              submittedIds={submittedIds}
+              onSelectOption={handleSelectOption}
+              onCheckMultiple={handleCheckMultiple}
+              onToggleReveal={handleToggleReveal}
+              onToggleMastered={toggleMastered}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              onBack={onBack}
+              onBackLabel={onBackLabel}
+              setTitle={setTitle}
+              setId={setId}
+              activeMode={activeMode}
+              onChangeMode={(mode) => setActiveMode(mode)}
+              onOpenQuestionGrid={() => setShowQuestionGrid(true)}
+              onOpenThemeModal={openThemeModal}
+              slideDirection={slideDirection}
+            />
           ) : theme === 'shin-kasukabe' ? (
             <ShinQuizView
               question={question}
@@ -1184,8 +1278,6 @@ export default function Quiz({
           {/* Question Text */}
           <div className="quiz-v2-q-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</div>
           <QuestionImages images={question.images} />
-
-          <AskAI question={question} />
 
           {/* Options / Free response */}
           {isFreeResponse ? (
@@ -1337,6 +1429,8 @@ export default function Quiz({
             </button>
           </div>
 
+          <AskAI question={question} />
+
           {/* Keyboard Hint */}
           <div className="quiz-v2-keyboard-hint">
             💡 Phím tắt: <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> chọn đáp án · <kbd className="hint-kbd-space">Space</kbd> xem đáp án · <kbd>←</kbd> <kbd>→</kbd> chuyển câu · <kbd>M</kbd> đánh dấu · <kbd>G</kbd> danh sách
@@ -1344,7 +1438,20 @@ export default function Quiz({
             </div>
           </div>
         )}
-      </>
+
+        <MobileQuizBottomBar
+          canPrev={canPrev}
+          isAnswered={isAnswered}
+          isRevealed={isRevealed}
+          isMultipleChoice={isMultipleChoice}
+          selectedAnswer={selectedAnswer}
+          nextLabel={mobileNextLabel}
+          onPrev={handlePrev}
+          onToggleReveal={handleToggleReveal}
+          onCheckMultiple={handleCheckMultiple}
+          onNext={handleNext}
+        />
+      </div>
     )}
 
 

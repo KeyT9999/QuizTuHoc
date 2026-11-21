@@ -80,6 +80,11 @@ export default function KnowledgeGroupPicker({
       title: 'Phân Nhánh Kỹ Năng Cổ Thư Viện',
       desc: 'Mỗi nhóm kiến thức là một nhánh kỹ năng ma thuật. Tích lũy tri thức để nâng cao pháp lực học thuật.',
     },
+    'billionaire-vault': {
+      eyebrow: `💎 ${courseLabel} · DANH MỤC ĐẦU TƯ TRI THỨC USD`,
+      title: 'Chọn Hạng Mục Chuyên Đề Sinh Lời',
+      desc: 'Tập trung tối ưu hóa từng mảng kiến thức trọng tâm để tăng tốc tài sản trí tuệ và GPA tuyệt đối.',
+    },
     'shin-kasukabe': {
       eyebrow: `🖍️ ${courseLabel} · BẢN ĐỒ ĐỘI PHÒNG VỆ KASUKABE`,
       title: 'Chọn Nhóm Chuyên Đề Hôm Nay',

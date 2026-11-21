@@ -2061,3 +2061,106 @@
   border-color: rgba(148, 163, 184, 0.24);
 }
 
+/* Billionaire Vault Hero 3-Finish Quick Switcher & Luxury Dark Cards */
+.money-home-finish-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.money-home-finish-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #f3d37a;
+  background: rgba(12, 14, 20, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.34);
+  padding: 5px 11px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+
+.money-home-finish-chip {
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.34);
+  background: rgba(12, 14, 20, 0.86);
+  color: #e2e8f0;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.money-home-finish-chip:hover {
+  transform: translateY(-2px);
+  border-color: #f3d37a;
+  color: #fef08a;
+}
+
+.money-home-finish-chip.is-active {
+  background: linear-gradient(135deg, #b8860b 0%, #d4af37 58%, #f3d37a 100%);
+  border-color: #fef08a;
+  color: #090a0d;
+  font-weight: 800;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.34);
+}
+
+[data-theme="billionaire-vault"] .home-overview-card,
+[data-theme="billionaire-vault"] .home-major-card,
+[data-theme="billionaire-vault"] .stats-kpi-card,
+[data-theme="billionaire-vault"] .stats-panel-card,
+[data-theme="billionaire-vault"] .home-empty-progress-banner,
+[data-theme="billionaire-vault"] .stats-hero-banner {
+  background: rgba(12, 14, 20, 0.88);
+  border-color: rgba(212, 175, 55, 0.3);
+  color: #f8fafc;
+}
+
+[data-theme="billionaire-vault"] .home-overview-value,
+[data-theme="billionaire-vault"] .home-section-title,
+[data-theme="billionaire-vault"] .home-major-title,
+[data-theme="billionaire-vault"] .stats-hero-title,
+[data-theme="billionaire-vault"] .stats-kpi-value,
+[data-theme="billionaire-vault"] .stats-panel-title,
+[data-theme="billionaire-vault"] .stats-major-name,
+[data-theme="billionaire-vault"] .stats-item-code,
+[data-theme="billionaire-vault"] .home-empty-progress-left h3 {
+  color: #f8fafc;
+}
+
+[data-theme="billionaire-vault"] .home-overview-label,
+[data-theme="billionaire-vault"] .home-overview-sub,
+[data-theme="billionaire-vault"] .home-section-subtitle,
+[data-theme="billionaire-vault"] .home-major-meta,
+[data-theme="billionaire-vault"] .home-major-progress-row,
+[data-theme="billionaire-vault"] .stats-hero-desc,
+[data-theme="billionaire-vault"] .stats-kpi-label,
+[data-theme="billionaire-vault"] .stats-kpi-sub,
+[data-theme="billionaire-vault"] .stats-panel-subtitle,
+[data-theme="billionaire-vault"] .stats-major-row-metrics,
+[data-theme="billionaire-vault"] .stats-item-name,
+[data-theme="billionaire-vault"] .stats-item-sub,
+[data-theme="billionaire-vault"] .home-empty-progress-left p {
+  color: #cbd5e1;
+}
+
+[data-theme="billionaire-vault"] .stats-major-row,
+[data-theme="billionaire-vault"] .stats-item-row {
+  background: rgba(20, 23, 32, 0.84);
+  border-color: rgba(212, 175, 55, 0.24);
+}
+
+[data-theme="billionaire-vault"] .stats-item-percent {
+  color: #f3d37a;
+}
+
+[data-theme="billionaire-vault"] .stats-mini-bar {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="billionaire-vault"] .stats-mini-bar-fill {
+  background: linear-gradient(90deg, #d4af37, #10b981);
+}
+

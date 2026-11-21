@@ -87,6 +87,12 @@ export default function QuestionListView({
       title: 'Bí Thư Toàn Bộ Câu Hỏi',
       desc: 'Kho lưu trữ toàn bộ phong ấn câu hỏi học viện. Nhấn vào bất kỳ câu nào để bắt đầu giải mã phong ấn.',
     },
+    'billionaire-vault': {
+      icon: '💎',
+      tag: 'BILLIONAIRE VAULT · SỔ CÁI CÂU HỎI USD',
+      title: 'Danh Mục Toàn Bộ Câu Hỏi Đầu Tư',
+      desc: 'Tra cứu nhanh toàn bộ câu hỏi trong danh mục tài sản tri thức. Chọn bất kỳ câu nào để chốt lời ngay lập tức.',
+    },
     'shin-kasukabe': {
       icon: '🖍️',
       tag: 'SỔ TAY KASUKABE · KHO CÂU HỎI CHOCOBI',

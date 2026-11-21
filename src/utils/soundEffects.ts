@@ -419,3 +419,91 @@ export function playActionBeamSound(force = false): void {
     // ignore
   }
 }
+
+/**
+ * Authentic Luxury Cash Register "KA-CHING!" bell + gold coin shimmer
+ */
+export function playCashRegisterSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+
+    // 1. Crisp brass mechanical drawer click ("KA-")
+    const clickOsc = ctx.createOscillator();
+    const clickGain = ctx.createGain();
+    clickOsc.type = 'triangle';
+    clickOsc.frequency.setValueAtTime(1180, now);
+    clickOsc.frequency.exponentialRampToValueAtTime(320, now + 0.035);
+    clickGain.gain.setValueAtTime(0.22, now);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+    clickOsc.connect(clickGain);
+    clickGain.connect(ctx.destination);
+    clickOsc.start(now);
+    clickOsc.stop(now + 0.05);
+
+    // 2. Shimmering crystal bell harmonic ("-CHING!")
+    const bellFreqs = [1567.98, 2093.0, 3135.96]; // G6, C7, G7
+    bellFreqs.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      const t = now + 0.045 + i * 0.018;
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(i === 0 ? 0.16 : 0.09, t);
+      gain.gain.exponentialRampToValueAtTime(0.0005, t + 0.55);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.58);
+    });
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Rapid crisp US Dollar bill counter "ZIP-ZIP-ZIP!" sound
+ */
+export function playMoneyCountSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    const flutterCount = 4;
+    for (let k = 0; k < flutterCount; k++) {
+      const t = now + k * 0.045;
+      const bufSize = Math.floor(ctx.sampleRate * 0.032);
+      const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) {
+        const env = Math.sin((i / bufSize) * Math.PI);
+        data[i] = (Math.random() * 2 - 1) * env;
+      }
+
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(2800 + k * 350, t);
+      bp.Q.setValueAtTime(2.0, t);
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.18, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.032);
+
+      noise.connect(bp);
+      bp.connect(gain);
+      gain.connect(ctx.destination);
+      noise.start(t);
+      noise.stop(t + 0.034);
+    }
+  } catch {
+    // ignore
+  }
+}

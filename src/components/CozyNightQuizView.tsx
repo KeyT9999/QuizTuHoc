@@ -317,9 +317,6 @@ export default function CozyNightQuizView({
             <h2 className="cozy-question-text" data-hover-translate={question.text} data-hover-translate-kind="question">{question.text}</h2>
             <QuestionImages images={question.images} />
 
-            {/* AI Assistant Banner */}
-            <AskAI question={question} />
-
             {/* Options List */}
             {isFreeResponse ? (
               <div className="quiz-v2-free-response" style={{ marginBottom: 20 }}>
@@ -467,6 +464,9 @@ export default function CozyNightQuizView({
                   : 'Câu tiếp →'}
               </button>
             </div>
+
+            {/* AI Assistant Banner */}
+            <AskAI question={question} />
 
             {/* Keyboard Shortcuts Hint */}
             <footer className="cozy-keyboard-hints">

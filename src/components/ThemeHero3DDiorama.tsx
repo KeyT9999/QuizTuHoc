@@ -183,6 +183,103 @@ function createArcaneRuneTexture(): THREE.CanvasTexture {
 }
 
 /**
+ * Generates a high-contrast luxury Titanium Black Card texture for Billionaire Vault 3D Diorama.
+ */
+function createBlackCardFaceTexture(): THREE.CanvasTexture {
+  const w = 512;
+  const h = 320;
+  const canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d')!;
+
+  // Brushed Obsidian metallic gradient base
+  const bg = ctx.createLinearGradient(0, 0, w, h);
+  bg.addColorStop(0, '#14171f');
+  bg.addColorStop(0.45, '#08090d');
+  bg.addColorStop(0.75, '#19150d');
+  bg.addColorStop(1, '#07080b');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+
+  // Subtle brushed metal horizontal micro-lines
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+  ctx.lineWidth = 1;
+  for (let y = 4; y < h; y += 5) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(w, y);
+    ctx.stroke();
+  }
+
+  // Subtle geometric guilloché diamond rings on right half
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.14)';
+  ctx.lineWidth = 1.2;
+  for (let r = 36; r <= 128; r += 22) {
+    ctx.beginPath();
+    ctx.arc(w - 110, h / 2, r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // Art-Deco 1px Champagne Gold hairline frame + corner L-accents
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.65)';
+  ctx.lineWidth = 2.5;
+  ctx.strokeRect(16, 16, w - 32, h - 32);
+
+  ctx.strokeStyle = '#f3d37a';
+  ctx.lineWidth = 4;
+  // Top-left & Bottom-right luxury corners
+  ctx.beginPath();
+  ctx.moveTo(16, 48); ctx.lineTo(16, 16); ctx.lineTo(48, 16);
+  ctx.moveTo(w - 48, h - 16); ctx.lineTo(w - 16, h - 16); ctx.lineTo(w - 16, h - 48);
+  ctx.stroke();
+
+  // Header brand text
+  ctx.fillStyle = '#f3d37a';
+  ctx.font = 'bold 24px Georgia, serif';
+  ctx.fillText('KEYT PRIVATE', 38, 62);
+
+  ctx.fillStyle = 'rgba(243, 211, 122, 0.72)';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.fillText('BLACK CARD · USD VAULT', 38, 84);
+
+  // Top-right 24K emerald-gold crest badge
+  ctx.fillStyle = 'rgba(16, 185, 129, 0.22)';
+  ctx.strokeStyle = '#34d399';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(w - 126, 38, 88, 28, 14);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#6ee7b7';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('USD · AAA', w - 82, 57);
+  ctx.textAlign = 'left';
+
+  // Large subtle watermark $100 emblem on right
+  ctx.fillStyle = 'rgba(243, 211, 122, 0.16)';
+  ctx.font = 'bold 74px Georgia, serif';
+  ctx.fillText('$', w - 128, 198);
+
+  // Embossed Card Number
+  ctx.fillStyle = '#fde68a';
+  ctx.font = 'bold 26px monospace';
+  ctx.fillText('4000  8888  9999  0100', 38, 232);
+
+  // Footer Holder & Valid
+  ctx.fillStyle = 'rgba(226, 232, 240, 0.75)';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.fillText('SCHOLAR BILLIONAIRE', 38, 272);
+  ctx.fillStyle = '#d4af37';
+  ctx.fillText('NO LIMIT · 24K', w - 150, 272);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.needsUpdate = true;
+  return tex;
+}
+
+/**
  * Parametric curved lotus petal geometry with smooth normals (no flat plane clipping).
  */
 function createSmoothLotusPetalGeometry(width: number, length: number, cupDepth: number, tipCurl: number): THREE.BufferGeometry {
@@ -811,6 +908,140 @@ export default function ThemeHero3DDiorama({
     }
 
     // =========================================================================
+    // SCENE 4d: BILLIONAIRE VAULT (3D TITANIUM BLACK CARD + GOLD BULLION + USD COINS)
+    // =========================================================================
+    else if (theme === 'billionaire-vault') {
+      camera.position.set(0, 0.35, 5.25);
+      camera.lookAt(0, 0, 0);
+      keyLight.color.setHex(0xfef3c7);
+      rimLight.color.setHex(0x10b981);
+      cursorLight.color.setHex(0xf3d37a);
+
+      const vaultGroup = new THREE.Group();
+      rootGroup.add(vaultGroup);
+
+      // 3D Titanium Black Card
+      const cardFaceTex = track(createBlackCardFaceTexture());
+      const cardFaceMat = track(
+        new THREE.MeshPhysicalMaterial({
+          map: cardFaceTex,
+          roughness: 0.24,
+          metalness: 0.72,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.12,
+        })
+      );
+      const cardEdgeGoldMat = track(
+        new THREE.MeshStandardMaterial({
+          color: 0xd4af37,
+          emissive: 0x78530b,
+          emissiveIntensity: 0.32,
+          metalness: 0.94,
+          roughness: 0.18,
+        })
+      );
+      const cardGeo = track(new THREE.BoxGeometry(2.3, 1.44, 0.085));
+      const blackCard = new THREE.Mesh(cardGeo, [
+        cardEdgeGoldMat,
+        cardEdgeGoldMat,
+        cardEdgeGoldMat,
+        cardEdgeGoldMat,
+        cardFaceMat,
+        cardFaceMat,
+      ]);
+      blackCard.rotation.x = 0.08;
+      vaultGroup.add(blackCard);
+
+      // Raised 24K Gold EMV Chip on the Black Card front face
+      const chipMat = track(
+        new THREE.MeshStandardMaterial({
+          color: 0xfde68a,
+          emissive: 0xb45309,
+          emissiveIntensity: 0.35,
+          metalness: 0.96,
+          roughness: 0.14,
+        })
+      );
+      const chipGeo = track(new THREE.BoxGeometry(0.32, 0.24, 0.025));
+      const chipMesh = new THREE.Mesh(chipGeo, chipMat);
+      chipMesh.position.set(-0.66, -0.02, 0.05);
+      blackCard.add(chipMesh);
+
+      // Sleek Champagne Gold & Deep Emerald Orbital Rings
+      const goldOrbitGeo = track(new THREE.TorusGeometry(1.72, 0.024, 20, 108));
+      const goldOrbit = new THREE.Mesh(goldOrbitGeo, cardEdgeGoldMat);
+      goldOrbit.rotation.x = 1.24;
+      vaultGroup.add(goldOrbit);
+
+      const emeraldOrbitMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0x10b981,
+          emissive: 0x065f46,
+          emissiveIntensity: 0.55,
+          metalness: 0.65,
+          roughness: 0.18,
+          clearcoat: 1.0,
+        })
+      );
+      const emeraldOrbitGeo = track(new THREE.TorusGeometry(1.92, 0.018, 20, 108));
+      const emeraldOrbit = new THREE.Mesh(emeraldOrbitGeo, emeraldOrbitMat);
+      emeraldOrbit.rotation.x = -1.1;
+      emeraldOrbit.rotation.y = 0.42;
+      vaultGroup.add(emeraldOrbit);
+
+      // Orbiting 24K Gold Bullion Ingot Bar
+      const bullionGeo = track(new THREE.BoxGeometry(0.56, 0.22, 0.28));
+      const bullionMesh = new THREE.Mesh(bullionGeo, chipMat);
+      vaultGroup.add(bullionMesh);
+
+      // 6 Orbiting 3D Gold Dollar Coins
+      const coinGeo = track(new THREE.CylinderGeometry(0.15, 0.15, 0.04, 28));
+      const coins: Array<{ mesh: THREE.Mesh; angle: number; radius: number; yOffset: number }> = [];
+      for (let i = 0; i < 6; i++) {
+        const coin = new THREE.Mesh(coinGeo, i % 3 === 0 ? emeraldOrbitMat : chipMat);
+        coin.rotation.x = Math.PI / 2;
+        const angle = (i / 6) * Math.PI * 2;
+        vaultGroup.add(coin);
+        coins.push({
+          mesh: coin,
+          angle,
+          radius: 1.78 + (i % 2) * 0.2,
+          yOffset: ((i % 3) - 1) * 0.34,
+        });
+      }
+
+      updaters.push((t) => {
+        blackCard.rotation.y = Math.sin(t * 0.65) * 0.48 + t * 0.24;
+        blackCard.rotation.z = Math.sin(t * 0.9) * 0.05;
+        vaultGroup.position.y = Math.sin(t * 1.65) * 0.09;
+
+        goldOrbit.rotation.z = t * 0.34;
+        emeraldOrbit.rotation.z = -t * 0.28;
+
+        // Orbiting Bullion Bar
+        const bAngle = t * 0.55;
+        bullionMesh.position.set(
+          Math.cos(bAngle) * 1.56,
+          -0.82 + Math.sin(t * 2.0) * 0.12,
+          Math.sin(bAngle) * 1.56
+        );
+        bullionMesh.rotation.y = -bAngle + 0.4;
+        bullionMesh.rotation.x = Math.sin(t * 1.4) * 0.15;
+
+        // Orbiting 3D Gold Coins
+        coins.forEach((c, idx) => {
+          const a = c.angle + t * 0.48;
+          c.mesh.position.set(
+            Math.cos(a) * c.radius,
+            c.yOffset + Math.sin(t * 2.1 + idx) * 0.18,
+            Math.sin(a) * c.radius
+          );
+          c.mesh.rotation.z = t * 2.2 + idx;
+        });
+      });
+    }
+
+    // =========================================================================
     // SCENE 4c: SHIN KASUKABE (3D HEXAGONAL CHOCOBI BOX + GOLDEN STARS & RINGS)
     // =========================================================================
     else if (theme === 'shin-kasukabe') {
@@ -1224,6 +1455,7 @@ export default function ThemeHero3DDiorama({
     // SHARED LUMINOUS PARTICLE FIELD (THEME-COLORED)
     // =========================================================================
     const paletteMap: Record<AppTheme, [string, string, number]> = {
+      'billionaire-vault': ['#fde68a', '#d4af37', 0x10b981],
       'shin-kasukabe': ['#fde047', '#10b981', 0xfacc15],
       'spidey-night': ['#fb7185', '#38bdf8', 0xfbbf24],
       'lotus-zen-sanctuary': ['#fef08a', '#d97706', 0xfbbf24],
@@ -1351,6 +1583,7 @@ export default function ThemeHero3DDiorama({
   };
 
   const hintLabel: Record<AppTheme, string> = {
+    'billionaire-vault': '💳 Di chuột xoay Thẻ Đen 3D · Chạm kích hoạt hào quang USD',
     'shin-kasukabe': '🍪 Di chuột xoay Hộp ChocoBi 3D · Chạm bắn mưa sao Kasukabe',
     'spidey-night': '🕷️ Di chuột xoay Lưới Tơ New York · Chạm bắn tơ Spider-Verse',
     'lotus-zen-sanctuary': '🪷 Di chuột xoay Liên Hoa · Chạm kích hoạt hào quang',
