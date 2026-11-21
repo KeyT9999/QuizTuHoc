@@ -75,6 +75,11 @@ import {
   MMK_KNOWLEDGE_GROUPS,
 } from './data/mmkKnowledgeGroups';
 import {
+  getMMK2KnowledgeGroupId,
+  getMMK2QuestionsForGroup,
+  MMK2_KNOWLEDGE_GROUPS,
+} from './data/mmk2KnowledgeGroups';
+import {
   getMco302KnowledgeGroupId,
   getMco302QuestionsForGroup,
   MCO302_KNOWLEDGE_GROUPS,
@@ -191,6 +196,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     groups: MMK_KNOWLEDGE_GROUPS,
     getGroupId: getMMKKnowledgeGroupId,
     filterQuestions: getMMKQuestionsForGroup,
+  },
+  mmk2_quiz_ba_khi: {
+    courseLabel: 'MMK101',
+    groups: MMK2_KNOWLEDGE_GROUPS,
+    getGroupId: getMMK2KnowledgeGroupId,
+    filterQuestions: getMMK2QuestionsForGroup,
   },
   mco302_quiz_ba_khi: {
     courseLabel: 'MCO302',

@@ -134,8 +134,8 @@ const BASE_COURSES: Course[] = [
     id: 'mmk101',
     code: 'MMK101',
     name: 'Nguyên lý Quản trị & Marketing (MMK)',
-    description: 'Ngân hàng tổng hợp 183 câu hỏi từ tài liệu FINAL (KEY CHÍNH + TỪ SLIDE, đã lọc trùng, chia 7 nhóm kiến thức) và 1 bộ đề thi Final Exam SU26 từ FUSTATION (tổng 2 bộ đề · 233 câu trắc nghiệm chuẩn có đáp án).',
-    badge: '2 bộ đề',
+    description: 'Gồm bộ tổng hợp FINAL (183 câu · 7 nhóm), bộ MMK2_QuizBaKhi từ MMK Key chính (274 câu · 7 nhóm kiến thức) và 1 đề thi Final Exam SU26 từ FUSTATION (tổng 3 bộ đề · 507 câu trắc nghiệm chuẩn có đáp án).',
+    badge: '3 bộ đề',
   },
   {
     id: 'mco302',

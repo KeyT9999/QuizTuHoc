@@ -57,6 +57,7 @@ import { SAMPLE_QUIZ_VNC } from './sampleQuizVNC';
 import { SAMPLE_QUIZ_SSA } from './sampleQuizSSA';
 import { SAMPLE_QUIZ_SSA2 } from './sampleQuizSSA2';
 import { SAMPLE_QUIZ_MMK } from './sampleQuizMMK';
+import { SAMPLE_QUIZ_MMK2 } from './sampleQuizMMK2';
 import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
 import { SAMPLE_QUIZ_VNR202_BAKHI } from './sampleQuizVNR202BaKhi';
 import { SAMPLE_QUIZ_MLN131_BAKHI } from './sampleQuizMLN131BaKhi';
@@ -702,6 +703,16 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     badge: '183 câu · 7 nhóm',
     questionCount: 183,
     rawText: SAMPLE_QUIZ_MMK,
+  },
+  {
+    id: 'mmk2_quiz_ba_khi',
+    courseId: 'mmk101',
+    title: 'MMK2_QuizBaKhi',
+    description: 'Bộ 274 câu hỏi MMK Key chính đầy đủ (đã lọc 101 câu trùng lặp và chuẩn hóa đáp án); chia thành 7 nhóm kiến thức.',
+    category: 'Môn MMK101',
+    badge: '274 câu · 7 nhóm',
+    questionCount: 274,
+    rawText: SAMPLE_QUIZ_MMK2,
   },
   {
     id: 'mco302_quiz_ba_khi',
