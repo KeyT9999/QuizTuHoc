@@ -2164,6 +2164,200 @@
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.2);
 }
 
+/* Fix Dark Mode Answer States (Selected / Correct / Wrong) + Mistake Feedback Box + Clear Button */
+.theme-cozy-night .game-q-opt-btn.selected,
+.theme-spidey-night .game-q-opt-btn.selected,
+[data-theme="cozy-night"] .game-q-opt-btn.selected,
+[data-theme="spidey-night"] .game-q-opt-btn.selected,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-q-opt-btn.selected {
+  background: rgba(56, 189, 248, 0.2) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35) !important;
+  color: #f8fafc !important;
+}
+
+.theme-cozy-night .game-q-opt-btn.opt-flash-correct,
+.theme-spidey-night .game-q-opt-btn.opt-flash-correct,
+[data-theme="cozy-night"] .game-q-opt-btn.opt-flash-correct,
+[data-theme="spidey-night"] .game-q-opt-btn.opt-flash-correct,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-q-opt-btn.opt-flash-correct {
+  background: rgba(16, 185, 129, 0.24) !important;
+  border-color: #34d399 !important;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.45), 0 8px 20px rgba(16, 185, 129, 0.22) !important;
+  color: #ecfdf5 !important;
+}
+
+.theme-cozy-night .game-q-opt-btn.opt-flash-correct .opt-label-text,
+.theme-spidey-night .game-q-opt-btn.opt-flash-correct .opt-label-text,
+[data-theme="cozy-night"] .game-q-opt-btn.opt-flash-correct .opt-label-text,
+[data-theme="spidey-night"] .game-q-opt-btn.opt-flash-correct .opt-label-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-q-opt-btn.opt-flash-correct .opt-label-text {
+  color: #ecfdf5 !important;
+  font-weight: 700;
+}
+
+.theme-cozy-night .game-q-opt-btn.opt-flash-wrong,
+.theme-spidey-night .game-q-opt-btn.opt-flash-wrong,
+[data-theme="cozy-night"] .game-q-opt-btn.opt-flash-wrong,
+[data-theme="spidey-night"] .game-q-opt-btn.opt-flash-wrong,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-q-opt-btn.opt-flash-wrong {
+  background: rgba(244, 63, 94, 0.24) !important;
+  border-color: #fb7185 !important;
+  box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.45) !important;
+  color: #ffe4e6 !important;
+}
+
+.theme-cozy-night .game-q-opt-btn.opt-flash-wrong .opt-label-text,
+.theme-spidey-night .game-q-opt-btn.opt-flash-wrong .opt-label-text,
+[data-theme="cozy-night"] .game-q-opt-btn.opt-flash-wrong .opt-label-text,
+[data-theme="spidey-night"] .game-q-opt-btn.opt-flash-wrong .opt-label-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-q-opt-btn.opt-flash-wrong .opt-label-text {
+  color: #ffe4e6 !important;
+}
+
+.theme-cozy-night .mistake-feedback-box.fb-correct,
+.theme-spidey-night .mistake-feedback-box.fb-correct,
+[data-theme="cozy-night"] .mistake-feedback-box.fb-correct,
+[data-theme="spidey-night"] .mistake-feedback-box.fb-correct,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .mistake-feedback-box.fb-correct {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.72), rgba(15, 23, 42, 0.92)) !important;
+  border: 1.5px solid rgba(52, 211, 153, 0.5) !important;
+  color: #d1fae5 !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.theme-cozy-night .mistake-feedback-box.fb-wrong,
+.theme-spidey-night .mistake-feedback-box.fb-wrong,
+[data-theme="cozy-night"] .mistake-feedback-box.fb-wrong,
+[data-theme="spidey-night"] .mistake-feedback-box.fb-wrong,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .mistake-feedback-box.fb-wrong {
+  background: linear-gradient(135deg, rgba(136, 19, 55, 0.72), rgba(15, 23, 42, 0.92)) !important;
+  border: 1.5px solid rgba(251, 113, 133, 0.5) !important;
+  color: #ffe4e6 !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.theme-cozy-night .mistake-feedback-box .fb-headline,
+.theme-spidey-night .mistake-feedback-box .fb-headline,
+[data-theme="cozy-night"] .mistake-feedback-box .fb-headline,
+[data-theme="spidey-night"] .mistake-feedback-box .fb-headline,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .mistake-feedback-box .fb-headline {
+  color: #ffffff !important;
+}
+
+.theme-cozy-night .mistake-feedback-box .fb-explanation-text,
+.theme-spidey-night .mistake-feedback-box .fb-explanation-text,
+[data-theme="cozy-night"] .mistake-feedback-box .fb-explanation-text,
+[data-theme="spidey-night"] .mistake-feedback-box .fb-explanation-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .mistake-feedback-box .fb-explanation-text {
+  color: #cbd5e1 !important;
+}
+
+.theme-cozy-night .mistake-check-actions,
+.theme-spidey-night .mistake-check-actions,
+[data-theme="cozy-night"] .mistake-check-actions,
+[data-theme="spidey-night"] .mistake-check-actions,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .mistake-check-actions {
+  background: rgba(30, 41, 59, 0.85) !important;
+  border-color: rgba(129, 140, 248, 0.38) !important;
+  color: #e2e8f0 !important;
+}
+
+.theme-cozy-night .game-btn-tiny,
+.theme-spidey-night .game-btn-tiny,
+[data-theme="cozy-night"] .game-btn-tiny,
+[data-theme="spidey-night"] .game-btn-tiny,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-btn-tiny {
+  background: rgba(225, 29, 72, 0.18) !important;
+  border: 1px solid rgba(244, 63, 94, 0.48) !important;
+  color: #fecdd3 !important;
+}
+
+.theme-cozy-night .game-btn-tiny:hover,
+.theme-spidey-night .game-btn-tiny:hover,
+[data-theme="cozy-night"] .game-btn-tiny:hover,
+[data-theme="spidey-night"] .game-btn-tiny:hover,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .game-btn-tiny:hover {
+  background: rgba(225, 29, 72, 0.34) !important;
+  border-color: #fb7185 !important;
+  color: #ffffff !important;
+}
+
+/* Spidey-specific Mistake Buster CTA & Card polish */
+[data-theme="spidey-night"] .mistake-feedback-box .game-btn-primary,
+.theme-spidey-night .mistake-feedback-box .game-btn-primary {
+  background: linear-gradient(135deg, #e11d48, #2563eb) !important;
+  border: 1px solid rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35) !important;
+}
+
+/* Also protect Mock Exam & Survival Tower answer states on Dark Themes */
+.theme-cozy-night .exam-option.revealed-correct,
+.theme-spidey-night .exam-option.revealed-correct,
+[data-theme="cozy-night"] .exam-option.revealed-correct,
+[data-theme="spidey-night"] .exam-option.revealed-correct,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-option.revealed-correct,
+.theme-cozy-night .review-option.option-correct,
+.theme-spidey-night .review-option.option-correct,
+[data-theme="cozy-night"] .review-option.option-correct,
+[data-theme="spidey-night"] .review-option.option-correct,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .review-option.option-correct {
+  background: rgba(16, 185, 129, 0.22) !important;
+  border-color: #34d399 !important;
+  color: #ecfdf5 !important;
+}
+
+.theme-cozy-night .review-option.option-correct .review-opt-text,
+.theme-spidey-night .review-option.option-correct .review-opt-text,
+[data-theme="cozy-night"] .review-option.option-correct .review-opt-text,
+[data-theme="spidey-night"] .review-option.option-correct .review-opt-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .review-option.option-correct .review-opt-text {
+  color: #a7f3d0 !important;
+}
+
+.theme-cozy-night .review-option.option-wrong,
+.theme-spidey-night .review-option.option-wrong,
+[data-theme="cozy-night"] .review-option.option-wrong,
+[data-theme="spidey-night"] .review-option.option-wrong,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .review-option.option-wrong {
+  background: rgba(244, 63, 94, 0.22) !important;
+  border-color: #fb7185 !important;
+  color: #ffe4e6 !important;
+}
+
+.theme-cozy-night .review-option.option-wrong .review-opt-text,
+.theme-spidey-night .review-option.option-wrong .review-opt-text,
+[data-theme="cozy-night"] .review-option.option-wrong .review-opt-text,
+[data-theme="spidey-night"] .review-option.option-wrong .review-opt-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .review-option.option-wrong .review-opt-text {
+  color: #fecdd3 !important;
+}
+
+.theme-cozy-night .tower-action-banner.banner-correct,
+.theme-spidey-night .tower-action-banner.banner-correct,
+[data-theme="cozy-night"] .tower-action-banner.banner-correct,
+[data-theme="spidey-night"] .tower-action-banner.banner-correct,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .tower-action-banner.banner-correct {
+  background: rgba(6, 78, 59, 0.8) !important;
+  border-color: #34d399 !important;
+  color: #d1fae5 !important;
+}
+
+.theme-cozy-night .tower-action-banner.banner-wrong,
+.theme-cozy-night .tower-action-banner.banner-timeout,
+.theme-spidey-night .tower-action-banner.banner-wrong,
+.theme-spidey-night .tower-action-banner.banner-timeout,
+[data-theme="cozy-night"] .tower-action-banner.banner-wrong,
+[data-theme="cozy-night"] .tower-action-banner.banner-timeout,
+[data-theme="spidey-night"] .tower-action-banner.banner-wrong,
+[data-theme="spidey-night"] .tower-action-banner.banner-timeout,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .tower-action-banner.banner-wrong,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .tower-action-banner.banner-timeout {
+  background: rgba(136, 19, 55, 0.8) !important;
+  border-color: #fb7185 !important;
+  color: #ffe4e6 !important;
+}
+
 /* --- Mode 4: Mock Exam FE — Cozy Night --- */
 .mock-exam-container.theme-cozy-night,
 .mock-exam-container.theme-spidey-night,

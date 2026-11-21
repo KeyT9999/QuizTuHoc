@@ -252,7 +252,19 @@ export default function MistakeBusterView({
       {/* Header Info */}
       <div className="game-hud-bar game-hud-mistakes">
         <div className="mistake-counter-pill">
-          <span>{theme === 'fantasy-academy' ? '🔮 THANH TẨY:' : theme === 'hon-viet' ? '📜 PHỤC THÙ:' : theme === 'lotus-zen-sanctuary' ? '🪷 QUÁN CHIẾU:' : '🛡️ SỬA LỖI:'}</span>
+          <span>
+            {theme === 'fantasy-academy'
+              ? '🔮 THANH TẨY:'
+              : theme === 'hon-viet'
+              ? '📜 PHỤC THÙ:'
+              : theme === 'lotus-zen-sanctuary'
+              ? '🪷 QUÁN CHIẾU:'
+              : theme === 'spidey-night'
+              ? '🕷️ QUÉT LỖI:'
+              : theme === 'shin-kasukabe'
+              ? '🫑 DIỆT ỚT CHUÔNG:'
+              : '🛡️ SỬA LỖI:'}
+          </span>
           <strong> Câu {currentIndex + 1} / {mistakeQuestions.length} câu sai</strong>
         </div>
 
