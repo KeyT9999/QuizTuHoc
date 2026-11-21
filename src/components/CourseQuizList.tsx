@@ -149,6 +149,48 @@ function getCardColorTheme(index: number, activeTheme: string) {
     return FANTASY_ACCENTS[index % FANTASY_ACCENTS.length];
   }
 
+  if (activeTheme === 'shin-kasukabe') {
+    const SHIN_ACCENTS = [
+      {
+        accent: '#ef4444',
+        borderLeft: '#ef4444',
+        badgeBg: 'rgba(239, 68, 68, 0.14)',
+        badgeText: '#dc2626',
+        badgeBorder: 'rgba(239, 68, 68, 0.36)',
+        btnBg: '#ef4444',
+        btnHover: '#dc2626',
+      },
+      {
+        accent: '#10b981',
+        borderLeft: '#10b981',
+        badgeBg: 'rgba(16, 185, 129, 0.14)',
+        badgeText: '#047857',
+        badgeBorder: 'rgba(16, 185, 129, 0.38)',
+        btnBg: '#10b981',
+        btnHover: '#059669',
+      },
+      {
+        accent: '#f59e0b',
+        borderLeft: '#f59e0b',
+        badgeBg: 'rgba(245, 158, 11, 0.16)',
+        badgeText: '#b45309',
+        badgeBorder: 'rgba(245, 158, 11, 0.42)',
+        btnBg: '#f59e0b',
+        btnHover: '#d97706',
+      },
+      {
+        accent: '#0ea5e9',
+        borderLeft: '#0ea5e9',
+        badgeBg: 'rgba(14, 165, 233, 0.15)',
+        badgeText: '#0369a1',
+        badgeBorder: 'rgba(14, 165, 233, 0.38)',
+        btnBg: '#0ea5e9',
+        btnHover: '#0284c7',
+      },
+    ];
+    return SHIN_ACCENTS[index % SHIN_ACCENTS.length];
+  }
+
   if (activeTheme === 'spidey-night') {
     const SPIDEY_ACCENTS = [
       {
@@ -280,6 +322,63 @@ function getCardColorTheme(index: number, activeTheme: string) {
 
 // Academic study illustration for hero right side
 function CourseHeroVisual({ theme }: { theme?: string }) {
+  if (theme === 'shin-kasukabe') {
+    return (
+      <div
+        className="course-hero-shin-visual"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 175,
+          height: 140,
+        }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 180 140" width="175" height="140" fill="none">
+          <defs>
+            <linearGradient id="shinHeroHex" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#34d399" />
+              <stop offset="100%" stopColor="#059669" />
+            </linearGradient>
+          </defs>
+          {/* Floating Pastel Clouds */}
+          <ellipse cx="42" cy="96" rx="28" ry="13" fill="rgba(255,255,255,0.75)" />
+          <ellipse cx="140" cy="42" rx="26" ry="12" fill="rgba(255,255,255,0.75)" />
+          {/* Playful Crayon Ring */}
+          <ellipse
+            cx="90"
+            cy="72"
+            rx="66"
+            ry="22"
+            transform="rotate(-14 90 72)"
+            stroke="#ef4444"
+            strokeWidth="3.2"
+            strokeDasharray="8 6"
+          />
+          {/* Iconic ChocoBi Hexagon Box Emblem */}
+          <polygon
+            points="90,22 130,44 130,96 90,118 50,96 50,44"
+            fill="url(#shinHeroHex)"
+            stroke="#fde047"
+            strokeWidth="4.5"
+            strokeLinejoin="round"
+          />
+          <polygon
+            points="90,42 98,60 117,61 102,73 107,91 90,81 73,91 78,73 63,61 82,60"
+            fill="#fde047"
+            stroke="#ef4444"
+            strokeWidth="2.8"
+            strokeLinejoin="round"
+          />
+          {/* Cute Sparkle Stars */}
+          <text x="26" y="42" fontSize="18" fill="#f59e0b">★</text>
+          <text x="144" y="106" fontSize="16" fill="#ef4444">✦</text>
+        </svg>
+      </div>
+    );
+  }
+
   if (theme === 'spidey-night') {
     return (
       <div
@@ -783,6 +882,8 @@ export default function CourseQuizList({
                   ? `🇻🇳 DI SẢN · MÔN ${course.code}`
                   : activeTheme === 'fantasy-academy'
                   ? `⚔️ BÍ TỊCH · PHÓ BẢN ${course.code}`
+                  : activeTheme === 'shin-kasukabe'
+                  ? `🖍️ KASUKABE · MÔN ${course.code}`
                   : activeTheme === 'spidey-night'
                   ? `🕷️ NIGHT-VERSE · MÔN ${course.code}`
                   : activeTheme === 'cozy-night'

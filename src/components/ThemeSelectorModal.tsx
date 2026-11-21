@@ -124,6 +124,48 @@ export default function ThemeSelectorModal({
         )}
 
         <div className="theme-grid">
+          {/* Option: Shin Kasukabe 4 Cảnh 3D & ChocoBi Pop */}
+          <div
+            className={`theme-card ${currentTheme === 'shin-kasukabe' ? 'is-active' : ''}`}
+            onClick={() => {
+              onSelectTheme('shin-kasukabe');
+              onClose();
+            }}
+          >
+            <div className="theme-card-preview shin-preview">
+              <div className="theme-preview-overlay">
+                <span className="theme-preview-badge shin">🖍️ Mới Nhất · Shin Kasukabe 3D</span>
+              </div>
+              <div className="theme-preview-mockup">
+                <div className="mockup-sidebar-left shin-sidebar"></div>
+                <div className="mockup-card-center shin-card">
+                  <div className="mockup-line-title shin-title"></div>
+                  <div className="mockup-line-option shin-option"></div>
+                  <div className="mockup-line-option shin-option active"></div>
+                </div>
+                <div className="mockup-sidebar-right shin-sidebar"></div>
+              </div>
+            </div>
+
+            <div className="theme-card-info">
+              <div className="theme-card-header">
+                <h4 className="theme-card-name">Shin Kasukabe (4 Cảnh 3D &amp; ChocoBi)</h4>
+                {currentTheme === 'shin-kasukabe' && (
+                  <span className="theme-active-tag">✓ Đang dùng</span>
+                )}
+              </div>
+              <p className="theme-card-desc">
+                4 bối cảnh 3D Parallax đổi tức thì (Phòng học, Bãi cỏ, Đồi cừu, Phố mưa Dark Lofi), hộp ChocoBi 3D, bé Shin đổi dáng sống động &amp; hiệu ứng Action Beam!
+              </p>
+              <div className="theme-card-tags">
+                <span className="theme-tag">4 Cảnh Thời Tiết</span>
+                <span className="theme-tag">ChocoBi 3D</span>
+                <span className="theme-tag">Action Beam</span>
+                <span className="theme-tag">2 Dáng Shin</span>
+              </div>
+            </div>
+          </div>
+
           {/* Option: Spidey Night-Verse */}
           <div
             className={`theme-card ${currentTheme === 'spidey-night' ? 'is-active' : ''}`}

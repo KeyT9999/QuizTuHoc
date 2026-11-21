@@ -2559,3 +2559,466 @@ body,
     gap: 8px !important;
   }
 }
+
+/* ==========================================================================
+   5. SHIN KASUKABE — 4 SCENES 3D PARALLAX & CHOCOBI POP (DAYLIGHT + RAIN DARK)
+   ========================================================================== */
+[data-theme="shin-kasukabe"] {
+  --theme-id: "shin-kasukabe";
+  --theme-bg-body: #eef6ff;
+  --theme-bg-body-img: linear-gradient(155deg, #e0f2fe 0%, #fef9c3 55%, #ffe4e6 100%);
+  --theme-bg-surface: rgba(255, 252, 245, 0.92);
+  --theme-bg-card: rgba(255, 253, 247, 0.9);
+  --theme-bg-card-hover: rgba(255, 255, 255, 0.97);
+  --theme-bg-header: rgba(255, 251, 235, 0.94);
+  --theme-bg-subtle: rgba(254, 243, 199, 0.52);
+  --theme-bg-input: rgba(255, 255, 255, 0.92);
+  --theme-border: rgba(245, 158, 11, 0.34);
+  --theme-border-hover: rgba(239, 68, 68, 0.62);
+  --theme-border-accent: #ef4444;
+  --theme-text-primary: #1e293b;
+  --theme-text-secondary: #334155;
+  --theme-text-muted: #475569;
+  --theme-text-sub: #64748b;
+  --theme-accent-primary: #ef4444;
+  --theme-accent-primary-hover: #dc2626;
+  --theme-accent-soft: rgba(254, 240, 138, 0.55);
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 3px 10px rgba(15, 23, 42, 0.08);
+  --theme-shadow-md: 0 10px 26px rgba(15, 23, 42, 0.12), 0 3px 0 rgba(245, 158, 11, 0.32);
+  --theme-shadow-lg: 0 16px 38px rgba(15, 23, 42, 0.16), 0 4px 0 rgba(16, 185, 129, 0.35);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* Automatic Dark Lofi Rainy Tokens when Rainy Kasukabe Scene is active */
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] {
+  --theme-bg-body: #0b1326;
+  --theme-bg-body-img: linear-gradient(160deg, #0b1326 0%, #162344 55%, #1d2848 100%);
+  --theme-bg-surface: rgba(15, 23, 42, 0.88);
+  --theme-bg-card: rgba(15, 23, 42, 0.84);
+  --theme-bg-card-hover: rgba(24, 36, 66, 0.94);
+  --theme-bg-header: rgba(11, 19, 38, 0.94);
+  --theme-bg-subtle: rgba(255, 255, 255, 0.08);
+  --theme-bg-input: rgba(15, 23, 42, 0.9);
+  --theme-border: rgba(147, 197, 253, 0.28);
+  --theme-border-hover: rgba(251, 191, 36, 0.65);
+  --theme-border-accent: #fbbf24;
+  --theme-text-primary: #f8fafc;
+  --theme-text-secondary: #e2e8f0;
+  --theme-text-muted: #cbd5e1;
+  --theme-text-sub: #94a3b8;
+  --theme-accent-primary: #f59e0b;
+  --theme-accent-primary-hover: #d97706;
+  --theme-accent-soft: rgba(251, 191, 36, 0.18);
+  --theme-shadow-md: 0 12px 28px rgba(2, 6, 23, 0.58), 0 3px 0 rgba(251, 191, 36, 0.3);
+}
+
+/* Global 4-Scene Kasukabe Wallpaper Layer */
+[data-theme="shin-kasukabe"] .app {
+  position: relative;
+}
+
+[data-theme="shin-kasukabe"] .app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(180deg, rgba(255, 253, 245, 0.56) 0%, rgba(255, 251, 235, 0.44) 52%, rgba(255, 253, 245, 0.62) 100%),
+    url('../assets/shin_bg_room.jpg');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  transition: background-image 0.5s ease;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="meadow"] .app::before {
+  background-image:
+    linear-gradient(180deg, rgba(240, 253, 244, 0.52) 0%, rgba(254, 252, 232, 0.38) 52%, rgba(240, 253, 244, 0.58) 100%),
+    url('../assets/shin_bg_meadow.jpg');
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="hills"] .app::before {
+  background-image:
+    linear-gradient(180deg, rgba(255, 251, 235, 0.48) 0%, rgba(254, 243, 199, 0.36) 52%, rgba(255, 251, 235, 0.56) 100%),
+    url('../assets/shin_bg_hills.jpg');
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .app::before {
+  background-image:
+    linear-gradient(180deg, rgba(9, 15, 34, 0.68) 0%, rgba(11, 20, 44, 0.54) 52%, rgba(7, 11, 26, 0.78) 100%),
+    url('../assets/shin_bg_rain.jpg');
+}
+
+[data-theme="shin-kasukabe"] .app > main,
+[data-theme="shin-kasukabe"] .app > header {
+  position: relative;
+  z-index: 2;
+}
+
+/* Navbar & Header — Bright Kasukabe Pastel vs Dark Rainy */
+[data-theme="shin-kasukabe"] .home-navbar,
+[data-theme="shin-kasukabe"] .course-nav {
+  background: linear-gradient(90deg, rgba(255, 253, 245, 0.94) 0%, rgba(254, 249, 195, 0.9) 55%, rgba(224, 242, 254, 0.94) 100%) !important;
+  border-bottom: 2px solid rgba(245, 158, 11, 0.38) !important;
+  backdrop-filter: blur(14px);
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-navbar,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-nav {
+  background: linear-gradient(90deg, rgba(11, 19, 38, 0.94) 0%, rgba(22, 35, 68, 0.92) 55%, rgba(15, 23, 42, 0.95) 100%) !important;
+  border-bottom: 1.5px solid rgba(251, 191, 36, 0.38) !important;
+}
+
+[data-theme="shin-kasukabe"] .home-brand-name,
+[data-theme="shin-kasukabe"] .course-brand-name {
+  color: #1e293b !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-brand-name,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-brand-name {
+  color: #fef08a !important;
+}
+
+[data-theme="shin-kasukabe"] .home-nav-item,
+[data-theme="shin-kasukabe"] .course-nav-item,
+[data-theme="shin-kasukabe"] .course-back-btn {
+  color: #334155 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-nav-item,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-nav-item,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-back-btn {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-back-btn {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.35) !important;
+}
+
+[data-theme="shin-kasukabe"] .home-nav-item.active,
+[data-theme="shin-kasukabe"] .course-nav-item.active {
+  background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Global Toggle Pills contrast on Bright Shin Scenes */
+[data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-mouse-fx-toggle-btn.is-on {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+[data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-mouse-fx-toggle-btn.is-off {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+[data-theme="shin-kasukabe"]:not([data-shin-scene="rain"]) .global-translate-toggle-btn.is-on {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #0369a1;
+}
+
+/* Hero & Course Headers */
+[data-theme="shin-kasukabe"] .home-hero-eyebrow,
+[data-theme="shin-kasukabe"] .course-hero-badge {
+  background: linear-gradient(135deg, rgba(254, 240, 138, 0.92), rgba(254, 205, 211, 0.88)) !important;
+  border: 1.5px solid rgba(239, 68, 68, 0.42) !important;
+  color: #b91c1c !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-hero-eyebrow,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-hero-badge {
+  background: rgba(30, 41, 59, 0.88) !important;
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  color: #fde047 !important;
+}
+
+[data-theme="shin-kasukabe"] .home-hero-title,
+[data-theme="shin-kasukabe"] .course-hero-title {
+  color: #0f172a !important;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-hero-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-hero-title {
+  color: #f8fafc !important;
+  text-shadow: 0 4px 20px rgba(2, 6, 23, 0.75);
+}
+
+[data-theme="shin-kasukabe"] .home-gradient-text {
+  background: linear-gradient(110deg, #ef4444 0%, #f59e0b 52%, #10b981 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-gradient-text {
+  background: linear-gradient(110deg, #fde047 0%, #fb923c 50%, #34d399 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="shin-kasukabe"] .home-hero-desc,
+[data-theme="shin-kasukabe"] .course-hero-desc {
+  color: #1e293b !important;
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-hero-desc,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-hero-desc {
+  color: #cbd5e1 !important;
+  text-shadow: 0 2px 12px rgba(2, 6, 23, 0.7);
+}
+
+[data-theme="shin-kasukabe"] .home-hero-primary-btn {
+  background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.32), 0 3px 0 #10b981 !important;
+}
+
+/* Subject & Exam Cards (Daylight Crayon Sticker vs Dark Rainy Lofi Glass) */
+[data-theme="shin-kasukabe"] .subject-card,
+[data-theme="shin-kasukabe"] .exam-card,
+[data-theme="shin-kasukabe"] .course-hero,
+[data-theme="shin-kasukabe"] .course-stat-card {
+  background: rgba(255, 253, 247, 0.9) !important;
+  backdrop-filter: blur(14px);
+  border: 2px solid rgba(245, 158, 11, 0.34) !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1), 0 3px 0 rgba(245, 158, 11, 0.3) !important;
+}
+
+[data-theme="shin-kasukabe"] .subject-card:hover,
+[data-theme="shin-kasukabe"] .exam-card:hover {
+  border-color: #ef4444 !important;
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.18), 0 4px 0 #10b981 !important;
+}
+
+[data-theme="shin-kasukabe"] .subject-cta-btn,
+[data-theme="shin-kasukabe"] .exam-cta-btn {
+  background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.28) !important;
+}
+
+[data-theme="shin-kasukabe"] .course-hero-icon-box {
+  background: linear-gradient(135deg, #fef08a, #fed7aa) !important;
+  border: 2px solid rgba(239, 68, 68, 0.45) !important;
+  color: #dc2626 !important;
+}
+
+[data-theme="shin-kasukabe"] .exam-add-card {
+  background: rgba(255, 251, 235, 0.9) !important;
+  border: 2px dashed rgba(239, 68, 68, 0.45) !important;
+}
+
+/* Automatic Dark Rainy Overrides for Cards, Badges & Add Card (ZERO white-bleed!) */
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-hero,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-stat-card {
+  background: rgba(15, 23, 42, 0.86) !important;
+  border: 1.5px solid rgba(147, 197, 253, 0.3) !important;
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.56), 0 3px 0 rgba(251, 191, 36, 0.28) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-code-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-stat-number {
+  color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-name-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-desc-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-subject-sub,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-desc,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-stat-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-hero-icon-box {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.22), rgba(96, 165, 250, 0.24)) !important;
+  border-color: rgba(251, 191, 36, 0.52) !important;
+  color: #fde047 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-add-card {
+  background: rgba(15, 23, 42, 0.86) !important;
+  border: 2px dashed rgba(251, 191, 36, 0.45) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-add-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-add-desc {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-add-icon-box {
+  background: rgba(251, 191, 36, 0.18) !important;
+  border: 1px solid rgba(251, 191, 36, 0.48) !important;
+  color: #fde047 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-add-btn {
+  background: rgba(251, 191, 36, 0.18) !important;
+  border: 1px solid rgba(251, 191, 36, 0.48) !important;
+  color: #fef08a !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-major-tag,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-custom-tag {
+  background: rgba(15, 23, 42, 0.88) !important;
+  border: 1px solid color-mix(in srgb, var(--tag-color, #fbbf24) 55%, transparent) !important;
+  color: color-mix(in srgb, var(--tag-color, #fbbf24) 45%, #ffffff) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-search-input,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-search-input,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-filter-chip,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-sort-btn,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .exam-sort-btn {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border-color: rgba(147, 197, 253, 0.3) !important;
+  color: #f8fafc !important;
+}
+
+/* Shared Quiz Header & Mode Bar — Shin Kasukabe Daylight & Rainy Dark */
+[data-theme="shin-kasukabe"] .quiz-v2-header,
+.theme-shin-kasukabe .quiz-v2-header {
+  background: linear-gradient(90deg, rgba(255, 253, 245, 0.96) 0%, rgba(254, 243, 199, 0.95) 55%, rgba(224, 242, 254, 0.96) 100%) !important;
+  border-bottom: 2px solid rgba(245, 158, 11, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-v2-title,
+.theme-shin-kasukabe .quiz-v2-title,
+[data-theme="shin-kasukabe"] .quiz-progress-ring-text,
+[data-theme="shin-kasukabe"] .quiz-progress-ring-label strong {
+  color: #1e293b !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-v2-part-selector,
+.theme-shin-kasukabe .quiz-v2-part-selector {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(245, 158, 11, 0.45) !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-v2-part-nav-btn,
+[data-theme="shin-kasukabe"] .quiz-v2-part-select-btn {
+  color: #1e293b !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-v2-header-btn,
+[data-theme="shin-kasukabe"] .quiz-v2-header-icon-btn {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(245, 158, 11, 0.42) !important;
+  color: #1e293b !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-mode-hub,
+.theme-shin-kasukabe .quiz-mode-hub {
+  background: rgba(255, 253, 245, 0.94) !important;
+  border-bottom: 1.5px solid rgba(245, 158, 11, 0.32) !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-mode-pill-btn {
+  color: #334155 !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border: 1px solid rgba(203, 213, 225, 0.75) !important;
+}
+
+[data-theme="shin-kasukabe"] .quiz-mode-pill-btn.is-active {
+  background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  font-weight: 800 !important;
+}
+
+/* Shared Quiz Header & Mode Bar — Dark Rainy Scene Override */
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-header {
+  background: linear-gradient(90deg, rgba(11, 19, 38, 0.96) 0%, rgba(22, 35, 68, 0.96) 55%, rgba(15, 23, 42, 0.96) 100%) !important;
+  border-bottom: 1.5px solid rgba(251, 191, 36, 0.36) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-progress-ring-text,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-progress-ring-label strong,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-part-nav-btn,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-part-select-btn {
+  color: #fef3c7 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-part-selector,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-header-btn,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-v2-header-icon-btn {
+  background: rgba(30, 41, 59, 0.85) !important;
+  border-color: rgba(147, 197, 253, 0.35) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-mode-hub {
+  background: rgba(11, 19, 38, 0.95) !important;
+  border-bottom: 1.5px solid rgba(147, 197, 253, 0.25) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-mode-pill-btn {
+  color: #cbd5e1 !important;
+  background: rgba(30, 41, 59, 0.72) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .quiz-mode-pill-btn.is-active {
+  background: linear-gradient(135deg, #f59e0b, #ef4444) !important;
+  color: #ffffff !important;
+  border-color: #fde047 !important;
+}
+
+/* AskAI Banner — Đội Phòng Vệ Kasukabe AI */
+[data-theme="shin-kasukabe"] .ask-ai-wrapper,
+[data-theme="shin-kasukabe"] .ask-ai-toolbar {
+  background: linear-gradient(135deg, rgba(254, 249, 195, 0.85), rgba(209, 250, 229, 0.8)) !important;
+  border-color: rgba(16, 185, 129, 0.45) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-wrapper,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .ask-ai-toolbar {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.92), rgba(20, 48, 56, 0.88)) !important;
+  border-color: rgba(251, 191, 36, 0.4) !important;
+  color: #f8fafc !important;
+}
+
+/* 3D Diorama Backlight Aura */
+.theme-diorama-aura.aura-shin-kasukabe {
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.34) 0%, rgba(16, 185, 129, 0.24) 48%, transparent 74%);
+}

@@ -811,6 +811,176 @@ export default function ThemeHero3DDiorama({
     }
 
     // =========================================================================
+    // SCENE 4c: SHIN KASUKABE (3D HEXAGONAL CHOCOBI BOX + GOLDEN STARS & RINGS)
+    // =========================================================================
+    else if (theme === 'shin-kasukabe') {
+      camera.position.set(0, 0.45, 5.3);
+      camera.lookAt(0, 0, 0);
+      keyLight.color.setHex(0xfff7ed);
+      rimLight.color.setHex(0xfde047);
+      cursorLight.color.setHex(0x10b981);
+
+      const shinGroup = new THREE.Group();
+      rootGroup.add(shinGroup);
+
+      // Iconic Hexagonal ChocoBi Snack Box (Emerald Mint Green)
+      const boxGeo = track(new THREE.CylinderGeometry(0.86, 0.86, 1.42, 6));
+      const boxMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0x10b981,
+          emissive: 0x065f46,
+          emissiveIntensity: 0.32,
+          roughness: 0.18,
+          metalness: 0.15,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.1,
+        })
+      );
+      const chocoBox = new THREE.Mesh(boxGeo, boxMat);
+      shinGroup.add(chocoBox);
+
+      // Top & Bottom Pink-Gold Crayon Lid Rims
+      const rimGeo = track(new THREE.CylinderGeometry(0.91, 0.91, 0.12, 6));
+      const pinkRimMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xf43f5e,
+          emissive: 0x9f1239,
+          emissiveIntensity: 0.25,
+          roughness: 0.2,
+          clearcoat: 0.9,
+        })
+      );
+      const topRim = new THREE.Mesh(rimGeo, pinkRimMat);
+      topRim.position.y = 0.68;
+      shinGroup.add(topRim);
+
+      const botRim = new THREE.Mesh(rimGeo, pinkRimMat);
+      botRim.position.y = -0.68;
+      shinGroup.add(botRim);
+
+      // 3D Extruded 5-Point Golden ChocoBi Star Helper
+      const starShape = new THREE.Shape();
+      const outerR = 0.34;
+      const innerR = 0.15;
+      for (let i = 0; i < 10; i++) {
+        const rad = i % 2 === 0 ? outerR : innerR;
+        const a = (i / 10) * Math.PI * 2 - Math.PI / 2;
+        const sx = Math.cos(a) * rad;
+        const sy = Math.sin(a) * rad;
+        if (i === 0) starShape.moveTo(sx, sy);
+        else starShape.lineTo(sx, sy);
+      }
+      starShape.closePath();
+
+      const starGeo = track(
+        new THREE.ExtrudeGeometry(starShape, {
+          depth: 0.12,
+          bevelEnabled: true,
+          bevelThickness: 0.04,
+          bevelSize: 0.03,
+          bevelSegments: 2,
+        })
+      );
+      starGeo.center();
+
+      const starGoldMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xfacc15,
+          emissive: 0xd97706,
+          emissiveIntensity: 0.42,
+          roughness: 0.15,
+          metalness: 0.35,
+          clearcoat: 1.0,
+        })
+      );
+
+      // Front & Back Star Emblems on the ChocoBi Box
+      const frontStar = new THREE.Mesh(starGeo, starGoldMat);
+      frontStar.position.set(0, 0, 0.82);
+      shinGroup.add(frontStar);
+
+      const backStar = new THREE.Mesh(starGeo, starGoldMat);
+      backStar.position.set(0, 0, -0.82);
+      backStar.rotation.y = Math.PI;
+      shinGroup.add(backStar);
+
+      // Shin Red & Sunshine Yellow Playful Orbiting Crayon Rings
+      const redOrbitGeo = track(new THREE.TorusGeometry(1.56, 0.042, 20, 96));
+      const redOrbitMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xef4444,
+          emissive: 0xb91c1c,
+          emissiveIntensity: 0.35,
+          roughness: 0.2,
+          clearcoat: 1.0,
+        })
+      );
+      const redOrbit = new THREE.Mesh(redOrbitGeo, redOrbitMat);
+      redOrbit.rotation.x = 1.18;
+      shinGroup.add(redOrbit);
+
+      const skyOrbitGeo = track(new THREE.TorusGeometry(1.74, 0.03, 20, 96));
+      const skyOrbitMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0x38bdf8,
+          emissive: 0x0284c7,
+          emissiveIntensity: 0.35,
+          roughness: 0.2,
+          clearcoat: 1.0,
+        })
+      );
+      const skyOrbit = new THREE.Mesh(skyOrbitGeo, skyOrbitMat);
+      skyOrbit.rotation.x = -1.05;
+      skyOrbit.rotation.y = 0.45;
+      shinGroup.add(skyOrbit);
+
+      // 6 Orbiting Mini 3D ChocoBi Star Biscuits
+      const miniStarGeo = track(
+        new THREE.ExtrudeGeometry(starShape, {
+          depth: 0.06,
+          bevelEnabled: true,
+          bevelThickness: 0.02,
+          bevelSize: 0.015,
+          bevelSegments: 1,
+        })
+      );
+      miniStarGeo.center();
+      miniStarGeo.scale(0.55, 0.55, 0.55);
+
+      const miniStars: Array<{ mesh: THREE.Mesh; angle: number; radius: number; yOffset: number }> = [];
+      for (let i = 0; i < 6; i++) {
+        const mesh = new THREE.Mesh(miniStarGeo, i % 2 === 0 ? starGoldMat : pinkRimMat);
+        const angle = (i / 6) * Math.PI * 2;
+        shinGroup.add(mesh);
+        miniStars.push({ mesh, angle, radius: 1.66 + (i % 2) * 0.22, yOffset: (i % 3 - 1) * 0.36 });
+      }
+
+      updaters.push((t) => {
+        chocoBox.rotation.y = t * 0.48;
+        topRim.rotation.y = t * 0.48;
+        botRim.rotation.y = t * 0.48;
+        frontStar.position.set(Math.sin(t * 0.48) * 0.82, 0, Math.cos(t * 0.48) * 0.82);
+        frontStar.rotation.y = t * 0.48;
+        backStar.position.set(-Math.sin(t * 0.48) * 0.82, 0, -Math.cos(t * 0.48) * 0.82);
+        backStar.rotation.y = t * 0.48 + Math.PI;
+        redOrbit.rotation.z = t * 0.42;
+        skyOrbit.rotation.z = -t * 0.35;
+        shinGroup.position.y = Math.sin(t * 1.9) * 0.1;
+
+        miniStars.forEach((s, idx) => {
+          const a = s.angle + t * 0.65;
+          s.mesh.position.set(
+            Math.cos(a) * s.radius,
+            s.yOffset + Math.sin(t * 2.4 + idx) * 0.22,
+            Math.sin(a) * s.radius
+          );
+          s.mesh.rotation.z = t * 1.6 + idx;
+          s.mesh.rotation.y = t * 1.2;
+        });
+      });
+    }
+
+    // =========================================================================
     // SCENE 4b: SPIDEY NIGHT-VERSE (NEW YORK SKYLINE + 3D WEB + SPIDER CORE)
     // =========================================================================
     else if (theme === 'spidey-night') {
@@ -1054,6 +1224,7 @@ export default function ThemeHero3DDiorama({
     // SHARED LUMINOUS PARTICLE FIELD (THEME-COLORED)
     // =========================================================================
     const paletteMap: Record<AppTheme, [string, string, number]> = {
+      'shin-kasukabe': ['#fde047', '#10b981', 0xfacc15],
       'spidey-night': ['#fb7185', '#38bdf8', 0xfbbf24],
       'lotus-zen-sanctuary': ['#fef08a', '#d97706', 0xfbbf24],
       'hon-viet': ['#fef08a', '#dc2626', 0xf59e0b],
@@ -1180,6 +1351,7 @@ export default function ThemeHero3DDiorama({
   };
 
   const hintLabel: Record<AppTheme, string> = {
+    'shin-kasukabe': '🍪 Di chuột xoay Hộp ChocoBi 3D · Chạm bắn mưa sao Kasukabe',
     'spidey-night': '🕷️ Di chuột xoay Lưới Tơ New York · Chạm bắn tơ Spider-Verse',
     'lotus-zen-sanctuary': '🪷 Di chuột xoay Liên Hoa · Chạm kích hoạt hào quang',
     'hon-viet': '🥁 Di chuột nghiêng Trống Đồng · Chạm tỏa hào quang Lạc Việt',

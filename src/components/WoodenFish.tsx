@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { playWoodFishSound, playTempleBellSound, playWebThwipSound, type WoodFishTone } from '../utils/soundEffects';
+import {
+  playWoodFishSound,
+  playTempleBellSound,
+  playWebThwipSound,
+  playShinBoingSound,
+  type WoodFishTone,
+} from '../utils/soundEffects';
 import { useTheme } from '../context/ThemeContext';
 import './WoodenFish.css';
 
@@ -9,6 +15,17 @@ interface FloatingItem {
   x: number;
   y: number;
 }
+
+const SHIN_CHOCOBI_BLESSINGS = [
+  'BOING! +1 Sao ChocoBi qua môn 🍪⭐',
+  '+1 Vía Siêu Nhân Hành Động ⚡',
+  'Bạch Tuyết sủa gâu gâu chúc điểm A+ 🐶',
+  'Tránh xa ớt chuông xanh, trúng đề tủ! 🫑✨',
+  '+1 Năng lượng Đội Phòng Vệ Kasukabe 🛡️',
+  'Mẹ Misae khen quá giỏi luôn~ 🏆',
+  'SUGOI! +1 Hộp bánh ChocoBi may mắn 🎁',
+  '+1 Tốc độ cày đề siêu cấp 5 tuổi 🚀',
+];
 
 const SPIDEY_BLESSINGS = [
   'THWIP! +1 Vía qua môn 🕷️',
@@ -54,6 +71,7 @@ export default function WoodenFish({
 }: WoodenFishProps) {
   const { theme } = useTheme();
   const isSpidey = theme === 'spidey-night';
+  const isShin = theme === 'shin-kasukabe';
 
   // Total Merit Count stored in localStorage
   const [merits, setMerits] = useState<number>(() => {
@@ -108,7 +126,10 @@ export default function WoodenFish({
   // Perform a single strike
   const strike = useCallback((coords?: { x: number; y: number }) => {
     // 1. Audio
-    if (isSpidey) {
+    if (isShin) {
+      playShinBoingSound(true);
+      window.dispatchEvent(new CustomEvent('theme-particle-burst'));
+    } else if (isSpidey) {
       playWebThwipSound(true);
       window.dispatchEvent(new CustomEvent('theme-particle-burst'));
     } else {
@@ -143,7 +164,10 @@ export default function WoodenFish({
     // 5. Floating blessing text
     let blessingText = customMantra;
     if (!blessingText) {
-      if (isSpidey) {
+      if (isShin) {
+        const randIdx = Math.floor(Math.random() * SHIN_CHOCOBI_BLESSINGS.length);
+        blessingText = SHIN_CHOCOBI_BLESSINGS[randIdx];
+      } else if (isSpidey) {
         const randIdx = Math.floor(Math.random() * SPIDEY_BLESSINGS.length);
         blessingText = SPIDEY_BLESSINGS[randIdx];
       } else if (selectedMantra === 'random') {
@@ -156,13 +180,19 @@ export default function WoodenFish({
 
     const newItem: FloatingItem = {
       id: Date.now() + Math.random(),
-      text: blessingText || (isSpidey ? 'THWIP! +1 Vía qua môn 🕷️' : '+1 Công đức 🪷'),
+      text:
+        blessingText ||
+        (isShin
+          ? 'BOING! +1 Sao ChocoBi 🍪⭐'
+          : isSpidey
+          ? 'THWIP! +1 Vía qua môn 🕷️'
+          : '+1 Công đức 🪷'),
       x: coords ? coords.x : 130 + (Math.random() - 0.5) * 50,
       y: coords ? coords.y : 80 + (Math.random() - 0.5) * 30,
     };
 
     setFloatingItems((prev) => [...prev.slice(-12), newItem]);
-  }, [tone, selectedMantra, customMantra, isSpidey]);
+  }, [tone, selectedMantra, customMantra, isSpidey, isShin]);
 
   // Clean up floating items
   useEffect(() => {
@@ -253,16 +283,54 @@ export default function WoodenFish({
         {/* Floating Bubble */}
         <button
           type="button"
-          className={`woodfish-float-bubble ${isSpidey ? 'is-spidey-webshooter' : ''} ${isBubblePressed ? 'is-pressed' : ''}`}
+          className={`woodfish-float-bubble ${isSpidey ? 'is-spidey-webshooter' : ''} ${isShin ? 'is-shin-chocobi' : ''} ${isBubblePressed ? 'is-pressed' : ''}`}
           onClick={handleBubbleClick}
           title={
-            isSpidey
+            isShin
+              ? 'Bấm để Bóc Hộp ChocoBi nhận sao may mắn · Nhấn icon góc để phóng to'
+              : isSpidey
               ? 'Bấm để Bắn Tơ THWIP! xả stress · Nhấn icon góc để phóng to'
               : 'Bấm để Gõ Mõ · Nhấn icon góc để phóng to'
           }
-          aria-label={isSpidey ? 'Bắn Tơ Spidey THWIP' : 'Gõ Mõ Cầu May'}
+          aria-label={isShin ? 'Bóc Hộp ChocoBi May Mắn' : isSpidey ? 'Bắn Tơ Spidey THWIP' : 'Gõ Mõ Cầu May'}
         >
-          {isSpidey ? (
+          {isShin ? (
+            /* Crisp Hexagonal ChocoBi Snack Box Emblem SVG */
+            <svg className="woodfish-bubble-svg shin-chocobi-svg" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="chocobi-hex-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#34d399" />
+                  <stop offset="55%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="#047857" />
+                </linearGradient>
+              </defs>
+              <polygon
+                points="50,8 88,28 88,72 50,92 12,72 12,28"
+                fill="url(#chocobi-hex-bg)"
+                stroke="#fde047"
+                strokeWidth="4.5"
+                strokeLinejoin="round"
+              />
+              <polygon
+                points="50,18 79,33 79,67 50,82 21,67 21,33"
+                fill="none"
+                stroke="rgba(255,255,255,0.4)"
+                strokeWidth="1.8"
+                strokeDasharray="4 3"
+              />
+              {/* Iconic Golden ChocoBi Star */}
+              <polygon
+                points="50,24 57,41 75,42 61,53 65,71 50,61 35,71 39,53 25,42 43,41"
+                fill="#fde047"
+                stroke="#ef4444"
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+              <circle cx="45" cy="48" r="2.2" fill="#1e293b" />
+              <circle cx="55" cy="48" r="2.2" fill="#1e293b" />
+              <path d="M 46 54 Q 50 58 54 54" stroke="#ef4444" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+            </svg>
+          ) : isSpidey ? (
             /* Crisp Spider-Man Mask / Web-Shooter Emblem SVG */
             <svg className="woodfish-bubble-svg spidey-shooter-svg" viewBox="0 0 100 100">
               <defs>
@@ -351,7 +419,13 @@ export default function WoodenFish({
               e.stopPropagation();
               handleOpen();
             }}
-            title={isSpidey ? 'Mở Bàn Bắn Tơ Xả Stress' : 'Mở Chánh Điện Gõ Mõ'}
+            title={
+              isShin
+                ? 'Mở Máy Bóc Hộp ChocoBi May Mắn'
+                : isSpidey
+                ? 'Mở Bàn Bắn Tơ Xả Stress'
+                : 'Mở Chánh Điện Gõ Mõ'
+            }
           >
             ⛶
           </span>
@@ -375,8 +449,16 @@ export default function WoodenFish({
             {/* Header */}
             <div className="woodfish-modal-header">
               <div className="woodfish-modal-title">
-                <span className="woodfish-modal-title-icon">{isSpidey ? '🕷️' : '🪷'}</span>
-                <span>{isSpidey ? 'Spidey Web-Shooter · Bắn Tơ Xả Stress' : 'Gõ Mõ Cầu May & Tịnh Tâm'}</span>
+                <span className="woodfish-modal-title-icon">
+                  {isShin ? '🍪' : isSpidey ? '🕷️' : '🪷'}
+                </span>
+                <span>
+                  {isShin
+                    ? 'Hộp ChocoBi May Mắn · Xin Vía Qua Môn'
+                    : isSpidey
+                    ? 'Spidey Web-Shooter · Bắn Tơ Xả Stress'
+                    : 'Gõ Mõ Cầu May & Tịnh Tâm'}
+                </span>
               </div>
               <button
                 type="button"
@@ -393,7 +475,11 @@ export default function WoodenFish({
               <div className="woodfish-merit-counter">
                 <span className="woodfish-merit-num">{merits.toLocaleString()}</span>
                 <span className="woodfish-merit-label">
-                  {isSpidey ? 'Phát bắn tơ THWIP!' : 'Công đức tích lũy'}
+                  {isShin
+                    ? 'Ngôi sao ChocoBi tích lũy'
+                    : isSpidey
+                    ? 'Phát bắn tơ THWIP!'
+                    : 'Công đức tích lũy'}
                 </span>
               </div>
 

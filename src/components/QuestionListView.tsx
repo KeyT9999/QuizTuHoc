@@ -87,6 +87,12 @@ export default function QuestionListView({
       title: 'Bí Thư Toàn Bộ Câu Hỏi',
       desc: 'Kho lưu trữ toàn bộ phong ấn câu hỏi học viện. Nhấn vào bất kỳ câu nào để bắt đầu giải mã phong ấn.',
     },
+    'shin-kasukabe': {
+      icon: '🖍️',
+      tag: 'SỔ TAY KASUKABE · KHO CÂU HỎI CHOCOBI',
+      title: 'Toàn Bộ Câu Hỏi Trong Sổ Tay',
+      desc: 'Tra cứu nhanh toàn bộ câu hỏi của bộ đề. Bấm vào bất kỳ câu nào để cùng bé Shin làm ngay lập tức!',
+    },
     'spidey-night': {
       icon: '🕷️',
       tag: 'SPIDEY NIGHT-VERSE · HỒ SƠ CÂU HỎI',

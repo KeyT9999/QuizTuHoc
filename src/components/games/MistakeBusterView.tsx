@@ -168,6 +168,11 @@ export default function MistakeBusterView({
         title: 'Phong Ấn Đã Được Thanh Tẩy!',
         desc: 'Tuyệt đỉnh pháp sư! Toàn bộ câu hỏi sai đã được thanh tẩy hoàn toàn khỏi Cổ Thư Viện.',
       },
+      'shin-kasukabe': {
+        icon: '🍪',
+        title: 'Đã Diệt Sạch Toàn Bộ Ớt Chuông Xanh!',
+        desc: 'Quá đỉnh luôn! Không còn câu hay sai nào trong bộ đề này nữa — thưởng ngay 1 hộp ChocoBi nha!',
+      },
       'spidey-night': {
         icon: '🕸️',
         title: 'Đã Quét Sạch Toàn Bộ Câu Sai!',

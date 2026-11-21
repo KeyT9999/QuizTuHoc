@@ -1,8 +1,10 @@
-export type AppTheme = 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
+export type AppTheme = 'shin-kasukabe' | 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
+export type ShinSceneId = 'room' | 'meadow' | 'hills' | 'rain';
 
 const THEME_STORAGE_KEY = 'keyt_selected_ui_theme';
 const MOUSE_EFFECTS_KEY = 'keyt_mouse_effects_enabled';
 const HOVER_TRANSLATE_KEY = 'keyt_hover_translate_enabled';
+const SHIN_SCENE_KEY = 'keyt_shin_scene_id';
 const FOCUS_MODE_KEY = 'keyt_focus_mode_enabled';
 const XP_STORAGE_KEY = 'keyt_user_total_xp';
 const STREAK_DAYS_KEY = 'keyt_study_streak_days';
@@ -14,6 +16,7 @@ export function getAppTheme(): AppTheme {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (
       saved === 'default' ||
+      saved === 'shin-kasukabe' ||
       saved === 'spidey-night' ||
       saved === 'cozy-night' ||
       saved === 'fantasy-academy' ||
@@ -71,6 +74,28 @@ export function setHoverTranslateEnabled(enabled: boolean): void {
   try {
     localStorage.setItem(HOVER_TRANSLATE_KEY, enabled ? 'true' : 'false');
     window.dispatchEvent(new CustomEvent('keyt-hover-translate-changed', { detail: enabled }));
+  } catch {
+    // ignore
+  }
+}
+
+// Shin Kasukabe Active Scene ('room' | 'meadow' | 'hills' | 'rain')
+export function getShinScene(): ShinSceneId {
+  try {
+    const saved = localStorage.getItem(SHIN_SCENE_KEY);
+    if (saved === 'room' || saved === 'meadow' || saved === 'hills' || saved === 'rain') {
+      return saved;
+    }
+  } catch {
+    // ignore
+  }
+  return 'room';
+}
+
+export function setShinScene(scene: ShinSceneId): void {
+  try {
+    localStorage.setItem(SHIN_SCENE_KEY, scene);
+    window.dispatchEvent(new CustomEvent('keyt-shin-scene-changed', { detail: scene }));
   } catch {
     // ignore
   }

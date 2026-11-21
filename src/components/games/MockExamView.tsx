@@ -397,6 +397,12 @@ export default function MockExamView({
         desc: 'Bước vào đại sảnh khảo hạch ma thuật bí truyền dưới áp lực thời gian thực tế. Giải mã trọn vẹn bộ đề thi để ghi danh vào bảng vàng huyền thoại.',
         startBtn: '⚡ BẮT ĐẦU KHẢO HẠCH MA PHÁP',
       },
+      'shin-kasukabe': {
+        tag: '🖍️ ĐỘI PHÒNG VỆ KASUKABE · MÔ PHỎNG PHÒNG THI',
+        title: 'THI THỬ FE · CÙNG BÉ SHIN',
+        desc: 'Thử sức thi thật cùng đồng hồ đếm ngược! Chọn nhanh – né sạch ớt chuông xanh, chấm điểm thang 10 và xem lại từng câu sai chi tiết.',
+        startBtn: '⚡ ACTION BEAM! BẮT ĐẦU THI THỬ',
+      },
       'spidey-night': {
         tag: '🕷️ SPIDEY NIGHT-VERSE · MÔ PHỎNG PHÒNG THI',
         title: 'THI THỬ FE · SPIDER-VERSE',
@@ -612,6 +618,7 @@ export default function MockExamView({
     const examBadges = {
       'hon-viet': '🏛️ KHẢO THÍ FE',
       'fantasy-academy': '⚡ KHẢO HẠCH FE',
+      'shin-kasukabe': '🖍️ SHIN FE',
       'spidey-night': '🕷️ SPIDEY FE',
       'cozy-night': '🌙 THI ĐÊM FE',
       'lotus-zen-sanctuary': '🪷 KHẢO THÍ FE',

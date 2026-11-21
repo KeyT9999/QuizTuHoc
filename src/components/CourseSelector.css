@@ -1963,3 +1963,101 @@
   }
 }
 
+/* Shin Kasukabe Hero 4-Scene Quick Switcher & Rainy Dark Cards */
+.shin-home-scene-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.shin-home-scene-label {
+  font-size: 12.5px;
+  font-weight: 850;
+  color: #334155;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .shin-home-scene-label {
+  background: rgba(15, 23, 42, 0.82);
+  color: #fde047;
+}
+
+.shin-home-scene-chip {
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(245, 158, 11, 0.42);
+  background: rgba(255, 253, 245, 0.88);
+  color: #1e293b;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.18s ease, border-color 0.18s ease;
+}
+
+.shin-home-scene-chip:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: #ef4444;
+}
+
+.shin-home-scene-chip.is-active {
+  background: linear-gradient(135deg, #ef4444, #f59e0b);
+  border-color: #fde047;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.32);
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .shin-home-scene-chip:not(.is-active) {
+  background: rgba(15, 23, 42, 0.82);
+  border-color: rgba(147, 197, 253, 0.35);
+  color: #e2e8f0;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-overview-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-major-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-kpi-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-panel-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-empty-progress-banner,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-hero-banner {
+  background: rgba(15, 23, 42, 0.86);
+  border-color: rgba(147, 197, 253, 0.28);
+  color: #f8fafc;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-overview-value,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-section-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-major-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-hero-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-kpi-value,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-panel-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-major-name,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-item-code,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-empty-progress-left h3 {
+  color: #f8fafc;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-overview-label,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-overview-sub,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-section-subtitle,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-major-meta,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-major-progress-row,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-hero-desc,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-kpi-label,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-kpi-sub,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-panel-subtitle,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-major-row-metrics,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-item-name,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-item-sub,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-empty-progress-left p {
+  color: #cbd5e1;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-major-row,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .stats-item-row {
+  background: rgba(30, 41, 59, 0.72);
+  border-color: rgba(148, 163, 184, 0.24);
+}
+

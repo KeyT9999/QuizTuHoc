@@ -80,6 +80,11 @@ export default function KnowledgeGroupPicker({
       title: 'Phân Nhánh Kỹ Năng Cổ Thư Viện',
       desc: 'Mỗi nhóm kiến thức là một nhánh kỹ năng ma thuật. Tích lũy tri thức để nâng cao pháp lực học thuật.',
     },
+    'shin-kasukabe': {
+      eyebrow: `🖍️ ${courseLabel} · BẢN ĐỒ ĐỘI PHÒNG VỆ KASUKABE`,
+      title: 'Chọn Nhóm Chuyên Đề Hôm Nay',
+      desc: 'Cùng Shin & Bạch Tuyết chinh phục từng nhóm kiến thức, gom đủ sao ChocoBi để qua môn cực mượt!',
+    },
     'spidey-night': {
       eyebrow: `🕷️ ${courseLabel} · BẢN ĐỒ TUẦN TRA SPIDER-VERSE`,
       title: 'Chọn Khu Vực Chuyên Đề Đêm Nay',

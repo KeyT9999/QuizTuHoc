@@ -108,6 +108,7 @@ import { clearQuizAttemptStorage } from './utils/quizSplit';
 import { useDailyShopeeRedirect } from './utils/dailyShopeeRedirect';
 import WoodenFish from './components/WoodenFish';
 import SpideyChibiMascot from './components/SpideyChibiMascot';
+import ShinMascot from './components/ShinMascot';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
 import './App.css';
@@ -259,7 +260,7 @@ function updateKnowledgeGroupUrlState(
 
 export default function App() {
   const { route, navigate } = useAppRouter();
-  const { theme, mouseEffectsEnabled } = useTheme();
+  const { theme, mouseEffectsEnabled, shinScene } = useTheme();
   useDailyShopeeRedirect();
 
   const [courses, setCourses] = useState<Course[]>(() => [
@@ -752,6 +753,12 @@ export default function App() {
       {theme === 'spidey-night' &&
         !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <SpideyChibiMascot variant="floating" mouseEffectsEnabled={mouseEffectsEnabled} />
+        )}
+
+      {/* Floating Sticker Bé Shin (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Shin) */}
+      {theme === 'shin-kasukabe' &&
+        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+          <ShinMascot variant="floating" scene={shinScene} mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 
       {/* Widget Gõ Mõ Tịnh Tâm / Nút Bắn Tơ Spidey */}

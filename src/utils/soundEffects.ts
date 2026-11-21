@@ -341,3 +341,81 @@ export function playWebThwipSound(force = false): void {
     // ignore
   }
 }
+
+/**
+ * Playful Crayon Shin-chan cartoon spring "BOING-POP!" & ChocoBi chime
+ */
+export function playShinBoingSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+
+    // 1. Rubbery cartoon spring boing
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(260, now);
+    osc.frequency.exponentialRampToValueAtTime(640, now + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(420, now + 0.15);
+    osc.frequency.exponentialRampToValueAtTime(780, now + 0.22);
+
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    // 2. Tiny sparkle star pop
+    const starOsc = ctx.createOscillator();
+    const starGain = ctx.createGain();
+    starOsc.type = 'triangle';
+    starOsc.frequency.setValueAtTime(1046.5, now + 0.06);
+    starOsc.frequency.exponentialRampToValueAtTime(1567.98, now + 0.18);
+    starGain.gain.setValueAtTime(0.11, now + 0.06);
+    starGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    starOsc.connect(starGain);
+    starGain.connect(ctx.destination);
+
+    osc.start(now);
+    starOsc.start(now + 0.06);
+    osc.stop(now + 0.25);
+    starOsc.stop(now + 0.23);
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Heroic Action Kamen "ACTION BEAM!" anime shimmer arpeggio
+ */
+export function playActionBeamSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    const notes = [523.25, 659.25, 783.99, 1046.5, 1318.51]; // C5 E5 G5 C6 E6
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = i === notes.length - 1 ? 'triangle' : 'sine';
+      const t = now + i * 0.055;
+      osc.frequency.setValueAtTime(freq, t);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.03, t + 0.22);
+
+      gain.gain.setValueAtTime(0.13, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.26);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.27);
+    });
+  } catch {
+    // ignore
+  }
+}

@@ -6,9 +6,12 @@ import {
   setMouseEffectsEnabled as saveMouseEffectsEnabled,
   getHoverTranslateEnabled,
   setHoverTranslateEnabled as saveHoverTranslateEnabled,
+  getShinScene,
+  setShinScene as saveShinScene,
   type AppTheme,
+  type ShinSceneId,
 } from '../utils/studyStats';
-export type { AppTheme };
+export type { AppTheme, ShinSceneId };
 import ThemeSelectorModal from '../components/ThemeSelectorModal';
 
 interface ThemeContextValue {
@@ -20,6 +23,8 @@ interface ThemeContextValue {
   hoverTranslateEnabled: boolean;
   setHoverTranslateEnabled: (enabled: boolean) => void;
   toggleHoverTranslate: () => void;
+  shinScene: ShinSceneId;
+  setShinScene: (scene: ShinSceneId) => void;
   isThemeModalOpen: boolean;
   openThemeModal: () => void;
   closeThemeModal: () => void;
@@ -36,6 +41,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [hoverTranslateEnabled, setHoverTranslateState] = useState<boolean>(() =>
     getHoverTranslateEnabled()
   );
+  const [shinScene, setShinSceneState] = useState<ShinSceneId>(() => getShinScene());
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
   // Synchronize document attribute with active theme
@@ -43,6 +49,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
+
+  // Synchronize document attribute with active Shin Kasukabe scene
+  useEffect(() => {
+    document.documentElement.setAttribute('data-shin-scene', shinScene);
+    document.body.setAttribute('data-shin-scene', shinScene);
+  }, [shinScene]);
 
   // Synchronize document attribute with mouse effects setting
   useEffect(() => {
@@ -81,6 +93,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
+    const handleShinSceneChange = (e: Event) => {
+      const customEvent = e as CustomEvent<ShinSceneId>;
+      if (customEvent.detail) {
+        setShinSceneState(customEvent.detail);
+      }
+    };
+
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'keyt_selected_ui_theme') {
         const nextTheme = getAppTheme();
@@ -89,17 +108,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setMouseEffectsState(getMouseEffectsEnabled());
       } else if (e.key === 'keyt_hover_translate_enabled') {
         setHoverTranslateState(getHoverTranslateEnabled());
+      } else if (e.key === 'keyt_shin_scene_id') {
+        setShinSceneState(getShinScene());
       }
     };
 
     window.addEventListener('keyt-theme-changed', handleThemeChange);
     window.addEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
     window.addEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
+    window.addEventListener('keyt-shin-scene-changed', handleShinSceneChange);
     window.addEventListener('storage', handleStorage);
     return () => {
       window.removeEventListener('keyt-theme-changed', handleThemeChange);
       window.removeEventListener('keyt-mouse-effects-changed', handleMouseEffectsChange);
       window.removeEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
+      window.removeEventListener('keyt-shin-scene-changed', handleShinSceneChange);
       window.removeEventListener('storage', handleStorage);
     };
   }, [theme]);
@@ -135,6 +158,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const changeShinScene = useCallback((nextScene: ShinSceneId) => {
+    setShinSceneState(nextScene);
+    saveShinScene(nextScene);
+  }, []);
+
   const openThemeModal = useCallback(() => setIsThemeModalOpen(true), []);
   const closeThemeModal = useCallback(() => setIsThemeModalOpen(false), []);
   const toggleThemeModal = useCallback(() => setIsThemeModalOpen((prev) => !prev), []);
@@ -150,6 +178,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         hoverTranslateEnabled,
         setHoverTranslateEnabled: changeHoverTranslate,
         toggleHoverTranslate,
+        shinScene,
+        setShinScene: changeShinScene,
         isThemeModalOpen,
         openThemeModal,
         closeThemeModal,

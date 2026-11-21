@@ -27,6 +27,13 @@ const AI_PERSONAS: Record<
     subtitle: 'Giải mã cổ ngữ · Chỉ dẫn đáp án & ma pháp',
     cta: 'Triệu hồi AI',
   },
+  'shin-kasukabe': {
+    icon: '🖍️',
+    btnIcon: '🛡️',
+    title: 'Đội Phòng Vệ Kasukabe AI',
+    subtitle: 'Shin – Kazama – Bạch Tuyết giải thích đáp án siêu dễ hiểu',
+    cta: 'Hỏi Biệt Đội',
+  },
   'spidey-night': {
     icon: '🕷️',
     btnIcon: '⚡',

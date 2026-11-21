@@ -45,9 +45,17 @@ const THEME_CONFIG: Record<
     glyphs?: string[];
     isRain?: boolean;
     isWebBurst?: boolean;
+    isStarBurst?: boolean;
     moteCount: number;
   }
 > = {
+  'shin-kasukabe': {
+    colors: ['#facc15', '#ef4444', '#10b981', '#38bdf8', '#fb7185'],
+    glowColor: 'rgba(250, 204, 21, 0.16)',
+    glyphs: ['★', '✦', '•'],
+    isStarBurst: true,
+    moteCount: 38,
+  },
   'spidey-night': {
     colors: ['#fb7185', '#38bdf8', '#fbbf24', '#60a5fa', '#e11d48'],
     glowColor: 'rgba(225, 29, 72, 0.14)',
@@ -175,8 +183,8 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
     };
 
     const handlePointerDown = (e: PointerEvent) => {
-      spawnBurst(e.clientX, e.clientY, 14);
-      if (cfg.isWebBurst && webBursts.length < 6) {
+      spawnBurst(e.clientX, e.clientY, cfg.isStarBurst ? 18 : 14);
+      if ((cfg.isWebBurst || cfg.isStarBurst) && webBursts.length < 6) {
         webBursts.push({
           x: e.clientX,
           y: e.clientY,
@@ -190,7 +198,7 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
 
     const handleCustomBurst = () => {
       spawnBurst(smoothMouseX, smoothMouseY, 26);
-      if (cfg.isWebBurst && webBursts.length < 6) {
+      if ((cfg.isWebBurst || cfg.isStarBurst) && webBursts.length < 6) {
         webBursts.push({
           x: smoothMouseX,
           y: smoothMouseY,
@@ -326,7 +334,7 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
         ctx.restore();
       }
 
-      // Draw expanding mini spider-webs on click for spidey-night theme
+      // Draw expanding mini spider-webs (spidey-night) or ChocoBi stars (shin-kasukabe) on click
       for (let i = webBursts.length - 1; i >= 0; i--) {
         const wb = webBursts[i];
         wb.life += 1;
@@ -337,38 +345,60 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
         const progress = wb.life / wb.maxLife;
         const ease = 1 - Math.pow(1 - progress, 3);
         const radius = wb.maxRadius * ease;
-        const alpha = (1 - progress) * 0.65;
-        const spokes = 8;
+        const alpha = (1 - progress) * 0.72;
 
         ctx.save();
         ctx.translate(wb.x, wb.y);
-        ctx.rotate(wb.rotation);
+        ctx.rotate(wb.rotation + (cfg.isStarBurst ? progress * 0.9 : 0));
         ctx.globalAlpha = alpha;
-        ctx.strokeStyle = 'rgba(248, 250, 252, 0.9)';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 8;
-        ctx.lineWidth = 1.1;
 
-        for (let s = 0; s < spokes; s++) {
-          const a = (s / spokes) * Math.PI * 2;
+        if (cfg.isStarBurst) {
+          // Expanding golden ChocoBi 5-point star outline
+          const spikes = 5;
+          const innerR = radius * 0.45;
+          ctx.strokeStyle = '#facc15';
+          ctx.shadowColor = '#10b981';
+          ctx.shadowBlur = 10;
+          ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(Math.cos(a) * radius, Math.sin(a) * radius);
-          ctx.stroke();
-        }
-
-        [0.45, 0.82].forEach((ringScale) => {
-          const r = radius * ringScale;
-          ctx.beginPath();
-          for (let s = 0; s <= spokes; s++) {
-            const a = (s / spokes) * Math.PI * 2;
+          for (let s = 0; s < spikes * 2; s++) {
+            const r = s % 2 === 0 ? radius : innerR;
+            const a = (s / (spikes * 2)) * Math.PI * 2 - Math.PI / 2;
             const px = Math.cos(a) * r;
             const py = Math.sin(a) * r;
             if (s === 0) ctx.moveTo(px, py);
             else ctx.lineTo(px, py);
           }
+          ctx.closePath();
           ctx.stroke();
-        });
+        } else {
+          const spokes = 8;
+          ctx.strokeStyle = 'rgba(248, 250, 252, 0.9)';
+          ctx.shadowColor = '#38bdf8';
+          ctx.shadowBlur = 8;
+          ctx.lineWidth = 1.1;
+
+          for (let s = 0; s < spokes; s++) {
+            const a = (s / spokes) * Math.PI * 2;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(Math.cos(a) * radius, Math.sin(a) * radius);
+            ctx.stroke();
+          }
+
+          [0.45, 0.82].forEach((ringScale) => {
+            const r = radius * ringScale;
+            ctx.beginPath();
+            for (let s = 0; s <= spokes; s++) {
+              const a = (s / spokes) * Math.PI * 2;
+              const px = Math.cos(a) * r;
+              const py = Math.sin(a) * r;
+              if (s === 0) ctx.moveTo(px, py);
+              else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+          });
+        }
         ctx.restore();
       }
     };

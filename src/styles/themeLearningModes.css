@@ -3268,3 +3268,40 @@
     height: 240px;
   }
 }
+
+/* ==========================================================================
+   SHIN KASUKABE — LEARNING MODES & MINIGAMES (DAYLIGHT + RAIN DARK)
+   ========================================================================== */
+[data-theme="shin-kasukabe"] .theme-qlist-hero,
+[data-theme="shin-kasukabe"] .theme-qlist-card,
+[data-theme="shin-kasukabe"] .knowledge-group-card {
+  background: rgba(255, 253, 247, 0.92);
+  border: 2px solid rgba(245, 158, 11, 0.36);
+  backdrop-filter: blur(14px);
+}
+
+[data-theme="shin-kasukabe"] .theme-qlist-tab.is-active {
+  background: linear-gradient(135deg, #ef4444, #f59e0b);
+  border-color: #ef4444;
+  color: #ffffff;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-hero,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .knowledge-group-card,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-search-input,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-tab {
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(147, 197, 253, 0.32);
+  color: #f8fafc;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-title,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-stat-item .stat-value {
+  color: #f8fafc;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-desc,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .theme-qlist-stat-item .stat-label {
+  color: #cbd5e1;
+}

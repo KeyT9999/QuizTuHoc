@@ -88,6 +88,16 @@ function getCourseTheme(course: Course, activeTheme = 'default'): SubjectTheme {
     };
   }
 
+  if (activeTheme === 'shin-kasukabe') {
+    return {
+      primary: '#ef4444',
+      soft: 'rgba(254, 240, 138, 0.45)',
+      border: 'rgba(245, 158, 11, 0.48)',
+      hoverShadow: 'rgba(239, 68, 68, 0.24)',
+      icon,
+    };
+  }
+
   if (activeTheme === 'spidey-night') {
     return {
       primary: '#f43f5e',
@@ -318,6 +328,13 @@ function getHomeHeroDetails(theme: string) {
         badgeIcon: '📜',
         badgeTitle: 'Học Viện Ma Pháp',
       };
+    case 'shin-kasukabe':
+      return {
+        eyebrow: '🖍️ SHIN KASUKABE · 4 CẢNH 3D & CHOCOBI STUDY HUB',
+        titlePre: 'Hôm nay cùng Shin ',
+        titleHighlight: 'cày qua môn nào nào?',
+        desc: 'Đội Phòng Vệ Kasukabe sẵn sàng! Chọn môn học, đổi giữa 4 khung cảnh 3D và gom sao ChocoBi để qua môn cực mượt.',
+      };
     case 'spidey-night':
       return {
         eyebrow: '🕷️ SPIDEY NIGHT-VERSE · NEW YORK STUDY HUB',
@@ -367,6 +384,8 @@ export default function CourseSelector({
     toggleMouseEffects,
     hoverTranslateEnabled,
     toggleHoverTranslate,
+    shinScene,
+    setShinScene,
   } = useTheme();
   const heroDetails = getHomeHeroDetails(theme);
   const [activeTab, setActiveTab] = useState<HomeNavTab>(activeNavTab);
@@ -1064,6 +1083,30 @@ export default function CourseSelector({
                   <span>📊 Xem Thống kê học tập</span>
                 </button>
               </div>
+
+              {theme === 'shin-kasukabe' && (
+                <div className="shin-home-scene-bar" role="group" aria-label="Chọn cảnh Kasukabe">
+                  <span className="shin-home-scene-label">🎬 Đổi cảnh 3D:</span>
+                  {(
+                    [
+                      { id: 'room', label: '📚 Phòng học' },
+                      { id: 'meadow', label: '🌿 Bãi cỏ' },
+                      { id: 'hills', label: '☁️ Đồi cừu' },
+                      { id: 'rain', label: '🌧️ Phố mưa (Dark)' },
+                    ] as const
+                  ).map((sc) => (
+                    <button
+                      key={sc.id}
+                      type="button"
+                      className={`shin-home-scene-chip ${shinScene === sc.id ? 'is-active' : ''}`}
+                      onClick={() => setShinScene(sc.id)}
+                      aria-pressed={shinScene === sc.id}
+                    >
+                      {sc.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="home-hero-right">
