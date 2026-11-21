@@ -155,8 +155,8 @@ const BASE_COURSES: Course[] = [
     id: 'prm393',
     code: 'PRM393',
     name: 'Lập trình di động (Mobile Programming)',
-    description: 'Bao gồm 3 bộ đề thi Final/Retake các kỳ SU26 và SP26 (tổng 150 câu trắc nghiệm chuẩn có đáp án về Flutter, Dart, Widgets, State Management BLoC, REST API, JWT & Firebase).',
-    badge: '3 bộ đề',
+    description: 'Bao gồm 6 bộ đề thi Final/Retake/Block 5 các kỳ SU26 và SP26 từ FUSTATION & FuExam (tổng 298 câu trắc nghiệm chuẩn có đáp án về Flutter, Dart, Widgets, State Management BLoC, REST API, JWT & Firebase).',
+    badge: '6 bộ đề',
   },
   {
     id: 'ite302c',

@@ -84,7 +84,10 @@ import {
   SAMPLE_QUIZ_BRA301_SP26_FE_264891,
 } from './sampleQuizBRA301Exams';
 import {
+  SAMPLE_QUIZ_PRM393_SU26_B5_FE,
+  SAMPLE_QUIZ_PRM393_SU26_RE_395814,
   SAMPLE_QUIZ_PRM393_SU26_FE_887674,
+  SAMPLE_QUIZ_PRM393_SP26_B5_FE,
   SAMPLE_QUIZ_PRM393_SP26_RE_749532,
   SAMPLE_QUIZ_PRM393_SP26_FE_604728,
 } from './sampleQuizPRM393';
@@ -870,6 +873,24 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     rawText: SAMPLE_QUIZ_BRA301_SP26_FE_264891,
   },
   {
+    id: 'prm393_su26_b5_fe',
+    courseId: 'prm393',
+    title: 'PRM393_SU26_B5_FE',
+    description: 'Đề thi Final Exam Block 5 PRM393 kỳ SU26 (FuExam · 28/08/2026) gồm 50 câu hỏi về Flutter SDK, Widgets, CustomScrollView/Slivers, BLoC/Cubit, SharedPreferences/Hive, Animation và Testing.',
+    category: 'Môn PRM393',
+    badge: 'Final B5 SU26 - 50 câu',
+    rawText: SAMPLE_QUIZ_PRM393_SU26_B5_FE,
+  },
+  {
+    id: 'prm393_su26_re_395814',
+    courseId: 'prm393',
+    title: 'PRM393_SU26_RE_395814',
+    description: 'Đề thi Retake PRM393 kỳ SU26 (FuExam · 06/08/2026) gồm 50 câu hỏi về Dart OOP/Null Safety, MaterialApp/Column/GridView, Navigator, Provider/BLoC, REST API và SQLite.',
+    category: 'Môn PRM393',
+    badge: 'Retake SU26 - 50 câu',
+    rawText: SAMPLE_QUIZ_PRM393_SU26_RE_395814,
+  },
+  {
     id: 'prm393_su26_fe_887674',
     courseId: 'prm393',
     title: 'PRM393_SU26_FE_887674',
@@ -877,6 +898,15 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn PRM393',
     badge: 'Final Exam SU26 - 50 câu',
     rawText: SAMPLE_QUIZ_PRM393_SU26_FE_887674,
+  },
+  {
+    id: 'prm393_sp26_b5_fe',
+    courseId: 'prm393',
+    title: 'PRM393_SP26_B5_FE',
+    description: 'Đề thi Final Exam Block 5 PRM393 kỳ SP26 (FuExam · 09/05/2026) gồm 48 câu hỏi về Widget Tree, BuildContext, BLoC/Stream/Cubit, Hive/SharedPreferences, Token Auth, Testing và Git.',
+    category: 'Môn PRM393',
+    badge: 'Final B5 SP26 - 48 câu',
+    rawText: SAMPLE_QUIZ_PRM393_SP26_B5_FE,
   },
   {
     id: 'prm393_sp26_re_749532',
