@@ -4,13 +4,23 @@ import { playWebThwipSound } from '../utils/soundEffects';
 import './SpideyNightTheme.css';
 
 export type SpideyMood = 'idle' | 'correct' | 'wrong' | 'streak';
+export type SpideySuitMode = 'classic' | 'symbiote';
 
 interface SpideyChibiMascotProps {
   variant?: 'sidebar' | 'floating';
   mood?: SpideyMood;
+  suitMode?: SpideySuitMode;
   combo?: number;
   mouseEffectsEnabled?: boolean;
+  onTriggerSwing?: () => void;
 }
+
+const SYMBIOTE_QUOTES = [
+  'WE ARE... PASSING THIS EXAM! 🖤',
+  'Symbiote Stealth Mode — cày đêm cực êm mắt 🕷️',
+  'Bóng tối giúp tập trung gấp đôi, quét sạch đề thôi!',
+  'Tơ bạc Symbiote đã khóa mục tiêu A+! ⚡',
+];
 
 const IDLE_QUOTES = [
   'With great GPA comes great responsibility! 🕷️',
@@ -43,8 +53,10 @@ const WRONG_QUOTES = [
 export default function SpideyChibiMascot({
   variant = 'sidebar',
   mood = 'idle',
+  suitMode = 'classic',
   combo = 0,
   mouseEffectsEnabled = true,
+  onTriggerSwing,
 }: SpideyChibiMascotProps) {
   const [isDropped, setIsDropped] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
@@ -89,12 +101,26 @@ export default function SpideyChibiMascot({
 
   const handleChibiClick = useCallback(() => {
     playWebThwipSound(false);
-    setThwipCount((prev) => prev + 1);
+    setThwipCount((prev) => {
+      const next = prev + 1;
+      // Every 3 clicks on sidebar Chibi triggers an Easter-egg overhead web swing!
+      if (variant === 'sidebar' && next % 3 === 0 && onTriggerSwing) {
+        onTriggerSwing();
+      }
+      return next;
+    });
     setIsDropped(true);
     if (dropTimerRef.current) clearTimeout(dropTimerRef.current);
     dropTimerRef.current = window.setTimeout(() => setIsDropped(false), 620);
 
-    const pool = mood === 'wrong' ? WRONG_QUOTES : mood === 'streak' ? STREAK_QUOTES : IDLE_QUOTES;
+    const pool =
+      suitMode === 'symbiote'
+        ? SYMBIOTE_QUOTES
+        : mood === 'wrong'
+        ? WRONG_QUOTES
+        : mood === 'streak'
+        ? STREAK_QUOTES
+        : IDLE_QUOTES;
     const nextQuote = pool[Math.floor(Math.random() * pool.length)];
     setQuote(nextQuote);
     setShowBubble(true);
@@ -103,7 +129,7 @@ export default function SpideyChibiMascot({
       if (bubbleTimerRef.current) clearTimeout(bubbleTimerRef.current);
       bubbleTimerRef.current = window.setTimeout(() => setShowBubble(false), 4200);
     }
-  }, [mood, variant]);
+  }, [mood, suitMode, variant, onTriggerSwing]);
 
   const handleToggleCollapse = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -135,7 +161,7 @@ export default function SpideyChibiMascot({
 
   return (
     <div
-      className={`spidey-chibi-root is-${variant} mood-${mood} ${
+      className={`spidey-chibi-root is-${variant} mood-${mood} suit-${suitMode} ${
         isDropped ? 'is-dropped' : ''
       } ${mouseEffectsEnabled ? 'fx-on' : 'fx-off'}`}
     >

@@ -280,6 +280,53 @@ function getCardColorTheme(index: number, activeTheme: string) {
 
 // Academic study illustration for hero right side
 function CourseHeroVisual({ theme }: { theme?: string }) {
+  if (theme === 'spidey-night') {
+    return (
+      <div
+        className="course-hero-spidey-visual"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '300px',
+          height: '200px',
+          position: 'relative',
+        }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 260 190" width="250" height="184" fill="none">
+          <defs>
+            <radialGradient id="spideyCourseHalo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#e11d48" stopOpacity="0.4" />
+              <stop offset="55%" stopColor="#2563eb" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#060918" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="spideyCourseRing" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#f43f5e" />
+              <stop offset="55%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#fbbf24" />
+            </linearGradient>
+          </defs>
+          <circle cx="130" cy="95" r="84" fill="url(#spideyCourseHalo)" />
+          {/* Spider Web Mandala */}
+          <g stroke="rgba(248,250,252,0.28)" strokeWidth="1.2">
+            <line x1="130" y1="16" x2="130" y2="174" />
+            <line x1="51" y1="95" x2="209" y2="95" />
+            <line x1="74" y1="39" x2="186" y2="151" />
+            <line x1="186" y1="39" x2="74" y2="151" />
+            <circle cx="130" cy="95" r="28" />
+            <circle cx="130" cy="95" r="52" />
+            <circle cx="130" cy="95" r="74" strokeDasharray="6 5" stroke="url(#spideyCourseRing)" strokeWidth="2" />
+          </g>
+          {/* Central Stylized Spidey Mask Badge */}
+          <ellipse cx="130" cy="95" rx="30" ry="34" fill="#e11d48" stroke="#060918" strokeWidth="4" />
+          <path d="M107 84 Q119 86 126 101 Q114 104 108 93 Z" fill="#ffffff" stroke="#060918" strokeWidth="3" strokeLinejoin="round" />
+          <path d="M153 84 Q141 86 134 101 Q146 104 152 93 Z" fill="#ffffff" stroke="#060918" strokeWidth="3" strokeLinejoin="round" />
+        </svg>
+      </div>
+    );
+  }
+
   if (theme === 'lotus-zen-sanctuary') {
     return (
       <div className="course-hero-lotus-visual" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '320px', height: '220px', position: 'relative' }}>

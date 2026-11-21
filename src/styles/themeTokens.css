@@ -329,6 +329,85 @@
   box-shadow: 0 6px 20px rgba(225, 29, 72, 0.48), -3px 3px 0 rgba(56, 189, 248, 0.5) !important;
 }
 
+/* Fix white-bleed cards & bright white badges in Course Detail & Library for Spidey Night-Verse */
+[data-theme="spidey-night"] .course-hero-icon-box {
+  background: linear-gradient(145deg, rgba(225, 29, 72, 0.24), rgba(37, 99, 235, 0.24)) !important;
+  border: 1.5px solid rgba(244, 63, 94, 0.52) !important;
+  color: #fda4af !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), -2px 2px 0 rgba(56, 189, 248, 0.45) !important;
+}
+
+[data-theme="spidey-night"] .exam-add-card {
+  background: linear-gradient(160deg, rgba(14, 21, 46, 0.84), rgba(9, 13, 30, 0.9)) !important;
+  border: 2px dashed rgba(244, 63, 94, 0.42) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="spidey-night"] .exam-add-card:hover {
+  background: linear-gradient(160deg, rgba(22, 30, 64, 0.94), rgba(14, 19, 44, 0.96)) !important;
+  border-color: rgba(56, 189, 248, 0.72) !important;
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.6),
+    -3px 0 0 rgba(225, 29, 72, 0.5),
+    3px 0 0 rgba(56, 189, 248, 0.45) !important;
+}
+
+[data-theme="spidey-night"] .exam-add-icon-box {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.28), rgba(37, 99, 235, 0.26)) !important;
+  border: 1px solid rgba(244, 63, 94, 0.5) !important;
+  color: #fecdd3 !important;
+}
+
+[data-theme="spidey-night"] .exam-add-badge {
+  color: #38bdf8 !important;
+}
+
+[data-theme="spidey-night"] .exam-add-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="spidey-night"] .exam-add-desc {
+  color: #94a3b8 !important;
+}
+
+[data-theme="spidey-night"] .exam-add-btn {
+  background: rgba(225, 29, 72, 0.18) !important;
+  border: 1px solid rgba(244, 63, 94, 0.48) !important;
+  color: #fecdd3 !important;
+}
+
+[data-theme="spidey-night"] .exam-add-card:hover .exam-add-btn {
+  background: linear-gradient(135deg, #e11d48, #2563eb) !important;
+  border-color: rgba(56, 189, 248, 0.6) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="spidey-night"] .subject-major-tag {
+  background: rgba(15, 23, 42, 0.86) !important;
+  border: 1px solid color-mix(in srgb, var(--tag-color, #38bdf8) 55%, transparent) !important;
+  color: color-mix(in srgb, var(--tag-color, #38bdf8) 45%, #ffffff) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="spidey-night"] .subject-custom-tag {
+  background: rgba(30, 41, 59, 0.86) !important;
+  border: 1px solid rgba(244, 63, 94, 0.4) !important;
+  color: #fecdd3 !important;
+}
+
+/* Symbiote Black Suit global override when active inside Spidey theme */
+[data-theme="spidey-night"][data-spidey-suit="symbiote"] {
+  --theme-bg-body: #03040a;
+  --theme-border: rgba(203, 213, 225, 0.24);
+  --theme-border-hover: rgba(167, 139, 250, 0.6);
+  --theme-accent-primary: #cbd5e1;
+}
+
+[data-theme="spidey-night"][data-spidey-suit="symbiote"] .app::before {
+  filter: saturate(0.18) brightness(0.65) contrast(1.18);
+  opacity: 0.36;
+}
+
 /* --------------------------------------------------------------------------
    4. HỒN VIỆT — VIETNAM HERITAGE (Đỏ Son, Vàng Kim, Trống Đồng, Hoa Sen)
    -------------------------------------------------------------------------- */
