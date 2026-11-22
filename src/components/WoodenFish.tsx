@@ -5,9 +5,10 @@ import {
   playWebThwipSound,
   playShinBoingSound,
   playCashRegisterSound,
+  playDoraemonBellSound,
   type WoodFishTone,
 } from '../utils/soundEffects';
-import { addUserNetWorth } from '../utils/studyStats';
+import { addUserNetWorth, addUserDorayaki } from '../utils/studyStats';
 import { useTheme } from '../context/ThemeContext';
 import './WoodenFish.css';
 
@@ -17,6 +18,17 @@ interface FloatingItem {
   x: number;
   y: number;
 }
+
+const DORAEMON_BLESSINGS = [
+  'KENG KENG! +1 Bánh Rán Dorayaki 🥞🔔',
+  'Tèn tén ten! +1 Bánh Mì Ghi Nhớ 🍞✨',
+  'Chong Chóng Tre bay thẳng GPA 4.0 🚁💙',
+  'Cánh Cửa Thần Kỳ mở lối trúng tủ 🚪🌸',
+  '+1 Vía thông minh chuẩn Dekisugi ⭐',
+  'Đèn Pin Thu Nhỏ mọi áp lực thi cử 🔦✨',
+  '+1 Năng lượng Túi Thần Kỳ 4D 🎒💙',
+  'Pass FE cực mượt cùng Doraemon! 🏆',
+];
 
 const MONEY_BLESSINGS = [
   'KA-CHING! +$1,000 USD nạp két 💵',
@@ -86,6 +98,7 @@ export default function WoodenFish({
   const isSpidey = theme === 'spidey-night';
   const isShin = theme === 'shin-kasukabe';
   const isMoney = theme === 'billionaire-vault';
+  const isDoraemon = theme === 'doraemon-gadget';
 
   // Total Merit Count stored in localStorage
   const [merits, setMerits] = useState<number>(() => {
@@ -140,7 +153,11 @@ export default function WoodenFish({
   // Perform a single strike
   const strike = useCallback((coords?: { x: number; y: number }) => {
     // 1. Audio
-    if (isMoney) {
+    if (isDoraemon) {
+      playDoraemonBellSound(true);
+      addUserDorayaki(1);
+      window.dispatchEvent(new CustomEvent('theme-particle-burst'));
+    } else if (isMoney) {
       playCashRegisterSound(true);
       addUserNetWorth(1000);
       window.dispatchEvent(new CustomEvent('money-networth-updated'));
@@ -183,7 +200,10 @@ export default function WoodenFish({
     // 5. Floating blessing text
     let blessingText = customMantra;
     if (!blessingText) {
-      if (isMoney) {
+      if (isDoraemon) {
+        const randIdx = Math.floor(Math.random() * DORAEMON_BLESSINGS.length);
+        blessingText = DORAEMON_BLESSINGS[randIdx];
+      } else if (isMoney) {
         const randIdx = Math.floor(Math.random() * MONEY_BLESSINGS.length);
         blessingText = MONEY_BLESSINGS[randIdx];
       } else if (isShin) {
@@ -204,7 +224,9 @@ export default function WoodenFish({
       id: Date.now() + Math.random(),
       text:
         blessingText ||
-        (isMoney
+        (isDoraemon
+          ? 'KENG KENG! +1 Bánh Rán Dorayaki 🥞🔔'
+          : isMoney
           ? 'KA-CHING! +$1,000 USD 💵'
           : isShin
           ? 'BOING! +1 Sao ChocoBi 🍪⭐'
@@ -216,7 +238,7 @@ export default function WoodenFish({
     };
 
     setFloatingItems((prev) => [...prev.slice(-12), newItem]);
-  }, [tone, selectedMantra, customMantra, isSpidey, isShin, isMoney]);
+  }, [tone, selectedMantra, customMantra, isSpidey, isShin, isMoney, isDoraemon]);
 
   // Clean up floating items
   useEffect(() => {
@@ -307,10 +329,12 @@ export default function WoodenFish({
         {/* Floating Bubble */}
         <button
           type="button"
-          className={`woodfish-float-bubble ${isMoney ? 'is-money-counter' : ''} ${isSpidey ? 'is-spidey-webshooter' : ''} ${isShin ? 'is-shin-chocobi' : ''} ${isBubblePressed ? 'is-pressed' : ''}`}
+          className={`woodfish-float-bubble ${isDoraemon ? 'is-doraemon-bell' : ''} ${isMoney ? 'is-money-counter' : ''} ${isSpidey ? 'is-spidey-webshooter' : ''} ${isShin ? 'is-shin-chocobi' : ''} ${isBubblePressed ? 'is-pressed' : ''}`}
           onClick={handleBubbleClick}
           title={
-            isMoney
+            isDoraemon
+              ? 'Bấm để Lắc Chuông Vàng Doraemon (+1 Bánh Rán Dorayaki) · Nhấn icon góc để phóng to'
+              : isMoney
               ? 'Bấm để Đếm Tiền USD (+$1,000 vào két) · Nhấn icon góc để phóng to'
               : isShin
               ? 'Bấm để Bóc Hộp ChocoBi nhận sao may mắn · Nhấn icon góc để phóng to'
@@ -318,9 +342,32 @@ export default function WoodenFish({
               ? 'Bấm để Bắn Tơ THWIP! xả stress · Nhấn icon góc để phóng to'
               : 'Bấm để Gõ Mõ · Nhấn icon góc để phóng to'
           }
-          aria-label={isMoney ? 'Máy Đếm Tiền USD' : isShin ? 'Bóc Hộp ChocoBi May Mắn' : isSpidey ? 'Bắn Tơ Spidey THWIP' : 'Gõ Mõ Cầu May'}
+          aria-label={isDoraemon ? 'Chuông Vàng Doraemon' : isMoney ? 'Máy Đếm Tiền USD' : isShin ? 'Bóc Hộp ChocoBi May Mắn' : isSpidey ? 'Bắn Tơ Spidey THWIP' : 'Gõ Mõ Cầu May'}
         >
-          {isMoney ? (
+          {isDoraemon ? (
+            /* Crisp Iconic Doraemon Golden Bell & Red Collar SVG */
+            <svg className="woodfish-bubble-svg doraemon-bell-svg" viewBox="0 0 100 100">
+              <defs>
+                <radialGradient id="dora-bell-gold" cx="35%" cy="30%" r="68%">
+                  <stop offset="0%" stopColor="#fef9c3" />
+                  <stop offset="45%" stopColor="#facc15" />
+                  <stop offset="100%" stopColor="#ca8a04" />
+                </radialGradient>
+              </defs>
+              {/* Red collar band at top */}
+              <path d="M 16 26 Q 50 14 84 26 L 80 38 Q 50 28 20 38 Z" fill="#ef4444" stroke="#7f1d1d" strokeWidth="2.5" />
+              {/* Golden Bell body */}
+              <circle cx="50" cy="58" r="31" fill="url(#dora-bell-gold)" stroke="#854d0e" strokeWidth="3.5" />
+              {/* Horizontal raised double rim */}
+              <path d="M 20 51 Q 50 45 80 51" stroke="#854d0e" strokeWidth="2.8" fill="none" />
+              <path d="M 19 57 Q 50 51 81 57" stroke="#854d0e" strokeWidth="2.5" fill="none" />
+              {/* Classic Bell hole & vertical slit */}
+              <circle cx="50" cy="69" r="5.5" fill="#1e293b" />
+              <line x1="50" y1="74" x2="50" y2="87" stroke="#1e293b" strokeWidth="3.5" strokeLinecap="round" />
+              {/* Glossy highlight */}
+              <ellipse cx="38" cy="41" rx="7" ry="4" transform="rotate(-25 38 41)" fill="#ffffff" opacity="0.65" />
+            </svg>
+          ) : isMoney ? (
             /* Crisp 24K Gold & Emerald $100 USD Vault Crest SVG */
             <svg className="woodfish-bubble-svg money-counter-svg" viewBox="0 0 100 100">
               <defs>
@@ -475,7 +522,9 @@ export default function WoodenFish({
               handleOpen();
             }}
             title={
-              isMoney
+              isDoraemon
+                ? 'Mở Chuông Vàng Doraemon · Xin Vía Qua Môn'
+                : isMoney
                 ? 'Mở Máy Đếm Tiền USD · Xin Vía Tỷ Phú'
                 : isShin
                 ? 'Mở Máy Bóc Hộp ChocoBi May Mắn'
@@ -507,10 +556,12 @@ export default function WoodenFish({
             <div className="woodfish-modal-header">
               <div className="woodfish-modal-title">
                 <span className="woodfish-modal-title-icon">
-                  {isMoney ? '💵' : isShin ? '🍪' : isSpidey ? '🕷️' : '🪷'}
+                  {isDoraemon ? '🔔' : isMoney ? '💵' : isShin ? '🍪' : isSpidey ? '🕷️' : '🪷'}
                 </span>
                 <span>
-                  {isMoney
+                  {isDoraemon
+                    ? 'Chuông Vàng Doraemon · Xin Vía Qua Môn'
+                    : isMoney
                     ? 'Máy Đếm Tiền USD · Xin Vía Tỷ Phú'
                     : isShin
                     ? 'Hộp ChocoBi May Mắn · Xin Vía Qua Môn'
@@ -534,7 +585,9 @@ export default function WoodenFish({
               <div className="woodfish-merit-counter">
                 <span className="woodfish-merit-num">{merits.toLocaleString()}</span>
                 <span className="woodfish-merit-label">
-                  {isMoney
+                  {isDoraemon
+                    ? 'Lượt rung chuông (+1 Bánh Rán Dorayaki/lượt)'
+                    : isMoney
                     ? 'Lượt đếm tiền USD (+$1,000/lượt)'
                     : isShin
                     ? 'Ngôi sao ChocoBi tích lũy'

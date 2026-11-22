@@ -289,8 +289,8 @@ function createSmoothLotusPetalGeometry(width: number, length: number, cupDepth:
   for (let i = 0; i < pos.count; i++) {
     const x = pos.getX(i);
     const y = pos.getY(i);
-    // v goes from 0 at base to 1 at tip; clamp effective v to [0.05, 0.94] so tip/base triangles never collapse to 0 width
-    const v = (y + length / 2) / length;
+    // v goes from 0 at base to 1 at tip; clamp strictly to [0, 1] so Math.pow never receives negative float epsilon (-1e-16 -> NaN)
+    const v = Math.max(0, Math.min(1, (y + length / 2) / length));
     const vEff = 0.05 + v * 0.89;
     const u = x / (width / 2); // -1 to 1
 
@@ -908,6 +908,197 @@ export default function ThemeHero3DDiorama({
     }
 
     // =========================================================================
+    // SCENE 4e: DORAEMON GADGET (3D GOLDEN BELL + SPINNING TAKE-COPTER + DORAYAKI)
+    // =========================================================================
+    else if (theme === 'doraemon-gadget') {
+      camera.position.set(0, 0.42, 5.25);
+      camera.lookAt(0, 0.08, 0);
+      keyLight.color.setHex(0xfffbeb);
+      rimLight.color.setHex(0x38bdf8);
+      cursorLight.color.setHex(0xfacc15);
+
+      const doraGroup = new THREE.Group();
+      rootGroup.add(doraGroup);
+
+      // Central 3D Golden Collar Bell (Chuông Vàng Thần Kỳ)
+      const bellMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xfacc15,
+          emissive: 0xb45309,
+          emissiveIntensity: 0.34,
+          metalness: 0.86,
+          roughness: 0.16,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.08,
+        })
+      );
+      const bellBody = new THREE.Mesh(track(new THREE.SphereGeometry(0.76, 48, 48)), bellMat);
+      bellBody.position.y = -0.14;
+      doraGroup.add(bellBody);
+
+      // Raised Golden Equator Rim around the Bell
+      const bellRim = new THREE.Mesh(
+        track(new THREE.TorusGeometry(0.765, 0.055, 18, 64)),
+        bellMat
+      );
+      bellRim.rotation.x = Math.PI / 2;
+      bellRim.position.y = -0.12;
+      doraGroup.add(bellRim);
+
+      // Iconic Bell Front Hole & Slit
+      const slitMat = track(
+        new THREE.MeshStandardMaterial({
+          color: 0x1e293b,
+          roughness: 0.5,
+          metalness: 0.2,
+        })
+      );
+      const bellDot = new THREE.Mesh(track(new THREE.SphereGeometry(0.11, 20, 20)), slitMat);
+      bellDot.position.set(0, -0.34, 0.72);
+      bellDot.scale.set(1, 1, 0.35);
+      doraGroup.add(bellDot);
+
+      const bellSlit = new THREE.Mesh(track(new THREE.BoxGeometry(0.055, 0.28, 0.08)), slitMat);
+      bellSlit.position.set(0, -0.5, 0.65);
+      bellSlit.rotation.x = 0.45;
+      doraGroup.add(bellSlit);
+
+      // Signature Doraemon Red Collar Ring crowning the Bell
+      const collarMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xef4444,
+          emissive: 0x991b1b,
+          emissiveIntensity: 0.36,
+          roughness: 0.22,
+          clearcoat: 1.0,
+        })
+      );
+      const collarRing = new THREE.Mesh(
+        track(new THREE.TorusGeometry(0.86, 0.085, 20, 64)),
+        collarMat
+      );
+      collarRing.rotation.x = Math.PI / 2;
+      collarRing.position.y = 0.46;
+      doraGroup.add(collarRing);
+
+      // Spinning 3D Take-copter (Chong Chóng Tre) hovering above the Bell
+      const copterGroup = new THREE.Group();
+      copterGroup.position.y = 1.05;
+      doraGroup.add(copterGroup);
+
+      const copterCap = new THREE.Mesh(
+        track(new THREE.SphereGeometry(0.24, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2)),
+        bellMat
+      );
+      copterGroup.add(copterCap);
+
+      const copterShaft = new THREE.Mesh(
+        track(new THREE.CylinderGeometry(0.038, 0.038, 0.34, 16)),
+        bellMat
+      );
+      copterShaft.position.y = 0.28;
+      copterGroup.add(copterShaft);
+
+      const propellerBlade = new THREE.Mesh(
+        track(new THREE.BoxGeometry(1.18, 0.032, 0.13)),
+        bellMat
+      );
+      propellerBlade.position.y = 0.46;
+      copterGroup.add(propellerBlade);
+
+      // Sky-Blue 4D Pocket Orbit Ring & Pastel-Pink Anywhere Door Orbit Ring
+      const skyOrbitMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0x0096e6,
+          emissive: 0x0284c7,
+          emissiveIntensity: 0.52,
+          roughness: 0.18,
+          metalness: 0.35,
+          clearcoat: 1.0,
+        })
+      );
+      const skyOrbit = new THREE.Mesh(
+        track(new THREE.TorusGeometry(1.66, 0.032, 20, 108)),
+        skyOrbitMat
+      );
+      skyOrbit.rotation.x = 1.22;
+      doraGroup.add(skyOrbit);
+
+      const pinkOrbitMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xf472b6,
+          emissive: 0xdb2777,
+          emissiveIntensity: 0.45,
+          roughness: 0.2,
+          clearcoat: 1.0,
+        })
+      );
+      const pinkOrbit = new THREE.Mesh(
+        track(new THREE.TorusGeometry(1.88, 0.022, 20, 108)),
+        pinkOrbitMat
+      );
+      pinkOrbit.rotation.x = -1.08;
+      pinkOrbit.rotation.y = 0.45;
+      doraGroup.add(pinkOrbit);
+
+      // 6 Orbiting 3D Bánh Rán Dorayaki & Mini Stars
+      const dorayakiBunMat = track(
+        new THREE.MeshPhysicalMaterial({
+          color: 0xd97706,
+          emissive: 0x78350f,
+          emissiveIntensity: 0.25,
+          roughness: 0.38,
+          clearcoat: 0.65,
+        })
+      );
+      const dorayakiBeanMat = track(
+        new THREE.MeshStandardMaterial({
+          color: 0x451a03,
+          roughness: 0.55,
+        })
+      );
+      const bunGeo = track(new THREE.CylinderGeometry(0.2, 0.2, 0.09, 24));
+      const beanGeo = track(new THREE.CylinderGeometry(0.185, 0.185, 0.04, 24));
+
+      const dorayakis: Array<{ group: THREE.Group; angle: number; radius: number; yOffset: number }> = [];
+      for (let i = 0; i < 6; i++) {
+        const dg = new THREE.Group();
+        const topBun = new THREE.Mesh(bunGeo, dorayakiBunMat);
+        topBun.position.y = 0.04;
+        const bean = new THREE.Mesh(beanGeo, dorayakiBeanMat);
+        const botBun = new THREE.Mesh(bunGeo, dorayakiBunMat);
+        botBun.position.y = -0.04;
+        dg.add(topBun, bean, botBun);
+        doraGroup.add(dg);
+        dorayakis.push({
+          group: dg,
+          angle: (i / 6) * Math.PI * 2,
+          radius: 1.68 + (i % 2) * 0.24,
+          yOffset: ((i % 3) - 1) * 0.34,
+        });
+      }
+
+      updaters.push((t) => {
+        doraGroup.position.y = Math.sin(t * 1.8) * 0.1;
+        bellBody.rotation.y = Math.sin(t * 0.85) * 0.24;
+        propellerBlade.rotation.y = t * 14.5;
+        skyOrbit.rotation.z = t * 0.38;
+        pinkOrbit.rotation.z = -t * 0.32;
+
+        dorayakis.forEach((d, idx) => {
+          const a = d.angle + t * 0.52;
+          d.group.position.set(
+            Math.cos(a) * d.radius,
+            d.yOffset + Math.sin(t * 2.1 + idx) * 0.18,
+            Math.sin(a) * d.radius
+          );
+          d.group.rotation.x = 0.55 + Math.sin(t * 1.5 + idx) * 0.25;
+          d.group.rotation.y = t * 1.1;
+        });
+      });
+    }
+
+    // =========================================================================
     // SCENE 4d: BILLIONAIRE VAULT (3D TITANIUM BLACK CARD + GOLD BULLION + USD COINS)
     // =========================================================================
     else if (theme === 'billionaire-vault') {
@@ -1455,6 +1646,7 @@ export default function ThemeHero3DDiorama({
     // SHARED LUMINOUS PARTICLE FIELD (THEME-COLORED)
     // =========================================================================
     const paletteMap: Record<AppTheme, [string, string, number]> = {
+      'doraemon-gadget': ['#7dd3fc', '#facc15', 0x38bdf8],
       'billionaire-vault': ['#fde68a', '#d4af37', 0x10b981],
       'shin-kasukabe': ['#fde047', '#10b981', 0xfacc15],
       'spidey-night': ['#fb7185', '#38bdf8', 0xfbbf24],
@@ -1583,6 +1775,7 @@ export default function ThemeHero3DDiorama({
   };
 
   const hintLabel: Record<AppTheme, string> = {
+    'doraemon-gadget': '🔔 Di chuột xoay Chuông Vàng & Chong Chóng Tre 3D · Chạm mở Túi 4D',
     'billionaire-vault': '💳 Di chuột xoay Thẻ Đen 3D · Chạm kích hoạt hào quang USD',
     'shin-kasukabe': '🍪 Di chuột xoay Hộp ChocoBi 3D · Chạm bắn mưa sao Kasukabe',
     'spidey-night': '🕷️ Di chuột xoay Lưới Tơ New York · Chạm bắn tơ Spider-Verse',

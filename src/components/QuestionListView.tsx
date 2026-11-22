@@ -87,6 +87,12 @@ export default function QuestionListView({
       title: 'Bí Thư Toàn Bộ Câu Hỏi',
       desc: 'Kho lưu trữ toàn bộ phong ấn câu hỏi học viện. Nhấn vào bất kỳ câu nào để bắt đầu giải mã phong ấn.',
     },
+    'doraemon-gadget': {
+      icon: '🔔',
+      tag: 'TÚI THẦN KỲ 4D · KHO BÁNH MÌ GHI NHỚ',
+      title: 'Danh Sách Toàn Bộ Câu Hỏi Trong Túi 4D',
+      desc: 'Tra cứu nhanh toàn bộ câu hỏi của bộ đề. Bấm vào bất kỳ câu nào để đi qua Cánh Cửa Thần Kỳ làm ngay!',
+    },
     'billionaire-vault': {
       icon: '💎',
       tag: 'BILLIONAIRE VAULT · SỔ CÁI CÂU HỎI USD',

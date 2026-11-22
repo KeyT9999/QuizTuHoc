@@ -47,9 +47,17 @@ const THEME_CONFIG: Record<
     isWebBurst?: boolean;
     isStarBurst?: boolean;
     isGoldBurst?: boolean;
+    isDoraemonBurst?: boolean;
     moteCount: number;
   }
 > = {
+  'doraemon-gadget': {
+    colors: ['#38bdf8', '#facc15', '#f472b6', '#7dd3fc', '#ffffff'],
+    glowColor: 'rgba(56, 189, 248, 0.16)',
+    glyphs: ['★', '✦', '•'],
+    isDoraemonBurst: true,
+    moteCount: 40,
+  },
   'billionaire-vault': {
     colors: ['#f3d37a', '#d4af37', '#10b981', '#fef08a'],
     glowColor: 'rgba(212, 175, 55, 0.14)',
@@ -191,8 +199,8 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
     };
 
     const handlePointerDown = (e: PointerEvent) => {
-      spawnBurst(e.clientX, e.clientY, cfg.isStarBurst || cfg.isGoldBurst ? 18 : 14);
-      if ((cfg.isWebBurst || cfg.isStarBurst || cfg.isGoldBurst) && webBursts.length < 6) {
+      spawnBurst(e.clientX, e.clientY, cfg.isStarBurst || cfg.isGoldBurst || cfg.isDoraemonBurst ? 18 : 14);
+      if ((cfg.isWebBurst || cfg.isStarBurst || cfg.isGoldBurst || cfg.isDoraemonBurst) && webBursts.length < 6) {
         webBursts.push({
           x: e.clientX,
           y: e.clientY,
@@ -206,7 +214,7 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
 
     const handleCustomBurst = () => {
       spawnBurst(smoothMouseX, smoothMouseY, 26);
-      if ((cfg.isWebBurst || cfg.isStarBurst || cfg.isGoldBurst) && webBursts.length < 6) {
+      if ((cfg.isWebBurst || cfg.isStarBurst || cfg.isGoldBurst || cfg.isDoraemonBurst) && webBursts.length < 6) {
         webBursts.push({
           x: smoothMouseX,
           y: smoothMouseY,
@@ -360,7 +368,31 @@ export default function ThemeAmbientCanvas({ theme }: ThemeAmbientCanvasProps) {
         ctx.rotate(wb.rotation + (cfg.isStarBurst ? progress * 0.9 : 0));
         ctx.globalAlpha = alpha;
 
-        if (cfg.isGoldBurst) {
+        if (cfg.isDoraemonBurst) {
+          // 4D Pocket cyan halo + golden bell starlight burst
+          ctx.strokeStyle = '#38bdf8';
+          ctx.shadowColor = '#7dd3fc';
+          ctx.shadowBlur = 12;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(0, 0, radius, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.strokeStyle = '#fde047';
+          ctx.lineWidth = 1.6;
+          const rIn = radius * 0.35;
+          ctx.beginPath();
+          for (let s = 0; s < 8; s++) {
+            const rad = s % 2 === 0 ? radius * 0.85 : rIn;
+            const a = (s / 8) * Math.PI * 2;
+            const px = Math.cos(a) * rad;
+            const py = Math.sin(a) * rad;
+            if (s === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.stroke();
+        } else if (cfg.isGoldBurst) {
           // Luxury champagne gold concentric ring + Art-Deco diamond outline
           ctx.strokeStyle = '#f3d37a';
           ctx.shadowColor = '#d4af37';

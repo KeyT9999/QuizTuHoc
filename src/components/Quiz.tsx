@@ -39,6 +39,7 @@ import CozyNightQuizView from './CozyNightQuizView';
 import SpideyQuizView from './SpideyQuizView';
 import ShinQuizView from './ShinQuizView';
 import MoneyQuizView from './MoneyQuizView';
+import DoraemonQuizView from './DoraemonQuizView';
 import FantasyAcademyQuizView from './FantasyAcademyQuizView';
 import HonVietQuizView from './HonVietQuizView';
 import LotusZenQuizView from './LotusZenQuizView';
@@ -834,7 +835,7 @@ export default function Quiz({
   }
 
   return (
-    <div className={`quiz-v2-wrapper theme-${theme} ${theme === 'hon-viet' ? 'quiz-hon-viet-page-wrapper' : ''} ${theme === 'fantasy-academy' ? 'quiz-fantasy-page-wrapper' : ''} ${theme === 'cozy-night' ? 'quiz-cozy-page-wrapper' : ''} ${theme === 'spidey-night' ? 'quiz-spidey-page-wrapper' : ''} ${theme === 'shin-kasukabe' ? 'quiz-shin-page-wrapper' : ''} ${theme === 'billionaire-vault' ? 'quiz-money-page-wrapper' : ''} ${theme === 'lotus-zen-sanctuary' ? 'quiz-lotus-zen-page-wrapper' : ''}`}>
+    <div className={`quiz-v2-wrapper theme-${theme} ${theme === 'hon-viet' ? 'quiz-hon-viet-page-wrapper' : ''} ${theme === 'fantasy-academy' ? 'quiz-fantasy-page-wrapper' : ''} ${theme === 'cozy-night' ? 'quiz-cozy-page-wrapper' : ''} ${theme === 'spidey-night' ? 'quiz-spidey-page-wrapper' : ''} ${theme === 'shin-kasukabe' ? 'quiz-shin-page-wrapper' : ''} ${theme === 'billionaire-vault' ? 'quiz-money-page-wrapper' : ''} ${theme === 'doraemon-gadget' ? 'quiz-doraemon-page-wrapper' : ''} ${theme === 'lotus-zen-sanctuary' ? 'quiz-lotus-zen-page-wrapper' : ''}`}>
       {/* Canonical Unified Shared Quiz Header */}
       <SharedQuizHeader
         setTitle={setTitle}
@@ -1085,6 +1086,44 @@ export default function Quiz({
             />
           ) : theme === 'spidey-night' ? (
             <SpideyQuizView
+              question={question}
+              questions={questions}
+              currentIndex={currentIndex}
+              relativeIndex={relativeIndex}
+              totalCount={splitSettings.enabled && currentPart ? currentPart.totalCount : questions.length}
+              currentPart={currentPart}
+              parts={parts}
+              currentPartIndex={currentPartIndex}
+              splitEnabled={splitSettings.enabled}
+              onSwitchPart={handleSwitchPart}
+              selectedAnswer={selectedAnswer}
+              isAnswered={isAnswered}
+              isMastered={isMastered}
+              isRevealed={isRevealed}
+              isUnresolved={isUnresolved}
+              isMultipleChoice={isMultipleChoice}
+              isFreeResponse={isFreeResponse}
+              masteredIds={masteredIds}
+              answers={answers}
+              submittedIds={submittedIds}
+              onSelectOption={handleSelectOption}
+              onCheckMultiple={handleCheckMultiple}
+              onToggleReveal={handleToggleReveal}
+              onToggleMastered={toggleMastered}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              onBack={onBack}
+              onBackLabel={onBackLabel}
+              setTitle={setTitle}
+              setId={setId}
+              activeMode={activeMode}
+              onChangeMode={(mode) => setActiveMode(mode)}
+              onOpenQuestionGrid={() => setShowQuestionGrid(true)}
+              onOpenThemeModal={openThemeModal}
+              slideDirection={slideDirection}
+            />
+          ) : theme === 'doraemon-gadget' ? (
+            <DoraemonQuizView
               question={question}
               questions={questions}
               currentIndex={currentIndex}

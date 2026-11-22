@@ -124,6 +124,48 @@ export default function ThemeSelectorModal({
         )}
 
         <div className="theme-grid">
+          {/* Option: Doraemon · Túi Thần Kỳ 4D & Đồi Sao Đêm */}
+          <div
+            className={`theme-card ${currentTheme === 'doraemon-gadget' ? 'is-active' : ''}`}
+            onClick={() => {
+              onSelectTheme('doraemon-gadget');
+              onClose();
+            }}
+          >
+            <div className="theme-card-preview doraemon-preview">
+              <div className="theme-preview-overlay">
+                <span className="theme-preview-badge doraemon">🔔 Mới Nhất · Doraemon 4D</span>
+              </div>
+              <div className="theme-preview-mockup">
+                <div className="mockup-sidebar-left doraemon-sidebar"></div>
+                <div className="mockup-card-center doraemon-card">
+                  <div className="mockup-line-title doraemon-title"></div>
+                  <div className="mockup-line-option doraemon-option"></div>
+                  <div className="mockup-line-option doraemon-option active"></div>
+                </div>
+                <div className="mockup-sidebar-right doraemon-sidebar"></div>
+              </div>
+            </div>
+
+            <div className="theme-card-info">
+              <div className="theme-card-header">
+                <h4 className="theme-card-name">Doraemon (Túi Thần Kỳ 4D &amp; Đồi Sao)</h4>
+                {currentTheme === 'doraemon-gadget' && (
+                  <span className="theme-active-tag">✓ Đang dùng</span>
+                )}
+              </div>
+              <p className="theme-card-desc">
+                3 bối cảnh hoài niệm (Đồi Sao Đêm có sao băng · Bầu Trời Chong Chóng · Phòng Nobita), Chuông Vàng &amp; Chong Chóng Tre 3D, Túi 4D rút bảo bối, Cánh Cửa Thần Kỳ 3D &amp; Doraemon 2 biểu cảm!
+              </p>
+              <div className="theme-card-tags">
+                <span className="theme-tag">3 Cảnh 4D</span>
+                <span className="theme-tag">Sao Băng</span>
+                <span className="theme-tag">Cánh Cửa 3D</span>
+                <span className="theme-tag">Bánh Rán 🥞</span>
+              </div>
+            </div>
+          </div>
+
           {/* Option: Billionaire Vault · Black Card 3D & $100 USD */}
           <div
             className={`theme-card ${currentTheme === 'billionaire-vault' ? 'is-active' : ''}`}

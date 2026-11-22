@@ -168,6 +168,11 @@ export default function MistakeBusterView({
         title: 'Phong Ấn Đã Được Thanh Tẩy!',
         desc: 'Tuyệt đỉnh pháp sư! Toàn bộ câu hỏi sai đã được thanh tẩy hoàn toàn khỏi Cổ Thư Viện.',
       },
+      'doraemon-gadget': {
+        icon: '🔔',
+        title: 'Bánh Mì Ghi Nhớ Đã Xóa Sạch Câu Sai!',
+        desc: 'Tuyệt vời! Bạn không còn câu hay sai nào nữa — thưởng ngay 1 đĩa bánh rán Dorayaki nóng hổi nhé!',
+      },
       'billionaire-vault': {
         icon: '💎',
         title: 'Danh Mục Đầu Tư Không Còn Rủi Ro!',
@@ -266,6 +271,8 @@ export default function MistakeBusterView({
               ? '🪷 QUÁN CHIẾU:'
               : theme === 'spidey-night'
               ? '🕷️ QUÉT LỖI:'
+              : theme === 'doraemon-gadget'
+              ? '🍞 BÁNH MÌ GHI NHỚ:'
               : theme === 'billionaire-vault'
               ? '💎 RÀ SOÁT RỦI RO:'
               : theme === 'shin-kasukabe'

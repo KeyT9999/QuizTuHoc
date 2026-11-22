@@ -2164,3 +2164,106 @@
   background: linear-gradient(90deg, #d4af37, #10b981);
 }
 
+/* Doraemon Gadget Hero 3-World Quick Switcher & Starry Night Dark Cards */
+.doraemon-home-scene-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.doraemon-home-scene-label {
+  font-size: 12px;
+  font-weight: 850;
+  color: #7dd3fc;
+  background: rgba(10, 24, 50, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.42);
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.doraemon-home-scene-chip {
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(56, 189, 248, 0.38);
+  background: rgba(10, 24, 50, 0.86);
+  color: #e0f2fe;
+  font-size: 12.5px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.doraemon-home-scene-chip:hover {
+  transform: translateY(-2px);
+  border-color: #fde047;
+}
+
+.doraemon-home-scene-chip.is-active {
+  background: linear-gradient(135deg, #0096e6, #0284c7);
+  border-color: #fde047;
+  color: #ffffff;
+  font-weight: 850;
+  box-shadow: 0 4px 14px rgba(0, 150, 230, 0.36);
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .doraemon-home-scene-label,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .doraemon-home-scene-label {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0369a1;
+  border-color: rgba(0, 150, 230, 0.35);
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .doraemon-home-scene-chip:not(.is-active),
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .doraemon-home-scene-chip:not(.is-active) {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 150, 230, 0.32);
+  color: #1e293b;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-overview-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-major-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-kpi-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-panel-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-empty-progress-banner,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-hero-banner {
+  background: rgba(10, 24, 50, 0.88);
+  border-color: rgba(56, 189, 248, 0.32);
+  color: #f8fafc;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-overview-value,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-section-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-major-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-hero-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-kpi-value,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-panel-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-major-name,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-item-code,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-empty-progress-left h3 {
+  color: #f8fafc;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-overview-label,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-overview-sub,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-section-subtitle,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-major-meta,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-major-progress-row,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-hero-desc,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-kpi-label,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-kpi-sub,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-panel-subtitle,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-major-row-metrics,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-item-name,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-item-sub,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-empty-progress-left p {
+  color: #cbd5e1;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-major-row,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .stats-item-row {
+  background: rgba(15, 34, 68, 0.84);
+  border-color: rgba(56, 189, 248, 0.28);
+}
+

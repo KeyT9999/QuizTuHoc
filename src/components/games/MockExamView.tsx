@@ -397,6 +397,12 @@ export default function MockExamView({
         desc: 'Bước vào đại sảnh khảo hạch ma thuật bí truyền dưới áp lực thời gian thực tế. Giải mã trọn vẹn bộ đề thi để ghi danh vào bảng vàng huyền thoại.',
         startBtn: '⚡ BẮT ĐẦU KHẢO HẠCH MA PHÁP',
       },
+      'doraemon-gadget': {
+        tag: '🔔 TÚI THẦN KỲ 4D · MÔ PHỎNG PHÒNG THI',
+        title: 'THI THỬ FE · CÙNG DORAEMON',
+        desc: 'Kiểm tra sức mạnh Bánh Mì Ghi Nhớ dưới áp lực đồng hồ đếm ngược! Hệ thống bốc ngẫu nhiên câu hỏi, chấm thang 10 và chữa chi tiết từng câu sai.',
+        startBtn: '🚪 MỞ CỬA VÀO PHÒNG THI',
+      },
       'billionaire-vault': {
         tag: '💎 PRIVATE BANKING · MÔ PHỎNG PHÒNG THI USD',
         title: 'THI THỬ FE · BILLIONAIRE VAULT',
@@ -624,6 +630,7 @@ export default function MockExamView({
     const examBadges = {
       'hon-viet': '🏛️ KHẢO THÍ FE',
       'fantasy-academy': '⚡ KHẢO HẠCH FE',
+      'doraemon-gadget': '🔔 DORAEMON FE',
       'billionaire-vault': '💎 VAULT FE',
       'shin-kasukabe': '🖍️ SHIN FE',
       'spidey-night': '🕷️ SPIDEY FE',

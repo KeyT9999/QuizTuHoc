@@ -88,6 +88,16 @@ function getCourseTheme(course: Course, activeTheme = 'default'): SubjectTheme {
     };
   }
 
+  if (activeTheme === 'doraemon-gadget') {
+    return {
+      primary: '#0096e6',
+      soft: 'rgba(56, 189, 248, 0.16)',
+      border: 'rgba(56, 189, 248, 0.38)',
+      hoverShadow: 'rgba(0, 150, 230, 0.28)',
+      icon,
+    };
+  }
+
   if (activeTheme === 'billionaire-vault') {
     return {
       primary: '#d4af37',
@@ -338,6 +348,15 @@ function getHomeHeroDetails(theme: string) {
         badgeIcon: '📜',
         badgeTitle: 'Học Viện Ma Pháp',
       };
+    case 'doraemon-gadget':
+      return {
+        eyebrow: '🔔 DORAEMON · TÚI THẦN KỲ 4D & ĐỒI SAO STUDY HUB',
+        titlePre: 'Hôm nay cùng Doraemon ',
+        titleHighlight: 'khám phá môn học nào?',
+        desc: 'Đội Chong Chóng Tre, ăn Bánh Mì Ghi Nhớ và đổi giữa 3 bối cảnh hoài niệm (Đồi Sao Đêm · Bầu Trời · Phòng Nobita) để qua môn nhẹ tựa mây bay!',
+        badgeIcon: '🔔',
+        badgeTitle: 'Doraemon 4D',
+      };
     case 'billionaire-vault':
       return {
         eyebrow: '💎 BILLIONAIRE VAULT · BLACK CARD & $100 USD STUDY HUB',
@@ -407,6 +426,8 @@ export default function CourseSelector({
     setShinScene,
     moneyFinish,
     setMoneyFinish,
+    doraemonScene,
+    setDoraemonScene,
   } = useTheme();
   const heroDetails = getHomeHeroDetails(theme);
   const [activeTab, setActiveTab] = useState<HomeNavTab>(activeNavTab);
@@ -1151,6 +1172,29 @@ export default function CourseSelector({
                   ))}
                 </div>
               )}
+
+              {theme === 'doraemon-gadget' && (
+                <div className="doraemon-home-scene-bar" role="group" aria-label="Chọn bối cảnh Doraemon">
+                  <span className="doraemon-home-scene-label">🚪 Bối cảnh 4D:</span>
+                  {(
+                    [
+                      { id: 'starry', label: '🌌 Đồi Sao Đêm' },
+                      { id: 'sky', label: '☁️ Bầu Trời Chong Chóng' },
+                      { id: 'room', label: '🚪 Phòng Nobita' },
+                    ] as const
+                  ).map((sc) => (
+                    <button
+                      key={sc.id}
+                      type="button"
+                      className={`doraemon-home-scene-chip ${doraemonScene === sc.id ? 'is-active' : ''}`}
+                      onClick={() => setDoraemonScene(sc.id)}
+                      aria-pressed={doraemonScene === sc.id}
+                    >
+                      {sc.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="home-hero-right">
@@ -1436,6 +1480,29 @@ export default function CourseSelector({
                       aria-pressed={moneyFinish === fin.id}
                     >
                       {fin.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {theme === 'doraemon-gadget' && (
+                <div className="doraemon-home-scene-bar" role="group" aria-label="Chọn bối cảnh Doraemon">
+                  <span className="doraemon-home-scene-label">🚪 Bối cảnh 4D:</span>
+                  {(
+                    [
+                      { id: 'starry', label: '🌌 Đồi Sao Đêm' },
+                      { id: 'sky', label: '☁️ Bầu Trời Chong Chóng' },
+                      { id: 'room', label: '🚪 Phòng Nobita' },
+                    ] as const
+                  ).map((sc) => (
+                    <button
+                      key={sc.id}
+                      type="button"
+                      className={`doraemon-home-scene-chip ${doraemonScene === sc.id ? 'is-active' : ''}`}
+                      onClick={() => setDoraemonScene(sc.id)}
+                      aria-pressed={doraemonScene === sc.id}
+                    >
+                      {sc.label}
                     </button>
                   ))}
                 </div>

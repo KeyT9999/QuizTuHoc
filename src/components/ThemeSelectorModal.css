@@ -358,6 +358,47 @@
   color: #ffffff;
 }
 
+/* Doraemon · Túi Thần Kỳ 4D & Đồi Sao Đêm Preview Mockup */
+.theme-card-preview.doraemon-preview {
+  background:
+    radial-gradient(circle at 24% 24%, rgba(56, 189, 248, 0.42), transparent 54%),
+    radial-gradient(circle at 80% 76%, rgba(250, 204, 21, 0.34), transparent 52%),
+    linear-gradient(135deg, #07142b 0%, #0e2a5c 55%, #083344 100%);
+  border-bottom: 2px solid #38bdf8;
+}
+
+.mockup-sidebar-left.doraemon-sidebar,
+.mockup-sidebar-right.doraemon-sidebar {
+  background: rgba(12, 32, 68, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+}
+
+.mockup-card-center.doraemon-card {
+  background: linear-gradient(155deg, rgba(10, 26, 56, 0.96), rgba(7, 18, 40, 0.98));
+  border: 1.5px solid #38bdf8;
+  border-top: 2.5px solid #ef4444;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.mockup-line-title.doraemon-title {
+  background: linear-gradient(90deg, #ffffff, #bae6fd);
+}
+
+.mockup-line-option.doraemon-option {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.mockup-line-option.doraemon-option.active {
+  background: linear-gradient(90deg, #0096e6, #facc15);
+}
+
+.theme-preview-badge.doraemon {
+  background: linear-gradient(135deg, #0096e6 0%, #0284c7 100%);
+  border: 1px solid #fde047;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 150, 230, 0.45);
+}
+
 /* Billionaire Vault · Black Card 3D & $100 USD Preview Mockup */
 .theme-card-preview.money-preview {
   background:

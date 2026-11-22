@@ -507,3 +507,77 @@ export function playMoneyCountSound(force = false): void {
     // ignore
   }
 }
+
+/**
+ * Iconic cheerful Doraemon 4D-Pocket Gadget Reveal chime ("Tèn tén ten tén ten!")
+ */
+export function playDoraemonGadgetSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    // Playful ascending 22nd-century fanfare notes (C5 -> E5 -> G5 -> C6 -> E6)
+    const notes = [
+      { freq: 523.25, t: 0.0, dur: 0.11, vol: 0.16 },
+      { freq: 659.25, t: 0.085, dur: 0.11, vol: 0.17 },
+      { freq: 783.99, t: 0.17, dur: 0.12, vol: 0.18 },
+      { freq: 1046.5, t: 0.26, dur: 0.22, vol: 0.21 },
+      { freq: 1318.51, t: 0.36, dur: 0.38, vol: 0.17 },
+    ];
+    notes.forEach(({ freq, t, dur, vol }) => {
+      const osc = ctx.createOscillator();
+      const harm = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      harm.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + t);
+      harm.frequency.setValueAtTime(freq * 2, now + t);
+      gain.gain.setValueAtTime(vol, now + t);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + t + dur);
+      osc.connect(gain);
+      harm.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + t);
+      harm.start(now + t);
+      osc.stop(now + t + dur + 0.02);
+      harm.stop(now + t + dur + 0.02);
+    });
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Bright Doraemon Golden Collar Bell jingle ("Keng keng!")
+ */
+export function playDoraemonBellSound(force = false): void {
+  if (!force && !isSoundEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    const bellHits = [
+      { f1: 1760, f2: 2637, t: 0.0, dur: 0.28 },
+      { f1: 2093, f2: 3136, t: 0.065, dur: 0.36 },
+    ];
+    bellHits.forEach(({ f1, f2, t, dur }) => {
+      [f1, f2].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + t);
+        gain.gain.setValueAtTime(idx === 0 ? 0.16 : 0.08, now + t);
+        gain.gain.exponentialRampToValueAtTime(0.0006, now + t + dur);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + t);
+        osc.stop(now + t + dur + 0.02);
+      });
+    });
+  } catch {
+    // ignore
+  }
+}

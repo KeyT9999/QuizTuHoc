@@ -149,6 +149,48 @@ function getCardColorTheme(index: number, activeTheme: string) {
     return FANTASY_ACCENTS[index % FANTASY_ACCENTS.length];
   }
 
+  if (activeTheme === 'doraemon-gadget') {
+    const DORAEMON_ACCENTS = [
+      {
+        accent: '#0096e6',
+        borderLeft: '#38bdf8',
+        badgeBg: 'rgba(56, 189, 248, 0.16)',
+        badgeText: '#7dd3fc',
+        badgeBorder: 'rgba(56, 189, 248, 0.45)',
+        btnBg: '#0096e6',
+        btnHover: '#0284c7',
+      },
+      {
+        accent: '#f472b6',
+        borderLeft: '#f472b6',
+        badgeBg: 'rgba(244, 114, 182, 0.16)',
+        badgeText: '#fbcfe8',
+        badgeBorder: 'rgba(244, 114, 182, 0.45)',
+        btnBg: '#ec4899',
+        btnHover: '#db2777',
+      },
+      {
+        accent: '#facc15',
+        borderLeft: '#facc15',
+        badgeBg: 'rgba(250, 204, 21, 0.16)',
+        badgeText: '#fef08a',
+        badgeBorder: 'rgba(250, 204, 21, 0.45)',
+        btnBg: '#d97706',
+        btnHover: '#b45309',
+      },
+      {
+        accent: '#ef4444',
+        borderLeft: '#ef4444',
+        badgeBg: 'rgba(239, 68, 68, 0.16)',
+        badgeText: '#fecaca',
+        badgeBorder: 'rgba(239, 68, 68, 0.45)',
+        btnBg: '#dc2626',
+        btnHover: '#b91c1c',
+      },
+    ];
+    return DORAEMON_ACCENTS[index % DORAEMON_ACCENTS.length];
+  }
+
   if (activeTheme === 'billionaire-vault') {
     const MONEY_ACCENTS = [
       {
@@ -322,17 +364,17 @@ function getCardColorTheme(index: number, activeTheme: string) {
       {
         accent: '#A77636',
         borderLeft: '#A77636',
-        badgeBg: 'rgba(167, 118, 54, 0.18)',
-        badgeText: '#F7ECD6',
-        badgeBorder: 'rgba(167, 118, 54, 0.45)',
+        badgeBg: 'rgba(167, 118, 54, 0.16)',
+        badgeText: '#634115',
+        badgeBorder: 'rgba(167, 118, 54, 0.48)',
         btnBg: '#A77636',
         btnHover: '#8C5E22',
       },
       {
         accent: '#42665C',
         borderLeft: '#42665C',
-        badgeBg: 'rgba(66, 102, 92, 0.18)',
-        badgeText: '#A8D5C8',
+        badgeBg: 'rgba(66, 102, 92, 0.15)',
+        badgeText: '#1F453B',
         badgeBorder: 'rgba(66, 102, 92, 0.45)',
         btnBg: '#42665C',
         btnHover: '#2E4C44',
@@ -340,20 +382,20 @@ function getCardColorTheme(index: number, activeTheme: string) {
       {
         accent: '#7B3026',
         borderLeft: '#7B3026',
-        badgeBg: 'rgba(123, 48, 38, 0.18)',
-        badgeText: '#F5C6C0',
-        badgeBorder: 'rgba(123, 48, 38, 0.45)',
+        badgeBg: 'rgba(123, 48, 38, 0.14)',
+        badgeText: '#6E2219',
+        badgeBorder: 'rgba(123, 48, 38, 0.42)',
         btnBg: '#7B3026',
         btnHover: '#5E221B',
       },
       {
-        accent: '#D8B36A',
-        borderLeft: '#D8B36A',
-        badgeBg: 'rgba(216, 179, 106, 0.18)',
-        badgeText: '#FFF8EC',
-        badgeBorder: 'rgba(216, 179, 106, 0.45)',
-        btnBg: '#C29849',
-        btnHover: '#A77636',
+        accent: '#B8893A',
+        borderLeft: '#B8893A',
+        badgeBg: 'rgba(184, 137, 58, 0.16)',
+        badgeText: '#6B4912',
+        badgeBorder: 'rgba(184, 137, 58, 0.46)',
+        btnBg: '#A77636',
+        btnHover: '#8C5E22',
       },
     ];
     return LOTUS_ZEN_ACCENTS[index % LOTUS_ZEN_ACCENTS.length];
@@ -364,6 +406,71 @@ function getCardColorTheme(index: number, activeTheme: string) {
 
 // Academic study illustration for hero right side
 function CourseHeroVisual({ theme }: { theme?: string }) {
+  if (theme === 'doraemon-gadget') {
+    return (
+      <div
+        className="course-hero-doraemon-visual"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '260px',
+          height: '185px',
+          position: 'relative',
+        }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 240 175" width="235" height="170" fill="none">
+          <defs>
+            <radialGradient id="doraCourseGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
+              <stop offset="55%" stopColor="#f472b6" stopOpacity="0.16" />
+              <stop offset="100%" stopColor="#07142b" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="doraDoorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#f9a8d4" />
+              <stop offset="55%" stopColor="#f472b6" />
+              <stop offset="100%" stopColor="#db2777" />
+            </linearGradient>
+            <radialGradient id="doraCourseBell" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stopColor="#fef9c3" />
+              <stop offset="50%" stopColor="#facc15" />
+              <stop offset="100%" stopColor="#ca8a04" />
+            </radialGradient>
+          </defs>
+          <circle cx="120" cy="88" r="78" fill="url(#doraCourseGlow)" />
+          {/* Orbiting Sky Ring */}
+          <ellipse
+            cx="120"
+            cy="92"
+            rx="84"
+            ry="26"
+            transform="rotate(-12 120 92)"
+            stroke="#38bdf8"
+            strokeWidth="2.4"
+            strokeDasharray="7 6"
+          />
+          {/* Iconic Pink Anywhere Door */}
+          <rect x="74" y="30" width="64" height="108" rx="6" fill="url(#doraDoorGrad)" stroke="#fbcfe8" strokeWidth="2.5" />
+          <rect x="82" y="38" width="48" height="42" rx="3" fill="rgba(255,255,255,0.18)" stroke="#fce7f3" strokeWidth="1.5" />
+          <rect x="82" y="88" width="48" height="42" rx="3" fill="rgba(255,255,255,0.18)" stroke="#fce7f3" strokeWidth="1.5" />
+          <circle cx="124" cy="84" r="4.5" fill="#fde047" stroke="#854d0e" strokeWidth="1.5" />
+          {/* Floating Golden Bell Emblem */}
+          <circle cx="158" cy="112" r="24" fill="url(#doraCourseBell)" stroke="#854d0e" strokeWidth="2.5" />
+          <path d="M135 107 Q158 102 181 107" stroke="#854d0e" strokeWidth="2.2" />
+          <circle cx="158" cy="119" r="4" fill="#1e293b" />
+          <line x1="158" y1="123" x2="158" y2="133" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
+          {/* Floating Take-copter above Door */}
+          <rect x="84" y="18" width="44" height="4" rx="2" fill="#facc15" />
+          <rect x="104" y="21" width="4" height="9" fill="#f59e0b" />
+          {/* Twinkling Stars */}
+          <text x="34" y="54" fontSize="16" fill="#fde047">★</text>
+          <text x="192" y="58" fontSize="14" fill="#7dd3fc">✦</text>
+        </svg>
+      </div>
+    );
+  }
+
   if (theme === 'billionaire-vault') {
     return (
       <div
@@ -1016,6 +1123,8 @@ export default function CourseQuizList({
                   ? `🇻🇳 DI SẢN · MÔN ${course.code}`
                   : activeTheme === 'fantasy-academy'
                   ? `⚔️ BÍ TỊCH · PHÓ BẢN ${course.code}`
+                  : activeTheme === 'doraemon-gadget'
+                  ? `🔔 TÚI THẦN KỲ 4D · MÔN ${course.code}`
                   : activeTheme === 'billionaire-vault'
                   ? `💎 PRIVATE VAULT · MÔN ${course.code}`
                   : activeTheme === 'shin-kasukabe'

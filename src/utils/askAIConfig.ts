@@ -28,6 +28,13 @@ export const AI_PERSONAS: Record<
     subtitle: 'Giải mã cổ ngữ · Chỉ dẫn đáp án & ma pháp',
     cta: 'Triệu hồi AI',
   },
+  'doraemon-gadget': {
+    icon: '🔔',
+    btnIcon: '🍞',
+    title: 'Túi Thần Kỳ AI · Bánh Mì Ghi Nhớ',
+    subtitle: 'Bảo bối thế kỷ 22 · Giải thích đáp án dễ hiểu như đọc truyện',
+    cta: 'Rút Bảo Bối',
+  },
   'billionaire-vault': {
     icon: '🏦',
     btnIcon: '💎',

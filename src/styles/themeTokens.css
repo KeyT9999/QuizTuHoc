@@ -3786,3 +3786,1190 @@ body,
 .theme-diorama-aura.aura-billionaire-vault {
   background: radial-gradient(circle, rgba(212, 175, 55, 0.36) 0%, rgba(16, 185, 129, 0.2) 52%, transparent 76%);
 }
+
+/* ==========================================================================
+   7. DORAEMON GADGET — 3 WORLDS (STARRY HILL DARK · SUNNY SKY · NOBITA ROOM)
+   ========================================================================== */
+[data-theme="doraemon-gadget"] {
+  --theme-id: "doraemon-gadget";
+  --theme-bg-body: #07142b;
+  --theme-bg-body-img: linear-gradient(160deg, #07142b 0%, #0d2247 55%, #071b2e 100%);
+  --theme-bg-surface: rgba(9, 22, 46, 0.88);
+  --theme-bg-card: rgba(10, 24, 50, 0.86);
+  --theme-bg-card-hover: rgba(15, 36, 72, 0.94);
+  --theme-bg-header: rgba(7, 20, 43, 0.94);
+  --theme-bg-subtle: rgba(56, 189, 248, 0.1);
+  --theme-bg-input: rgba(10, 24, 50, 0.9);
+  --theme-border: rgba(56, 189, 248, 0.32);
+  --theme-border-hover: rgba(250, 204, 21, 0.68);
+  --theme-border-accent: #38bdf8;
+  --theme-text-primary: #f8fafc;
+  --theme-text-secondary: #e2e8f0;
+  --theme-text-muted: #cbd5e1;
+  --theme-text-sub: #94a3b8;
+  --theme-accent-primary: #0096e6;
+  --theme-accent-primary-hover: #38bdf8;
+  --theme-accent-soft: rgba(56, 189, 248, 0.18);
+  --theme-accent-text: #ffffff;
+  --theme-shadow-sm: 0 4px 14px rgba(3, 10, 26, 0.45);
+  --theme-shadow-md: 0 14px 32px rgba(3, 10, 26, 0.56);
+  --theme-shadow-lg: 0 22px 46px rgba(3, 10, 26, 0.72);
+
+  --home-bg: var(--theme-bg-body);
+  --home-card-bg: var(--theme-bg-card);
+  --home-border: var(--theme-border);
+  --home-border-hover: var(--theme-border-hover);
+  --home-text-main: var(--theme-text-primary);
+  --home-text-muted: var(--theme-text-muted);
+  --home-text-sub: var(--theme-text-sub);
+  --home-primary: var(--theme-accent-primary);
+  --home-primary-hover: var(--theme-accent-primary-hover);
+  --home-primary-soft: var(--theme-accent-soft);
+
+  --course-bg: var(--theme-bg-body);
+  --course-card-bg: var(--theme-bg-card);
+  --course-border: var(--theme-border);
+  --course-border-hover: var(--theme-border-hover);
+  --course-text-main: var(--theme-text-primary);
+  --course-text-muted: var(--theme-text-muted);
+  --course-text-sub: var(--theme-text-sub);
+  --course-primary: var(--theme-accent-primary);
+  --course-primary-hover: var(--theme-accent-primary-hover);
+  --course-primary-soft: var(--theme-accent-soft);
+}
+
+/* Bright Daylight Tokens for Sky & Nobita Room scenes */
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] {
+  --theme-bg-body: #e0f2fe;
+  --theme-bg-surface: rgba(255, 255, 255, 0.9);
+  --theme-bg-card: rgba(255, 255, 255, 0.88);
+  --theme-bg-card-hover: rgba(255, 255, 255, 0.97);
+  --theme-bg-header: rgba(240, 249, 255, 0.94);
+  --theme-border: rgba(0, 150, 230, 0.28);
+  --theme-text-primary: #0f172a;
+  --theme-text-secondary: #1e293b;
+  --theme-text-muted: #475569;
+  --theme-text-sub: #64748b;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] {
+  --theme-bg-body: #fffbeb;
+  --theme-bg-surface: rgba(255, 251, 242, 0.92);
+  --theme-bg-card: rgba(255, 251, 242, 0.9);
+  --theme-bg-card-hover: rgba(255, 255, 255, 0.97);
+  --theme-bg-header: rgba(255, 247, 237, 0.94);
+  --theme-border: rgba(244, 114, 182, 0.34);
+  --theme-text-primary: #1e293b;
+  --theme-text-secondary: #334155;
+  --theme-text-muted: #475569;
+  --theme-text-sub: #64748b;
+}
+
+/* Global 3-Scene Doraemon Wallpaper Layer */
+[data-theme="doraemon-gadget"] .app {
+  position: relative;
+}
+
+[data-theme="doraemon-gadget"] .app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(180deg, rgba(7, 20, 43, 0.68) 0%, rgba(10, 26, 56, 0.5) 50%, rgba(5, 16, 36, 0.78) 100%),
+    url('../assets/doraemon_bg_starry.jpg');
+  background-size: cover, cover;
+  background-position: center, center bottom;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  transition: background-image 0.5s ease;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .app::before {
+  background-image:
+    linear-gradient(180deg, rgba(224, 242, 254, 0.44) 0%, rgba(255, 255, 255, 0.28) 52%, rgba(224, 242, 254, 0.52) 100%),
+    url('../assets/doraemon_bg_sky.jpg');
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .app::before {
+  background-image:
+    linear-gradient(180deg, rgba(255, 247, 237, 0.48) 0%, rgba(255, 251, 235, 0.34) 52%, rgba(254, 243, 199, 0.54) 100%),
+    url('../assets/doraemon_bg_room.jpg');
+}
+
+[data-theme="doraemon-gadget"] .app > main,
+[data-theme="doraemon-gadget"] .app > header {
+  position: relative;
+  z-index: 2;
+}
+
+/* Navbar & Header — Starry Cobalt Dark vs Bright Sky/Room */
+[data-theme="doraemon-gadget"] .home-navbar,
+[data-theme="doraemon-gadget"] .course-nav {
+  background: linear-gradient(90deg, rgba(7, 20, 43, 0.95) 0%, rgba(13, 34, 71, 0.94) 55%, rgba(7, 26, 48, 0.95) 100%) !important;
+  border-bottom: 1.5px solid rgba(56, 189, 248, 0.38) !important;
+  box-shadow: 0 6px 24px rgba(3, 10, 26, 0.52) !important;
+  backdrop-filter: blur(16px);
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-navbar,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-nav {
+  background: linear-gradient(90deg, rgba(240, 249, 255, 0.95) 0%, rgba(224, 242, 254, 0.94) 55%, rgba(255, 255, 255, 0.95) 100%) !important;
+  border-bottom: 2px solid rgba(0, 150, 230, 0.35) !important;
+  box-shadow: 0 4px 18px rgba(0, 150, 230, 0.12) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-navbar,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-nav {
+  background: linear-gradient(90deg, rgba(255, 251, 242, 0.95) 0%, rgba(255, 247, 237, 0.94) 55%, rgba(252, 231, 243, 0.95) 100%) !important;
+  border-bottom: 2px solid rgba(244, 114, 182, 0.38) !important;
+  box-shadow: 0 4px 18px rgba(180, 83, 9, 0.1) !important;
+}
+
+[data-theme="doraemon-gadget"] .home-logo-box,
+[data-theme="doraemon-gadget"] .course-logo-box {
+  background: linear-gradient(135deg, #0096e6, #0284c7) !important;
+  border: 1.5px solid #facc15 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35) !important;
+}
+
+[data-theme="doraemon-gadget"] .home-brand-name,
+[data-theme="doraemon-gadget"] .course-brand-name {
+  color: #7dd3fc !important;
+}
+
+[data-theme="doraemon-gadget"] .home-brand-subtitle,
+[data-theme="doraemon-gadget"] .course-brand-subtitle {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"] .home-nav-item,
+[data-theme="doraemon-gadget"] .course-nav-item,
+[data-theme="doraemon-gadget"] .course-back-btn {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="doraemon-gadget"] .course-back-btn {
+  background: rgba(15, 34, 68, 0.86) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  color: #bae6fd !important;
+}
+
+/* Bright Sky & Room Navbar Ink Overrides */
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-brand-name,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-brand-name,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-brand-name,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-brand-name {
+  color: #0369a1 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-brand-subtitle,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-brand-subtitle,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-brand-subtitle,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-brand-subtitle {
+  color: #475569 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-nav-item,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-nav-item,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-back-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-nav-item,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-nav-item,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-back-btn {
+  color: #1e293b !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-back-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-back-btn {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 150, 230, 0.35) !important;
+}
+
+[data-theme="doraemon-gadget"] .home-nav-item.active,
+[data-theme="doraemon-gadget"] .course-nav-item.active,
+[data-theme="doraemon-gadget"] .home-filter-chip.active,
+[data-theme="doraemon-gadget"] .home-category-chip.active,
+[data-theme="doraemon-gadget"] .home-subfilter-pill.active {
+  background: linear-gradient(135deg, #0096e6 0%, #0284c7 100%) !important;
+  border-color: #fde047 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(0, 150, 230, 0.35) !important;
+}
+
+[data-theme="doraemon-gadget"] .global-theme-toggle-btn {
+  background: rgba(15, 34, 68, 0.9) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.52) !important;
+  color: #bae6fd !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+[data-theme="doraemon-gadget"] .global-theme-toggle-btn:hover {
+  background: rgba(56, 189, 248, 0.22) !important;
+  border-color: #facc15 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="doraemon-gadget"] .global-mouse-fx-toggle-btn.is-on {
+  background: rgba(250, 204, 21, 0.16) !important;
+  border-color: rgba(250, 204, 21, 0.55) !important;
+  color: #fef08a !important;
+}
+
+[data-theme="doraemon-gadget"] .global-mouse-fx-toggle-btn.is-off {
+  background: rgba(15, 34, 68, 0.86) !important;
+  border-color: rgba(148, 163, 184, 0.34) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"] .global-translate-toggle-btn.is-on {
+  background: rgba(56, 189, 248, 0.22) !important;
+  border-color: #38bdf8 !important;
+  color: #e0f2fe !important;
+}
+
+/* Bright scene toggle pills */
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .global-theme-toggle-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .global-theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 150, 230, 0.42) !important;
+  color: #0369a1 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .global-mouse-fx-toggle-btn.is-on,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .global-mouse-fx-toggle-btn.is-on {
+  background: #fef9c3 !important;
+  border-color: #f59e0b !important;
+  color: #92400e !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .global-mouse-fx-toggle-btn.is-off,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .global-mouse-fx-toggle-btn.is-off {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .global-translate-toggle-btn.is-on,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .global-translate-toggle-btn.is-on {
+  background: #e0f2fe !important;
+  border-color: #38bdf8 !important;
+  color: #0369a1 !important;
+}
+
+/* Hero & Course Headers */
+[data-theme="doraemon-gadget"] .home-hero-eyebrow,
+[data-theme="doraemon-gadget"] .course-hero-badge {
+  background: rgba(15, 34, 68, 0.9) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.55) !important;
+  color: #7dd3fc !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-hero-eyebrow,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-hero-badge,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-hero-eyebrow,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-hero-badge {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 150, 230, 0.45) !important;
+  color: #0369a1 !important;
+}
+
+[data-theme="doraemon-gadget"] .home-hero-title,
+[data-theme="doraemon-gadget"] .course-hero-title {
+  color: #f8fafc !important;
+  text-shadow: 0 4px 22px rgba(3, 10, 26, 0.78);
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-hero-title,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-hero-title,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-hero-title,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-hero-title {
+  color: #0f172a !important;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="doraemon-gadget"] .home-gradient-text {
+  background: linear-gradient(110deg, #7dd3fc 0%, #38bdf8 48%, #fde047 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-gradient-text,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-gradient-text {
+  background: linear-gradient(110deg, #0096e6 0%, #0284c7 52%, #ec4899 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="doraemon-gadget"] .home-hero-desc,
+[data-theme="doraemon-gadget"] .course-hero-desc {
+  color: #e2e8f0 !important;
+  text-shadow: 0 2px 12px rgba(3, 10, 26, 0.72);
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-hero-desc,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-hero-desc,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-hero-desc,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-hero-desc {
+  color: #1e293b !important;
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="doraemon-gadget"] .home-hero-primary-btn,
+[data-theme="doraemon-gadget"] .subject-cta-btn,
+[data-theme="doraemon-gadget"] .exam-cta-btn {
+  background: linear-gradient(135deg, #0096e6 0%, #0284c7 100%) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border: 1px solid rgba(186, 230, 253, 0.65) !important;
+  box-shadow: 0 5px 16px rgba(0, 150, 230, 0.34) !important;
+}
+
+/* Subject, Exam, Course Cards & Stat Boxes */
+[data-theme="doraemon-gadget"] .subject-card,
+[data-theme="doraemon-gadget"] .exam-card,
+[data-theme="doraemon-gadget"] .course-hero,
+[data-theme="doraemon-gadget"] .course-stat-card {
+  background: var(--theme-bg-card) !important;
+  backdrop-filter: blur(16px);
+  border: 1.5px solid var(--theme-border) !important;
+  box-shadow: var(--theme-shadow-md) !important;
+}
+
+[data-theme="doraemon-gadget"] .subject-card:hover,
+[data-theme="doraemon-gadget"] .exam-card:hover {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 16px 36px rgba(0, 150, 230, 0.24) !important;
+}
+
+/* Dark Starry Night Text & Sub-surface Overrides (ZERO white-bleed!) */
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-code-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .course-stat-number,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-add-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-stat-num,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-stat-value {
+  color: #f8fafc !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-name-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-desc-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-subject-sub,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-desc,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .course-stat-label,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-add-desc,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-stat-label,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-progress-label,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-progress-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .course-hero-icon-box,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .course-stat-icon-wrap,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-overview-icon,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-icon-box,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-stat-icon-wrap {
+  background: rgba(15, 34, 68, 0.92) !important;
+  border: 1px solid rgba(56, 189, 248, 0.36) !important;
+  color: #7dd3fc !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .course-stat-icon-wrap.ring-box svg circle:first-child {
+  stroke: rgba(255, 255, 255, 0.16) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .course-stat-icon-wrap.ring-box svg circle:last-child {
+  stroke: #38bdf8 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-add-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-card-add,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-empty-state {
+  background: rgba(10, 24, 50, 0.88) !important;
+  border: 2px dashed rgba(56, 189, 248, 0.48) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 14px 32px rgba(3, 10, 26, 0.56) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-card-add:hover {
+  border-color: #fde047 !important;
+  background: rgba(15, 34, 68, 0.94) !important;
+  box-shadow: 0 16px 36px rgba(0, 150, 230, 0.28) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .add-info-text h3,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-empty-state h3 {
+  color: #f8fafc !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .add-info-text p,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-empty-state p {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-add-badge {
+  color: #facc15 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-add-icon-box,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-add-btn,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .add-icon-circle,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .add-btn {
+  background: rgba(56, 189, 248, 0.16) !important;
+  border: 1px solid rgba(56, 189, 248, 0.48) !important;
+  color: #bae6fd !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .add-btn:hover {
+  background: linear-gradient(135deg, #0096e6, #0284c7) !important;
+  border-color: #fde047 !important;
+  color: #ffffff !important;
+}
+
+/* Bright Daylight Surface Polish for Sunny Sky & Nobita Room */
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-hero {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(224, 242, 254, 0.9) 100%) !important;
+  border: 1.5px solid rgba(0, 150, 230, 0.34) !important;
+  box-shadow: 0 14px 32px rgba(0, 150, 230, 0.14) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-hero {
+  background: linear-gradient(135deg, rgba(255, 251, 242, 0.94) 0%, rgba(254, 243, 199, 0.88) 100%) !important;
+  border: 1.5px solid rgba(244, 114, 182, 0.36) !important;
+  box-shadow: 0 14px 32px rgba(180, 83, 9, 0.12) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .subject-card,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .exam-card,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-stat-card,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .subject-card-add,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .exam-add-card {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(0, 150, 230, 0.28) !important;
+  box-shadow: 0 12px 28px rgba(14, 116, 144, 0.11) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .subject-card,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .exam-card,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-stat-card,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .subject-card-add,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .exam-add-card {
+  background: rgba(255, 251, 242, 0.91) !important;
+  border-color: rgba(244, 114, 182, 0.32) !important;
+  box-shadow: 0 12px 28px rgba(180, 83, 9, 0.1) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .exam-badge,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .exam-badge {
+  background: color-mix(in srgb, var(--card-accent, #0284c7) 14%, #ffffff) !important;
+  border-color: color-mix(in srgb, var(--card-accent, #0284c7) 40%, transparent) !important;
+  color: color-mix(in srgb, var(--card-accent, #0284c7) 78%, #0f172a) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-search-input,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .exam-search-input,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-sort-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .exam-sort-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-category-chip:not(.active),
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-search-input,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .exam-search-input,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-sort-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .exam-sort-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-category-chip:not(.active) {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1.5px solid rgba(0, 150, 230, 0.28) !important;
+  color: #1e293b !important;
+  box-shadow: 0 4px 12px rgba(14, 116, 144, 0.08) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-category-count,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-category-count {
+  background: rgba(14, 165, 233, 0.14) !important;
+  color: #0369a1 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-category-chip.active .home-category-count,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-category-chip.active .home-category-count {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .theme-diorama-interactive-hint,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .theme-diorama-interactive-hint {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(0, 150, 230, 0.35) !important;
+  color: #0369a1 !important;
+  box-shadow: 0 6px 18px rgba(14, 116, 144, 0.14) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-major-tag,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-custom-tag,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-code-badge {
+  background: rgba(15, 34, 68, 0.9) !important;
+  border: 1px solid rgba(56, 189, 248, 0.42) !important;
+  color: #bae6fd !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-badge {
+  background: color-mix(in srgb, var(--card-accent, #38bdf8) 18%, rgba(10, 24, 50, 0.94)) !important;
+  border-color: color-mix(in srgb, var(--card-accent, #38bdf8) 54%, transparent) !important;
+  color: color-mix(in srgb, var(--card-accent, #7dd3fc) 45%, #ffffff) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-progress-val,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-progress-percent {
+  color: #fde047 !important;
+  font-weight: 850 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-progress-track,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .subject-progress-track {
+  background: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-stat-pill {
+  background: rgba(15, 34, 68, 0.88) !important;
+  border: 1px solid rgba(56, 189, 248, 0.28) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-search-input,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-search-input,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-filter-chip,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-category-chip,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-subfilter-pill,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-sort-btn,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-sort-btn,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-hero-secondary-btn,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-sort-menu,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-sort-menu {
+  background: rgba(10, 24, 50, 0.9) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.34) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .home-sort-option,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-sort-option {
+  color: #e2e8f0 !important;
+}
+
+/* Footers (Zero White Bleed on Starry Night, Frosted Soft Glass on Sky/Room!) */
+[data-theme="doraemon-gadget"] .course-footer,
+[data-theme="doraemon-gadget"] .home-footer {
+  background: rgba(7, 20, 43, 0.94) !important;
+  border-top: 1px solid rgba(56, 189, 248, 0.3) !important;
+  color: #94a3b8 !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="doraemon-gadget"] .course-footer a,
+[data-theme="doraemon-gadget"] .home-footer a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"] .course-footer a:hover,
+[data-theme="doraemon-gadget"] .home-footer a:hover {
+  color: #fde047 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-footer,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-footer,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-footer,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-footer {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-top: 1px solid rgba(0, 150, 230, 0.25) !important;
+  color: #475569 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .course-footer a,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .home-footer a,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .course-footer a,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .home-footer a {
+  color: #0369a1 !important;
+}
+
+/* Clear right footer links from fixed bottom-right Golden Bell bubble on desktop */
+@media (min-width: 641px) {
+  [data-theme="doraemon-gadget"] .home-footer-inner,
+  [data-theme="doraemon-gadget"] .course-footer-inner {
+    padding-right: 92px;
+  }
+}
+
+/* Shared Quiz Header & Mode Bar — Starry Night Dark & Sunny Bright */
+[data-theme="doraemon-gadget"] .quiz-v2-header,
+.theme-doraemon-gadget .quiz-v2-header {
+  background: linear-gradient(90deg, rgba(7, 20, 43, 0.96) 0%, rgba(13, 34, 71, 0.96) 55%, rgba(7, 26, 48, 0.96) 100%) !important;
+  border-bottom: 1.5px solid rgba(56, 189, 248, 0.38) !important;
+}
+
+[data-theme="doraemon-gadget"] .quiz-v2-title,
+[data-theme="doraemon-gadget"] .quiz-progress-ring-text,
+[data-theme="doraemon-gadget"] .quiz-progress-ring-label strong,
+[data-theme="doraemon-gadget"] .quiz-v2-part-nav-btn,
+[data-theme="doraemon-gadget"] .quiz-v2-part-select-btn {
+  color: #bae6fd !important;
+}
+
+[data-theme="doraemon-gadget"] .quiz-progress-ring-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"] .quiz-v2-part-selector,
+[data-theme="doraemon-gadget"] .quiz-v2-header-btn,
+[data-theme="doraemon-gadget"] .quiz-v2-header-icon-btn {
+  background: rgba(15, 34, 68, 0.88) !important;
+  border-color: rgba(56, 189, 248, 0.38) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="doraemon-gadget"] .quiz-mode-hub,
+.theme-doraemon-gadget .quiz-mode-hub {
+  background: rgba(7, 20, 43, 0.95) !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.28) !important;
+}
+
+[data-theme="doraemon-gadget"] .quiz-mode-pill-btn {
+  color: #cbd5e1 !important;
+  background: rgba(15, 34, 68, 0.78) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+[data-theme="doraemon-gadget"] .quiz-mode-pill-btn.is-active {
+  background: linear-gradient(135deg, #0096e6, #0284c7) !important;
+  color: #ffffff !important;
+  border-color: #fde047 !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.34) !important;
+}
+
+/* Bright Sky & Room Shared Quiz Header Override */
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-header,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-header {
+  background: linear-gradient(90deg, rgba(240, 249, 255, 0.96) 0%, rgba(255, 255, 255, 0.96) 55%, rgba(224, 242, 254, 0.96) 100%) !important;
+  border-bottom: 1.5px solid rgba(0, 150, 230, 0.32) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-title,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-progress-ring-text,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-progress-ring-label strong,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-part-nav-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-part-select-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-title,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-progress-ring-text,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-progress-ring-label strong,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-part-nav-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-part-select-btn {
+  color: #0369a1 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-progress-ring-label,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-progress-ring-label {
+  color: #475569 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-part-selector,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-header-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-header-icon-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-part-selector,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-header-btn,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-header-icon-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 150, 230, 0.32) !important;
+  color: #1e293b !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-mode-hub,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-mode-hub {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1.5px solid rgba(0, 150, 230, 0.24) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-mode-pill-btn:not(.is-active),
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-mode-pill-btn:not(.is-active) {
+  color: #334155 !important;
+  background: rgba(240, 249, 255, 0.85) !important;
+  border-color: rgba(14, 165, 233, 0.25) !important;
+}
+
+/* AskAI Banner — Túi Thần Kỳ AI · Bánh Mì Ghi Nhớ */
+[data-theme="doraemon-gadget"] .ask-ai {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-toolbar {
+  background: linear-gradient(135deg, rgba(13, 34, 71, 0.94), rgba(8, 47, 73, 0.92)) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.5) !important;
+  border-radius: 14px !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-toolbar-icon {
+  background: rgba(250, 204, 21, 0.2) !important;
+  border: 1px solid rgba(250, 204, 21, 0.55) !important;
+  color: #fde047 !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-toolbar-copy strong {
+  color: #7dd3fc !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-toolbar-copy span,
+[data-theme="doraemon-gadget"] .ask-ai-toolbar-copy span:last-child {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-toggle {
+  background: linear-gradient(135deg, #0096e6, #0284c7) !important;
+  border: 1px solid #fde047 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .ask-ai-toolbar,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .ask-ai-toolbar {
+  background: linear-gradient(135deg, rgba(224, 242, 254, 0.92), rgba(254, 249, 195, 0.84)) !important;
+  border-color: rgba(0, 150, 230, 0.45) !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .ask-ai-toolbar-copy strong,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .ask-ai-toolbar-copy strong {
+  color: #0369a1 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .ask-ai-toolbar-copy span,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .ask-ai-toolbar-copy span {
+  color: #334155 !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-panel {
+  background: rgba(9, 22, 46, 0.96) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="doraemon-gadget"] .ask-ai-answer {
+  background: rgba(15, 34, 68, 0.9) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .ask-ai-panel,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .ask-ai-panel {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(0, 150, 230, 0.34) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .ask-ai-answer,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .ask-ai-answer {
+  background: rgba(240, 249, 255, 0.92) !important;
+  color: #1e293b !important;
+}
+
+/* 3D Diorama Backlight Aura — Doraemon */
+.theme-diorama-aura.aura-doraemon-gadget {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(250, 204, 21, 0.24) 50%, transparent 76%);
+}
+
+/* ==========================================================================
+   UNIVERSAL 9-TEMPLATE VISUAL POLISH AUDIT
+   (Footers, Add Cards, Secondary Mode Backdrops, Progress Tracks, Hero Icons)
+   ========================================================================== */
+
+/* 1. Clear footer right links from fixed bottom-right WoodenFish / Mascot bubble across ALL 9 themes */
+@media (min-width: 641px) {
+  .home-footer-inner,
+  .course-footer-inner {
+    padding-right: 96px !important;
+  }
+}
+
+/* 2. Prevent cold white #f7f8fc backdrop bleed in MistakeBuster & secondary Quiz modes */
+[data-theme="hon-viet"] .quiz-v2-wrapper,
+[data-theme="fantasy-academy"] .quiz-v2-wrapper,
+[data-theme="cozy-night"] .quiz-v2-wrapper {
+  background: transparent !important;
+}
+
+/* 3. Cohesive Dark & Heritage Footers (Zero White Glare on Dark-Backdrop Themes) */
+[data-theme="hon-viet"] .home-footer,
+[data-theme="hon-viet"] .course-footer {
+  background: linear-gradient(90deg, rgba(46, 5, 8, 0.96), rgba(64, 8, 12, 0.95), rgba(38, 4, 7, 0.96)) !important;
+  border-top: 1.5px solid rgba(245, 158, 11, 0.42) !important;
+  color: #fde68a !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="hon-viet"] .home-footer a,
+[data-theme="hon-viet"] .course-footer a {
+  color: #fef3c7 !important;
+}
+
+[data-theme="hon-viet"] .home-footer a:hover,
+[data-theme="hon-viet"] .course-footer a:hover {
+  color: #fbbf24 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-footer,
+[data-theme="lotus-zen-sanctuary"] .course-footer {
+  background: rgba(24, 14, 9, 0.96) !important;
+  border-top: 1.5px solid rgba(167, 118, 54, 0.45) !important;
+  color: #d6c5b0 !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-footer a,
+[data-theme="lotus-zen-sanctuary"] .course-footer a {
+  color: #f7ecd6 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .home-footer a:hover,
+[data-theme="lotus-zen-sanctuary"] .course-footer a:hover {
+  color: #d8b36a !important;
+}
+
+[data-theme="fantasy-academy"] .home-footer,
+[data-theme="fantasy-academy"] .course-footer {
+  background: rgba(8, 20, 14, 0.96) !important;
+  border-top: 1.5px solid rgba(217, 119, 6, 0.36) !important;
+  color: #94a3b8 !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="fantasy-academy"] .home-footer a,
+[data-theme="fantasy-academy"] .course-footer a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="fantasy-academy"] .home-footer a:hover,
+[data-theme="fantasy-academy"] .course-footer a:hover {
+  color: #fbbf24 !important;
+}
+
+[data-theme="cozy-night"] .home-footer,
+[data-theme="cozy-night"] .course-footer {
+  background: rgba(13, 19, 36, 0.95) !important;
+  border-top: 1px solid rgba(129, 140, 248, 0.3) !important;
+  color: #94a3b8 !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="cozy-night"] .home-footer a,
+[data-theme="cozy-night"] .course-footer a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="cozy-night"] .home-footer a:hover,
+[data-theme="cozy-night"] .course-footer a:hover {
+  color: #38bdf8 !important;
+}
+
+[data-theme="spidey-night"] .home-footer,
+[data-theme="spidey-night"] .course-footer {
+  background: rgba(8, 12, 28, 0.96) !important;
+  border-top: 1.5px solid rgba(244, 63, 94, 0.35) !important;
+  color: #94a3b8 !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="spidey-night"] .home-footer a,
+[data-theme="spidey-night"] .course-footer a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="spidey-night"] .home-footer a:hover,
+[data-theme="spidey-night"] .course-footer a:hover {
+  color: #38bdf8 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-footer,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-footer {
+  background: rgba(13, 21, 38, 0.95) !important;
+  border-top: 1px solid rgba(147, 197, 253, 0.3) !important;
+  color: #94a3b8 !important;
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-footer a,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-footer a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-footer a:hover,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .course-footer a:hover {
+  color: #fde047 !important;
+}
+
+/* 4. Fix "Tạo môn học mới" (.subject-card-add) for Billionaire Vault, Shin Rain, Lotus Zen & Hon Viet badge */
+[data-theme="billionaire-vault"] .subject-card-add,
+[data-theme="billionaire-vault"] .home-empty-state {
+  background: linear-gradient(160deg, rgba(14, 16, 22, 0.92), rgba(9, 10, 14, 0.95)) !important;
+  border: 2px dashed rgba(212, 175, 55, 0.45) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.56) !important;
+}
+
+[data-theme="billionaire-vault"] .subject-card-add:hover {
+  border-color: #f3d37a !important;
+  background: rgba(20, 23, 32, 0.96) !important;
+  box-shadow: 0 16px 36px rgba(212, 175, 55, 0.22) !important;
+}
+
+[data-theme="billionaire-vault"] .add-info-text h3,
+[data-theme="billionaire-vault"] .home-empty-state h3 {
+  color: #f8fafc !important;
+}
+
+[data-theme="billionaire-vault"] .add-info-text p,
+[data-theme="billionaire-vault"] .home-empty-state p {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="billionaire-vault"] .add-icon-circle,
+[data-theme="billionaire-vault"] .add-btn {
+  background: rgba(212, 175, 55, 0.16) !important;
+  border: 1px solid rgba(212, 175, 55, 0.48) !important;
+  color: #f3d37a !important;
+}
+
+[data-theme="billionaire-vault"] .add-btn:hover {
+  background: linear-gradient(135deg, #b8860b, #d4af37, #f3d37a) !important;
+  color: #090a0d !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .subject-card-add,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-empty-state {
+  background: rgba(15, 23, 42, 0.88) !important;
+  border: 2px dashed rgba(251, 191, 36, 0.45) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.48) !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .add-info-text h3,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-empty-state h3 {
+  color: #f8fafc !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .add-info-text p,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .home-empty-state p {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .add-icon-circle,
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .add-btn {
+  background: rgba(251, 191, 36, 0.16) !important;
+  border: 1px solid rgba(251, 191, 36, 0.48) !important;
+  color: #fde047 !important;
+}
+
+[data-theme="shin-kasukabe"][data-shin-scene="rain"] .add-btn:hover {
+  background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="hon-viet"] .subject-card-add .home-hero-eyebrow {
+  background: linear-gradient(135deg, #991b1b, #7f1d1d) !important;
+  border: 1px solid rgba(245, 158, 11, 0.65) !important;
+  color: #fef08a !important;
+  text-shadow: none !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-card-add,
+[data-theme="lotus-zen-sanctuary"] .home-empty-state,
+[data-theme="lotus-zen-sanctuary"] .exam-add-card {
+  background: linear-gradient(155deg, #fffdf7 0%, #f7ecd6 100%) !important;
+  border: 1.5px dashed rgba(167, 118, 54, 0.58) !important;
+  box-shadow: 0 10px 26px rgba(18, 10, 6, 0.34) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .subject-card-add .home-hero-eyebrow,
+[data-theme="lotus-zen-sanctuary"] .exam-add-badge {
+  background: rgba(167, 118, 54, 0.18) !important;
+  border: 1px solid rgba(167, 118, 54, 0.48) !important;
+  color: #5c3a14 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .exam-add-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+[data-theme="lotus-zen-sanctuary"] .add-info-text h3,
+[data-theme="lotus-zen-sanctuary"] .exam-add-title,
+[data-theme="lotus-zen-sanctuary"] .home-empty-state h3 {
+  color: #28211c !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .add-info-text p,
+[data-theme="lotus-zen-sanctuary"] .exam-add-desc,
+[data-theme="lotus-zen-sanctuary"] .home-empty-state p {
+  color: #5c4b3d !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .add-icon-circle,
+[data-theme="lotus-zen-sanctuary"] .exam-add-icon-box {
+  background: linear-gradient(135deg, #f3e4c3 0%, #e9d3a3 100%) !important;
+  border: 1.5px solid rgba(167, 118, 54, 0.5) !important;
+  color: #6b4514 !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .add-btn,
+[data-theme="lotus-zen-sanctuary"] .exam-add-btn {
+  background: linear-gradient(135deg, #a77636 0%, #8c5e22 100%) !important;
+  border: 1px solid rgba(216, 179, 106, 0.6) !important;
+  color: #fff8ec !important;
+}
+
+/* 5. Fix "Tạo đề thi mới" (.exam-add-card) & .course-hero-icon-box for Hon Viet, Lotus Zen, Fantasy, Cozy Night */
+[data-theme="hon-viet"] .exam-add-card {
+  background: linear-gradient(155deg, #fffdf8 0%, #fdf6ea 60%, #faefe0 100%) !important;
+  border: 1.5px dashed rgba(217, 119, 6, 0.55) !important;
+  box-shadow: 0 10px 24px rgba(45, 4, 8, 0.24) !important;
+}
+
+[data-theme="hon-viet"] .exam-add-icon-box {
+  background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.45) !important;
+  color: #991b1b !important;
+}
+
+[data-theme="hon-viet"] .exam-add-badge {
+  color: #991b1b !important;
+}
+
+[data-theme="hon-viet"] .exam-add-title {
+  color: #2a0508 !important;
+}
+
+[data-theme="hon-viet"] .exam-add-desc {
+  color: #4a1d0f !important;
+}
+
+[data-theme="hon-viet"] .exam-add-btn {
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%) !important;
+  border: 1px solid rgba(251, 191, 36, 0.5) !important;
+  color: #fffbeb !important;
+}
+
+[data-theme="hon-viet"] .course-hero-icon-box {
+  background: linear-gradient(145deg, rgba(153, 27, 27, 0.55), rgba(120, 20, 20, 0.72)) !important;
+  border: 1.5px solid rgba(251, 191, 36, 0.58) !important;
+  color: #fde68a !important;
+  box-shadow: 0 8px 22px rgba(40, 2, 5, 0.45) !important;
+}
+
+[data-theme="lotus-zen-sanctuary"] .course-hero-icon-box {
+  background: linear-gradient(145deg, rgba(167, 118, 54, 0.34), rgba(59, 32, 20, 0.72)) !important;
+  border: 1.5px solid rgba(216, 179, 106, 0.6) !important;
+  color: #fef08a !important;
+  box-shadow: 0 8px 22px rgba(10, 5, 3, 0.5) !important;
+}
+
+[data-theme="fantasy-academy"] .course-hero-icon-box {
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.2), rgba(217, 119, 6, 0.22)) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.55) !important;
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .exam-add-card {
+  background: rgba(13, 29, 21, 0.94) !important;
+  border: 1.5px dashed rgba(217, 119, 6, 0.48) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.58) !important;
+}
+
+[data-theme="fantasy-academy"] .exam-add-icon-box {
+  background: rgba(217, 119, 6, 0.18) !important;
+  border: 1px solid rgba(245, 158, 11, 0.48) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme="fantasy-academy"] .exam-add-badge {
+  color: #fbbf24 !important;
+}
+
+[data-theme="fantasy-academy"] .exam-add-title {
+  color: #fef3c7 !important;
+}
+
+[data-theme="fantasy-academy"] .exam-add-desc {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="fantasy-academy"] .exam-add-btn {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="cozy-night"] .course-hero-icon-box {
+  background: linear-gradient(145deg, rgba(99, 102, 241, 0.28), rgba(56, 189, 248, 0.2)) !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.5) !important;
+  color: #bae6fd !important;
+}
+
+[data-theme="cozy-night"] .exam-add-card {
+  background: rgba(20, 28, 46, 0.88) !important;
+  border: 1.5px dashed rgba(129, 140, 248, 0.45) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-theme="cozy-night"] .exam-add-icon-box {
+  background: rgba(99, 102, 241, 0.2) !important;
+  border: 1px solid rgba(129, 140, 248, 0.42) !important;
+  color: #38bdf8 !important;
+}
+
+[data-theme="cozy-night"] .exam-add-badge {
+  color: #38bdf8 !important;
+}
+
+[data-theme="cozy-night"] .exam-add-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="cozy-night"] .exam-add-desc {
+  color: #94a3b8 !important;
+}
+
+[data-theme="cozy-night"] .exam-add-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border: 1px solid rgba(165, 180, 252, 0.42) !important;
+  color: #ffffff !important;
+}
+
+/* 6. Fix stark solid-white progress tracks, circular ring tracks & major tags on Dark Themes */
+[data-theme="fantasy-academy"] .exam-progress-track,
+[data-theme="fantasy-academy"] .subject-progress-track,
+[data-theme="cozy-night"] .exam-progress-track,
+[data-theme="cozy-night"] .subject-progress-track,
+[data-theme="spidey-night"] .exam-progress-track,
+[data-theme="spidey-night"] .subject-progress-track {
+  background: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="fantasy-academy"] .course-stat-icon-wrap.ring-box svg circle:first-child,
+[data-theme="cozy-night"] .course-stat-icon-wrap.ring-box svg circle:first-child,
+[data-theme="spidey-night"] .course-stat-icon-wrap.ring-box svg circle:first-child {
+  stroke: rgba(255, 255, 255, 0.16) !important;
+}
+
+[data-theme="fantasy-academy"] .subject-major-tag {
+  background: rgba(16, 40, 28, 0.9) !important;
+  border: 1px solid rgba(245, 158, 11, 0.42) !important;
+  color: #fef3c7 !important;
+}
+
+[data-theme="cozy-night"] .subject-major-tag {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border: 1px solid rgba(129, 140, 248, 0.42) !important;
+  color: #e0e7ff !important;
+}

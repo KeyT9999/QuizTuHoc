@@ -110,6 +110,7 @@ import WoodenFish from './components/WoodenFish';
 import SpideyChibiMascot from './components/SpideyChibiMascot';
 import ShinMascot from './components/ShinMascot';
 import MoneyWingsMascot from './components/MoneyWingsMascot';
+import DoraemonMascot from './components/DoraemonMascot';
 import ThemeAmbientCanvas from './components/ThemeAmbientCanvas';
 import { useTheme } from './context/ThemeContext';
 import './App.css';
@@ -261,7 +262,7 @@ function updateKnowledgeGroupUrlState(
 
 export default function App() {
   const { route, navigate } = useAppRouter();
-  const { theme, mouseEffectsEnabled, shinScene, moneyFinish } = useTheme();
+  const { theme, mouseEffectsEnabled, shinScene, moneyFinish, doraemonScene } = useTheme();
   useDailyShopeeRedirect();
 
   const [courses, setCourses] = useState<Course[]>(() => [
@@ -589,7 +590,13 @@ export default function App() {
   };
 
   return (
-    <div className="app" data-theme={theme}>
+    <div
+      className="app"
+      data-theme={theme}
+      data-shin-scene={shinScene}
+      data-money-finish={moneyFinish}
+      data-doraemon-scene={doraemonScene}
+    >
       <main className="app-main">
         {/* 1. Màn hình danh sách môn học */}
         {route.type === 'course_list' && (
@@ -766,6 +773,12 @@ export default function App() {
       {theme === 'billionaire-vault' &&
         !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <MoneyWingsMascot variant="floating" finish={moneyFinish} mouseEffectsEnabled={mouseEffectsEnabled} />
+        )}
+
+      {/* Floating Mascot Doraemon (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Doraemon) */}
+      {theme === 'doraemon-gadget' &&
+        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+          <DoraemonMascot variant="floating" scene={doraemonScene} mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 
       {/* Widget Gõ Mõ Tịnh Tâm / Nút Bắn Tơ Spidey */}

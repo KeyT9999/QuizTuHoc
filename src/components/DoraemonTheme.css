@@ -1,0 +1,1690 @@
+/* ==========================================================================
+   DORAEMON GADGET THEME — 4D POCKET, STARRY HILL, SKY & NOBITA'S ROOM
+   Signature Palette: Doraemon Sky Blue (#0096E6 / #38BDF8), Collar Red (#EF4444),
+   Golden Bell (#FACC15), Anywhere Door Pink (#F472B6), Deep Starry Cobalt (#07142B)
+   ========================================================================== */
+
+/* Eliminate default light quiz-v2-wrapper background across all 3 scenes */
+.quiz-doraemon-page-wrapper,
+[data-theme="doraemon-gadget"] .quiz-v2-wrapper,
+.theme-doraemon-gadget.quiz-v2-wrapper {
+  background-color: #07142b !important;
+  background-image: linear-gradient(165deg, #07142b 0%, #0d2247 55%, #071b2e 100%) !important;
+  color: #f8fafc !important;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: clip;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-v2-wrapper,
+[data-theme="doraemon-gadget"][data-doraemon-scene="sky"] .quiz-doraemon-page-wrapper {
+  background-color: #e0f2fe !important;
+  background-image: linear-gradient(165deg, #bae6fd 0%, #e0f2fe 52%, #f0fdf4 100%) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-v2-wrapper,
+[data-theme="doraemon-gadget"][data-doraemon-scene="room"] .quiz-doraemon-page-wrapper {
+  background-color: #fef3c7 !important;
+  background-image: linear-gradient(165deg, #fffbeb 0%, #ffedd5 55%, #fce7f3 100%) !important;
+  color: #1e293b !important;
+}
+
+/* ==========================================================================
+   DYNAMIC SCENE TOKENS (STARRY NIGHT / SUNNY SKY / GOLDEN TATAMI ROOM)
+   ========================================================================== */
+.doraemon-theme-root {
+  --dr-blue: #0096e6;
+  --dr-sky: #38bdf8;
+  --dr-red: #ef4444;
+  --dr-bell: #facc15;
+  --dr-pink: #f472b6;
+  --dr-card-bg: rgba(9, 22, 46, 0.84);
+  --dr-card-border: rgba(56, 189, 248, 0.32);
+  --dr-card-shadow: 0 18px 42px rgba(3, 10, 26, 0.62), inset 0 1px 0 rgba(186, 230, 253, 0.14);
+  --dr-text: #f8fafc;
+  --dr-text-muted: #cbd5e1;
+  --dr-opt-bg: rgba(15, 34, 68, 0.84);
+  --dr-opt-border: rgba(56, 189, 248, 0.26);
+  --dr-pill-bg: rgba(15, 34, 68, 0.88);
+
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 110px);
+  color: var(--dr-text);
+}
+
+.doraemon-theme-root.scene-sky {
+  --dr-card-bg: rgba(255, 255, 255, 0.88);
+  --dr-card-border: rgba(0, 150, 230, 0.28);
+  --dr-card-shadow: 0 14px 34px rgba(14, 116, 144, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --dr-text: #0f172a;
+  --dr-text-muted: #475569;
+  --dr-opt-bg: rgba(240, 249, 255, 0.92);
+  --dr-opt-border: rgba(14, 165, 233, 0.28);
+  --dr-pill-bg: rgba(240, 249, 255, 0.95);
+}
+
+.doraemon-theme-root.scene-room {
+  --dr-card-bg: rgba(255, 251, 242, 0.9);
+  --dr-card-border: rgba(244, 114, 182, 0.34);
+  --dr-card-shadow: 0 14px 34px rgba(120, 53, 15, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --dr-text: #1e293b;
+  --dr-text-muted: #64748b;
+  --dr-opt-bg: rgba(255, 247, 237, 0.92);
+  --dr-opt-border: rgba(245, 158, 11, 0.3);
+  --dr-pill-bg: rgba(255, 247, 237, 0.95);
+}
+
+/* ==========================================================================
+   BACKDROP, SHOOTING STARS, FIREFLIES & DRIFTING ANIME CLOUDS
+   ========================================================================== */
+.doraemon-stage-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.doraemon-stage-wallpaper {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  opacity: 0.78;
+  transition: background-image 0.55s ease, filter 0.4s ease, opacity 0.4s ease;
+}
+
+.doraemon-theme-root.is-focus-active .doraemon-stage-wallpaper {
+  opacity: 0.34;
+  filter: blur(5px);
+}
+
+.doraemon-stage-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 72% 70% at 50% 42%, rgba(7, 20, 43, 0.42) 0%, rgba(4, 12, 30, 0.78) 100%),
+    linear-gradient(180deg, rgba(7, 20, 43, 0.58) 0%, rgba(7, 20, 43, 0.2) 55%, rgba(6, 18, 34, 0.55) 100%);
+}
+
+.doraemon-theme-root.scene-sky .doraemon-stage-scrim {
+  background:
+    radial-gradient(ellipse 76% 70% at 50% 42%, rgba(255, 255, 255, 0.22) 0%, rgba(186, 230, 253, 0.44) 100%),
+    linear-gradient(180deg, rgba(224, 242, 254, 0.42) 0%, rgba(255, 255, 255, 0.14) 55%, rgba(224, 242, 254, 0.45) 100%);
+}
+
+.doraemon-theme-root.scene-room .doraemon-stage-scrim {
+  background:
+    radial-gradient(ellipse 76% 70% at 50% 42%, rgba(255, 251, 235, 0.25) 0%, rgba(254, 215, 170, 0.42) 100%),
+    linear-gradient(180deg, rgba(255, 247, 237, 0.42) 0%, rgba(255, 251, 235, 0.15) 55%, rgba(254, 243, 199, 0.45) 100%);
+}
+
+/* Shooting Stars & Glowing Fireflies on Starry Night Hill */
+.doraemon-starry-fx,
+.doraemon-day-fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.doraemon-shooting-star {
+  position: absolute;
+  width: 135px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(125, 211, 252, 0.72) 38%, transparent 100%);
+  box-shadow: 0 0 10px rgba(186, 230, 253, 0.85);
+  opacity: 0;
+  transform: rotate(-28deg);
+  animation: doraemonShootingStar 7.5s linear infinite;
+}
+
+.doraemon-shooting-star::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 12px 3px rgba(254, 240, 138, 0.9);
+}
+
+.doraemon-shooting-star.s1 { top: 14%; left: 78%; animation-delay: 0.4s; animation-duration: 6.4s; }
+.doraemon-shooting-star.s2 { top: 24%; left: 32%; animation-delay: 2.8s; animation-duration: 7.8s; }
+.doraemon-shooting-star.s3 { top: 11%; left: 56%; animation-delay: 4.9s; animation-duration: 6.9s; }
+.doraemon-shooting-star.s4 { top: 32%; left: 90%; animation-delay: 6.2s; animation-duration: 8.2s; }
+
+@keyframes doraemonShootingStar {
+  0% { transform: translate3d(0, 0, 0) rotate(-28deg); opacity: 0; }
+  4% { opacity: 1; }
+  18% { transform: translate3d(-340px, 185px, 0) rotate(-28deg); opacity: 0; }
+  100% { transform: translate3d(-340px, 185px, 0) rotate(-28deg); opacity: 0; }
+}
+
+.doraemon-firefly {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fef08a 0%, #38bdf8 60%, transparent 100%);
+  box-shadow: 0 0 12px 2px rgba(254, 240, 138, 0.75);
+  animation: doraemonFireflyFloat 7s ease-in-out infinite;
+}
+
+.doraemon-firefly.f1 { bottom: 16%; left: 9%; animation-delay: 0s; }
+.doraemon-firefly.f2 { bottom: 24%; left: 17%; animation-delay: 1.5s; }
+.doraemon-firefly.f3 { bottom: 18%; right: 14%; animation-delay: 2.9s; }
+.doraemon-firefly.f4 { bottom: 28%; right: 8%; animation-delay: 4.1s; }
+.doraemon-firefly.f5 { bottom: 12%; left: 48%; animation-delay: 5.2s; }
+
+@keyframes doraemonFireflyFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0.35; }
+  50% { transform: translate3d(18px, -28px, 0) scale(1.25); opacity: 0.95; }
+}
+
+/* Drifting clouds & subtle bells on Sunny Sky / Tatami Room */
+.doraemon-drift-cloud {
+  position: absolute;
+  width: 240px;
+  height: 68px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(8px);
+  animation: doraemonCloudDrift 34s linear infinite;
+}
+
+.doraemon-drift-cloud.c1 { top: 15%; left: -240px; }
+.doraemon-drift-cloud.c2 { top: 34%; left: -280px; width: 300px; animation-delay: 14s; animation-duration: 42s; }
+
+@keyframes doraemonCloudDrift {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 340px)); }
+}
+
+.doraemon-ambient-bell {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0.35;
+  animation: doraemonAmbientBob 8s ease-in-out infinite;
+}
+
+.doraemon-ambient-bell.ab1 { top: 22%; left: 3%; }
+.doraemon-ambient-bell.ab2 { top: 58%; right: 3%; animation-delay: 2.4s; }
+.doraemon-ambient-bell.ab3 { bottom: 16%; left: 5%; animation-delay: 4.8s; }
+
+@keyframes doraemonAmbientBob {
+  0%, 100% { transform: translateY(0) rotate(-6deg); opacity: 0.25; }
+  50% { transform: translateY(-18px) rotate(8deg); opacity: 0.55; }
+}
+
+/* ==========================================================================
+   3D SWINGING PINK ANYWHERE DOOR CELEBRATION OVERLAY (NO HEADER OVERLAP!)
+   ========================================================================== */
+.doraemon-door-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 140;
+  overflow: hidden;
+}
+
+.doraemon-celebration-floater {
+  position: absolute;
+  top: -32px;
+  font-size: 26px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  animation-name: doraemonCelebrationDrop;
+  animation-timing-function: cubic-bezier(0.22, 0.65, 0.42, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes doraemonCelebrationDrop {
+  0% { transform: translate3d(0, 0, 0) rotate(-14deg) scale(0.8); opacity: 0; }
+  14% { opacity: 1; }
+  65% { transform: translate3d(26px, 56vh, 0) rotate(22deg) scale(1.1); opacity: 0.96; }
+  100% { transform: translate3d(-18px, 108vh, 0) rotate(-18deg) scale(0.9); opacity: 0; }
+}
+
+.doraemon-door-banner {
+  position: absolute;
+  bottom: 24px;
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 92vw;
+  padding: 13px 24px 13px 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(7, 22, 50, 0.97) 0%, rgba(14, 52, 98, 0.97) 100%);
+  border: 2px solid #f472b6;
+  box-shadow:
+    0 22px 54px rgba(2, 8, 24, 0.72),
+    0 0 32px rgba(56, 189, 248, 0.35),
+    0 0 20px rgba(244, 114, 182, 0.3);
+  animation: doraemonBannerPop 2.65s cubic-bezier(0.18, 0.88, 0.32, 1) forwards;
+}
+
+@keyframes doraemonBannerPop {
+  0% { opacity: 0; transform: translateX(-50%) translateY(24px) scale(0.92); }
+  14% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.02); }
+  82% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(14px) scale(0.96); }
+}
+
+/* 3D Miniature Swinging Pink Anywhere Door */
+.doraemon-mini-door-frame {
+  position: relative;
+  width: 44px;
+  height: 62px;
+  border-radius: 6px 6px 2px 2px;
+  border: 3px solid #f472b6;
+  background: #831843;
+  perspective: 180px;
+  flex-shrink: 0;
+  box-shadow: 0 0 18px rgba(244, 114, 182, 0.55);
+}
+
+.doraemon-mini-door-portal {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #fef08a 0%, #38bdf8 48%, #1d4ed8 100%);
+  animation: doraemonPortalGlow 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes doraemonPortalGlow {
+  from { filter: brightness(0.95); }
+  to { filter: brightness(1.35); }
+}
+
+.doraemon-mini-door-leaf {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, #fb7185 0%, #f472b6 55%, #ec4899 100%);
+  border: 1px solid #fbcfe8;
+  transform-origin: left center;
+  animation: doraemonDoorSwing 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.doraemon-mini-door-knob {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fde047;
+  box-shadow: 0 0 6px #fde047;
+}
+
+@keyframes doraemonDoorSwing {
+  0% { transform: rotateY(0deg); }
+  45% { transform: rotateY(-74deg); }
+  100% { transform: rotateY(-66deg); }
+}
+
+.doraemon-door-eyebrow {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  color: #f9a8d4;
+}
+
+.doraemon-door-title {
+  font-size: 17px;
+  font-weight: 900;
+  background: linear-gradient(95deg, #ffffff 0%, #bae6fd 50%, #fde047 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 2px;
+}
+
+.doraemon-door-sub {
+  font-size: 12px;
+  color: #e0f2fe;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   3-COLUMN LAYOUT & FROSTED DORAEMON GLASS WIDGETS
+   ========================================================================== */
+.doraemon-body-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) 278px;
+  gap: 20px;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 14px 22px 96px;
+  position: relative;
+  z-index: 2;
+  align-items: start;
+}
+
+.doraemon-theme-root.is-focus-active .doraemon-body-layout {
+  grid-template-columns: minmax(0, 820px);
+  justify-content: center;
+}
+
+.doraemon-theme-root.is-focus-active .doraemon-sidebar-left,
+.doraemon-theme-root.is-focus-active .doraemon-sidebar-right > :not(.doraemon-focus-card) {
+  display: none;
+}
+
+.doraemon-theme-root.is-focus-active .doraemon-sidebar-right {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  width: 260px;
+  z-index: 40;
+}
+
+.doraemon-sidebar-left,
+.doraemon-sidebar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.doraemon-widget-card {
+  background: var(--dr-card-bg);
+  border: 1.5px solid var(--dr-card-border);
+  border-radius: 18px;
+  padding: 14px 15px;
+  box-shadow: var(--dr-card-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.doraemon-widget-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.doraemon-widget-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--dr-text);
+  letter-spacing: 0.2px;
+}
+
+.doraemon-pill-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #7dd3fc;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-pill-badge {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0369a1;
+}
+
+.doraemon-dorayaki-chip {
+  font-size: 11px;
+  font-weight: 850;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(250, 204, 21, 0.2);
+  border: 1px solid rgba(250, 204, 21, 0.52);
+  color: #fde047;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-dorayaki-chip {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #b45309;
+}
+
+/* Donut Progress */
+.doraemon-donut-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 2px auto 12px;
+}
+
+.doraemon-donut-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.doraemon-donut-bg {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.2);
+  stroke-width: 7;
+}
+
+.doraemon-donut-fill {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.55));
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-donut-fill {
+  stroke: #0096e6;
+  filter: none;
+}
+
+.doraemon-donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.doraemon-donut-num {
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--dr-text);
+  line-height: 1;
+}
+
+.doraemon-donut-sub {
+  font-size: 10px;
+  color: var(--dr-text-muted);
+  margin-top: 2px;
+}
+
+.doraemon-stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.doraemon-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--dr-text-muted);
+}
+
+.doraemon-stat-row strong {
+  margin-left: auto;
+  color: var(--dr-text);
+  font-weight: 800;
+}
+
+.d-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.d-dot.dot-sky { background: #38bdf8; }
+.d-dot.dot-green { background: #10b981; }
+.d-dot.dot-red { background: #ef4444; }
+.d-dot.dot-muted { background: #64748b; }
+
+/* Streak & Accuracy Cards */
+.doraemon-streak-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doraemon-streak-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(250, 204, 21, 0.16);
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.doraemon-streak-days {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--dr-text);
+}
+
+.doraemon-streak-sub {
+  font-size: 11px;
+  color: var(--dr-text-muted);
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.doraemon-muted-val {
+  font-size: 12px;
+  color: var(--dr-text-muted);
+  font-weight: 700;
+}
+
+.doraemon-acc-num {
+  font-size: 27px;
+  font-weight: 900;
+  color: var(--dr-text);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.doraemon-acc-bar {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.22);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.doraemon-acc-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0096e6, #38bdf8, #facc15);
+  transition: width 0.45s ease;
+}
+
+.doraemon-xp-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--dr-text-muted);
+  margin-bottom: 5px;
+}
+
+.doraemon-xp-mini-bar {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.18);
+  overflow: hidden;
+}
+
+.doraemon-xp-mini-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #facc15, #f59e0b);
+}
+
+/* ==========================================================================
+   CENTER COLUMN: TAKE-COPTER PROGRESS BAR & DORAEMON QUESTION CARD
+   ========================================================================== */
+.doraemon-center-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.doraemon-progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--dr-card-bg);
+  border: 1.5px solid var(--dr-card-border);
+  backdrop-filter: blur(12px);
+}
+
+.doraemon-progress-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.24);
+  position: relative;
+}
+
+.doraemon-progress-fill {
+  height: 100%;
+  min-width: 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0096e6 0%, #38bdf8 65%, #facc15 100%);
+  position: relative;
+  transition: width 0.45s ease;
+}
+
+.doraemon-progress-glider {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fde047, #f59e0b);
+  border: 2px solid #ef4444;
+  font-size: 12px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.65);
+}
+
+.doraemon-progress-pct {
+  font-size: 12.5px;
+  font-weight: 850;
+  color: #38bdf8;
+  min-width: 36px;
+  text-align: right;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-progress-pct {
+  color: #0284c7;
+}
+
+/* Main Doraemon Question Card with Signature Red Collar Ribbon */
+.doraemon-question-card {
+  position: relative;
+  background: var(--dr-card-bg);
+  border: 1.5px solid var(--dr-card-border);
+  border-radius: 22px;
+  padding: 26px 26px 22px;
+  box-shadow: var(--dr-card-shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow: visible;
+}
+
+.doraemon-question-card.slide-in-next {
+  animation: doraemonSlideNext 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.doraemon-question-card.slide-in-prev {
+  animation: doraemonSlidePrev 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.doraemon-question-card.is-wobble-shake {
+  animation: doraemonWobble 0.32s ease;
+}
+
+@keyframes doraemonSlideNext {
+  from { opacity: 0.45; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes doraemonSlidePrev {
+  from { opacity: 0.45; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes doraemonWobble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Subtle Signature Red Collar Top Accent with Golden Bell */
+.doraemon-card-collar-ribbon {
+  position: absolute;
+  top: 0;
+  left: 26px;
+  right: 26px;
+  height: 4px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, transparent 0%, #ef4444 18%, #ef4444 82%, transparent 100%);
+  opacity: 0.9;
+}
+
+.doraemon-collar-bell {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fef08a 0%, #facc15 65%, #d97706 100%);
+  border: 1.5px solid #92400e;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
+}
+
+/* Pop Feedback Pill */
+.doraemon-fx-pop-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 15px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+  z-index: 8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  animation: doraemonPopFloat 1.6s ease forwards;
+}
+
+.doraemon-fx-pop-badge.is-correct {
+  background: linear-gradient(135deg, #0096e6, #10b981);
+  border: 1.5px solid #fde047;
+  color: #ffffff;
+}
+
+.doraemon-fx-pop-badge.is-wrong {
+  background: linear-gradient(135deg, #ef4444, #f43f5e);
+  border: 1.5px solid #fecdd3;
+  color: #ffffff;
+}
+
+@keyframes doraemonPopFloat {
+  0% { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.85); }
+  16% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.04); }
+  80% { opacity: 1; transform: translateX(-50%) translateY(-4px) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(0.95); }
+}
+
+.doraemon-q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.doraemon-q-left-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.doraemon-q-num-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(0, 150, 230, 0.24), rgba(56, 189, 248, 0.16));
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  font-size: 12px;
+  font-weight: 850;
+  color: #7dd3fc;
+  letter-spacing: 0.5px;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-q-num-pill {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #0369a1;
+}
+
+.doraemon-q-total {
+  opacity: 0.72;
+  font-weight: 700;
+}
+
+.doraemon-q-part-chip {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--dr-text-muted);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--dr-opt-bg);
+  border: 1px solid var(--dr-opt-border);
+}
+
+.doraemon-mastered-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--dr-opt-border);
+  background: var(--dr-opt-bg);
+  color: var(--dr-text);
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.doraemon-mastered-btn:hover {
+  border-color: #38bdf8;
+}
+
+.doraemon-mastered-btn.is-mastered {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.24), rgba(245, 158, 11, 0.2));
+  border-color: #facc15;
+  color: #fde047;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-mastered-btn.is-mastered {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #f59e0b;
+}
+
+.doraemon-question-text {
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--dr-text);
+  margin: 0 0 18px 0;
+}
+
+/* Options */
+.doraemon-options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.doraemon-option-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: var(--dr-opt-bg);
+  border: 1.5px solid var(--dr-opt-border);
+  color: var(--dr-text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+}
+
+.doraemon-option-card:hover {
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 150, 230, 0.18);
+}
+
+.doraemon-option-card.is-selected {
+  border-color: #38bdf8;
+  background: rgba(0, 150, 230, 0.2);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-option-card.is-selected {
+  background: #e0f2fe;
+}
+
+.doraemon-option-card.is-correct {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.24), rgba(6, 78, 59, 0.52));
+  border-color: #34d399;
+  color: #ecfdf5;
+  box-shadow: 0 0 0 1.5px rgba(52, 211, 153, 0.45);
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-option-card.is-correct {
+  background: linear-gradient(135deg, #dcfce7, #ecfdf5);
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.doraemon-option-card.is-incorrect {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.24), rgba(136, 19, 55, 0.48));
+  border-color: #fb7185;
+  color: #ffe4e6;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-option-card.is-incorrect {
+  background: linear-gradient(135deg, #fee2e2, #fff1f2);
+  border-color: #ef4444;
+  color: #991b1b;
+}
+
+.doraemon-option-card.is-dimmed {
+  opacity: 0.54;
+}
+
+.doraemon-option-key {
+  width: 31px;
+  height: 31px;
+  border-radius: 10px;
+  background: rgba(0, 150, 230, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.48);
+  color: #7dd3fc;
+  font-size: 13px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-option-key {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0369a1;
+}
+
+.doraemon-option-card.is-correct .doraemon-option-key {
+  background: #10b981;
+  border-color: #6ee7b7;
+  color: #ffffff;
+}
+
+.doraemon-option-card.is-incorrect .doraemon-option-key {
+  background: #ef4444;
+  border-color: #fda4af;
+  color: #ffffff;
+}
+
+.doraemon-option-text {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.48;
+}
+
+.doraemon-option-status {
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.doraemon-option-status.correct { color: #10b981; }
+.doraemon-option-status.incorrect { color: #f43f5e; }
+
+/* Free Response */
+.doraemon-free-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.doraemon-free-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dr-text-muted);
+}
+
+.doraemon-free-textarea {
+  width: 100%;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--dr-opt-bg);
+  border: 1.5px solid var(--dr-opt-border);
+  color: var(--dr-text);
+  font-family: inherit;
+  font-size: 14.5px;
+  resize: vertical;
+}
+
+/* Feedback Box */
+.doraemon-feedback-box {
+  margin-top: 14px;
+  padding: 11px 15px;
+  border-radius: 13px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.doraemon-feedback-box.correct {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  color: #d1fae5;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-feedback-box.correct {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.doraemon-feedback-box.incorrect {
+  background: rgba(244, 63, 94, 0.2);
+  border: 1px solid rgba(251, 113, 133, 0.5);
+  color: #ffe4e6;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-feedback-box.incorrect {
+  background: #fff1f2;
+  color: #9f1239;
+}
+
+.doraemon-feedback-box.revealed {
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #e0f2fe;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-feedback-box.revealed {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+/* Card Actions */
+.doraemon-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.doraemon-nav-btn,
+.doraemon-reveal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--dr-opt-bg);
+  border: 1px solid var(--dr-opt-border);
+  color: var(--dr-text);
+  font-size: 13.5px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.doraemon-nav-btn:hover:not(:disabled),
+.doraemon-reveal-btn:hover:not(:disabled) {
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.doraemon-nav-btn:disabled,
+.doraemon-reveal-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.doraemon-reveal-btn kbd {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-reveal-btn kbd {
+  background: #bae6fd;
+  color: #0369a1;
+}
+
+.doraemon-next-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0096e6 0%, #0284c7 100%);
+  border: 1px solid #7dd3fc;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 850;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 150, 230, 0.34);
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.doraemon-next-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.doraemon-next-btn.is-check-multi {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #6ee7b7;
+}
+
+.doraemon-next-btn:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.doraemon-ask-ai-wrap {
+  margin-top: 14px;
+}
+
+.doraemon-keyboard-hints {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--dr-opt-border);
+  font-size: 11.5px;
+  color: var(--dr-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.doraemon-keyboard-hints kbd {
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--dr-opt-bg);
+  border: 1px solid var(--dr-opt-border);
+  color: #38bdf8;
+  font-weight: 800;
+  font-size: 10.5px;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-keyboard-hints kbd {
+  color: #0284c7;
+}
+
+/* ==========================================================================
+   RIGHT SIDEBAR: 4D POCKET GADGET PULL + 3 SCENES + DORAEMON MASCOT
+   ========================================================================== */
+.doraemon-door-quick-btn {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 114, 182, 0.65);
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.24), rgba(236, 72, 153, 0.18));
+  color: #fbcfe8;
+  font-size: 11px;
+  font-weight: 850;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-door-quick-btn {
+  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+  color: #be185d;
+}
+
+.doraemon-door-quick-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: #ffffff;
+}
+
+/* Interactive 4D Pocket Semi-Circle Stage */
+.doraemon-4d-pocket-stage {
+  position: relative;
+  width: 100%;
+  border-radius: 15px;
+  padding: 12px 12px 10px;
+  background: linear-gradient(155deg, rgba(0, 150, 230, 0.26) 0%, rgba(14, 116, 144, 0.18) 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  color: var(--dr-text);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin-bottom: 10px;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-4d-pocket-stage {
+  background: linear-gradient(155deg, #e0f2fe 0%, #f0f9ff 100%);
+  border-color: #38bdf8;
+}
+
+.doraemon-4d-pocket-stage:hover {
+  transform: translateY(-1px);
+  border-color: #facc15;
+  box-shadow: 0 8px 22px rgba(0, 150, 230, 0.28);
+}
+
+.doraemon-pocket-beam {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 85%, rgba(254, 240, 138, 0.72) 0%, rgba(56, 189, 248, 0.32) 48%, transparent 78%);
+  pointer-events: none;
+  animation: doraemonPocketBeam 0.65s ease-out forwards;
+}
+
+@keyframes doraemonPocketBeam {
+  0% { opacity: 0.95; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+.doraemon-pocket-gadget-pop {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: doraemonGadgetBounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes doraemonGadgetBounce {
+  0% { opacity: 0.4; transform: translateY(10px) scale(0.84); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.doraemon-gadget-emoji {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(254, 240, 138, 0.45);
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-gadget-emoji {
+  background: #ffffff;
+  border-color: #7dd3fc;
+}
+
+.doraemon-gadget-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.doraemon-gadget-info strong {
+  font-size: 12.5px;
+  font-weight: 850;
+  color: #fef08a;
+}
+
+.doraemon-theme-root.is-bright-scene .doraemon-gadget-info strong {
+  color: #0369a1;
+}
+
+.doraemon-gadget-info span {
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--dr-text-muted);
+}
+
+/* Iconic White 4D Pocket Arc at bottom of gadget stage */
+.doraemon-pocket-arc {
+  position: relative;
+  z-index: 2;
+  border-radius: 4px 4px 28px 28px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid #0284c7;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 850;
+  color: #0369a1;
+  box-shadow: inset 0 -3px 8px rgba(0, 150, 230, 0.14);
+}
+
+/* 3 World Switcher Pills (Guaranteed Single Line!) */
+.doraemon-scene-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.doraemon-scene-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 3px;
+  border-radius: 10px;
+  border: 1px solid var(--dr-opt-border);
+  background: var(--dr-opt-bg);
+  color: var(--dr-text-muted);
+  font-size: 10.2px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.doraemon-scene-pill:hover {
+  border-color: #38bdf8;
+  color: var(--dr-text);
+}
+
+.doraemon-scene-pill.is-active {
+  background: linear-gradient(135deg, #0096e6, #0284c7);
+  border-color: #7dd3fc;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 150, 230, 0.34);
+}
+
+/* Focus Mode */
+.doraemon-focus-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.doraemon-focus-desc {
+  font-size: 11px;
+  color: var(--dr-text-muted);
+  margin: 3px 0 0 0;
+}
+
+.doraemon-toggle-pill {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: rgba(148, 163, 184, 0.25);
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.doraemon-toggle-pill.is-on {
+  background: linear-gradient(135deg, #0096e6, #38bdf8);
+}
+
+.doraemon-toggle-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.doraemon-toggle-pill.is-on .doraemon-toggle-knob {
+  transform: translateX(20px);
+}
+
+/* ==========================================================================
+   DUAL-POSE ANIMATED DORAEMON MASCOT (SIDEBAR & FLOATING)
+   ========================================================================== */
+.doraemon-sidebar-mascot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.doraemon-mascot-stage {
+  position: relative;
+  width: 100%;
+  height: 112px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.doraemon-stage-halo {
+  position: absolute;
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.34) 0%, rgba(250, 204, 21, 0.14) 55%, transparent 74%);
+  animation: doraemonHaloPulse 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes doraemonHaloPulse {
+  from { transform: scale(0.92); opacity: 0.72; }
+  to { transform: scale(1.08); opacity: 1; }
+}
+
+.doraemon-mini-copter {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  animation: doraemonCopterHover 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+}
+
+.doraemon-mini-copter.is-fast rect:first-child {
+  transform-origin: 32px 6px;
+  animation: doraemonPropellerSpin 0.16s linear infinite;
+}
+
+@keyframes doraemonCopterHover {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+@keyframes doraemonPropellerSpin {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0.2); }
+  100% { transform: scaleX(1); }
+}
+
+.doraemon-mascot-img {
+  position: relative;
+  z-index: 2;
+  max-height: 92px;
+  max-width: 130px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.38));
+  animation: doraemonGentleFloat 3.4s ease-in-out infinite;
+  transition: transform 0.22s ease;
+}
+
+.doraemon-mascot-stage:hover .doraemon-mascot-img {
+  transform: scale(1.07);
+}
+
+.doraemon-sidebar-mascot.mood-excited .doraemon-mascot-img {
+  animation: doraemonJoyBounce 0.65s ease-in-out infinite;
+}
+
+.doraemon-sidebar-mascot.mood-wrong .doraemon-mascot-img {
+  animation: doraemonPeekWobble 0.8s ease-in-out infinite;
+}
+
+@keyframes doraemonGentleFloat {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-6px) rotate(1.5deg); }
+}
+
+@keyframes doraemonJoyBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.06); }
+}
+
+@keyframes doraemonPeekWobble {
+  0%, 100% { transform: rotate(-4deg) scale(1.02); }
+  50% { transform: rotate(4deg) scale(1.05); }
+}
+
+.doraemon-speech-bubble {
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: var(--dr-opt-bg);
+  border: 1px solid var(--dr-opt-border);
+  font-size: 11.5px;
+  font-weight: 650;
+  line-height: 1.42;
+  color: var(--dr-text);
+  text-align: center;
+}
+
+.doraemon-sparkle-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.d-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 15px;
+  animation: doraemonSparkBurst 0.72s ease-out forwards;
+}
+
+.d-spark.s1 { --sx: -46px; --sy: -36px; }
+.d-spark.s2 { --sx: 46px; --sy: -32px; }
+.d-spark.s3 { --sx: -38px; --sy: 28px; }
+.d-spark.s4 { --sx: 42px; --sy: 26px; }
+
+@keyframes doraemonSparkBurst {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1.25); }
+}
+
+/* Floating Mascot on Home / Library / Course Detail (Safely Above Bottom-Right Bell) */
+.doraemon-floating-mascot {
+  position: fixed;
+  right: 18px;
+  bottom: 94px;
+  z-index: 82;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+.doraemon-floating-close {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.55);
+  color: #e0f2fe;
+  font-size: 10px;
+  cursor: pointer;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+}
+
+.doraemon-floating-bubble {
+  max-width: 215px;
+  padding: 8px 11px;
+  border-radius: 13px;
+  background: rgba(7, 22, 50, 0.94);
+  border: 1.5px solid #38bdf8;
+  color: #f0f9ff;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.38;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+.doraemon-floating-btn {
+  position: relative;
+  width: 80px;
+  height: 70px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.doraemon-floating-btn .doraemon-mascot-img {
+  max-height: 64px;
+  max-width: 78px;
+}
+
+.doraemon-floating-aura {
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 72%);
+  pointer-events: none;
+}
+
+.doraemon-click-ring {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 2px solid #facc15;
+  animation: doraemonRingOut 0.5s ease-out forwards;
+}
+
+@keyframes doraemonRingOut {
+  from { transform: scale(0.7); opacity: 0.95; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+
+/* Mobile Controls */
+.doraemon-mobile-bar,
+.doraemon-mobile-drawer {
+  display: none;
+}
+
+@media (max-width: 1120px) {
+  .doraemon-body-layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px 14px 104px;
+  }
+
+  .doraemon-sidebar-left,
+  .doraemon-sidebar-right {
+    display: none;
+  }
+
+  .doraemon-mobile-bar {
+    display: flex;
+  }
+
+  .doraemon-mobile-stat-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    border-radius: 13px;
+    background: var(--dr-card-bg);
+    border: 1.5px solid var(--dr-card-border);
+    color: var(--dr-text);
+    font-size: 12.5px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .doraemon-mobile-drawer {
+    display: block;
+    padding: 10px;
+    border-radius: 14px;
+    background: var(--dr-card-bg);
+    border: 1.5px solid var(--dr-card-border);
+  }
+}
+
+@media (max-width: 640px) {
+  .doraemon-question-card {
+    padding: 20px 15px 16px;
+    border-radius: 18px;
+  }
+
+  .doraemon-floating-mascot {
+    right: 10px;
+    bottom: 78px;
+  }
+
+  .doraemon-floating-btn {
+    width: 64px;
+    height: 58px;
+  }
+
+  .doraemon-floating-btn .doraemon-mascot-img {
+    max-height: 52px;
+    max-width: 62px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doraemon-shooting-star,
+  .doraemon-firefly,
+  .doraemon-drift-cloud,
+  .doraemon-ambient-bell,
+  .doraemon-mascot-img,
+  .doraemon-mini-copter {
+    animation: none !important;
+  }
+}

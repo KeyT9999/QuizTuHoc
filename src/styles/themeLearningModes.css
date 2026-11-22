@@ -3041,20 +3041,20 @@
 /* --- Mode 3: Mistake Review — Liên Hoa Phật Quốc --- */
 .game-card-surface.theme-lotus-zen-sanctuary,
 [data-theme="lotus-zen-sanctuary"] .game-card-surface {
-  background: #FFF8EC;
-  border: 2px solid #A77636;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
+  background: #FFF8EC !important;
+  border: 2px solid #A77636 !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4) !important;
 }
 
 .theme-lotus-zen-sanctuary .game-splash-title,
 [data-theme="lotus-zen-sanctuary"] .game-splash-title {
-  color: #3B2014;
+  color: #3B2014 !important;
   font-family: var(--theme-font-heading, serif);
 }
 
 .theme-lotus-zen-sanctuary .game-splash-subtitle,
 [data-theme="lotus-zen-sanctuary"] .game-splash-subtitle {
-  color: #6B5B4D;
+  color: #6B5B4D !important;
 }
 
 .theme-lotus-zen-sanctuary .game-hud-mistakes {
@@ -3726,4 +3726,169 @@
   background: linear-gradient(135deg, #b8860b, #d4af37) !important;
   color: #090a0d !important;
   font-weight: 800 !important;
+}
+
+/* ==========================================================================
+   DORAEMON GADGET — LEARNING MODES & ALL MINIGAMES (STARRY NIGHT + SKY/ROOM)
+   ========================================================================== */
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-hero,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-group-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-groups-note,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-card-surface,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-question-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-hud-mistakes,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-setup-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-header-bar,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-palette,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-score-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .review-q-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-splash-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-side-pane,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-battle-pane,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-result-card {
+  background: rgba(10, 24, 50, 0.9) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.36) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 14px 36px rgba(3, 10, 26, 0.6) !important;
+  backdrop-filter: blur(16px);
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-eyebrow,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-groups-eyebrow,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mistake-counter-pill,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-hud-score-value,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-result-crown,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .truefalse-label {
+  color: #7dd3fc !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-groups-heading h1,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-group-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-splash-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .card-q-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-q-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-splash-title,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .truefalse-question-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .truefalse-statement-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-stat-item .stat-value {
+  color: #f8fafc !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-desc,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-groups-heading p,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .knowledge-group-summary,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-splash-subtitle,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-desc,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-stat-item .stat-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-search-input,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .theme-qlist-tab,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .q-num-badge,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .card-opt-chip,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mock-exam-number-input,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-rule-card,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .truefalse-context-box,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .truefalse-statement-box {
+  background: rgba(15, 34, 68, 0.9) !important;
+  border-color: rgba(56, 189, 248, 0.34) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme="doraemon-gadget"] .theme-qlist-tab.is-active,
+[data-theme="doraemon-gadget"] .game-btn-primary,
+[data-theme="doraemon-gadget"] .mock-exam-btn.primary,
+[data-theme="doraemon-gadget"] .tower-btn-start {
+  background: linear-gradient(135deg, #0096e6 0%, #0284c7 100%) !important;
+  border: 1px solid #fde047 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 20px rgba(0, 150, 230, 0.34) !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-option,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-opt-btn {
+  background: rgba(15, 34, 68, 0.88) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.32) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn .opt-label-text,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-option-text {
+  color: #f1f5f9 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn .opt-key-circle,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-option-key {
+  background: rgba(56, 189, 248, 0.2) !important;
+  border-color: rgba(56, 189, 248, 0.48) !important;
+  color: #bae6fd !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn.opt-flash-correct,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .exam-option.revealed-correct,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .review-option.option-correct {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(6, 78, 59, 0.65)) !important;
+  border: 1.5px solid #34d399 !important;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.42) !important;
+  color: #ecfdf5 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn.opt-flash-correct .opt-key-circle {
+  background: #10b981 !important;
+  border-color: #6ee7b7 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn.opt-flash-correct .opt-label-text {
+  color: #ecfdf5 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn.opt-flash-wrong,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .review-option.option-wrong {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.28), rgba(136, 19, 55, 0.65)) !important;
+  border: 1.5px solid #fb7185 !important;
+  color: #ffe4e6 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-q-opt-btn.opt-flash-wrong .opt-key-circle {
+  background: #f43f5e !important;
+  border-color: #fda4af !important;
+  color: #ffffff !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mistake-feedback-box.fb-correct,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-action-banner.banner-correct {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.78), rgba(9, 22, 46, 0.94)) !important;
+  border: 1.5px solid rgba(52, 211, 153, 0.55) !important;
+  color: #d1fae5 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mistake-feedback-box.fb-wrong,
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .tower-action-banner.banner-wrong {
+  background: linear-gradient(135deg, rgba(136, 19, 55, 0.78), rgba(9, 22, 46, 0.94)) !important;
+  border: 1.5px solid rgba(251, 113, 133, 0.55) !important;
+  color: #ffe4e6 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mistake-feedback-box .fb-headline {
+  color: #ffffff !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .mistake-feedback-box .fb-explanation-text {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="doraemon-gadget"]:not([data-doraemon-scene="sky"]):not([data-doraemon-scene="room"]) .game-btn-tiny {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border: 1px solid rgba(248, 113, 113, 0.5) !important;
+  color: #fecaca !important;
 }

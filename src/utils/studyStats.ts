@@ -1,6 +1,7 @@
-export type AppTheme = 'billionaire-vault' | 'shin-kasukabe' | 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
+export type AppTheme = 'doraemon-gadget' | 'billionaire-vault' | 'shin-kasukabe' | 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
 export type ShinSceneId = 'room' | 'meadow' | 'hills' | 'rain';
 export type MoneyVaultFinish = 'obsidian' | 'emerald' | 'gold';
+export type DoraemonSceneId = 'starry' | 'sky' | 'room';
 
 const THEME_STORAGE_KEY = 'keyt_selected_ui_theme';
 const MOUSE_EFFECTS_KEY = 'keyt_mouse_effects_enabled';
@@ -8,6 +9,8 @@ const HOVER_TRANSLATE_KEY = 'keyt_hover_translate_enabled';
 const SHIN_SCENE_KEY = 'keyt_shin_scene_id';
 const MONEY_FINISH_KEY = 'keyt_money_vault_finish';
 const MONEY_NETWORTH_KEY = 'keyt_money_usd_networth';
+const DORAEMON_SCENE_KEY = 'keyt_doraemon_scene_id';
+const DORAEMON_DORAYAKI_KEY = 'keyt_doraemon_dorayaki_count';
 const FOCUS_MODE_KEY = 'keyt_focus_mode_enabled';
 const XP_STORAGE_KEY = 'keyt_user_total_xp';
 const STREAK_DAYS_KEY = 'keyt_study_streak_days';
@@ -19,6 +22,7 @@ export function getAppTheme(): AppTheme {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (
       saved === 'default' ||
+      saved === 'doraemon-gadget' ||
       saved === 'billionaire-vault' ||
       saved === 'shin-kasukabe' ||
       saved === 'spidey-night' ||
@@ -147,6 +151,54 @@ export function addUserNetWorth(delta: number): number {
   try {
     localStorage.setItem(MONEY_NETWORTH_KEY, next.toString());
     window.dispatchEvent(new CustomEvent('keyt-networth-changed', { detail: next }));
+    window.dispatchEvent(new Event('storage'));
+  } catch {
+    // ignore
+  }
+  return next;
+}
+
+// Doraemon Active World Scene ('starry' | 'sky' | 'room')
+export function getDoraemonScene(): DoraemonSceneId {
+  try {
+    const saved = localStorage.getItem(DORAEMON_SCENE_KEY);
+    if (saved === 'starry' || saved === 'sky' || saved === 'room') {
+      return saved;
+    }
+  } catch {
+    // ignore
+  }
+  return 'starry';
+}
+
+export function setDoraemonScene(scene: DoraemonSceneId): void {
+  try {
+    localStorage.setItem(DORAEMON_SCENE_KEY, scene);
+    window.dispatchEvent(new CustomEvent('keyt-doraemon-scene-changed', { detail: scene }));
+  } catch {
+    // ignore
+  }
+}
+
+// Doraemon Persistent Dorayaki Count (Bánh Rán Tích Lũy)
+export function getUserDorayaki(): number {
+  try {
+    const raw = localStorage.getItem(DORAEMON_DORAYAKI_KEY);
+    if (raw) {
+      const val = parseInt(raw, 10);
+      if (!isNaN(val) && val >= 0) return val;
+    }
+  } catch {
+    // ignore
+  }
+  return 0;
+}
+
+export function addUserDorayaki(delta: number): number {
+  const next = Math.max(0, getUserDorayaki() + delta);
+  try {
+    localStorage.setItem(DORAEMON_DORAYAKI_KEY, next.toString());
+    window.dispatchEvent(new CustomEvent('keyt-dorayaki-changed', { detail: next }));
     window.dispatchEvent(new Event('storage'));
   } catch {
     // ignore

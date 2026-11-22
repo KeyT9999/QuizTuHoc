@@ -10,11 +10,14 @@ import {
   setShinScene as saveShinScene,
   getMoneyVaultFinish,
   setMoneyVaultFinish as saveMoneyVaultFinish,
+  getDoraemonScene,
+  setDoraemonScene as saveDoraemonScene,
   type AppTheme,
   type ShinSceneId,
   type MoneyVaultFinish,
+  type DoraemonSceneId,
 } from '../utils/studyStats';
-export type { AppTheme, ShinSceneId, MoneyVaultFinish };
+export type { AppTheme, ShinSceneId, MoneyVaultFinish, DoraemonSceneId };
 import ThemeSelectorModal from '../components/ThemeSelectorModal';
 
 interface ThemeContextValue {
@@ -30,6 +33,8 @@ interface ThemeContextValue {
   setShinScene: (scene: ShinSceneId) => void;
   moneyFinish: MoneyVaultFinish;
   setMoneyFinish: (finish: MoneyVaultFinish) => void;
+  doraemonScene: DoraemonSceneId;
+  setDoraemonScene: (scene: DoraemonSceneId) => void;
   isThemeModalOpen: boolean;
   openThemeModal: () => void;
   closeThemeModal: () => void;
@@ -50,6 +55,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [moneyFinish, setMoneyFinishState] = useState<MoneyVaultFinish>(() =>
     getMoneyVaultFinish()
   );
+  const [doraemonScene, setDoraemonSceneState] = useState<DoraemonSceneId>(() =>
+    getDoraemonScene()
+  );
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
   // Synchronize document attribute with active theme synchronously before paint
@@ -69,6 +77,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute('data-money-finish', moneyFinish);
     document.body.setAttribute('data-money-finish', moneyFinish);
   }, [moneyFinish]);
+
+  // Synchronize document attribute with active Doraemon scene synchronously before paint
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-doraemon-scene', doraemonScene);
+    document.body.setAttribute('data-doraemon-scene', doraemonScene);
+  }, [doraemonScene]);
 
   // Synchronize document attribute with mouse effects setting
   useEffect(() => {
@@ -121,6 +135,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
+    const handleDoraemonSceneChange = (e: Event) => {
+      const customEvent = e as CustomEvent<DoraemonSceneId>;
+      if (customEvent.detail) {
+        setDoraemonSceneState(customEvent.detail);
+      }
+    };
+
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'keyt_selected_ui_theme') {
         const nextTheme = getAppTheme();
@@ -133,6 +154,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setShinSceneState(getShinScene());
       } else if (e.key === 'keyt_money_vault_finish') {
         setMoneyFinishState(getMoneyVaultFinish());
+      } else if (e.key === 'keyt_doraemon_scene_id') {
+        setDoraemonSceneState(getDoraemonScene());
       }
     };
 
@@ -141,6 +164,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     window.addEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
     window.addEventListener('keyt-shin-scene-changed', handleShinSceneChange);
     window.addEventListener('keyt-money-finish-changed', handleMoneyFinishChange);
+    window.addEventListener('keyt-doraemon-scene-changed', handleDoraemonSceneChange);
     window.addEventListener('storage', handleStorage);
     return () => {
       window.removeEventListener('keyt-theme-changed', handleThemeChange);
@@ -148,6 +172,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('keyt-hover-translate-changed', handleHoverTranslateChange);
       window.removeEventListener('keyt-shin-scene-changed', handleShinSceneChange);
       window.removeEventListener('keyt-money-finish-changed', handleMoneyFinishChange);
+      window.removeEventListener('keyt-doraemon-scene-changed', handleDoraemonSceneChange);
       window.removeEventListener('storage', handleStorage);
     };
   }, [theme]);
@@ -193,6 +218,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     saveMoneyVaultFinish(nextFinish);
   }, []);
 
+  const changeDoraemonScene = useCallback((nextScene: DoraemonSceneId) => {
+    setDoraemonSceneState(nextScene);
+    saveDoraemonScene(nextScene);
+  }, []);
+
   const openThemeModal = useCallback(() => setIsThemeModalOpen(true), []);
   const closeThemeModal = useCallback(() => setIsThemeModalOpen(false), []);
   const toggleThemeModal = useCallback(() => setIsThemeModalOpen((prev) => !prev), []);
@@ -212,6 +242,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setShinScene: changeShinScene,
         moneyFinish,
         setMoneyFinish: changeMoneyFinish,
+        doraemonScene,
+        setDoraemonScene: changeDoraemonScene,
         isThemeModalOpen,
         openThemeModal,
         closeThemeModal,

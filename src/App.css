@@ -3358,10 +3358,11 @@
 .quiz-v2-part-selector {
   display: inline-flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 2px;
+  color: #f8fafc;
 }
 
 .quiz-v2-part-nav-btn {
@@ -4109,14 +4110,22 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  padding: 6px clamp(12px, 3vw, 28px);
+  padding: 6px clamp(10px, 2vw, 22px);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  scrollbar-width: none;
   position: sticky;
   top: 49px;
   z-index: 90;
   box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+}
+
+.quiz-mode-hub::-webkit-scrollbar {
+  display: none;
 }
 
 /* Legacy row classes — now same-row */
@@ -4158,11 +4167,13 @@
   gap: 5px;
   background: transparent;
   border: 1.5px solid transparent;
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 10px;
   font-size: 12.5px;
   font-weight: 600;
   color: #64748b;
+  white-space: nowrap;
+  flex-shrink: 0;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
