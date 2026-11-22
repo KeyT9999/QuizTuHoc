@@ -43,8 +43,8 @@ const BASE_COURSES: Course[] = [
     id: 'vnr202',
     code: 'VNR202',
     name: 'Lịch sử Đảng Cộng sản Việt Nam',
-    description: 'Bao gồm ngân hàng Quiz Bá Khí 440 câu và 9 bộ đề thi từ FUSTATION (tổng 10 bộ đề · 980 câu hỏi trắc nghiệm chuẩn có đáp án).',
-    badge: '10 bộ đề',
+    description: 'Bao gồm ngân hàng Quiz Bá Khí 440 câu và 11 bộ đề thi từ FUSTATION (tổng 12 bộ đề · 1.100 câu hỏi trắc nghiệm chuẩn có đáp án).',
+    badge: '12 bộ đề',
   },
   {
     id: 'pmg201c',
@@ -57,8 +57,8 @@ const BASE_COURSES: Course[] = [
     id: 'swd392',
     code: 'SWD392',
     name: 'Software Architecture & Design',
-    description: 'Bao gồm 12 bộ đề sẵn có và 4 bộ đề thi FUSTATION về UML, COMET, kiến trúc phần mềm, SOA, SPL và design patterns (tổng 16 bộ đề).',
-    badge: '16 bộ đề',
+    description: 'Bao gồm 12 bộ đề sẵn có và 5 bộ đề thi FUSTATION về UML, COMET, kiến trúc phần mềm, SOA, SPL và design patterns (tổng 17 bộ đề).',
+    badge: '17 bộ đề',
   },
   {
     id: 'sdn302',
