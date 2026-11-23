@@ -67,6 +67,9 @@ const BRA301_QUESTION_IDS_BY_GROUP: Record<string, readonly number[]> = {
   '11': [
     37, 177, 220, 221, 281, 282, 326, 343, 422, 466, 477,
   ],
+  '12': [
+    519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538,
+  ],
 };
 
 export const BRA301_KNOWLEDGE_GROUPS: Bra301KnowledgeGroup[] = [
@@ -146,6 +149,13 @@ export const BRA301_KNOWLEDGE_GROUPS: Bra301KnowledgeGroup[] = [
     title: "Quản trị & điều hành thương hiệu",
     summary: "Lập kế hoạch, trách nhiệm tổ chức, uy tín, khả năng chống chịu và quản trị thương hiệu.",
     questionIds: BRA301_QUESTION_IDS_BY_GROUP['11'],
+  },
+  {
+    id: '12',
+    number: 12,
+    title: "Câu hỏi mới (Update 23.11)",
+    summary: "20 câu hỏi mới cập nhật ngày 23/11 từ bộ BRA301 Chubendan (Private Label, Value Pricing, Brand Recognition, POD, Line Extension, Brand Value Chain, Ambush Marketing, Holistic Methods, IMC, ZMET...).",
+    questionIds: BRA301_QUESTION_IDS_BY_GROUP['12'],
   },
 ];
 

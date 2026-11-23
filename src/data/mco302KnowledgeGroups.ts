@@ -19,6 +19,7 @@ const MCO302_QUESTION_IDS_BY_GROUP: Record<string, readonly number[]> = {
   '8': [34, 35, 36, 37, 84, 85, 86, 132, 133, 134, 135, 156, 158, 163, 169, 171, 172, 225, 226, 239, 240, 246, 249, 252, 263, 265],
   '9': [38, 40, 41, 42, 44, 45, 54, 88, 89, 90, 91, 95, 97, 102, 108, 136, 137, 138, 140, 141, 142, 143, 146, 149, 155, 159, 165, 174, 180, 187, 190, 199, 205, 227, 228, 229, 231, 232, 235, 241, 242, 250, 251, 262, 266, 271, 274],
   '10': [31, 46, 47, 48, 49, 59, 70, 71, 92, 93, 139, 144, 145, 147, 195, 200, 207, 223, 233, 243, 245, 273, 283, 284],
+  '11': [286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316],
 };
 
 export const MCO302_KNOWLEDGE_GROUPS: Mco302KnowledgeGroup[] = [
@@ -91,6 +92,13 @@ export const MCO302_KNOWLEDGE_GROUPS: Mco302KnowledgeGroup[] = [
     title: "Năng lực Liên văn hóa, Bối cảnh Ứng dụng & Công bằng Xã hội",
     summary: "Thành tố năng lực liên văn hóa (Motivation, Knowledge, Attitudes, Skills), ứng dụng trong Y tế / Đa văn hóa, Liên minh (Alliances) và Công bằng xã hội.",
     questionIds: MCO302_QUESTION_IDS_BY_GROUP['10'],
+  },
+  {
+    id: '11',
+    number: 11,
+    title: "Câu hỏi mới (Update 23.11)",
+    summary: "31 câu hỏi mới cập nhật ngày 23/11 từ bộ MCO302 Chubedan (Face Negotiation, Nonverbal & Power, Dialectics, Language Policies, Translation, Contact Hypothesis, Ethnic Identity, Transpection...).",
+    questionIds: MCO302_QUESTION_IDS_BY_GROUP['11'],
   },
 ];
 

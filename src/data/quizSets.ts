@@ -653,9 +653,9 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     id: 'bra301_quiz_ba_khi',
     courseId: 'bra301',
     title: 'BRA301-Quiz Bá Khí',
-    description: 'Bộ 518 câu hỏi trắc nghiệm BRA301 về quản trị thương hiệu, định vị, truyền thông, kiến trúc và giá trị thương hiệu.',
+    description: 'Bộ 538 câu hỏi trắc nghiệm BRA301 (gồm 20 câu mới update 23.11) về quản trị thương hiệu, định vị, truyền thông, kiến trúc và giá trị thương hiệu.',
     category: 'Môn BRA301',
-    badge: '518 câu',
+    badge: '538 câu · Update 23.11',
     rawText: SAMPLE_QUIZ_BRA301,
   },
   {
@@ -721,9 +721,9 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     id: 'mco302_quiz_ba_khi',
     courseId: 'mco302',
     title: 'MCO302-Quiz Bá Khí',
-    description: 'Bộ 285 câu hỏi trắc nghiệm MCO302 (Intercultural Communication) về văn hóa, bản sắc, ngôn ngữ, phi ngôn từ, di cư, văn hóa đại chúng và quản trị xung đột.',
+    description: 'Bộ 316 câu hỏi trắc nghiệm MCO302 (gồm 31 câu mới update 23.11) về văn hóa, bản sắc, ngôn ngữ, phi ngôn từ, di cư, văn hóa đại chúng và quản trị xung đột.',
     category: 'Môn MCO302',
-    badge: '285 câu',
+    badge: '316 câu · Update 23.11',
     rawText: SAMPLE_QUIZ_MCO302,
   },
   {

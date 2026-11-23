@@ -106,7 +106,7 @@ const BASE_COURSES: Course[] = [
     id: 'bra301',
     code: 'BRA301',
     name: 'Quản trị thương hiệu',
-    description: 'Ngân hàng 518 câu + 7 bộ đề thi Final/Retake các kỳ FA26, SU26, SP26, FA25, SU25 từ FUSTATION (tổng 8 bộ đề · 868 câu trắc nghiệm quản trị thương hiệu).',
+    description: 'Ngân hàng 538 câu (update 23.11) + 7 bộ đề thi Final/Retake các kỳ FA26, SU26, SP26, FA25, SU25 từ FUSTATION (tổng 8 bộ đề · 888 câu trắc nghiệm quản trị thương hiệu).',
     badge: '8 bộ đề',
   },
   {
@@ -141,7 +141,7 @@ const BASE_COURSES: Course[] = [
     id: 'mco302',
     code: 'MCO302',
     name: 'Giao tiếp Liên văn hóa (Intercultural Communication)',
-    description: 'Ngân hàng 285 câu + 2 bộ đề thi Final Exam các kỳ SU26, SP26 từ FUSTATION (tổng 385 câu trắc nghiệm giao tiếp liên văn hóa).',
+    description: 'Ngân hàng 316 câu (update 23.11) + 2 bộ đề thi Final Exam các kỳ SU26, SP26 từ FUSTATION (tổng 3 bộ đề · 416 câu trắc nghiệm giao tiếp liên văn hóa).',
     badge: '3 bộ đề',
   },
   {
