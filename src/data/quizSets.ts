@@ -52,6 +52,7 @@ import { SAMPLE_QUIZ_MKT209M } from './sampleQuizMKT209m';
 import { SAMPLE_QUIZ_MKT301 } from './sampleQuizMKT301';
 import { SAMPLE_QUIZ_CCM301 } from './sampleQuizCCM301';
 import { SAMPLE_QUIZ_BRA301 } from './sampleQuizBRA301';
+import { BRA301_QUESTION_IDS } from './bra301KnowledgeGroups';
 import { SAMPLE_QUIZ_EVN301 } from './sampleQuizEVN301';
 import { SAMPLE_QUIZ_VNC } from './sampleQuizVNC';
 import { SAMPLE_QUIZ_SSA } from './sampleQuizSSA';
@@ -117,6 +118,7 @@ export interface QuizSetInfo {
   badge?: string;
   rawText: string;
   questionCount?: number;
+  questionIds?: readonly number[];
   loadRawText?: () => Promise<string>;
   kind?: 'text' | 'image';
   imageBasePath?: string;
@@ -653,9 +655,11 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     id: 'bra301_quiz_ba_khi',
     courseId: 'bra301',
     title: 'BRA301-Quiz Bá Khí',
-    description: 'Bộ 538 câu hỏi trắc nghiệm BRA301 (gồm 20 câu mới update 23.11) về quản trị thương hiệu, định vị, truyền thông, kiến trúc và giá trị thương hiệu.',
+    description: `Bộ ${BRA301_QUESTION_IDS.length} câu hỏi trắc nghiệm BRA301 (gồm 20 câu mới update 23.11) về quản trị thương hiệu, định vị, truyền thông, kiến trúc và giá trị thương hiệu.`,
     category: 'Môn BRA301',
-    badge: '538 câu · Update 23.11',
+    badge: `${BRA301_QUESTION_IDS.length} câu · Update 23.11`,
+    questionCount: BRA301_QUESTION_IDS.length,
+    questionIds: BRA301_QUESTION_IDS,
     rawText: SAMPLE_QUIZ_BRA301,
   },
   {

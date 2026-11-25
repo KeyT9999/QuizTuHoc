@@ -385,7 +385,7 @@ export default function App() {
     if (activeSet && activeSet.kind !== 'image') {
       const effectiveRaw = activeSet.rawText || loadedRawTexts[activeSet.id] || '';
       if (!effectiveRaw) return [];
-      const parsed = parseQuizText(effectiveRaw);
+      const parsed = parseQuizText(effectiveRaw, activeSet.questionIds);
       const researchedAnswers = MLN_RESEARCH_ANSWER_KEYS[activeSet.id];
 
       if (!researchedAnswers) return parsed;

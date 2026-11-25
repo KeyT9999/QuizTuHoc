@@ -94,9 +94,12 @@ export default function Quiz({
 
   // Play Mode (Cốt lõi vs Đột phá) & Mistake count
   const [activeMode, setActiveMode] = useState<QuizPlayMode>('study');
-  const [mistakeCount, setMistakeCount] = useState<number>(() => {
-    return setId ? getMistakeQuestionIds(setId).length : 0;
-  });
+  const getMistakeCount = useCallback(() => {
+    if (!setId) return 0;
+    const mistakeIds = new Set(getMistakeQuestionIds(setId));
+    return questions.filter((question) => mistakeIds.has(question.id)).length;
+  }, [questions, setId]);
+  const [mistakeCount, setMistakeCount] = useState(getMistakeCount);
 
   // Calculate parts based on splitSettings
   const parts = useMemo(() => {
@@ -264,7 +267,11 @@ export default function Quiz({
   const isRevealed = question ? revealedIds.includes(question.id) : false;
 
   // Progress stats
-  const progressPercent = questions.length > 0 ? Math.round((masteredIds.length / questions.length) * 100) : 0;
+  const masteredCount = useMemo(() => {
+    const mastered = new Set(masteredIds);
+    return questions.filter(({ id }) => mastered.has(id)).length;
+  }, [masteredIds, questions]);
+  const progressPercent = questions.length > 0 ? Math.round((masteredCount / questions.length) * 100) : 0;
 
   const partQuestionIds = useMemo(() => {
     if (!currentPart) return [];
@@ -324,11 +331,11 @@ export default function Quiz({
       } else if (!isUnresolved && answer !== question.correctAnswer) {
         if (setId) {
           saveMistakeQuestion(setId, question.id);
-          setMistakeCount(getMistakeQuestionIds(setId).length);
+          setMistakeCount(getMistakeCount());
         }
       }
     },
-    [isAnswered, isMultipleChoice, question, isUnresolved, masteredIds, setId]
+    [isAnswered, isMultipleChoice, question, isUnresolved, masteredIds, setId, getMistakeCount]
   );
 
   const handleCheckMultiple = useCallback(() => {
@@ -349,9 +356,9 @@ export default function Quiz({
       setMasteredIds((prev) => [...prev, question.id]);
     } else if (!isUnresolved && !isCorrect && setId) {
       saveMistakeQuestion(setId, question.id);
-      setMistakeCount(getMistakeQuestionIds(setId).length);
+      setMistakeCount(getMistakeCount());
     }
-  }, [selectedAnswer, isAnswered, question, masteredIds, isUnresolved, setId]);
+  }, [selectedAnswer, isAnswered, question, masteredIds, isUnresolved, setId, getMistakeCount]);
 
   const toggleMastered = (questionId: number) => {
     setMasteredIds((prev) =>
@@ -484,7 +491,7 @@ export default function Quiz({
       getMistakeQuestionIds(setId)
         .filter((id) => partIds.has(id))
         .forEach((id) => removeMistakeQuestion(setId, id));
-      setMistakeCount(getMistakeQuestionIds(setId).length);
+      setMistakeCount(getMistakeCount());
     }
   };
 
@@ -847,7 +854,7 @@ export default function Quiz({
         partProgressPercent={partProgressPercent}
         progressPercent={progressPercent}
         partMasteredCount={partMasteredCount}
-        masteredCount={masteredIds.length}
+        masteredCount={masteredCount}
         relativeIndex={relativeIndex}
         currentIndex={currentIndex}
         masteredIds={masteredIds}
@@ -919,7 +926,7 @@ export default function Quiz({
           setTitle={setTitle}
           allQuestions={questions}
           onBackToStudy={() => setActiveMode('study')}
-          onMistakesUpdated={() => setMistakeCount(setId ? getMistakeQuestionIds(setId).length : 0)}
+          onMistakesUpdated={() => setMistakeCount(getMistakeCount())}
         />
       )}
 

@@ -97,7 +97,10 @@ export function getQuizSetProgress(set: QuizSetInfo): { total: number; mastered:
       const legacyMastered = localStorage.getItem('keyt_quiz_mastered');
       if (legacyMastered) masteredIds = JSON.parse(legacyMastered);
     }
-    const mastered = masteredIds.length;
+    const questionIds = set.questionIds && new Set(set.questionIds);
+    const mastered = questionIds
+      ? masteredIds.filter((id) => questionIds.has(id)).length
+      : masteredIds.length;
     const percent = Math.round((mastered / total) * 100);
     return { total, mastered, percent };
   } catch {

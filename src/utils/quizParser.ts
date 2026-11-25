@@ -12,7 +12,7 @@ export interface Question {
   images?: string[];
 }
 
-export function parseQuizText(rawText: string): Question[] {
+export function parseQuizText(rawText: string, questionIds?: readonly number[]): Question[] {
   const questions: Question[] = [];
 
   // Split by 2 or more newlines to get question blocks
@@ -206,5 +206,7 @@ export function parseQuizText(rawText: string): Question[] {
     }
   }
 
-  return questions;
+  // Explicit IDs are ordered with the parsed questions. Keep sequential IDs for plain text imports.
+  if (!questionIds || questionIds.length !== questions.length) return questions;
+  return questions.map((question, index) => ({ ...question, id: questionIds[index] }));
 }

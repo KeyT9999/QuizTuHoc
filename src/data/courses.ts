@@ -1,4 +1,5 @@
 import { FUSTATION_NEW_COURSES } from './fustationCourses';
+import { BRA301_QUESTION_IDS } from './bra301KnowledgeGroups';
 
 export interface Course {
   id: string;
@@ -106,7 +107,7 @@ const BASE_COURSES: Course[] = [
     id: 'bra301',
     code: 'BRA301',
     name: 'Quản trị thương hiệu',
-    description: 'Ngân hàng 538 câu (update 23.11) + 7 bộ đề thi Final/Retake các kỳ FA26, SU26, SP26, FA25, SU25 từ FUSTATION (tổng 8 bộ đề · 888 câu trắc nghiệm quản trị thương hiệu).',
+    description: `Ngân hàng ${BRA301_QUESTION_IDS.length} câu (update 23.11) + 7 bộ đề thi Final/Retake các kỳ FA26, SU26, SP26, FA25, SU25 từ FUSTATION (tổng 8 bộ đề · ${BRA301_QUESTION_IDS.length + 350} câu trắc nghiệm quản trị thương hiệu).`,
     badge: '8 bộ đề',
   },
   {
