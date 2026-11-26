@@ -167,6 +167,13 @@ const BASE_COURSES: Course[] = [
     badge: '5 bộ đề',
   },
   {
+    id: 'ada201c',
+    code: 'ADA201c',
+    name: 'Ứng dụng AI trong Phân tích Dữ liệu (AI in Data Analysis)',
+    description: 'Bao gồm trọn bộ 2 đề thi Final/Retake kỳ SU26 từ FuExam (tổng 100 câu trắc nghiệm có đáp án về Generative AI, Prompt Engineering, Custom GPTs, CAPITAL/RACE/PARE/Achieve, RAG, Data Exploration & AI Ethics).',
+    badge: '2 bộ đề',
+  },
+  {
     id: 'flashcard',
     code: 'FLASHCARD',
     name: 'Thuật ngữ Flashcard PMG201c',

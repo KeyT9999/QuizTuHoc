@@ -100,6 +100,10 @@ import {
   SAMPLE_QUIZ_ITE302C_SU25_FE_613752,
 } from './sampleQuizITE302c';
 import {
+  SAMPLE_QUIZ_ADA201C_SU26_RE_461006,
+  SAMPLE_QUIZ_ADA201C_SU26_FE,
+} from './sampleQuizADA201c';
+import {
   SAMPLE_QUIZ_JPD123_FA26_PT1_573928,
   SAMPLE_QUIZ_JPD123_FA26_PT1_753826,
   SAMPLE_QUIZ_JPD123_SU26_B5_FE_157915,
@@ -974,6 +978,26 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     category: 'Môn ITE302c',
     badge: 'Final Exam SU25 - 60 câu',
     rawText: SAMPLE_QUIZ_ITE302C_SU25_FE_613752,
+  },
+  {
+    id: 'ada201c_su26_re_461006',
+    courseId: 'ada201c',
+    title: 'ADA201c_SU26_RE_461006',
+    description: 'Đề thi Retake ADA201c kỳ SU26 (FuExam · 22/08/2026) gồm 50 câu hỏi về LLM, Custom GPTs, CAPITAL/RACE/Achieve, Prompt Patterns, Few-shot, Chain-of-Thought, Data Exploration & AI Ethics.',
+    category: 'Môn ADA201c',
+    badge: 'Retake SU26 - 50 câu',
+    questionCount: 50,
+    rawText: SAMPLE_QUIZ_ADA201C_SU26_RE_461006,
+  },
+  {
+    id: 'ada201c_su26_fe',
+    courseId: 'ada201c',
+    title: 'ADA201c_SU26_FE',
+    description: 'Đề thi Final Exam ADA201c kỳ SU26 (FuExam · 15/08/2026) gồm 50 câu hỏi về Prompt Engineering, RAG, PARE/CAPITAL, Cognitive Verifier, Adversarial Risks, Copilot & ChatGPT Advanced Data Analysis.',
+    category: 'Môn ADA201c',
+    badge: 'Final Exam SU26 - 50 câu',
+    questionCount: 50,
+    rawText: SAMPLE_QUIZ_ADA201C_SU26_FE,
   },
   ...FUSTATION_QUIZ_SETS,
 ];

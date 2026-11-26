@@ -174,6 +174,7 @@ export function getCourseCategories(course: Pick<Course, 'code' | 'name' | 'desc
     code === 'FLASHCARD' ||
     code === 'DTA301' ||
     code === 'DAT301M' ||
+    code === 'ADA201C' ||
     code === 'MAS291' ||
     code === 'DET101C' ||
     code === 'MLN122' ||
@@ -192,7 +193,7 @@ export function getCourseCategories(course: Pick<Course, 'code' | 'name' | 'desc
 
   // 5. Công nghệ thông tin (Kỹ thuật phần mềm, AI/Data, An toàn thông tin, Vi mạch, Ô tô số, HTTT)
   if (
-    /^(CSI|PRF|PRO|PFP|PRP|APO|PCP|CSD|DBI|DBM|DBS|OSG|OSP|NWC|CEA|SWE|SWR|SWT|SWD|SDN|PRJ|PRN|PRM|MMA|FER|WED|WDU|HSF|SBA|MSS|PRC|MSA|SAP|PRU|PWD|AIG|AIL|AIM|AID|AIE|AIH|REL|CPV|NLP|MAI|MAD|MAE|MAS291|BDI|DTA|DAT|ADY|DSR|IAA|IAO|IAM|IAP|IAW|HOD402|FRS|CRY|AIC|SPM|CES|ITA|ISM302|BPS|DSS|ITB|KMS|IMO|ISC|IOT|EBS|DIC|ELC|EEI|MCP|MCE|FAP|SDI|ASI|ATS|AEE|PMG|ITE|SEG)/.test(code) ||
+    /^(CSI|PRF|PRO|PFP|PRP|APO|PCP|CSD|DBI|DBM|DBS|OSG|OSP|NWC|CEA|SWE|SWR|SWT|SWD|SDN|PRJ|PRN|PRM|MMA|FER|WED|WDU|HSF|SBA|MSS|PRC|MSA|SAP|PRU|PWD|AIG|AIL|AIM|AID|AIE|AIH|REL|CPV|NLP|MAI|MAD|MAE|MAS291|BDI|DTA|DAT|ADY|ADA|DSR|IAA|IAO|IAM|IAP|IAW|HOD402|FRS|CRY|AIC|SPM|CES|ITA|ISM302|BPS|DSS|ITB|KMS|IMO|ISC|IOT|EBS|DIC|ELC|EEI|MCP|MCE|FAP|SDI|ASI|ATS|AEE|PMG|ITE|SEG)/.test(code) ||
     code === 'FLASHCARD' ||
     code === 'TMG301' ||
     code === 'DET101C' ||
