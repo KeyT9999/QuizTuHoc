@@ -495,6 +495,7 @@ export default function AdminPage({ onNavigateTab }: AdminPageProps) {
             <button
               type="button"
               className="admin-btn-primary"
+              data-no-shopee-redirect="true"
               onClick={() => loginWithGoogle('/admin')}
             >
               Đăng nhập với Google

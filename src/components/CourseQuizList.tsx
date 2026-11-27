@@ -4,6 +4,7 @@ import type { QuizSetInfo } from '../data/quizSets';
 import { getQuizSetProgress, calculateCourseProgress } from '../utils/courseStorage';
 import PassedBadge from './PassedBadge';
 import UserAccountMenu from './UserAccountMenu';
+import { useAuth } from '../context/AuthContext';
 import { PROGRESS_SYNCED_EVENT } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import ZenTempleWatermark from './ZenTempleWatermark';
@@ -892,6 +893,7 @@ export default function CourseQuizList({
     hoverTranslateEnabled,
     toggleHoverTranslate,
   } = useTheme();
+  const { isAuthenticated, isBackendReady, loginWithGoogle } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortType>('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -1362,6 +1364,28 @@ export default function CourseQuizList({
         {/* ====================================================================
             6. EXAM CARDS GRID
             ==================================================================== */}
+        {!isAuthenticated && (
+          <div className="course-auth-notice" role="status">
+            <div className="course-auth-notice-text">
+              <span aria-hidden="true">🔒</span>
+              <span>
+                Bạn chưa đăng nhập — vui lòng đăng nhập Google để xem nội dung và làm các bộ đề môn{' '}
+                <strong>{course.code}</strong>.
+              </span>
+            </div>
+            {isBackendReady && (
+              <button
+                type="button"
+                className="course-auth-notice-btn"
+                data-no-shopee-redirect="true"
+                onClick={() => loginWithGoogle(`/course/${course.id}`)}
+              >
+                Đăng nhập Google
+              </button>
+            )}
+          </div>
+        )}
+
         <section className="exam-cards-grid">
           {filteredSets.map((set, index) => {
             const { total, mastered, percent } = getQuizSetProgress(set);
@@ -1484,7 +1508,7 @@ export default function CourseQuizList({
                       onSelectSet(set);
                     }}
                   >
-                    <span>Tiếp tục học</span>
+                    <span>{isAuthenticated ? 'Tiếp tục học' : '🔒 Đăng nhập để làm'}</span>
                     <span aria-hidden="true">→</span>
                   </button>
                 </div>
@@ -1521,7 +1545,7 @@ export default function CourseQuizList({
                 onCreateQuizSet();
               }}
             >
-              <span>Dán đề thi</span>
+              <span>{isAuthenticated ? 'Dán đề thi' : '🔒 Đăng nhập để tạo'}</span>
               <span aria-hidden="true">→</span>
             </button>
           </article>

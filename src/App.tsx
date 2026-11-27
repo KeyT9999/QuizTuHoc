@@ -10,6 +10,8 @@ import Flashcard from './components/Flashcard';
 import KnowledgeGroupPicker from './components/KnowledgeGroupPicker';
 import ProfilePage from './components/ProfilePage';
 import AdminPage from './components/AdminPage';
+import QuizAuthGate from './components/QuizAuthGate';
+import { useAuth } from './context/AuthContext';
 import { notifyStudyProgressUpdated } from './utils/studyProgressEvents';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
@@ -97,6 +99,11 @@ import {
   getMln131QuestionsForGroup,
   MLN131_KNOWLEDGE_GROUPS,
 } from './data/mln131KnowledgeGroups';
+import {
+  getBcj201cKnowledgeGroupId,
+  getBcj201cQuestionsForGroup,
+  BCJ201C_KNOWLEDGE_GROUPS,
+} from './data/bcj201cKnowledgeGroups';
 import {
   loadCustomCourses,
   saveCustomCourses,
@@ -228,6 +235,12 @@ const KNOWLEDGE_GROUP_CONFIGS: Partial<Record<string, KnowledgeGroupConfig>> = {
     getGroupId: getMln131KnowledgeGroupId,
     filterQuestions: getMln131QuestionsForGroup,
   },
+  bcj201c_quiz_ba_khi: {
+    courseLabel: 'BCJ201c',
+    groups: BCJ201C_KNOWLEDGE_GROUPS,
+    getGroupId: getBcj201cKnowledgeGroupId,
+    filterQuestions: getBcj201cQuestionsForGroup,
+  },
 };
 
 function getKnowledgeGroupIdFromUrl(setId: string): string | null {
@@ -266,6 +279,13 @@ function updateKnowledgeGroupUrlState(
 export default function App() {
   const { route, navigate } = useAppRouter();
   const { theme, mouseEffectsEnabled, shinScene, moneyFinish, doraemonScene } = useTheme();
+  const {
+    isAuthenticated,
+    isLoading: isAuthLoading,
+    isBackendReady,
+    authError,
+    loginWithGoogle,
+  } = useAuth();
   useDailyShopeeRedirect();
 
   const [courses, setCourses] = useState<Course[]>(() => [
@@ -328,7 +348,8 @@ export default function App() {
 
   useEffect(() => {
     if (
-      route.type === 'quiz'
+      isAuthenticated
+      && route.type === 'quiz'
       && activeSet
       && activeSet.kind !== 'image'
       && !activeSet.rawText
@@ -348,10 +369,11 @@ export default function App() {
         cancelled = true;
       };
     }
-  }, [route.type, activeSet, loadedRawTexts]);
+  }, [isAuthenticated, route.type, activeSet, loadedRawTexts]);
 
   const isLoadingActiveSetText = Boolean(
-    route.type === 'quiz'
+    isAuthenticated
+    && route.type === 'quiz'
     && activeSet
     && activeSet.kind !== 'image'
     && !activeSet.rawText
@@ -385,6 +407,7 @@ export default function App() {
   }, [activeSet, route]);
 
   const parsedQuestions = useMemo(() => {
+    if (!isAuthenticated) return [];
     if (activeSet && activeSet.kind !== 'image') {
       const effectiveRaw = activeSet.rawText || loadedRawTexts[activeSet.id] || '';
       if (!effectiveRaw) return [];
@@ -401,7 +424,7 @@ export default function App() {
       });
     }
     return [];
-  }, [activeSet, loadedRawTexts]);
+  }, [activeSet, isAuthenticated, loadedRawTexts]);
 
   const knowledgeGroupQuestions = useMemo(() => {
     if (!knowledgeGroupId || !knowledgeGroupConfig) return parsedQuestions;
@@ -643,8 +666,33 @@ export default function App() {
           )
         )}
 
-        {/* 3. Màn hình tạo / dán đề mới cho môn */}
-        {route.type === 'new_quiz' && (
+        {/* 3. Màn hình chờ kiểm tra phiên đăng nhập trước khi mở Quiz */}
+        {(route.type === 'quiz' || route.type === 'new_quiz') && isAuthLoading && (
+          <div className="app-error-state">
+            <h3>Đang kiểm tra phiên đăng nhập...</h3>
+            <p>Vui lòng đợi trong giây lát.</p>
+          </div>
+        )}
+
+        {/* 3b. Chặn xem / tạo Quiz khi chưa đăng nhập */}
+        {(route.type === 'quiz' || route.type === 'new_quiz') && !isAuthLoading && !isAuthenticated && (
+          <QuizAuthGate
+            mode={route.type === 'new_quiz' ? 'new_quiz' : 'quiz'}
+            course={activeCourse}
+            quizSet={activeSet}
+            isBackendReady={isBackendReady}
+            authError={authError}
+            onLogin={() => {
+              const target = `${window.location.pathname}${window.location.search}`;
+              loginWithGoogle(target);
+            }}
+            onBack={handleBackToCourseDetail}
+            onBackToLibrary={handleBackToCourseList}
+          />
+        )}
+
+        {/* 3c. Màn hình tạo / dán đề mới cho môn */}
+        {route.type === 'new_quiz' && isAuthenticated && (
           <TextInput
             targetCourse={activeCourse}
             onStartQuiz={handleStartCustomQuiz}
@@ -653,7 +701,7 @@ export default function App() {
         )}
 
         {/* 4. Màn hình chờ tải dữ liệu đề thi (lazy chunk) */}
-        {isLoadingActiveSetText && (
+        {isAuthenticated && isLoadingActiveSetText && (
           <div className="app-error-state">
             <h3>Đang tải đề thi...</h3>
             <p>Vui lòng đợi trong giây lát.</p>
@@ -661,7 +709,7 @@ export default function App() {
         )}
 
         {/* 4b. Màn hình kết quả làm bài */}
-        {route.type === 'quiz' && !isLoadingActiveSetText && isResultView && (
+        {route.type === 'quiz' && isAuthenticated && !isLoadingActiveSetText && isResultView && (
           <Result
             questions={knowledgeGroupQuestions}
             answers={answers}
@@ -679,7 +727,7 @@ export default function App() {
           />
         )}
 
-        {route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && knowledgeGroupConfig && isKnowledgeGroupPickerOpen && (
+        {route.type === 'quiz' && isAuthenticated && !isLoadingActiveSetText && !isResultView && knowledgeGroupConfig && isKnowledgeGroupPickerOpen && (
           <KnowledgeGroupPicker
             setId={activeSet?.id ?? route.setId}
             questions={parsedQuestions}
@@ -698,7 +746,7 @@ export default function App() {
         )}
 
         {/* 5. Màn hình làm bài trắc nghiệm văn bản (chuẩn PMG) */}
-        {route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen && (
+        {route.type === 'quiz' && isAuthenticated && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen && (
           <Quiz
             key={`${effectiveQuizSetId ?? activeSet.id}_${quizAttemptNonce}`}
             setId={effectiveQuizSetId ?? activeSet.id}
@@ -721,7 +769,7 @@ export default function App() {
         )}
 
         {/* 6. Màn hình làm bài đề ảnh (nếu có) */}
-        {route.type === 'quiz' && !isResultView && activeSet && activeSet.kind === 'image' && (
+        {route.type === 'quiz' && isAuthenticated && !isResultView && activeSet && activeSet.kind === 'image' && (
           <ImageQuiz
             setId={activeSet.id}
             setTitle={activeSet.title}
@@ -734,7 +782,7 @@ export default function App() {
         )}
 
         {/* 7. Lỗi không tìm thấy đề */}
-        {route.type === 'quiz' && !activeSet && (
+        {route.type === 'quiz' && isAuthenticated && !activeSet && (
           <div className="app-error-state">
             <h3>Không tìm thấy đề thi</h3>
             <p>Bộ đề này không tồn tại hoặc đường dẫn không chính xác.</p>
@@ -791,25 +839,25 @@ export default function App() {
 
       {/* Floating Chibi Spidey Đu Tơ (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Chibi) */}
       {theme === 'spidey-night' &&
-        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+        !(isAuthenticated && route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <SpideyChibiMascot variant="floating" mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 
       {/* Floating Sticker Bé Shin (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Shin) */}
       {theme === 'shin-kasukabe' &&
-        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+        !(isAuthenticated && route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <ShinMascot variant="floating" scene={shinScene} mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 
       {/* Floating Mascot Cọc Đô Có Cánh (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Mascot) */}
       {theme === 'billionaire-vault' &&
-        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+        !(isAuthenticated && route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <MoneyWingsMascot variant="floating" finish={moneyFinish} mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 
       {/* Floating Mascot Doraemon (Home / Library / Stats / Course Detail — quiz screen renders its own reactive sidebar Doraemon) */}
       {theme === 'doraemon-gadget' &&
-        !(route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
+        !(isAuthenticated && route.type === 'quiz' && !isLoadingActiveSetText && !isResultView && activeSet && activeSet.kind !== 'image' && !isKnowledgeGroupPickerOpen) && (
           <DoraemonMascot variant="floating" scene={doraemonScene} mouseEffectsEnabled={mouseEffectsEnabled} />
         )}
 

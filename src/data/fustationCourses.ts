@@ -425,8 +425,8 @@ export const FUSTATION_NEW_COURSES: Course[] = [
     id: "bcj201c",
     code: "BCJ201c",
     name: "Nghệ thuật xây dựng câu chuyện thương hiệu",
-    description: "Bao gồm 2 bộ đề thi từ FUSTATION (tổng 100 câu hỏi trắc nghiệm chuẩn có đáp án).",
-    badge: "2 bộ đề",
+    description: "Bao gồm Quiz_Ba_Khi (203 câu chia 7 nhóm kèm ảnh minh họa) và 2 bộ đề thi từ FUSTATION (tổng 303 câu hỏi trắc nghiệm chuẩn có đáp án).",
+    badge: "3 bộ đề",
   },
   {
     id: "hod102c",

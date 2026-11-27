@@ -193,6 +193,7 @@ export default function HomeBentoHub({
               <button
                 type="button"
                 className="bento-google-mini"
+                data-no-shopee-redirect="true"
                 onClick={() => loginWithGoogle('/home')}
               >
                 <span>☁️</span>

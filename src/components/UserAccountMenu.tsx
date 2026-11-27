@@ -82,6 +82,7 @@ export default function UserAccountMenu({ onOpenProfile }: UserAccountMenuProps)
         <button
           type="button"
           className="uam-login-btn"
+          data-no-shopee-redirect="true"
           onClick={() => loginWithGoogle('/profile')}
           title="Đăng nhập Google để lưu và đồng bộ tiến độ học tập"
         >

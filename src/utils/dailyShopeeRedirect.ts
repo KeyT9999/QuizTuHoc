@@ -48,9 +48,55 @@ function getOrCreateRandomTriggerTimestamp(): number {
   }
 }
 
+const AUTH_SKIP_SELECTOR = [
+  '[data-no-shopee-redirect="true"]',
+  '.qag-google-btn',
+  '.uam-login-btn',
+  '.profile-google-cta',
+  '.course-auth-notice-btn',
+  '.bento-google-mini',
+].join(', ');
+
+function shouldSkipShopeeRedirect(event: MouseEvent): boolean {
+  if (window.location.pathname.startsWith('/auth')) {
+    return true;
+  }
+
+  const rawTarget = event.target;
+  const element =
+    rawTarget instanceof Element
+      ? rawTarget
+      : rawTarget instanceof Node
+        ? rawTarget.parentElement
+        : null;
+
+  if (!element) {
+    return false;
+  }
+
+  if (element.closest(AUTH_SKIP_SELECTOR)) {
+    return true;
+  }
+
+  const interactive = element.closest('button, a, [role="button"]');
+  if (interactive) {
+    const label = [
+      interactive.textContent || '',
+      interactive.getAttribute('aria-label') || '',
+      interactive.getAttribute('title') || '',
+    ].join(' ');
+    if (/đăng\s*nhập|sign\s*in|login|google/i.test(label)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 /**
  * Hook tự động mở link Shopee 1 ngày / 1 lần / 1 thiết bị
  * vào một thời điểm ngẫu nhiên khi người dùng đang thao tác học tập.
+ * Bỏ qua hoàn toàn các thao tác đăng nhập Google để không làm gián đoạn luồng xác thực.
  */
 export function useDailyShopeeRedirect(): void {
   useEffect(() => {
@@ -60,9 +106,14 @@ export function useDailyShopeeRedirect(): void {
 
     const targetTimestamp = getOrCreateRandomTriggerTimestamp();
 
-    const handleUserInteraction = () => {
+    const handleUserInteraction = (event: MouseEvent) => {
       if (hasTriggeredToday()) {
         window.removeEventListener('click', handleUserInteraction, true);
+        return;
+      }
+
+      // Không bao giờ chuyển hướng Shopee khi người dùng nhấn đăng nhập Google
+      if (shouldSkipShopeeRedirect(event)) {
         return;
       }
 

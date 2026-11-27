@@ -416,6 +416,7 @@ export default function StatsDashboard({
             <button
               type="button"
               className="s2-btn-secondary"
+              data-no-shopee-redirect="true"
               onClick={() => loginWithGoogle('/stats')}
             >
               ☁️ Đăng nhập lưu tiến độ

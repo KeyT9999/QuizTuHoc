@@ -62,6 +62,7 @@ import { SAMPLE_QUIZ_MMK2 } from './sampleQuizMMK2';
 import { SAMPLE_QUIZ_MCO302 } from './sampleQuizMCO302';
 import { SAMPLE_QUIZ_VNR202_BAKHI } from './sampleQuizVNR202BaKhi';
 import { SAMPLE_QUIZ_MLN131_BAKHI } from './sampleQuizMLN131BaKhi';
+import { SAMPLE_QUIZ_BCJ201C_BAKHI } from './sampleQuizBCJ201cBaKhi';
 import {
   SAMPLE_QUIZ_IPR102_SU26_FE_873863,
   SAMPLE_QUIZ_IPR102_SP26_FE_138652,
@@ -998,6 +999,16 @@ export const DEFAULT_QUIZ_SETS: QuizSetInfo[] = [
     badge: 'Final Exam SU26 - 50 câu',
     questionCount: 50,
     rawText: SAMPLE_QUIZ_ADA201C_SU26_FE,
+  },
+  {
+    id: 'bcj201c_quiz_ba_khi',
+    courseId: 'bcj201c',
+    title: 'Quiz_Ba_Khi',
+    description: 'Bộ 203 câu hỏi trắc nghiệm BCJ201c tổng hợp (đã làm sạch, lọc trùng, kèm 9 hình minh họa gốc về quảng cáo & nhiếp ảnh), chia thành 7 nhóm kiến thức trọng tâm.',
+    category: 'Môn BCJ201c',
+    badge: '203 câu · 7 nhóm',
+    questionCount: 203,
+    rawText: SAMPLE_QUIZ_BCJ201C_BAKHI,
   },
   ...FUSTATION_QUIZ_SETS,
 ];
