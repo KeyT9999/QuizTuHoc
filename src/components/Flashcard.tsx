@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import type { FlashcardSet } from '../data/flashcardData';
+import { notifyStudyProgressUpdated } from '../utils/studyProgressEvents';
 
 interface FlashcardProps {
   flashcardSet: FlashcardSet;
@@ -23,10 +24,19 @@ export default function Flashcard({ flashcardSet, onBack }: FlashcardProps) {
   const [shuffled, setShuffled] = useState(false);
   const [displayCards, setDisplayCards] = useState(cards);
 
+  const didMountKnownRef = useRef(false);
+
   // Save known progress
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify([...knownIds]));
-  }, [knownIds, storageKey]);
+    if (didMountKnownRef.current) {
+      notifyStudyProgressUpdated(
+        knownIds.size === 0 ? { resetFlashcardIds: [flashcardSet.id] } : undefined
+      );
+    } else {
+      didMountKnownRef.current = true;
+    }
+  }, [knownIds, storageKey, flashcardSet.id]);
 
   // Shuffle function
   const shuffleCards = useCallback(() => {

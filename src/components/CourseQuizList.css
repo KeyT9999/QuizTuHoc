@@ -996,6 +996,26 @@
 /* ==========================================================================
    10. RESPONSIVE MEDIA QUERIES
    ========================================================================== */
+@media (max-width: 1120px) {
+  .course-nav-inner {
+    padding: 0 14px;
+    gap: 10px;
+  }
+
+  .course-back-btn {
+    padding: 6px 10px;
+  }
+
+  .course-back-btn span:not(.course-back-arrow) {
+    display: none;
+  }
+
+  .course-nav-item {
+    padding: 6px 9px;
+    font-size: 12.5px;
+  }
+}
+
 @media (max-width: 1024px) {
   .course-hero-illustration {
     width: 230px;
@@ -1003,6 +1023,11 @@
 
   .course-hero-title {
     font-size: 28px;
+  }
+
+  .course-brand-subtitle,
+  .course-nav-links .course-nav-item:not(.active) {
+    display: none;
   }
 }
 

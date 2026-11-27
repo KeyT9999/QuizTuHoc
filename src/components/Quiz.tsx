@@ -34,6 +34,7 @@ import {
   addStudyXP,
   recordDailyStudy,
 } from '../utils/studyStats';
+import { notifyStudyProgressUpdated } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import CozyNightQuizView from './CozyNightQuizView';
 import SpideyQuizView from './SpideyQuizView';
@@ -212,9 +213,18 @@ export default function Quiz({
     localStorage.setItem(storageKeyAnswers, JSON.stringify(answers));
   }, [answers, storageKeyAnswers]);
 
+  const didMountMasteredRef = useRef(false);
+
   useEffect(() => {
     localStorage.setItem(storageKeyMastered, JSON.stringify(masteredIds));
-  }, [masteredIds, storageKeyMastered]);
+    if (didMountMasteredRef.current) {
+      notifyStudyProgressUpdated(
+        masteredIds.length === 0 && setId ? { resetSetIds: [setId] } : undefined
+      );
+    } else {
+      didMountMasteredRef.current = true;
+    }
+  }, [masteredIds, storageKeyMastered, setId]);
 
   useEffect(() => {
     localStorage.setItem(storageKeySubmitted, JSON.stringify(submittedIds));

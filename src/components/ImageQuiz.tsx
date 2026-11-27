@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MLN_RESEARCH_ANSWER_KEYS, MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
+import { notifyStudyProgressUpdated } from '../utils/studyProgressEvents';
 
 interface ImageQuizProps {
   setId: string;
@@ -63,8 +64,17 @@ export default function ImageQuiz({
   });
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
 
+  const didMountMasteredRef = useRef(false);
+
   useEffect(() => localStorage.setItem(indexKey, String(currentIndex)), [currentIndex, indexKey]);
-  useEffect(() => localStorage.setItem(masteredKey, JSON.stringify(masteredIds)), [masteredIds, masteredKey]);
+  useEffect(() => {
+    localStorage.setItem(masteredKey, JSON.stringify(masteredIds));
+    if (didMountMasteredRef.current) {
+      notifyStudyProgressUpdated(masteredIds.length === 0 ? { resetSetIds: [setId] } : undefined);
+    } else {
+      didMountMasteredRef.current = true;
+    }
+  }, [masteredIds, masteredKey, setId]);
   useEffect(() => localStorage.setItem(answersKey, JSON.stringify(answers)), [answers, answersKey]);
   useEffect(() => localStorage.setItem(submittedKey, JSON.stringify(submittedIds)), [submittedIds, submittedKey]);
 

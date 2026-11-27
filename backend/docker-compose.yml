@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quiztuhoc-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+    ports:
+      - "127.0.0.1:4000:4000"
+
+  # Tùy chọn: bật MongoDB local trên VPS nếu không dùng MongoDB Atlas
+  # Chạy: docker compose --profile local-mongo up -d --build
+  mongodb:
+    image: mongo:7
+    profiles: ["local-mongo"]
+    container_name: quiztuhoc-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-quizadmin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-change_me_strong_password}
+      MONGO_INITDB_DATABASE: quiztuhoc
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "127.0.0.1:27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo_data:

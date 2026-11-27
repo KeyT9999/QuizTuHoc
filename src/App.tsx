@@ -8,6 +8,8 @@ import ImageQuiz from './components/ImageQuiz';
 import Result from './components/Result';
 import Flashcard from './components/Flashcard';
 import KnowledgeGroupPicker from './components/KnowledgeGroupPicker';
+import ProfilePage from './components/ProfilePage';
+import { notifyStudyProgressUpdated } from './utils/studyProgressEvents';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
 import { DEFAULT_COURSES, type Course } from './data/courses';
@@ -536,6 +538,9 @@ export default function App() {
       : undefined;
 
     clearQuizAttemptStorage(targetSetId);
+    if (targetSetId) {
+      notifyStudyProgressUpdated({ resetSetIds: [targetSetId] });
+    }
 
     if (activeGroupId && knowledgeGroupId !== activeGroupId) {
       setKnowledgeGroupId(activeGroupId);
@@ -744,6 +749,27 @@ export default function App() {
             flashcardSet={currentFlashcardSet}
             onBack={handleBackToCourseList}
           />
+        )}
+
+        {/* 9. Màn hình Hồ sơ cá nhân & Tiến độ học */}
+        {route.type === 'profile' && (
+          <ProfilePage
+            courses={courses}
+            quizSets={quizSets}
+            flashcardSets={FLASHCARD_SETS}
+            onNavigateTab={handleNavigateHomeTab}
+            onSelectCourse={handleSelectCourse}
+            onSelectSet={handleSelectSet}
+            onSelectFlashcard={handleSelectFlashcard}
+          />
+        )}
+
+        {/* 10. Màn hình trung gian xử lý callback đăng nhập Google */}
+        {route.type === 'auth_callback' && (
+          <div className="app-error-state">
+            <h3>Đang hoàn tất đăng nhập Google...</h3>
+            <p>Hệ thống đang đồng bộ và gộp tiến độ học tập của bạn. Vui lòng đợi trong giây lát.</p>
+          </div>
         )}
       </main>
 

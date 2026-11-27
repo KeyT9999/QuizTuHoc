@@ -10,6 +10,8 @@ import {
 } from '../utils/courseStorage';
 import type { HomeNavTab } from '../utils/router';
 import PassedBadge from './PassedBadge';
+import UserAccountMenu from './UserAccountMenu';
+import { PROGRESS_SYNCED_EVENT } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import ThemeHero3DDiorama from './ThemeHero3DDiorama';
 import {
@@ -436,6 +438,13 @@ export default function CourseSelector({
   const [sortOrder, setSortOrder] = useState<SortType>('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [homeSubFilter, setHomeSubFilter] = useState<'all' | 'studying' | 'passed' | 'recent'>('all');
+  const [syncTick, setSyncTick] = useState(0);
+
+  useEffect(() => {
+    const handleProgressSynced = () => setSyncTick((prev) => prev + 1);
+    window.addEventListener(PROGRESS_SYNCED_EVENT, handleProgressSynced);
+    return () => window.removeEventListener(PROGRESS_SYNCED_EVENT, handleProgressSynced);
+  }, []);
 
   useEffect(() => {
     setActiveTab(activeNavTab);
@@ -487,6 +496,7 @@ export default function CourseSelector({
 
   // Tổng hợp dữ liệu thống kê học tập & tiến độ cho cả Trang chủ và Thống kê
   const studyStats = useMemo(() => {
+    void syncTick;
     const recentIds = loadRecentCourseIds();
     const courseMap = new Map<string, Course>();
     for (const c of courses) {
@@ -677,7 +687,7 @@ export default function CourseSelector({
       flashcardPercent: fcProg.percent,
       majorStats,
     };
-  }, [courses, quizSets, flashcardSets]);
+  }, [courses, quizSets, flashcardSets, syncTick]);
 
   // Compute filtered & sorted courses for Library tab
   const displayedCourses = useMemo(() => {
@@ -1079,17 +1089,8 @@ export default function CourseSelector({
               <span>Giao diện</span>
             </button>
 
-            {/* User Avatar Menu */}
-            <div className="home-user-menu">
-              <div className="home-user-avatar" title="Tài khoản cá nhân">
-                V
-              </div>
-              <div className="home-user-chevron">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </div>
-            </div>
+            {/* User Avatar / Google Account Menu */}
+            <UserAccountMenu />
           </nav>
         </div>
       </header>

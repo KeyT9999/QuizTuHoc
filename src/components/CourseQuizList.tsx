@@ -3,6 +3,8 @@ import type { Course } from '../data/courses';
 import type { QuizSetInfo } from '../data/quizSets';
 import { getQuizSetProgress, calculateCourseProgress } from '../utils/courseStorage';
 import PassedBadge from './PassedBadge';
+import UserAccountMenu from './UserAccountMenu';
+import { PROGRESS_SYNCED_EVENT } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import ZenTempleWatermark from './ZenTempleWatermark';
 import LotusFlowerSvg from './LotusFlowerSvg';
@@ -893,7 +895,14 @@ export default function CourseQuizList({
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortType>('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [syncTick, setSyncTick] = useState(0);
   const sortRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleProgressSynced = () => setSyncTick((prev) => prev + 1);
+    window.addEventListener(PROGRESS_SYNCED_EVENT, handleProgressSynced);
+    return () => window.removeEventListener(PROGRESS_SYNCED_EVENT, handleProgressSynced);
+  }, []);
 
   // Close sort menu on click outside
   useEffect(() => {
@@ -913,11 +922,13 @@ export default function CourseQuizList({
 
   // Overall course progress
   const courseProgress = useMemo(() => {
+    void syncTick;
     return calculateCourseProgress(course.id, quizSets);
-  }, [course.id, quizSets]);
+  }, [course.id, quizSets, syncTick]);
 
   // Filtered & Sorted sets
   const filteredSets = useMemo(() => {
+    void syncTick;
     let list = courseSets;
 
     // Search by title, description, category, or badge
@@ -956,7 +967,7 @@ export default function CourseQuizList({
     }
 
     return list;
-  }, [courseSets, searchQuery, sortOrder]);
+  }, [courseSets, searchQuery, sortOrder, syncTick]);
 
   const handleDeleteSet = (e: React.MouseEvent, set: QuizSetInfo) => {
     e.stopPropagation();
@@ -1091,15 +1102,8 @@ export default function CourseQuizList({
               <span>Giao diện</span>
             </button>
 
-            {/* Avatar / User Menu */}
-            <div className="course-user-menu" title="Tài khoản cá nhân">
-              <div className="course-user-avatar">V</div>
-              <div className="course-user-chevron">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </div>
-            </div>
+            {/* Avatar / Google Account Menu */}
+            <UserAccountMenu />
           </nav>
         </div>
       </header>

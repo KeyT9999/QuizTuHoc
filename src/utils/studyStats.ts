@@ -1,3 +1,5 @@
+import { notifyStudyProgressUpdated } from './studyProgressEvents';
+
 export type AppTheme = 'doraemon-gadget' | 'billionaire-vault' | 'shin-kasukabe' | 'spidey-night' | 'cozy-night' | 'fantasy-academy' | 'hon-viet' | 'lotus-zen-sanctuary' | 'default';
 export type ShinSceneId = 'room' | 'meadow' | 'hills' | 'rain';
 export type MoneyVaultFinish = 'obsidian' | 'emerald' | 'gold';
@@ -264,6 +266,7 @@ export function addStudyXP(amount: number): number {
     window.dispatchEvent(new CustomEvent('keyt-xp-changed', { detail: next }));
     window.dispatchEvent(new CustomEvent('keyt-xp-earned', { detail: next }));
     window.dispatchEvent(new Event('storage'));
+    notifyStudyProgressUpdated();
   } catch {
     // ignore
   }
@@ -343,6 +346,7 @@ export function recordDailyStudy(): number {
     localStorage.setItem(STREAK_LAST_DATE_KEY, today);
     window.dispatchEvent(new CustomEvent('keyt-streak-changed', { detail: nextStreak }));
     window.dispatchEvent(new Event('storage'));
+    notifyStudyProgressUpdated();
     return nextStreak;
   } catch {
     return 0;

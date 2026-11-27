@@ -2,6 +2,7 @@ import type { Course } from '../data/courses';
 import type { QuizSetInfo } from '../data/quizSets';
 import type { FlashcardSet } from '../data/flashcardData';
 import { parseQuizText } from './quizParser';
+import { notifyStudyProgressUpdated } from './studyProgressEvents';
 
 const STORAGE_CUSTOM_COURSES = 'keyt_custom_courses';
 const STORAGE_CUSTOM_QUIZZES = 'keyt_custom_quiz_sets';
@@ -162,6 +163,7 @@ export function recordRecentCourse(courseId: string): void {
     const current = loadRecentCourseIds().filter((id) => id !== courseId);
     const updated = [courseId, ...current].slice(0, 12);
     localStorage.setItem(STORAGE_RECENT_COURSES, JSON.stringify(updated));
+    notifyStudyProgressUpdated();
   } catch {
     // ignore storage errors
   }

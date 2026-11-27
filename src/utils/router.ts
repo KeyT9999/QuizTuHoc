@@ -7,7 +7,9 @@ export type AppRoute =
   | { type: 'course_detail'; courseId: string }
   | { type: 'quiz'; courseId: string; setId: string }
   | { type: 'new_quiz'; courseId: string }
-  | { type: 'flashcard' };
+  | { type: 'flashcard' }
+  | { type: 'profile' }
+  | { type: 'auth_callback' };
 
 export function parseRoute(pathname: string): AppRoute {
   // Normalize path: strip trailing slash, replace multiple slashes
@@ -28,6 +30,14 @@ export function parseRoute(pathname: string): AppRoute {
     if (parts[0] === 'courses' || parts[0] === 'course' || parts[0] === 'library') {
       return { type: 'course_list', tab: 'library' };
     }
+    if (parts[0] === 'profile') {
+      return { type: 'profile' };
+    }
+  }
+
+  // 1b. Google OAuth callback route: /auth/callback
+  if (parts.length === 2 && parts[0] === 'auth' && parts[1] === 'callback') {
+    return { type: 'auth_callback' };
   }
 
   // 2. Flashcards: /flashcards or /flashcard
@@ -77,6 +87,10 @@ export function buildRouteUrl(route: AppRoute): string {
       return `/course/${route.courseId}/new-quiz`;
     case 'flashcard':
       return '/flashcards';
+    case 'profile':
+      return '/profile';
+    case 'auth_callback':
+      return '/auth/callback';
   }
 }
 

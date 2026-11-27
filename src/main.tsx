@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { initializeGoogleAnalytics } from './utils/googleAnalytics'
 import './index.css'
 import { ThemeProvider } from './context/ThemeContext'
+import { AuthProvider } from './context/AuthContext'
 import App from './App.tsx'
 import HoverTranslate from './components/HoverTranslate'
 
@@ -11,10 +12,12 @@ initializeGoogleAnalytics()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <>
-        <App />
-        <HoverTranslate />
-      </>
+      <AuthProvider>
+        <>
+          <App />
+          <HoverTranslate />
+        </>
+      </AuthProvider>
     </ThemeProvider>
   </StrictMode>,
 )
