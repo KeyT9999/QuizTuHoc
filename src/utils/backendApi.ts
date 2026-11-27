@@ -1,3 +1,16 @@
+export interface XpBreakdown {
+  masteredQuestionsXp: number;
+  flashcardsXp: number;
+  completedSetsXp: number;
+  passedCoursesXp: number;
+  studyDaysXp: number;
+}
+
+export interface RecentStudyDay {
+  date: string;
+  studied: boolean;
+}
+
 export interface UserProfileBasics {
   id: string;
   email: string;
@@ -14,7 +27,10 @@ export interface UserProfileBasics {
   nextLevelXp: number;
   remainingXp: number;
   streakDays: number;
+  longestStreakDays?: number;
   streakLastDate: string;
+  studiedToday?: boolean;
+  totalStudyDays?: number;
   lastLoginAt: string;
   lastSyncedAt: string | null;
   createdAt: string;
@@ -22,12 +38,17 @@ export interface UserProfileBasics {
 
 export interface ProfileSummary {
   xp: number;
+  xpBreakdown?: XpBreakdown;
   level: number;
   currentLevelXp: number;
   nextLevelXp: number;
   remainingXp: number;
   streakDays: number;
+  longestStreakDays?: number;
   streakLastDate: string;
+  studiedToday?: boolean;
+  totalStudyDays?: number;
+  recent7Days?: RecentStudyDay[];
   studiedCoursesCount: number;
   passedCoursesCount: number;
   startedSetsCount: number;
@@ -122,6 +143,7 @@ export interface ProgressSyncPayload {
   xp: number;
   streakDays: number;
   streakLastDate: string;
+  activityRecorded?: boolean;
   recentCourseIds: string[];
   totalCatalogQuestions: number;
   sets: ProgressSyncSetInput[];

@@ -8,7 +8,6 @@ import {
   getUserXP,
   calculateLevel,
   getStudyStreak,
-  addStudyXP,
 } from '../utils/studyStats';
 import './FantasyAcademyTheme.css';
 
@@ -203,7 +202,7 @@ export default function FantasyAcademyQuizView({
   const displayTitle = setTitle || 'MLN111';
   const rankPercent = xp >= 3000 ? 'Top 1%' : xp >= 1800 ? 'Top 3%' : xp >= 800 ? 'Top 5%' : 'Top 10%';
 
-  const handleClaimChest = (id: string, name: string, rewardXp: number, isEligible: boolean) => {
+  const handleClaimChest = (id: string, name: string, _rewardXp: number, isEligible: boolean) => {
     if (claimedChests[id]) {
       setClaimedChest(`Bạn đã mở ${name} trước đó rồi!`);
       setTimeout(() => setClaimedChest(null), 3000);
@@ -214,7 +213,6 @@ export default function FantasyAcademyQuizView({
       setTimeout(() => setClaimedChest(null), 3000);
       return;
     }
-    addStudyXP(rewardXp);
     const updated = { ...claimedChests, [id]: true };
     setClaimedChests(updated);
     try {
@@ -222,7 +220,7 @@ export default function FantasyAcademyQuizView({
     } catch {
       // ignore
     }
-    setClaimedChest(`🎉 Mở ${name} thành công! Nhận được +${rewardXp} EXP!`);
+    setClaimedChest(`🎉 Đã mở khóa huy hiệu ${name}!`);
     setTimeout(() => setClaimedChest(null), 3500);
   };
 

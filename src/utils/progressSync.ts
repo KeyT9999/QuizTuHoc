@@ -14,7 +14,7 @@ import {
   getQuizSetProgress,
   loadRecentCourseIds,
 } from './courseStorage';
-import { getStudyStreak, getUserXP } from './studyStats';
+import { getStudyStreak, getUserXP, setUserXPExact, XP_RULES } from './studyStats';
 import {
   PROGRESS_SYNCED_EVENT,
   STUDY_PROGRESS_UPDATED_EVENT,
@@ -57,6 +57,7 @@ export function collectLocalProgressSnapshot(
   options?: {
     includeZeroSetIds?: string[];
     includeZeroFlashcardIds?: string[];
+    activityRecorded?: boolean;
   }
 ): ProgressSyncPayload {
   const courseMap = new Map<string, Course>();
@@ -198,12 +199,67 @@ export function collectLocalProgressSnapshot(
     xp: getUserXP(),
     streakDays: getStudyStreak(),
     streakLastDate,
+    ...(options?.activityRecorded ? { activityRecorded: true } : {}),
     recentCourseIds: loadRecentCourseIds(),
     totalCatalogQuestions,
     sets,
     courseCatalog,
     flashcards,
   };
+}
+
+/**
+ * Computes real XP strictly from local verified progress (matches backend formula)
+ */
+export function computeLocalRealXP(
+  courses: Course[],
+  quizSets: QuizSetInfo[],
+  flashcardSets: FlashcardSet[]
+): number {
+  const snap = collectLocalProgressSnapshot(courses, quizSets, flashcardSets);
+  const mainSets = snap.sets.filter((s) => !s.isKnowledgeGroup && s.masteredIds.length > 0);
+  const masteredQuestions = mainSets.reduce((sum, s) => sum + s.masteredIds.length, 0);
+  const completedSets = mainSets.filter(
+    (s) => s.totalQuestions > 0 && s.masteredIds.length >= s.totalQuestions
+  ).length;
+  const passedCourses = snap.courseCatalog.filter((c) => {
+    if (c.totalQuestions <= 0) return false;
+    const prog = calculateCourseProgress(c.courseId, quizSets);
+    return prog.totalQuestions > 0 && prog.percent >= 100;
+  }).length;
+  const flashcardsKnown = snap.flashcards.reduce((sum, f) => sum + f.knownIds.length, 0);
+  const studyDays = Math.max(snap.streakDays, masteredQuestions > 0 || flashcardsKnown > 0 ? 1 : 0);
+
+  return (
+    masteredQuestions * XP_RULES.perMasteredQuestion +
+    flashcardsKnown * XP_RULES.perKnownFlashcard +
+    completedSets * XP_RULES.perCompletedSet +
+    passedCourses * XP_RULES.perPassedCourse +
+    studyDays * XP_RULES.perStudyDay
+  );
+}
+
+const REAL_XP_RECONCILED_KEY = 'keyt_real_xp_reconciled_v3';
+
+export function reconcileGuestLocalXP(
+  courses: Course[],
+  quizSets: QuizSetInfo[],
+  flashcardSets: FlashcardSet[]
+): void {
+  if (typeof window === 'undefined') return;
+  try {
+    if (localStorage.getItem(REAL_XP_RECONCILED_KEY) === 'true') return;
+    const realXp = computeLocalRealXP(courses, quizSets, flashcardSets);
+    setHydratingFromCloud(true);
+    try {
+      setUserXPExact(realXp);
+      localStorage.setItem(REAL_XP_RECONCILED_KEY, 'true');
+    } finally {
+      setHydratingFromCloud(false);
+    }
+  } catch {
+    // ignore
+  }
 }
 
 export function hydrateLocalStorageFromProfile(profile: FullProfileResponse): void {

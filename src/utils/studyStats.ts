@@ -244,7 +244,41 @@ try {
   // ignore
 }
 
-// XP Gamification
+export const XP_RULES = {
+  perMasteredQuestion: 10,
+  perKnownFlashcard: 5,
+  perCompletedSet: 100,
+  perPassedCourse: 300,
+  perStudyDay: 25,
+} as const;
+
+export function getVietnamDateKey(date: Date = new Date()): string {
+  const vnTime = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+  const year = vnTime.getUTCFullYear();
+  const month = String(vnTime.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(vnTime.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function shiftDateKey(dateKey: string, deltaDays: number): string {
+  const [y, m, d] = dateKey.split('-').map(Number);
+  const utc = new Date(Date.UTC(y, m - 1, d + deltaDays));
+  const year = utc.getUTCFullYear();
+  const month = String(utc.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(utc.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function normalizeDateKey(raw: string | null): string | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed;
+  const parsed = Date.parse(trimmed);
+  if (!Number.isFinite(parsed)) return null;
+  return getVietnamDateKey(new Date(parsed));
+}
+
+// XP Gamification (synced with server-authoritative real XP)
 export function getUserXP(): number {
   try {
     const raw = localStorage.getItem(XP_STORAGE_KEY);
@@ -255,60 +289,82 @@ export function getUserXP(): number {
   } catch {
     // ignore
   }
-  return 0; // Pure real data: starts at 0 XP
+  return 0;
 }
 
-export function addStudyXP(amount: number): number {
-  const current = getUserXP();
-  const next = current + Math.max(0, amount);
+export function setUserXPExact(xp: number): number {
+  const next = Math.max(0, Math.floor(Number.isFinite(xp) ? xp : 0));
   try {
     localStorage.setItem(XP_STORAGE_KEY, next.toString());
     window.dispatchEvent(new CustomEvent('keyt-xp-changed', { detail: next }));
-    window.dispatchEvent(new CustomEvent('keyt-xp-earned', { detail: next }));
     window.dispatchEvent(new Event('storage'));
-    notifyStudyProgressUpdated();
   } catch {
     // ignore
   }
   return next;
 }
 
-export function calculateLevel(xp: number): { level: number; currentLevelXp: number; nextLevelXp: number; remainingXp: number } {
-  const XP_PER_LEVEL = 250;
-  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
-  const currentLevelXp = xp % XP_PER_LEVEL;
-  const remainingXp = XP_PER_LEVEL - currentLevelXp;
+export function addStudyXP(amount: number): number {
+  const current = getUserXP();
+  const next = current + Math.max(0, Math.floor(amount));
+  try {
+    localStorage.setItem(XP_STORAGE_KEY, next.toString());
+    window.dispatchEvent(new CustomEvent('keyt-xp-changed', { detail: next }));
+    window.dispatchEvent(new CustomEvent('keyt-xp-earned', { detail: next }));
+    window.dispatchEvent(new Event('storage'));
+    notifyStudyProgressUpdated({ activityRecorded: true });
+  } catch {
+    // ignore
+  }
+  return next;
+}
+
+/**
+ * Progressive RPG level curve (matches backend exactly):
+ * Lv.1->2: 100 XP, Lv.2->3: 150 XP, Lv.L->(L+1): 100 + (L-1)*50 XP
+ */
+export function calculateLevel(xp: number): {
+  level: number;
+  currentLevelXp: number;
+  nextLevelXp: number;
+  remainingXp: number;
+} {
+  let remaining = Math.max(0, Math.floor(Number.isFinite(xp) ? xp : 0));
+  let level = 1;
+  let stepCost = 100 + (level - 1) * 50;
+
+  while (remaining >= stepCost) {
+    remaining -= stepCost;
+    level += 1;
+    stepCost = 100 + (level - 1) * 50;
+  }
+
   return {
     level,
-    currentLevelXp,
-    nextLevelXp: XP_PER_LEVEL,
-    remainingXp,
+    currentLevelXp: remaining,
+    nextLevelXp: stepCost,
+    remainingXp: stepCost - remaining,
   };
 }
 
-// Study Streak Management (100% Real User Activity)
+// Study Streak Management (Vietnam Timezone YYYY-MM-DD, synced with MongoDB studyDates)
 export function getStudyStreak(): number {
   try {
     const savedStreakRaw = localStorage.getItem(STREAK_DAYS_KEY);
-    const lastDate = localStorage.getItem(STREAK_LAST_DATE_KEY);
+    const lastDateKey = normalizeDateKey(localStorage.getItem(STREAK_LAST_DATE_KEY));
 
-    if (!savedStreakRaw || !lastDate) {
-      return 0; // No real study recorded yet -> 0 days
+    if (!savedStreakRaw || !lastDateKey) {
+      return 0;
     }
 
-    const today = new Date().toDateString();
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toDateString();
-
+    const today = getVietnamDateKey();
+    const yesterday = shiftDateKey(today, -1);
     const streak = parseInt(savedStreakRaw, 10) || 0;
 
-    // If last active study was today or yesterday, streak is currently valid
-    if (lastDate === today || lastDate === yesterdayStr) {
+    if (lastDateKey === today || lastDateKey === yesterday) {
       return streak;
     }
 
-    // Missed more than 1 calendar day without studying -> streak reset to 0
     localStorage.setItem(STREAK_DAYS_KEY, '0');
     return 0;
   } catch {
@@ -318,35 +374,26 @@ export function getStudyStreak(): number {
 
 export function recordDailyStudy(): number {
   try {
-    const today = new Date().toDateString();
-    const lastDate = localStorage.getItem(STREAK_LAST_DATE_KEY);
+    const today = getVietnamDateKey();
+    const yesterday = shiftDateKey(today, -1);
+    const lastDateKey = normalizeDateKey(localStorage.getItem(STREAK_LAST_DATE_KEY));
     const savedStreak = parseInt(localStorage.getItem(STREAK_DAYS_KEY) || '0', 10);
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toDateString();
-
-    // Already recorded study session for today: keep current streak
-    if (lastDate === today) {
+    if (lastDateKey === today) {
       const activeStreak = Math.max(1, savedStreak);
       localStorage.setItem(STREAK_DAYS_KEY, activeStreak.toString());
+      localStorage.setItem(STREAK_LAST_DATE_KEY, today);
+      notifyStudyProgressUpdated({ activityRecorded: true });
       return activeStreak;
     }
 
-    let nextStreak = 1;
-    // Studied yesterday: maintain unbroken streak (+1 day)
-    if (lastDate === yesterdayStr) {
-      nextStreak = Math.max(1, savedStreak) + 1;
-    } else {
-      // First day ever or restarted after missing days
-      nextStreak = 1;
-    }
+    const nextStreak = lastDateKey === yesterday ? Math.max(1, savedStreak) + 1 : 1;
 
     localStorage.setItem(STREAK_DAYS_KEY, nextStreak.toString());
     localStorage.setItem(STREAK_LAST_DATE_KEY, today);
     window.dispatchEvent(new CustomEvent('keyt-streak-changed', { detail: nextStreak }));
     window.dispatchEvent(new Event('storage'));
-    notifyStudyProgressUpdated();
+    notifyStudyProgressUpdated({ activityRecorded: true });
     return nextStreak;
   } catch {
     return 0;

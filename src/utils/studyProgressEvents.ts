@@ -4,6 +4,7 @@ export const PROGRESS_SYNCED_EVENT = 'keyt-progress-synced';
 export interface StudyProgressUpdateDetail {
   resetSetIds?: string[];
   resetFlashcardIds?: string[];
+  activityRecorded?: boolean;
 }
 
 let hydratingFromCloud = false;

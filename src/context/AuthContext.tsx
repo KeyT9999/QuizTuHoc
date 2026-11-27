@@ -29,6 +29,7 @@ import {
 import {
   collectLocalProgressSnapshot,
   hydrateLocalStorageFromProfile,
+  reconcileGuestLocalXP,
   STUDY_PROGRESS_UPDATED_EVENT,
   type StudyProgressUpdateDetail,
 } from '../utils/progressSync';
@@ -109,6 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pendingSyncTimerRef = useRef<number | null>(null);
   const pendingResetSetIdsRef = useRef<Set<string>>(new Set());
   const pendingResetFlashcardIdsRef = useRef<Set<string>>(new Set());
+  const pendingActivityRecordedRef = useRef<boolean>(false);
   const hasDirtyChangesRef = useRef<boolean>(false);
   const isAuthenticatedRef = useRef<boolean>(false);
 
@@ -130,21 +132,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const resetSetIds = Array.from(pendingResetSetIdsRef.current);
       const resetFlashcardIds = Array.from(pendingResetFlashcardIdsRef.current);
+      const activityRecorded = pendingActivityRecordedRef.current;
       pendingResetSetIdsRef.current.clear();
       pendingResetFlashcardIdsRef.current.clear();
+      pendingActivityRecordedRef.current = false;
       hasDirtyChangesRef.current = false;
 
       const { courses, quizSets, flashcardSets } = getAllCatalogItems();
       const snapshot = collectLocalProgressSnapshot(courses, quizSets, flashcardSets, {
         includeZeroSetIds: resetSetIds,
         includeZeroFlashcardIds: resetFlashcardIds,
+        activityRecorded,
       });
 
       setIsSyncing(true);
       try {
         const updatedProfile = await syncProgressToBackend(snapshot, options);
-        setProfile(updatedProfile);
-        setSyncError(null);
+        applyProfile(updatedProfile, true);
       } catch (error) {
         if (error instanceof BackendApiError && error.status === 401) {
           setStoredAuthToken(null);
@@ -157,7 +161,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsSyncing(false);
       }
     },
-    [isBackendReady]
+    [applyProfile, isBackendReady]
   );
 
   // Initial bootstrap: handle /auth/callback OR restore existing session
@@ -220,6 +224,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Case 2: Existing session check (only if token exists to avoid unnecessary 401 noise for guests)
       const token = getStoredAuthToken();
       if (!token) {
+        const { courses, quizSets, flashcardSets } = getAllCatalogItems();
+        reconcileGuestLocalXP(courses, quizSets, flashcardSets);
         if (!cancelled) setIsLoading(false);
         return;
       }
@@ -256,6 +262,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       if (detail?.resetFlashcardIds) {
         for (const id of detail.resetFlashcardIds) pendingResetFlashcardIdsRef.current.add(id);
+      }
+      if (detail?.activityRecorded) {
+        pendingActivityRecordedRef.current = true;
       }
 
       hasDirtyChangesRef.current = true;

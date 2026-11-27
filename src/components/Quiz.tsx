@@ -324,11 +324,12 @@ export default function Quiz({
       if (!isUnresolved) {
         if (answer === question.correctAnswer) {
           playCorrectSound();
-          addStudyXP(35);
+          if (!masteredIds.includes(question.id)) {
+            addStudyXP(10);
+          }
           window.dispatchEvent(new CustomEvent('theme-particle-burst'));
         } else {
           playWrongSound();
-          addStudyXP(15);
         }
       }
 
@@ -355,11 +356,12 @@ export default function Quiz({
     recordDailyStudy();
     if (isCorrect) {
       playCorrectSound();
-      addStudyXP(35);
+      if (!masteredIds.includes(question.id)) {
+        addStudyXP(10);
+      }
       window.dispatchEvent(new CustomEvent('theme-particle-burst'));
     } else {
       playWrongSound();
-      addStudyXP(15);
     }
 
     if (isCorrect && !masteredIds.includes(question.id)) {

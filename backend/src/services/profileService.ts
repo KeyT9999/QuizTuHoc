@@ -5,10 +5,14 @@ import { CourseSummary } from '../models/CourseSummary.js';
 import { FlashcardProgress } from '../models/FlashcardProgress.js';
 import {
   calculateLevelInfo,
+  calculateRealXP,
   computePercent,
+  computeStreakFromDates,
+  getVietnamDateKey,
   mergeRecentCourses,
-  mergeStreak,
   mergeUniqueIds,
+  normalizeDateKey,
+  normalizeStudyDates,
   normalizeUniqueIds,
 } from '../utils/level.js';
 
@@ -43,6 +47,7 @@ export const progressSyncPayloadSchema = z.object({
   xp: z.number().int().min(0).max(100_000_000).optional(),
   streakDays: z.number().int().min(0).max(100_000).optional(),
   streakLastDate: z.string().trim().max(64).optional(),
+  activityRecorded: z.boolean().optional(),
   recentCourseIds: z.array(z.string().trim().min(1).max(80)).max(24).optional(),
   totalCatalogQuestions: z.number().int().min(0).max(5_000_000).optional(),
   sets: z.array(setProgressInputSchema).max(2000).default([]),
@@ -55,6 +60,8 @@ export type CourseCatalogInput = z.infer<typeof courseCatalogInputSchema>;
 
 export function serializeUserBasics(user: IUser) {
   const levelInfo = calculateLevelInfo(user.xp);
+  const streakStats = computeStreakFromDates(user.studyDates || []);
+
   return {
     id: user._id.toString(),
     email: user.email,
@@ -70,8 +77,11 @@ export function serializeUserBasics(user: IUser) {
     currentLevelXp: levelInfo.currentLevelXp,
     nextLevelXp: levelInfo.nextLevelXp,
     remainingXp: levelInfo.remainingXp,
-    streakDays: user.streakDays,
-    streakLastDate: user.streakLastDate,
+    streakDays: streakStats.streakDays,
+    longestStreakDays: Math.max(user.longestStreakDays || 0, streakStats.longestStreakDays),
+    streakLastDate: streakStats.streakLastDate,
+    studiedToday: streakStats.studiedToday,
+    totalStudyDays: streakStats.totalStudyDays,
     lastLoginAt: user.lastLoginAt,
     lastSyncedAt: user.lastSyncedAt,
     createdAt: user.createdAt,
@@ -137,7 +147,8 @@ async function rebuildCourseSummaries(
       if (!fallbackName && s.courseName) fallbackName = s.courseName;
     }
 
-    const courseCode = catalog?.courseCode || fallbackCode || prev?.courseCode || courseId.toUpperCase();
+    const courseCode =
+      catalog?.courseCode || fallbackCode || prev?.courseCode || courseId.toUpperCase();
     const courseName = catalog?.courseName || fallbackName || prev?.courseName || courseCode;
 
     bulkOps.push({
@@ -162,7 +173,6 @@ async function rebuildCourseSummaries(
     });
   }
 
-  // Delete obsolete CourseSummaries whose progress dropped to 0
   const staleCourseIds = existingSummaries
     .map((s) => s.courseId)
     .filter((id) => !activeCourseIds.has(id));
@@ -180,6 +190,81 @@ async function rebuildCourseSummaries(
   }
 }
 
+/**
+ * Recomputes server-authoritative XP, Level, and Streak from verified MongoDB progress & studyDates
+ */
+export async function recalculateUserGamification(
+  user: IUser,
+  options?: { recordTodayActivity?: boolean; seedLegacyDate?: string }
+) {
+  const now = new Date();
+  const todayVn = getVietnamDateKey(now);
+
+  const [courses, sets, flashcards] = await Promise.all([
+    CourseSummary.find({ userId: user._id }).lean(),
+    SetProgress.find({ userId: user._id, isKnowledgeGroup: { $ne: true } }).lean(),
+    FlashcardProgress.find({ userId: user._id }).lean(),
+  ]);
+
+  const activeSets = sets.filter((s) => s.masteredCount > 0);
+  const totalMasteredQuestions = activeSets.reduce((sum, s) => sum + s.masteredCount, 0);
+  const completedSetsCount = activeSets.filter((s) => s.isCompleted).length;
+  const passedCoursesCount = courses.filter((c) => c.isPassed).length;
+  const flashcardsKnown = flashcards.reduce((sum, f) => sum + f.knownCount, 0);
+
+  const dateSet = new Set(normalizeStudyDates(user.studyDates || [], todayVn));
+
+  // Migrate legacy streakLastDate once if studyDates was empty and user has real progress
+  if (dateSet.size === 0 && (totalMasteredQuestions > 0 || flashcardsKnown > 0)) {
+    const legacyKey =
+      normalizeDateKey(options?.seedLegacyDate) || normalizeDateKey(user.streakLastDate);
+    if (legacyKey && legacyKey <= todayVn) {
+      dateSet.add(legacyKey);
+    } else {
+      dateSet.add(todayVn);
+    }
+  }
+
+  // Record today's real study day only when verified study activity occurred
+  if (options?.recordTodayActivity) {
+    dateSet.add(todayVn);
+  }
+
+  const normalizedDates = Array.from(dateSet).sort();
+  const streakStats = computeStreakFromDates(normalizedDates, now);
+
+  const realXp = calculateRealXP({
+    masteredQuestions: totalMasteredQuestions,
+    flashcardsKnown,
+    completedSets: completedSetsCount,
+    passedCourses: passedCoursesCount,
+    studyDaysCount: streakStats.totalStudyDays,
+  });
+
+  const levelInfo = calculateLevelInfo(realXp.totalXp);
+
+  const changed =
+    user.xp !== realXp.totalXp ||
+    user.level !== levelInfo.level ||
+    user.streakDays !== streakStats.streakDays ||
+    user.longestStreakDays !== streakStats.longestStreakDays ||
+    user.streakLastDate !== streakStats.streakLastDate ||
+    (user.studyDates || []).length !== normalizedDates.length;
+
+  user.studyDates = normalizedDates;
+  user.xp = realXp.totalXp;
+  user.level = levelInfo.level;
+  user.streakDays = streakStats.streakDays;
+  user.longestStreakDays = streakStats.longestStreakDays;
+  user.streakLastDate = streakStats.streakLastDate;
+
+  if (changed) {
+    await user.save();
+  }
+
+  return { realXp, levelInfo, streakStats };
+}
+
 export async function mergeUserProgress(user: IUser, payload: ProgressSyncPayload) {
   const now = new Date();
 
@@ -188,18 +273,40 @@ export async function mergeUserProgress(user: IUser, payload: ProgressSyncPayloa
     FlashcardProgress.find({ userId: user._id }).lean(),
   ]);
 
-  const existingSetMap = new Map<string, Pick<ISetProgress, 'masteredIds' | 'totalQuestions' | 'courseId' | 'courseCode' | 'courseName' | 'setTitle' | 'kind' | 'isKnowledgeGroup'>>(
-    existingSets.map((item) => [item.setId, item])
-  );
+  const existingSetMap = new Map<
+    string,
+    Pick<
+      ISetProgress,
+      | 'masteredIds'
+      | 'totalQuestions'
+      | 'courseId'
+      | 'courseCode'
+      | 'courseName'
+      | 'setTitle'
+      | 'kind'
+      | 'isKnowledgeGroup'
+    >
+  >(existingSets.map((item) => [item.setId, item]));
   const existingFcMap = new Map(existingFlashcards.map((item) => [item.flashcardSetId, item]));
+
+  let gainedNewProgress = false;
 
   const setOps: Parameters<typeof SetProgress.bulkWrite>[0] = [];
   for (const incoming of payload.sets) {
     const prev = existingSetMap.get(incoming.setId);
-    const mergedIds = mergeUniqueIds(prev?.masteredIds || [], normalizeUniqueIds(incoming.masteredIds));
+    const prevCount = prev?.masteredIds?.length || 0;
+    const mergedIds = mergeUniqueIds(
+      prev?.masteredIds || [],
+      normalizeUniqueIds(incoming.masteredIds)
+    );
     if (mergedIds.length === 0) continue;
+    if (mergedIds.length > prevCount) gainedNewProgress = true;
 
-    const totalQuestions = Math.max(incoming.totalQuestions, prev?.totalQuestions || 0, mergedIds.length);
+    const totalQuestions = Math.max(
+      incoming.totalQuestions,
+      prev?.totalQuestions || 0,
+      mergedIds.length
+    );
     const masteredCount = mergedIds.length;
     const percent = computePercent(masteredCount, totalQuestions);
     const isKnowledgeGroup =
@@ -234,8 +341,13 @@ export async function mergeUserProgress(user: IUser, payload: ProgressSyncPayloa
   const fcOps: Parameters<typeof FlashcardProgress.bulkWrite>[0] = [];
   for (const incoming of payload.flashcards) {
     const prev = existingFcMap.get(incoming.flashcardSetId);
-    const mergedIds = mergeUniqueIds(prev?.knownIds || [], normalizeUniqueIds(incoming.knownIds));
+    const prevCount = prev?.knownIds?.length || 0;
+    const mergedIds = mergeUniqueIds(
+      prev?.knownIds || [],
+      normalizeUniqueIds(incoming.knownIds)
+    );
     if (mergedIds.length === 0) continue;
+    if (mergedIds.length > prevCount) gainedNewProgress = true;
 
     const totalCards = Math.max(incoming.totalCards, prev?.totalCards || 0, mergedIds.length);
     const knownCount = mergedIds.length;
@@ -264,29 +376,36 @@ export async function mergeUserProgress(user: IUser, payload: ProgressSyncPayloa
     fcOps.length > 0 ? FlashcardProgress.bulkWrite(fcOps, { ordered: false }) : Promise.resolve(),
   ]);
 
-  const nextXp = Math.max(user.xp || 0, payload.xp || 0);
-  const nextStreak = mergeStreak(
-    { streakDays: user.streakDays || 0, streakLastDate: user.streakLastDate || '' },
-    { streakDays: payload.streakDays || 0, streakLastDate: payload.streakLastDate || '' }
-  );
-
-  user.xp = nextXp;
-  user.level = calculateLevelInfo(nextXp).level;
-  user.streakDays = nextStreak.streakDays;
-  user.streakLastDate = nextStreak.streakLastDate;
   user.recentCourseIds = mergeRecentCourses(payload.recentCourseIds || [], user.recentCourseIds || []);
   if (typeof payload.totalCatalogQuestions === 'number' && payload.totalCatalogQuestions > 0) {
-    user.totalCatalogQuestions = Math.max(user.totalCatalogQuestions || 0, payload.totalCatalogQuestions);
+    user.totalCatalogQuestions = Math.max(
+      user.totalCatalogQuestions || 0,
+      payload.totalCatalogQuestions
+    );
   }
   user.lastSyncedAt = now;
 
-  await Promise.all([user.save(), rebuildCourseSummaries(user._id, payload.courseCatalog)]);
+  await rebuildCourseSummaries(user._id, payload.courseCatalog);
+  await recalculateUserGamification(user, {
+    recordTodayActivity: gainedNewProgress || Boolean(payload.activityRecorded),
+    seedLegacyDate: payload.streakLastDate,
+  });
+  await user.save();
 
   return buildFullProfile(user);
 }
 
 export async function syncUserProgress(user: IUser, payload: ProgressSyncPayload) {
   const now = new Date();
+
+  const [existingSets, existingFlashcards] = await Promise.all([
+    SetProgress.find({ userId: user._id }).lean(),
+    FlashcardProgress.find({ userId: user._id }).lean(),
+  ]);
+  const existingSetMap = new Map(existingSets.map((s) => [s.setId, s.masteredCount]));
+  const existingFcMap = new Map(existingFlashcards.map((f) => [f.flashcardSetId, f.knownCount]));
+
+  let gainedNewProgress = false;
 
   const setOps: Parameters<typeof SetProgress.bulkWrite>[0] = [];
   for (const incoming of payload.sets) {
@@ -298,6 +417,10 @@ export async function syncUserProgress(user: IUser, payload: ProgressSyncPayload
         },
       });
       continue;
+    }
+
+    if (cleanIds.length > (existingSetMap.get(incoming.setId) || 0)) {
+      gainedNewProgress = true;
     }
 
     const totalQuestions = Math.max(incoming.totalQuestions, cleanIds.length);
@@ -344,6 +467,10 @@ export async function syncUserProgress(user: IUser, payload: ProgressSyncPayload
       continue;
     }
 
+    if (cleanIds.length > (existingFcMap.get(incoming.flashcardSetId) || 0)) {
+      gainedNewProgress = true;
+    }
+
     const totalCards = Math.max(incoming.totalCards, cleanIds.length);
     const knownCount = cleanIds.length;
     const percent = computePercent(knownCount, totalCards);
@@ -371,24 +498,6 @@ export async function syncUserProgress(user: IUser, payload: ProgressSyncPayload
     fcOps.length > 0 ? FlashcardProgress.bulkWrite(fcOps, { ordered: false }) : Promise.resolve(),
   ]);
 
-  if (typeof payload.xp === 'number') {
-    const nextXp = Math.max(user.xp || 0, payload.xp);
-    user.xp = nextXp;
-    user.level = calculateLevelInfo(nextXp).level;
-  }
-
-  if (typeof payload.streakDays === 'number' || typeof payload.streakLastDate === 'string') {
-    const nextStreak = mergeStreak(
-      { streakDays: user.streakDays || 0, streakLastDate: user.streakLastDate || '' },
-      {
-        streakDays: payload.streakDays ?? user.streakDays ?? 0,
-        streakLastDate: payload.streakLastDate ?? user.streakLastDate ?? '',
-      }
-    );
-    user.streakDays = nextStreak.streakDays;
-    user.streakLastDate = nextStreak.streakLastDate;
-  }
-
   if (payload.recentCourseIds && payload.recentCourseIds.length > 0) {
     user.recentCourseIds = mergeRecentCourses(payload.recentCourseIds, user.recentCourseIds || []);
   }
@@ -399,12 +508,18 @@ export async function syncUserProgress(user: IUser, payload: ProgressSyncPayload
 
   user.lastSyncedAt = now;
 
-  await Promise.all([user.save(), rebuildCourseSummaries(user._id, payload.courseCatalog)]);
+  await rebuildCourseSummaries(user._id, payload.courseCatalog);
+  await recalculateUserGamification(user, {
+    recordTodayActivity: gainedNewProgress || Boolean(payload.activityRecorded),
+  });
+  await user.save();
 
   return buildFullProfile(user);
 }
 
 export async function buildFullProfile(user: IUser) {
+  const { realXp, levelInfo, streakStats } = await recalculateUserGamification(user);
+
   const [courses, sets, flashcards] = await Promise.all([
     CourseSummary.find({ userId: user._id })
       .sort({ percent: -1, masteredQuestions: -1, lastStudiedAt: -1 })
@@ -420,26 +535,35 @@ export async function buildFullProfile(user: IUser) {
   const mainSets = sets.filter((s) => !s.isKnowledgeGroup && s.masteredCount > 0);
   const totalMasteredQuestions = mainSets.reduce((sum, s) => sum + s.masteredCount, 0);
   const studiedCoursesTotalQuestions = courses.reduce((sum, c) => sum + c.totalQuestions, 0);
-  const totalCatalogQuestions = Math.max(user.totalCatalogQuestions || 0, studiedCoursesTotalQuestions);
-  const studiedCoursesPercent = computePercent(totalMasteredQuestions, studiedCoursesTotalQuestions);
+  const totalCatalogQuestions = Math.max(
+    user.totalCatalogQuestions || 0,
+    studiedCoursesTotalQuestions
+  );
+  const studiedCoursesPercent = computePercent(
+    totalMasteredQuestions,
+    studiedCoursesTotalQuestions
+  );
   const overallCatalogPercent = computePercent(totalMasteredQuestions, totalCatalogQuestions);
 
   const flashcardsKnown = flashcards.reduce((sum, f) => sum + f.knownCount, 0);
   const flashcardsTotal = flashcards.reduce((sum, f) => sum + f.totalCards, 0);
   const flashcardPercent = computePercent(flashcardsKnown, flashcardsTotal);
 
-  const levelInfo = calculateLevelInfo(user.xp);
-
   return {
     user: serializeUserBasics(user),
     summary: {
-      xp: user.xp,
+      xp: realXp.totalXp,
+      xpBreakdown: realXp.breakdown,
       level: levelInfo.level,
       currentLevelXp: levelInfo.currentLevelXp,
       nextLevelXp: levelInfo.nextLevelXp,
       remainingXp: levelInfo.remainingXp,
-      streakDays: user.streakDays,
-      streakLastDate: user.streakLastDate,
+      streakDays: streakStats.streakDays,
+      longestStreakDays: streakStats.longestStreakDays,
+      streakLastDate: streakStats.streakLastDate,
+      studiedToday: streakStats.studiedToday,
+      totalStudyDays: streakStats.totalStudyDays,
+      recent7Days: streakStats.recent7Days,
       studiedCoursesCount: courses.length,
       passedCoursesCount: courses.filter((c) => c.isPassed).length,
       startedSetsCount: mainSets.length,

@@ -5,7 +5,7 @@ import type { FlashcardSet } from '../data/flashcardData';
 import type { HomeNavTab } from '../utils/router';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { collectLocalProgressSnapshot } from '../utils/progressSync';
+import { collectLocalProgressSnapshot, computeLocalRealXP } from '../utils/progressSync';
 import UserAccountMenu from './UserAccountMenu';
 import './ProfilePage.css';
 
@@ -114,7 +114,7 @@ export default function ProfilePage({
       studiedCourses: courseIds.size,
       startedSets: mainSets.length,
       masteredCount,
-      xp: snap.xp,
+      xp: computeLocalRealXP(courses, quizSets, flashcardSets),
       streakDays: snap.streakDays,
     };
   }, [courses, flashcardSets, isAuthenticated, quizSets]);
@@ -551,15 +551,33 @@ export default function ProfilePage({
 
               <div className="profile-kpi-card">
                 <div className="profile-kpi-top">
-                  <span className="profile-kpi-label">Cấp độ & Kinh nghiệm</span>
+                  <span className="profile-kpi-label">Cấp độ & Kinh nghiệm thật</span>
                   <span className="profile-kpi-icon">⚡</span>
                 </div>
                 <strong className="profile-kpi-big">
                   Level {summary.level} · {summary.xp.toLocaleString('vi-VN')} XP
                 </strong>
                 <span className="profile-kpi-sub">
-                  Còn {summary.remainingXp} XP để lên Level {summary.level + 1}
+                  {summary.currentLevelXp}/{summary.nextLevelXp} XP · còn {summary.remainingXp} XP lên
+                  Level {summary.level + 1}
                 </span>
+                {summary.xpBreakdown && (
+                  <div className="profile-xp-breakdown">
+                    <span>+{summary.xpBreakdown.masteredQuestionsXp.toLocaleString('vi-VN')} câu</span>
+                    {summary.xpBreakdown.flashcardsXp > 0 && (
+                      <span>+{summary.xpBreakdown.flashcardsXp.toLocaleString('vi-VN')} thẻ</span>
+                    )}
+                    {summary.xpBreakdown.completedSetsXp > 0 && (
+                      <span>+{summary.xpBreakdown.completedSetsXp.toLocaleString('vi-VN')} bộ đề</span>
+                    )}
+                    {summary.xpBreakdown.passedCoursesXp > 0 && (
+                      <span>+{summary.xpBreakdown.passedCoursesXp.toLocaleString('vi-VN')} PASS</span>
+                    )}
+                    {summary.xpBreakdown.studyDaysXp > 0 && (
+                      <span>+{summary.xpBreakdown.studyDaysXp.toLocaleString('vi-VN')} ngày</span>
+                    )}
+                  </div>
+                )}
                 <div className="profile-kpi-bar">
                   <div className="profile-kpi-bar-fill" style={{ width: `${xpProgressPercent}%` }} />
                 </div>
@@ -567,26 +585,31 @@ export default function ProfilePage({
 
               <div className="profile-kpi-card">
                 <div className="profile-kpi-top">
-                  <span className="profile-kpi-label">Chuỗi học & Bộ đề xong</span>
+                  <span className="profile-kpi-label">Chuỗi học thực tế</span>
                   <span className="profile-kpi-icon">🔥</span>
                 </div>
                 <strong className="profile-kpi-big">{summary.streakDays} ngày liên tiếp</strong>
                 <span className="profile-kpi-sub">
-                  🏁 {summary.completedSetsCount}/{summary.startedSetsCount} bộ đề xong · 🃏{' '}
-                  {summary.flashcardsKnown}/{summary.flashcardsTotal} thẻ
+                  🏆 Kỷ lục: {summary.longestStreakDays ?? summary.streakDays} ngày · Tổng{' '}
+                  {summary.totalStudyDays ?? summary.streakDays} ngày học
                 </span>
-                <div className="profile-kpi-bar">
-                  <div
-                    className="profile-kpi-bar-fill"
-                    style={{
-                      width: `${
-                        summary.startedSetsCount > 0
-                          ? Math.round((summary.completedSetsCount / summary.startedSetsCount) * 100)
-                          : 0
-                      }%`,
-                    }}
-                  />
-                </div>
+                {summary.recent7Days && summary.recent7Days.length > 0 && (
+                  <div className="profile-streak-week" aria-label="Lịch học 7 ngày gần nhất">
+                    {summary.recent7Days.map((day) => {
+                      const shortDay = day.date.slice(8, 10) + '/' + day.date.slice(5, 7);
+                      return (
+                        <div
+                          key={day.date}
+                          className={`profile-streak-day ${day.studied ? 'is-active' : ''}`}
+                          title={`${shortDay}: ${day.studied ? 'Đã học' : 'Chưa học'}`}
+                        >
+                          <span className="profile-streak-dot">{day.studied ? '✓' : ''}</span>
+                          <span className="profile-streak-label">{day.date.slice(8, 10)}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </section>
 

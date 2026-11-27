@@ -14,7 +14,9 @@ export interface IUser extends Document {
   xp: number;
   level: number;
   streakDays: number;
+  longestStreakDays: number;
   streakLastDate: string;
+  studyDates: string[];
   recentCourseIds: string[];
   totalCatalogQuestions: number;
   lastLoginAt: Date;
@@ -37,7 +39,9 @@ const userSchema = new Schema<IUser>(
     xp: { type: Number, default: 0, min: 0 },
     level: { type: Number, default: 1, min: 1 },
     streakDays: { type: Number, default: 0, min: 0 },
+    longestStreakDays: { type: Number, default: 0, min: 0 },
     streakLastDate: { type: String, default: '' },
+    studyDates: { type: [String], default: [] },
     recentCourseIds: { type: [String], default: [] },
     totalCatalogQuestions: { type: Number, default: 0, min: 0 },
     lastLoginAt: { type: Date, default: () => new Date() },

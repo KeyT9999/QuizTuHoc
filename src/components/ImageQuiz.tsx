@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { MLN_RESEARCH_ANSWER_KEYS, MLN_RESEARCH_UNCERTAIN } from '../data/mlnResearchAnswerKeys';
 import { notifyStudyProgressUpdated } from '../utils/studyProgressEvents';
+import { addStudyXP, recordDailyStudy } from '../utils/studyStats';
 
 interface ImageQuizProps {
   setId: string;
@@ -96,7 +97,11 @@ export default function ImageQuiz({
   const uncertainSet = new Set(uncertainQuestions);
 
   const markMastered = () => {
-    if (!isMastered) setMasteredIds((previous) => [...previous, questionNumber]);
+    recordDailyStudy();
+    if (!isMastered) {
+      setMasteredIds((previous) => [...previous, questionNumber]);
+      addStudyXP(10);
+    }
   };
 
   const handleSelectAnswer = (option: string) => {

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { FlashcardSet } from '../data/flashcardData';
 import { notifyStudyProgressUpdated } from '../utils/studyProgressEvents';
+import { addStudyXP, recordDailyStudy } from '../utils/studyStats';
 
 interface FlashcardProps {
   flashcardSet: FlashcardSet;
@@ -78,6 +79,7 @@ export default function Flashcard({ flashcardSet, onBack }: FlashcardProps) {
   }, []);
 
   const toggleKnown = useCallback(() => {
+    const alreadyKnown = knownIds.has(currentCard.id);
     setKnownIds((prev) => {
       const next = new Set(prev);
       if (next.has(currentCard.id)) {
@@ -87,7 +89,11 @@ export default function Flashcard({ flashcardSet, onBack }: FlashcardProps) {
       }
       return next;
     });
-  }, [currentCard]);
+    if (!alreadyKnown) {
+      recordDailyStudy();
+      addStudyXP(5);
+    }
+  }, [currentCard, knownIds]);
 
   const resetProgress = useCallback(() => {
     setKnownIds(new Set());
