@@ -56,6 +56,7 @@ export interface ProfileSummary {
   studiedToday?: boolean;
   totalStudyDays?: number;
   recent7Days?: RecentStudyDay[];
+  studyDates?: string[];
   studiedCoursesCount: number;
   passedCoursesCount: number;
   startedSetsCount: number;

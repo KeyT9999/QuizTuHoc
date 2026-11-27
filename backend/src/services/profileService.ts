@@ -567,6 +567,7 @@ export async function buildFullProfile(user: IUser) {
       studiedToday: streakStats.studiedToday,
       totalStudyDays: streakStats.totalStudyDays,
       recent7Days: streakStats.recent7Days,
+      studyDates: (user.studyDates || []).slice(-90),
       studiedCoursesCount: courses.length,
       passedCoursesCount: courses.filter((c) => c.isPassed).length,
       startedSetsCount: mainSets.length,

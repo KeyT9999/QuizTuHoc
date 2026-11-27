@@ -13,6 +13,7 @@ import PassedBadge from './PassedBadge';
 import UserAccountMenu from './UserAccountMenu';
 import AnnouncementBanner from './AnnouncementBanner';
 import HomeBentoHub from './HomeBentoHub';
+import StatsDashboard from './StatsDashboard';
 import { PROGRESS_SYNCED_EVENT } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import ThemeHero3DDiorama from './ThemeHero3DDiorama';
@@ -1792,297 +1793,31 @@ export default function CourseSelector({
       )}
 
       {/* ====================================================================
-          TAB 3: THỐNG KÊ HỌC TẬP CÁ NHÂN (PERSONAL ANALYTICS DASHBOARD)
+          TAB 3: THỐNG KÊ HỌC TẬP CÁ NHÂN (PERSONAL ANALYTICS DASHBOARD v2)
           ==================================================================== */}
       {activeTab === 'stats' && (
-        <main className="stats-dashboard-container">
-          {/* Header Banner Thống kê */}
-          <section className="stats-hero-banner">
-            <div className="stats-hero-text">
-              <span className="home-hero-eyebrow">📊 THỐNG KÊ HỌC TẬP CÁ NHÂN · FPT UNIVERSITY</span>
-              <h1 className="stats-hero-title">Hồ sơ Tiến độ &amp; Năng lực Ôn tập</h1>
-              <p className="stats-hero-desc">
-                Theo dõi trực tiếp số môn đã học, số bộ đề đã hoàn thành, tổng số câu trả lời đúng và tỷ lệ hoàn thành trên từng khối ngành đào tạo của Đại học FPT.
-              </p>
-            </div>
-            <div className="stats-hero-actions">
-              <button
-                type="button"
-                className="home-hero-primary-btn"
-                onClick={() => switchTab('library')}
-              >
-                <span>📚 Vào Thư viện luyện đề</span>
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
-          </section>
-
-          {/* 4 KPI Cards */}
-          <section className="stats-kpi-grid">
-            <div className="stats-kpi-card">
-              <div className="stats-kpi-top">
-                <span className="stats-kpi-label">Môn học đã tham gia</span>
-                <span className="stats-kpi-icon purple">📘</span>
-              </div>
-              <div className="stats-kpi-value">
-                {studyStats.studiedCourses.length}
-                <span className="stats-kpi-total"> / {courses.length} môn</span>
-              </div>
-              <div className="stats-kpi-sub">
-                Đã Pass 100%: <strong>{studyStats.passedCourses.length} môn</strong> · Đang học: <strong>{studyStats.inProgressCourses.length} môn</strong>
-              </div>
-            </div>
-
-            <div className="stats-kpi-card">
-              <div className="stats-kpi-top">
-                <span className="stats-kpi-label">Bộ đề đã luyện tập</span>
-                <span className="stats-kpi-icon blue">📝</span>
-              </div>
-              <div className="stats-kpi-value">
-                {studyStats.startedSets.length}
-                <span className="stats-kpi-total"> / {quizSets.length} đề</span>
-              </div>
-              <div className="stats-kpi-sub">
-                Hoàn thành 100%: <strong>{studyStats.completedSets.length} bộ đề</strong>
-              </div>
-            </div>
-
-            <div className="stats-kpi-card">
-              <div className="stats-kpi-top">
-                <span className="stats-kpi-label">Câu hỏi đã trả lời đúng</span>
-                <span className="stats-kpi-icon green">🎯</span>
-              </div>
-              <div className="stats-kpi-value">
-                {studyStats.totalMastered.toLocaleString('vi-VN')}
-                <span className="stats-kpi-total"> / {studyStats.totalQuestions.toLocaleString('vi-VN')}</span>
-              </div>
-              <div className="stats-kpi-sub">
-                Tỷ lệ chinh phục toàn kho: <strong>{studyStats.overallPercent}%</strong>
-              </div>
-            </div>
-
-            <div className="stats-kpi-card">
-              <div className="stats-kpi-top">
-                <span className="stats-kpi-label">Thẻ ghi nhớ (Flashcards)</span>
-                <span className="stats-kpi-icon amber">🗂️</span>
-              </div>
-              <div className="stats-kpi-value">
-                {studyStats.flashcardKnown}
-                <span className="stats-kpi-total"> / {studyStats.flashcardTotal} thẻ</span>
-              </div>
-              <div className="stats-kpi-sub">
-                Tiến độ thuộc thuật ngữ: <strong>{studyStats.flashcardPercent}%</strong>
-              </div>
-            </div>
-          </section>
-
-          {/* Biểu đồ tiến độ theo 7 khối ngành FPT University */}
-          <section className="stats-panel-card">
-            <div className="stats-panel-header">
-              <div>
-                <h2 className="stats-panel-title">📈 Biểu đồ Tiến độ theo 7 Khối ngành FPT University</h2>
-                <p className="stats-panel-subtitle">
-                  Thống kê chi tiết số môn, số bộ đề và số câu hỏi đã thuộc trên từng khối ngành (bao gồm các môn giao thoa học chung).
-                </p>
-              </div>
-            </div>
-
-            <div className="stats-major-bars-list">
-              {studyStats.majorStats.map((m) => (
-                <div
-                  key={m.key}
-                  className="stats-major-row"
-                  style={
-                    {
-                      '--row-color': m.meta.primary,
-                      '--row-soft': m.meta.soft,
-                      '--row-border': m.meta.border,
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="stats-major-row-head">
-                    <div className="stats-major-row-title-group">
-                      <span className="stats-major-pill">{m.meta.shortLabel}</span>
-                      <span className="stats-major-name">{m.meta.label}</span>
-                    </div>
-
-                    <div className="stats-major-row-metrics">
-                      <span>
-                        <strong>{m.studiedCourses}</strong>/{m.totalCourses} môn đã học
-                      </span>
-                      <span className="stats-dot">·</span>
-                      <span>
-                        <strong>{m.passedCourses}</strong> môn Pass
-                      </span>
-                      <span className="stats-dot">·</span>
-                      <span>
-                        <strong>{m.masteredQuestions.toLocaleString('vi-VN')}</strong>/{m.totalQuestions.toLocaleString('vi-VN')} câu ({m.percent}%)
-                      </span>
-                      <button
-                        type="button"
-                        className="stats-major-go-btn"
-                        onClick={() => openLibraryWithCategory(m.key)}
-                      >
-                        Ôn ngành này →
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="stats-major-bar-track">
-                    <div
-                      className="stats-major-bar-fill"
-                      style={{ width: `${Math.max(m.percent, m.studiedCourses > 0 ? 2 : 0)}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 2 Cột: Môn đang học & Bộ đề đã luyện */}
-          <section className="stats-two-col-grid">
-            {/* Cột 1: Môn học đã có tiến độ */}
-            <div className="stats-panel-card">
-              <div className="stats-panel-header">
-                <div>
-                  <h2 className="stats-panel-title">
-                    🏆 Các môn đã học ({studyStats.studiedCourses.length})
-                  </h2>
-                  <p className="stats-panel-subtitle">
-                    Sắp xếp theo tỷ lệ hoàn thành từ cao xuống thấp. Bấm vào môn để mở danh sách đề.
-                  </p>
-                </div>
-              </div>
-
-              {studyStats.studiedCourses.length === 0 ? (
-                <div className="stats-empty-box">
-                  <p>Bạn chưa có môn học nào có tiến độ (&gt; 0%).</p>
-                  <button
-                    type="button"
-                    className="home-empty-btn"
-                    onClick={() => switchTab('library')}
-                  >
-                    Chọn môn học trong Thư viện →
-                  </button>
-                </div>
-              ) : (
-                <div className="stats-item-list">
-                  {studyStats.studiedCourses.map((course) => {
-                    const prog = studyStats.courseProgressMap.get(course.id)!;
-                    const primaryCat = getCourseCategories(course)[0];
-                    const cm = CATEGORY_META_MAP[primaryCat];
-                    return (
-                      <div
-                        key={course.id}
-                        className="stats-item-row"
-                        onClick={() => onSelectCourse(course)}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        <div className="stats-item-left">
-                          <div className="stats-item-badges">
-                            <span className="stats-item-code">{course.code}</span>
-                            <span
-                              className="subject-major-tag"
-                              style={
-                                {
-                                  '--tag-color': cm.primary,
-                                  '--tag-bg': cm.soft,
-                                  '--tag-border': cm.border,
-                                } as React.CSSProperties
-                              }
-                            >
-                              {cm.shortLabel}
-                            </span>
-                            {prog.isPassed && <span className="stats-pass-pill">✓ PASS</span>}
-                          </div>
-                          <span className="stats-item-name">{course.name}</span>
-                          <span className="stats-item-sub">
-                            Đã thuộc {prog.masteredQuestions}/{prog.totalQuestions} câu ({prog.totalSets} bộ đề)
-                          </span>
-                        </div>
-
-                        <div className="stats-item-right">
-                          <span className="stats-item-percent">{prog.percent}%</span>
-                          <div className="stats-mini-bar">
-                            <div className="stats-mini-bar-fill" style={{ width: `${prog.percent}%` }} />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* Cột 2: Các bộ đề đã luyện tập */}
-            <div className="stats-panel-card">
-              <div className="stats-panel-header">
-                <div>
-                  <h2 className="stats-panel-title">
-                    📝 Các bộ đề đã làm ({studyStats.startedSets.length})
-                  </h2>
-                  <p className="stats-panel-subtitle">
-                    Các bộ đề bạn đang làm dở hoặc đã hoàn thành. Bấm vào đề để vào thi tiếp ngay.
-                  </p>
-                </div>
-              </div>
-
-              {studyStats.startedSets.length === 0 ? (
-                <div className="stats-empty-box">
-                  <p>Bạn chưa bắt đầu làm bộ đề nào.</p>
-                  <button
-                    type="button"
-                    className="home-empty-btn"
-                    onClick={() => switchTab('library')}
-                  >
-                    Bắt đầu luyện đề ngay →
-                  </button>
-                </div>
-              ) : (
-                <div className="stats-item-list">
-                  {studyStats.startedSets.slice(0, 30).map(({ set, course, total, mastered, percent }) => (
-                    <div
-                      key={set.id}
-                      className="stats-item-row"
-                      onClick={() => {
-                        if (onSelectSet) {
-                          onSelectSet(set);
-                        } else if (course) {
-                          onSelectCourse(course);
-                        }
-                      }}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <div className="stats-item-left">
-                        <div className="stats-item-badges">
-                          <span className="stats-item-code">{course?.code || set.courseId?.toUpperCase()}</span>
-                          {percent >= 100 ? (
-                            <span className="stats-pass-pill">✓ Hoàn thành</span>
-                          ) : (
-                            <span className="stats-doing-pill">Đang ôn</span>
-                          )}
-                        </div>
-                        <span className="stats-item-name">{set.title}</span>
-                        <span className="stats-item-sub">
-                          Đã trả lời đúng {mastered}/{total} câu
-                        </span>
-                      </div>
-
-                      <div className="stats-item-right">
-                        <span className="stats-item-percent">{percent}%</span>
-                        <div className="stats-mini-bar">
-                          <div className="stats-mini-bar-fill" style={{ width: `${percent}%` }} />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </section>
-        </main>
+        <StatsDashboard
+          courses={courses}
+          quizSets={quizSets}
+          flashcardSets={flashcardSets}
+          courseProgressMap={studyStats.courseProgressMap}
+          studiedCourses={studyStats.studiedCourses}
+          inProgressCourses={studyStats.inProgressCourses}
+          passedCourses={studyStats.passedCourses}
+          startedSets={studyStats.startedSets}
+          completedSets={studyStats.completedSets}
+          totalMastered={studyStats.totalMastered}
+          studiedCoursesTotalQuestions={studyStats.studiedCoursesTotalQuestions}
+          flashcardTotal={studyStats.flashcardTotal}
+          flashcardKnown={studyStats.flashcardKnown}
+          flashcardPercent={studyStats.flashcardPercent}
+          majorStats={studyStats.majorStats}
+          onSelectCourse={onSelectCourse}
+          onSelectSet={onSelectSet}
+          onSelectFlashcard={onSelectFlashcard}
+          onSwitchTab={switchTab}
+          onOpenMajorLibrary={(major) => openLibraryWithCategory(major)}
+        />
       )}
 
       {/* ====================================================================
