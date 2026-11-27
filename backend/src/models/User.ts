@@ -1,5 +1,8 @@
 import mongoose, { Schema, type Document } from 'mongoose';
 
+export type UserRole = 'user' | 'admin';
+export type UserStatus = 'active' | 'banned';
+
 export interface IUser extends Document {
   _id: mongoose.Types.ObjectId;
   googleId: string;
@@ -11,6 +14,11 @@ export interface IUser extends Document {
   bio: string;
   studentId: string;
   targetSemester: string;
+  role: UserRole;
+  status: UserStatus;
+  bannedReason: string;
+  bannedAt: Date | null;
+  adminNote: string;
   xp: number;
   level: number;
   streakDays: number;
@@ -19,7 +27,7 @@ export interface IUser extends Document {
   studyDates: string[];
   recentCourseIds: string[];
   totalCatalogQuestions: number;
-  lastLoginAt: Date;
+  lastLoginAt: Date | null;
   lastSyncedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -36,6 +44,11 @@ const userSchema = new Schema<IUser>(
     bio: { type: String, default: '', trim: true, maxlength: 240 },
     studentId: { type: String, default: '', trim: true, maxlength: 40 },
     targetSemester: { type: String, default: '', trim: true, maxlength: 40 },
+    role: { type: String, enum: ['user', 'admin'], default: 'user', index: true },
+    status: { type: String, enum: ['active', 'banned'], default: 'active', index: true },
+    bannedReason: { type: String, default: '', trim: true, maxlength: 300 },
+    bannedAt: { type: Date, default: null },
+    adminNote: { type: String, default: '', trim: true, maxlength: 500 },
     xp: { type: Number, default: 0, min: 0 },
     level: { type: Number, default: 1, min: 1 },
     streakDays: { type: Number, default: 0, min: 0 },

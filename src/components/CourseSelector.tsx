@@ -11,6 +11,7 @@ import {
 import type { HomeNavTab } from '../utils/router';
 import PassedBadge from './PassedBadge';
 import UserAccountMenu from './UserAccountMenu';
+import AnnouncementBanner from './AnnouncementBanner';
 import { PROGRESS_SYNCED_EVENT } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import ThemeHero3DDiorama from './ThemeHero3DDiorama';
@@ -1094,6 +1095,8 @@ export default function CourseSelector({
           </nav>
         </div>
       </header>
+
+      <AnnouncementBanner />
 
       {/* ====================================================================
           TAB 1: TRANG CHỦ (HERO + TIẾN ĐỘ ĐANG HỌC / GẦN ĐÂY + LỐI TẮT NGÀNH)

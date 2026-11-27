@@ -8,6 +8,8 @@ import { getDatabaseStatus } from './config/database.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import progressRoutes from './routes/progress.js';
+import announcementsRoutes from './routes/announcements.js';
+import adminRoutes from './routes/admin.js';
 
 export function createApp() {
   const app = express();
@@ -86,6 +88,8 @@ export function createApp() {
   app.use('/api/auth', authLimiter, authRoutes);
   app.use('/api/profile', apiLimiter, profileRoutes);
   app.use('/api/progress', apiLimiter, progressRoutes);
+  app.use('/api/announcements', apiLimiter, announcementsRoutes);
+  app.use('/api/admin', apiLimiter, adminRoutes);
 
   app.use((_req, res) => {
     res.status(404).json({

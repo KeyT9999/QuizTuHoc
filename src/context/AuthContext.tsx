@@ -39,6 +39,7 @@ interface AuthContextValue {
   user: UserProfileBasics | null;
   profile: FullProfileResponse | null;
   isAuthenticated: boolean;
+  isAdmin: boolean;
   isLoading: boolean;
   isSyncing: boolean;
   isBackendReady: boolean;
@@ -57,6 +58,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const OAUTH_ERROR_MESSAGES: Record<string, string> = {
   cancelled: 'Bạn đã hủy đăng nhập Google.',
+  account_banned: 'Tài khoản của bạn đã bị quản trị viên khóa.',
   google_not_configured: 'Máy chủ backend chưa cấu hình Google OAuth.',
   invalid_state: 'Phiên đăng nhập Google đã hết hạn. Vui lòng thử đăng nhập lại.',
   email_not_verified: 'Email Google của bạn chưa được xác minh.',
@@ -386,6 +388,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user: profile?.user ?? null,
         profile,
         isAuthenticated,
+        isAdmin: profile?.user.role === 'admin',
         isLoading,
         isSyncing,
         isBackendReady,

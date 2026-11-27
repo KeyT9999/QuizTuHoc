@@ -169,12 +169,26 @@
 }
 
 .uam-dropdown-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 14px;
   font-weight: 800;
   color: var(--theme-text-primary, #0f172a);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.uam-admin-tag {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
 }
 
 .uam-dropdown-email {
@@ -235,6 +249,16 @@
 .uam-menu-item:disabled {
   opacity: 0.6;
   cursor: wait;
+}
+
+.uam-menu-item.is-admin {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.uam-menu-item.is-admin:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
 }
 
 .uam-menu-item.is-danger {

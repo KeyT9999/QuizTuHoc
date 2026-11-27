@@ -9,6 +9,7 @@ import Result from './components/Result';
 import Flashcard from './components/Flashcard';
 import KnowledgeGroupPicker from './components/KnowledgeGroupPicker';
 import ProfilePage from './components/ProfilePage';
+import AdminPage from './components/AdminPage';
 import { notifyStudyProgressUpdated } from './utils/studyProgressEvents';
 import type { Question } from './utils/quizParser';
 import { parseQuizText } from './utils/quizParser';
@@ -764,7 +765,12 @@ export default function App() {
           />
         )}
 
-        {/* 10. Màn hình trung gian xử lý callback đăng nhập Google */}
+        {/* 10. Màn hình Quản trị Admin */}
+        {route.type === 'admin' && (
+          <AdminPage onNavigateTab={handleNavigateHomeTab} />
+        )}
+
+        {/* 11. Màn hình trung gian xử lý callback đăng nhập Google */}
         {route.type === 'auth_callback' && (
           <div className="app-error-state">
             <h3>Đang hoàn tất đăng nhập Google...</h3>

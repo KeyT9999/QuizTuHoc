@@ -1,7 +1,7 @@
 import { Router, type Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import { z } from 'zod';
-import { env, isGoogleAuthConfigured } from '../config/env.js';
+import { env, isBootstrapAdminEmail, isGoogleAuthConfigured } from '../config/env.js';
 import { User } from '../models/User.js';
 import { OAuthState } from '../models/OAuthState.js';
 import { AuthTicket } from '../models/AuthTicket.js';
@@ -157,15 +157,22 @@ router.get('/google/callback', async (req, res) => {
     const avatar = payload.picture?.trim() || '';
     const now = new Date();
 
-    // 4. Upsert user in MongoDB (preserve custom display name if already edited)
+    // 4. Upsert user in MongoDB (preserve custom display name & role if already configured)
     let user = await User.findOne({ $or: [{ googleId }, { email }] });
+    const shouldBeBootstrapAdmin = isBootstrapAdminEmail(email);
+
     if (user) {
+      if (user.status === 'banned') {
+        redirectToFrontendError(res, 'account_banned');
+        return;
+      }
       user.googleId = googleId;
       user.email = email;
       user.googleName = googleName;
       if (!user.name) user.name = googleName;
       if (givenName) user.givenName = givenName;
       if (avatar) user.avatar = avatar;
+      if (shouldBeBootstrapAdmin && user.role !== 'admin') user.role = 'admin';
       user.lastLoginAt = now;
       await user.save();
     } else {
@@ -176,6 +183,8 @@ router.get('/google/callback', async (req, res) => {
         name: googleName,
         givenName,
         avatar,
+        role: shouldBeBootstrapAdmin ? 'admin' : 'user',
+        status: 'active',
         lastLoginAt: now,
       });
     }
@@ -241,6 +250,18 @@ router.post('/exchange', async (req, res) => {
         error: {
           code: 'USER_NOT_FOUND',
           message: 'Không tìm thấy tài khoản.',
+        },
+      });
+      return;
+    }
+
+    if (user.status === 'banned') {
+      res.status(403).json({
+        error: {
+          code: 'ACCOUNT_BANNED',
+          message: user.bannedReason
+            ? `Tài khoản đã bị khóa: ${user.bannedReason}`
+            : 'Tài khoản của bạn đã bị quản trị viên khóa.',
         },
       });
       return;

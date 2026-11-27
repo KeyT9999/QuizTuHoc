@@ -138,7 +138,10 @@ export default function UserAccountMenu({ onOpenProfile }: UserAccountMenuProps)
       {menuOpen && (
         <div className="uam-dropdown" role="menu">
           <div className="uam-dropdown-header">
-            <div className="uam-dropdown-name">{user.name}</div>
+            <div className="uam-dropdown-name">
+              {user.name}
+              {user.role === 'admin' && <span className="uam-admin-tag">ADMIN</span>}
+            </div>
             <div className="uam-dropdown-email">{user.email}</div>
             <div className="uam-dropdown-badges">
               <span className="uam-badge-pill">⭐ Lv.{user.level}</span>
@@ -157,6 +160,21 @@ export default function UserAccountMenu({ onOpenProfile }: UserAccountMenuProps)
               <span>👤</span>
               <span>Hồ sơ & Tiến độ học</span>
             </button>
+
+            {user.role === 'admin' && (
+              <button
+                type="button"
+                className="uam-menu-item is-admin"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigateTo('/admin');
+                }}
+              >
+                <span>🛡️</span>
+                <span>Trang Quản trị Admin</span>
+              </button>
+            )}
 
             <button
               type="button"

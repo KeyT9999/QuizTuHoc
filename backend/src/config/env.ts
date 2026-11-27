@@ -12,6 +12,18 @@ function parseOrigins(raw: string | undefined, fallback: string): string[] {
   return Array.from(new Set(list));
 }
 
+function parseEmailList(raw: string | undefined): string[] {
+  if (!raw) return [];
+  return Array.from(
+    new Set(
+      raw
+        .split(',')
+        .map((item) => item.trim().toLowerCase())
+        .filter(Boolean)
+    )
+  );
+}
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const env = {
@@ -35,7 +47,12 @@ export const env = {
     process.env.FRONTEND_URL || 'http://localhost:5173'
   ),
   cookieDomain: process.env.COOKIE_DOMAIN?.trim() || undefined,
+  adminEmails: parseEmailList(process.env.ADMIN_EMAILS),
 };
+
+export function isBootstrapAdminEmail(email: string): boolean {
+  return env.adminEmails.includes(email.trim().toLowerCase());
+}
 
 export function validateEnv(): void {
   const missing: string[] = [];

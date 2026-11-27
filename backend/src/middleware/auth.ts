@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import { isBootstrapAdminEmail } from '../config/env.js';
 import { User, type IUser } from '../models/User.js';
 import { verifySessionToken } from '../utils/jwt.js';
 
@@ -63,6 +64,24 @@ export async function requireAuth(
       return;
     }
 
+    if (user.status === 'banned') {
+      res.status(403).json({
+        error: {
+          code: 'ACCOUNT_BANNED',
+          message: user.bannedReason
+            ? `Tài khoản đã bị khóa: ${user.bannedReason}`
+            : 'Tài khoản của bạn đã bị quản trị viên khóa.',
+        },
+      });
+      return;
+    }
+
+    // Ensure bootstrap admin emails from ADMIN_EMAILS always have admin role
+    if (isBootstrapAdminEmail(user.email) && user.role !== 'admin') {
+      user.role = 'admin';
+      await user.save();
+    }
+
     req.authUser = user;
     next();
   } catch (error) {
@@ -74,4 +93,21 @@ export async function requireAuth(
       },
     });
   }
+}
+
+export function requireAdmin(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+): void {
+  if (!req.authUser || req.authUser.role !== 'admin') {
+    res.status(403).json({
+      error: {
+        code: 'FORBIDDEN',
+        message: 'Bạn không có quyền truy cập khu vực quản trị Admin.',
+      },
+    });
+    return;
+  }
+  next();
 }

@@ -9,6 +9,7 @@ export type AppRoute =
   | { type: 'new_quiz'; courseId: string }
   | { type: 'flashcard' }
   | { type: 'profile' }
+  | { type: 'admin' }
   | { type: 'auth_callback' };
 
 export function parseRoute(pathname: string): AppRoute {
@@ -32,6 +33,9 @@ export function parseRoute(pathname: string): AppRoute {
     }
     if (parts[0] === 'profile') {
       return { type: 'profile' };
+    }
+    if (parts[0] === 'admin') {
+      return { type: 'admin' };
     }
   }
 
@@ -89,6 +93,8 @@ export function buildRouteUrl(route: AppRoute): string {
       return '/flashcards';
     case 'profile':
       return '/profile';
+    case 'admin':
+      return '/admin';
     case 'auth_callback':
       return '/auth/callback';
   }

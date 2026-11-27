@@ -11,6 +11,10 @@ export interface RecentStudyDay {
   studied: boolean;
 }
 
+export type UserRole = 'user' | 'admin';
+export type UserStatus = 'active' | 'banned';
+export type AnnouncementType = 'info' | 'update' | 'warning' | 'event';
+
 export interface UserProfileBasics {
   id: string;
   email: string;
@@ -21,6 +25,9 @@ export interface UserProfileBasics {
   bio: string;
   studentId: string;
   targetSemester: string;
+  role?: UserRole;
+  status?: UserStatus;
+  bannedReason?: string;
   xp: number;
   level: number;
   currentLevelXp: number;
@@ -328,4 +335,317 @@ export async function logoutBackend(): Promise<void> {
   } catch {
     // Ignore logout network error and clear local token regardless
   }
+}
+
+// ============================================================================
+// PUBLIC ANNOUNCEMENTS & ADMIN CRUD APIs
+// ============================================================================
+
+export interface PublicAnnouncement {
+  id: string;
+  title: string;
+  content: string;
+  type: AnnouncementType;
+  linkUrl: string;
+  linkLabel: string;
+  isPinned: boolean;
+  createdAt: string;
+}
+
+export interface AdminAnnouncement extends PublicAnnouncement {
+  isActive: boolean;
+  expiresAt: string | null;
+  createdByEmail: string;
+  updatedAt: string;
+}
+
+export interface AdminOverviewResponse {
+  totals: {
+    totalUsers: number;
+    activeUsers: number;
+    bannedUsers: number;
+    adminCount: number;
+    newUsers7d: number;
+    activeTodayCount: number;
+    totalMasteredQuestions: number;
+    totalStartedSets: number;
+    totalCompletedSets: number;
+    totalFlashcardsKnown: number;
+    activeAnnouncementsCount: number;
+  };
+  dailyActivity7d: Array<{
+    date: string;
+    activeLearners: number;
+    newUsers: number;
+  }>;
+  topCourses: Array<{
+    courseId: string;
+    courseCode: string;
+    courseName: string;
+    learnersCount: number;
+    avgPercent: number;
+    passedCount: number;
+    totalMastered: number;
+  }>;
+  topLearners: Array<{
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+    role: UserRole;
+    xp: number;
+    level: number;
+    streakDays: number;
+    totalStudyDays: number;
+  }>;
+}
+
+export interface AdminUserListItem {
+  id: string;
+  email: string;
+  name: string;
+  googleName: string;
+  avatar: string;
+  bio: string;
+  studentId: string;
+  targetSemester: string;
+  role: UserRole;
+  status: UserStatus;
+  bannedReason: string;
+  bannedAt: string | null;
+  adminNote: string;
+  isPreProvisioned: boolean;
+  xp: number;
+  level: number;
+  streakDays: number;
+  longestStreakDays: number;
+  totalStudyDays: number;
+  studiedCoursesCount: number;
+  passedCoursesCount: number;
+  studiedCoursesPercent: number;
+  totalMasteredQuestions: number;
+  startedSetsCount: number;
+  completedSetsCount: number;
+  flashcardsKnown: number;
+  lastLoginAt: string | null;
+  lastSyncedAt: string | null;
+  createdAt: string;
+}
+
+export interface AdminUsersListResponse {
+  users: AdminUserListItem[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export interface AdminUserDetailResponse extends FullProfileResponse {
+  adminMeta: {
+    role: UserRole;
+    status: UserStatus;
+    bannedReason: string;
+    bannedAt: string | null;
+    adminNote: string;
+    isPreProvisioned: boolean;
+    studyDates: string[];
+  };
+}
+
+export interface AdminCreateUserInput {
+  email: string;
+  name: string;
+  studentId?: string;
+  targetSemester?: string;
+  bio?: string;
+  role?: UserRole;
+  adminNote?: string;
+}
+
+export interface AdminUpdateUserInput {
+  name?: string;
+  studentId?: string;
+  targetSemester?: string;
+  bio?: string;
+  role?: UserRole;
+  status?: UserStatus;
+  bannedReason?: string;
+  adminNote?: string;
+}
+
+export interface AdminAnnouncementInput {
+  title: string;
+  content: string;
+  type: AnnouncementType;
+  linkUrl?: string;
+  linkLabel?: string;
+  isActive?: boolean;
+  isPinned?: boolean;
+  expiresAt?: string | null;
+}
+
+export interface AdminAuditLogItem {
+  id: string;
+  adminEmail: string;
+  action: string;
+  targetType: 'user' | 'announcement' | 'system';
+  targetId: string;
+  targetLabel: string;
+  details: string;
+  createdAt: string;
+}
+
+export async function fetchActiveAnnouncements(): Promise<{ announcements: PublicAnnouncement[] }> {
+  return apiFetch<{ announcements: PublicAnnouncement[] }>('/api/announcements/active', {
+    method: 'GET',
+    skipAuthHeader: true,
+  });
+}
+
+export async function fetchAdminOverview(): Promise<AdminOverviewResponse> {
+  return apiFetch<AdminOverviewResponse>('/api/admin/overview', { method: 'GET' });
+}
+
+export async function fetchAdminUsers(params: {
+  search?: string;
+  role?: string;
+  status?: string;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}): Promise<AdminUsersListResponse> {
+  const qs = new URLSearchParams();
+  if (params.search) qs.set('search', params.search);
+  if (params.role && params.role !== 'all') qs.set('role', params.role);
+  if (params.status && params.status !== 'all') qs.set('status', params.status);
+  if (params.sort) qs.set('sort', params.sort);
+  if (params.page) qs.set('page', String(params.page));
+  if (params.limit) qs.set('limit', String(params.limit));
+  const query = qs.toString();
+  return apiFetch<AdminUsersListResponse>(`/api/admin/users${query ? `?${query}` : ''}`, {
+    method: 'GET',
+  });
+}
+
+export async function fetchAdminUserDetail(userId: string): Promise<AdminUserDetailResponse> {
+  return apiFetch<AdminUserDetailResponse>(`/api/admin/users/${encodeURIComponent(userId)}`, {
+    method: 'GET',
+  });
+}
+
+export async function createAdminUser(payload: AdminCreateUserInput): Promise<{ id: string }> {
+  return apiFetch<{ id: string }>('/api/admin/users', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+export async function updateAdminUser(
+  userId: string,
+  payload: AdminUpdateUserInput
+): Promise<AdminUserDetailResponse> {
+  return apiFetch<AdminUserDetailResponse>(`/api/admin/users/${encodeURIComponent(userId)}`, {
+    method: 'PATCH',
+    body: payload,
+  });
+}
+
+export async function recalculateAdminUser(userId: string): Promise<FullProfileResponse> {
+  return apiFetch<FullProfileResponse>(
+    `/api/admin/users/${encodeURIComponent(userId)}/recalculate`,
+    { method: 'POST' }
+  );
+}
+
+export async function resetAdminUserProgress(
+  userId: string,
+  scope: 'all' | 'set',
+  setId?: string
+): Promise<FullProfileResponse> {
+  return apiFetch<FullProfileResponse>(
+    `/api/admin/users/${encodeURIComponent(userId)}/reset-progress`,
+    {
+      method: 'POST',
+      body: { scope, ...(setId ? { setId } : {}) },
+    }
+  );
+}
+
+export async function deleteAdminUser(userId: string): Promise<{ ok: boolean; deletedId: string }> {
+  return apiFetch<{ ok: boolean; deletedId: string }>(
+    `/api/admin/users/${encodeURIComponent(userId)}`,
+    { method: 'DELETE' }
+  );
+}
+
+export async function downloadAdminUsersCsv(): Promise<void> {
+  const baseUrl = getBackendBaseUrl();
+  if (!baseUrl) {
+    throw new BackendApiError(503, 'BACKEND_NOT_CONFIGURED', 'Chưa cấu hình backend.');
+  }
+  const token = getStoredAuthToken();
+  const headers: Record<string, string> = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const res = await fetch(`${baseUrl}/api/admin/users/export.csv`, {
+    method: 'GET',
+    headers,
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new BackendApiError(res.status, 'EXPORT_FAILED', 'Không thể xuất file CSV.');
+  }
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = `quiztuhoc-users-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+export async function fetchAdminAnnouncements(): Promise<{ announcements: AdminAnnouncement[] }> {
+  return apiFetch<{ announcements: AdminAnnouncement[] }>('/api/admin/announcements', {
+    method: 'GET',
+  });
+}
+
+export async function createAdminAnnouncement(
+  payload: AdminAnnouncementInput
+): Promise<{ announcement: AdminAnnouncement }> {
+  return apiFetch<{ announcement: AdminAnnouncement }>('/api/admin/announcements', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+export async function updateAdminAnnouncement(
+  id: string,
+  payload: Partial<AdminAnnouncementInput>
+): Promise<{ announcement: AdminAnnouncement }> {
+  return apiFetch<{ announcement: AdminAnnouncement }>(
+    `/api/admin/announcements/${encodeURIComponent(id)}`,
+    {
+      method: 'PATCH',
+      body: payload,
+    }
+  );
+}
+
+export async function deleteAdminAnnouncement(id: string): Promise<{ ok: boolean }> {
+  return apiFetch<{ ok: boolean }>(`/api/admin/announcements/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function fetchAdminAuditLogs(limit = 50): Promise<{ logs: AdminAuditLogItem[] }> {
+  return apiFetch<{ logs: AdminAuditLogItem[] }>(`/api/admin/audit-logs?limit=${limit}`, {
+    method: 'GET',
+  });
 }

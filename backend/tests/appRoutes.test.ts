@@ -62,6 +62,15 @@ test('PUT /api/progress/sync requires authentication', async () => {
   });
 });
 
+test('Admin endpoints reject unauthenticated requests with 401', async () => {
+  await withServer(async (baseUrl) => {
+    const res = await fetch(`${baseUrl}/api/admin/overview`);
+    assert.equal(res.status, 401);
+    const body = (await res.json()) as { error?: { code?: string } };
+    assert.equal(body.error?.code, 'UNAUTHORIZED');
+  });
+});
+
 test('Unknown route returns structured 404 JSON', async () => {
   await withServer(async (baseUrl) => {
     const res = await fetch(`${baseUrl}/api/does-not-exist`);
