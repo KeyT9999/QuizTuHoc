@@ -497,6 +497,39 @@ export interface AdminAuditLogItem {
   createdAt: string;
 }
 
+export interface LeaderboardEntry {
+  rank: number;
+  id: string;
+  name: string;
+  avatar: string;
+  studentId: string;
+  role: UserRole;
+  xp: number;
+  level: number;
+  streakDays: number;
+  longestStreakDays: number;
+  studiedCoursesCount: number;
+  totalMasteredQuestions: number;
+  isCurrentUser: boolean;
+}
+
+export interface LeaderboardResponse {
+  sort: 'xp' | 'streak';
+  totalActiveLearners: number;
+  communityMasteredQuestions: number;
+  leaders: LeaderboardEntry[];
+  myRank: LeaderboardEntry | null;
+}
+
+export async function fetchLeaderboard(
+  sort: 'xp' | 'streak' = 'xp',
+  limit = 6
+): Promise<LeaderboardResponse> {
+  return apiFetch<LeaderboardResponse>(`/api/leaderboard?sort=${sort}&limit=${limit}`, {
+    method: 'GET',
+  });
+}
+
 export async function fetchActiveAnnouncements(): Promise<{ announcements: PublicAnnouncement[] }> {
   return apiFetch<{ announcements: PublicAnnouncement[] }>('/api/announcements/active', {
     method: 'GET',

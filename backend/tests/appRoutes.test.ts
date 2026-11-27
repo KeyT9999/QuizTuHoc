@@ -71,6 +71,15 @@ test('Admin endpoints reject unauthenticated requests with 401', async () => {
   });
 });
 
+test('GET /api/leaderboard is mounted and responds JSON', async () => {
+  await withServer(async (baseUrl) => {
+    const res = await fetch(`${baseUrl}/api/leaderboard`);
+    assert.ok(res.status === 200 || res.status === 500);
+    const contentType = res.headers.get('content-type') || '';
+    assert.ok(contentType.includes('application/json'));
+  });
+});
+
 test('Unknown route returns structured 404 JSON', async () => {
   await withServer(async (baseUrl) => {
     const res = await fetch(`${baseUrl}/api/does-not-exist`);

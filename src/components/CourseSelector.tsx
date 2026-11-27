@@ -12,6 +12,7 @@ import type { HomeNavTab } from '../utils/router';
 import PassedBadge from './PassedBadge';
 import UserAccountMenu from './UserAccountMenu';
 import AnnouncementBanner from './AnnouncementBanner';
+import HomeBentoHub from './HomeBentoHub';
 import { PROGRESS_SYNCED_EVENT } from '../utils/studyProgressEvents';
 import { useTheme } from '../context/ThemeContext';
 import ThemeHero3DDiorama from './ThemeHero3DDiorama';
@@ -439,6 +440,7 @@ export default function CourseSelector({
   const [sortOrder, setSortOrder] = useState<SortType>('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [homeSubFilter, setHomeSubFilter] = useState<'all' | 'studying' | 'passed' | 'recent'>('all');
+  const [homeQuickSearch, setHomeQuickSearch] = useState('');
   const [syncTick, setSyncTick] = useState(0);
 
   useEffect(() => {
@@ -620,6 +622,11 @@ export default function CourseSelector({
 
     const overallPercent = totalQuestions > 0 ? Math.round((totalMastered / totalQuestions) * 100) : 0;
 
+    let studiedCoursesTotalQuestions = 0;
+    for (const c of studiedCourses) {
+      studiedCoursesTotalQuestions += courseProgressMap.get(c.id)?.totalQuestions ?? 0;
+    }
+
     // Flashcard stats
     const fcProg = flashcardSets.length > 0
       ? getFlashcardProgress(flashcardSets[0])
@@ -680,6 +687,7 @@ export default function CourseSelector({
       featuredCourses,
       totalQuestions,
       totalMastered,
+      studiedCoursesTotalQuestions,
       overallPercent,
       startedSets,
       completedSets,
@@ -738,8 +746,28 @@ export default function CourseSelector({
     return studyStats.activeOrRecentCourses;
   }, [homeSubFilter, studyStats]);
 
+  const homeQuickMatches = useMemo(() => {
+    const q = homeQuickSearch.trim().toLowerCase();
+    if (!q) return [];
+    return courses
+      .filter(
+        (c) =>
+          c.code.toLowerCase().includes(q) ||
+          c.name.toLowerCase().includes(q) ||
+          c.id.toLowerCase().includes(q)
+      )
+      .slice(0, 6);
+  }, [courses, homeQuickSearch]);
+
+  const hotShortcutCourses = useMemo(() => {
+    const codes = ['MLN111', 'HCM202', 'PMG201c', 'SWD392', 'SDN302'];
+    return codes
+      .map((code) => courses.find((c) => c.code.toLowerCase() === code.toLowerCase()))
+      .filter((c): c is Course => Boolean(c));
+  }, [courses]);
+
   // Hàm render 1 thẻ môn học (dùng chung cho cả Trang chủ và Thư viện)
-  const renderCourseCard = (course: Course) => {
+  const renderCourseCard = (course: Course, compact = false) => {
     const courseTheme = getCourseTheme(course, theme);
     const courseCategories = getCourseCategories(course);
 
@@ -772,7 +800,7 @@ export default function CourseSelector({
       return (
         <article
           key={course.id}
-          className="subject-card"
+          className={`subject-card ${compact ? 'subject-card--compact' : ''}`}
           style={{
             '--subj-primary': courseTheme.primary,
             '--subj-soft': courseTheme.soft,
@@ -794,7 +822,7 @@ export default function CourseSelector({
               </div>
               <h2 className="subject-code-title">FLASHCARD</h2>
               <p className="subject-name-text">{course.name}</p>
-              <p className="subject-desc-text">{course.description}</p>
+              {!compact && <p className="subject-desc-text">{course.description}</p>}
             </div>
 
             <div className="subject-top-actions">
@@ -864,7 +892,7 @@ export default function CourseSelector({
     return (
       <article
         key={course.id}
-        className="subject-card"
+        className={`subject-card ${compact ? 'subject-card--compact' : ''}`}
         style={{
           '--subj-primary': courseTheme.primary,
           '--subj-soft': courseTheme.soft,
@@ -907,7 +935,7 @@ export default function CourseSelector({
             </div>
             <h2 className="subject-code-title">{course.code}</h2>
             <p className="subject-name-text">{course.name}</p>
-            <p className="subject-desc-text">{course.description}</p>
+            {!compact && <p className="subject-desc-text">{course.description}</p>}
           </div>
 
           <div className="subject-top-actions">
@@ -1130,6 +1158,81 @@ export default function CourseSelector({
                 </button>
               </div>
 
+              {/* Instant Quick Search right inside Home Hero */}
+              <div className="home-quick-search-wrap">
+                <div className="home-quick-search-box">
+                  <span className="home-quick-search-icon" aria-hidden="true">
+                    🔍
+                  </span>
+                  <input
+                    type="search"
+                    className="home-quick-search-input"
+                    placeholder="Tìm nhanh mã môn học (VD: MLN111, SWD392, PMG201c)..."
+                    value={homeQuickSearch}
+                    onChange={(e) => setHomeQuickSearch(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && homeQuickMatches.length > 0) {
+                        onSelectCourse(homeQuickMatches[0]);
+                        setHomeQuickSearch('');
+                      } else if (e.key === 'Escape') {
+                        setHomeQuickSearch('');
+                      }
+                    }}
+                  />
+                  {homeQuickSearch && (
+                    <button
+                      type="button"
+                      className="home-quick-search-clear"
+                      onClick={() => setHomeQuickSearch('')}
+                      aria-label="Xóa tìm kiếm"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                {homeQuickMatches.length > 0 && (
+                  <div className="home-quick-dropdown" role="listbox">
+                    {homeQuickMatches.map((match) => {
+                      const prog = studyStats.courseProgressMap.get(match.id);
+                      return (
+                        <button
+                          key={match.id}
+                          type="button"
+                          className="home-quick-option"
+                          onClick={() => {
+                            onSelectCourse(match);
+                            setHomeQuickSearch('');
+                          }}
+                        >
+                          <span className="home-quick-code">{match.code}</span>
+                          <span className="home-quick-name">{match.name}</span>
+                          <span className="home-quick-prog">
+                            {prog ? `${prog.percent}% · ${prog.totalSets} đề` : ''}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {hotShortcutCourses.length > 0 && !homeQuickSearch && (
+                  <div className="home-quick-shortcuts">
+                    <span className="home-quick-shortcuts-lbl">Môn hot:</span>
+                    {hotShortcutCourses.map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        className="home-quick-shortcut-chip"
+                        onClick={() => onSelectCourse(c)}
+                      >
+                        {c.code}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               {theme === 'shin-kasukabe' && (
                 <div className="shin-home-scene-bar" role="group" aria-label="Chọn cảnh Kasukabe">
                   <span className="shin-home-scene-label">🎬 Đổi cảnh 3D:</span>
@@ -1203,83 +1306,26 @@ export default function CourseSelector({
 
             <div className="home-hero-right">
               <div className="home-hero-3d-stage">
-                <ThemeHero3DDiorama theme={theme} height={250} />
+                <ThemeHero3DDiorama theme={theme} height={224} />
               </div>
             </div>
           </section>
 
-          {/* 4 Thẻ Tóm tắt Nhanh */}
-          <section className="home-overview-section">
-            <div className="home-overview-grid">
-              <div
-                className="home-overview-card clickable"
-                onClick={() => switchTab('library')}
-                role="button"
-                tabIndex={0}
-              >
-                <div className="home-overview-icon purple">📚</div>
-                <div className="home-overview-body">
-                  <span className="home-overview-value">{courses.length} môn · {quizSets.length} đề</span>
-                  <span className="home-overview-label">Kho đề FPT University</span>
-                  <span className="home-overview-sub">{studyStats.totalQuestions.toLocaleString('vi-VN')} câu trắc nghiệm</span>
-                </div>
-              </div>
-
-              <div
-                className="home-overview-card clickable"
-                onClick={() => switchTab('stats')}
-                role="button"
-                tabIndex={0}
-              >
-                <div className="home-overview-icon blue">🔥</div>
-                <div className="home-overview-body">
-                  <span className="home-overview-value">
-                    {studyStats.studiedCourses.length} môn đang học
-                  </span>
-                  <span className="home-overview-label">Môn học có tiến độ &gt; 0%</span>
-                  <span className="home-overview-sub">
-                    Đã Pass 100%: {studyStats.passedCourses.length} môn
-                  </span>
-                </div>
-              </div>
-
-              <div
-                className="home-overview-card clickable"
-                onClick={() => switchTab('stats')}
-                role="button"
-                tabIndex={0}
-              >
-                <div className="home-overview-icon green">✅</div>
-                <div className="home-overview-body">
-                  <span className="home-overview-value">
-                    {studyStats.startedSets.length} / {quizSets.length} bộ đề
-                  </span>
-                  <span className="home-overview-label">Bộ đề đã luyện tập</span>
-                  <span className="home-overview-sub">
-                    Hoàn thành 100%: {studyStats.completedSets.length} bộ đề
-                  </span>
-                </div>
-              </div>
-
-              <div
-                className="home-overview-card clickable"
-                onClick={() => switchTab('stats')}
-                role="button"
-                tabIndex={0}
-              >
-                <div className="home-overview-icon amber">🎯</div>
-                <div className="home-overview-body">
-                  <span className="home-overview-value">
-                    {studyStats.totalMastered.toLocaleString('vi-VN')} câu
-                  </span>
-                  <span className="home-overview-label">Câu hỏi đã trả lời đúng</span>
-                  <span className="home-overview-sub">
-                    Tổng tiến độ toàn kho: {studyStats.overallPercent}%
-                  </span>
-                </div>
-              </div>
-            </div>
-          </section>
+          {/* Bento Dashboard Cá nhân hóa: Học tiếp 1 bấm + Tiến độ & Streak 7 ngày + Top Học Bá Live */}
+          <HomeBentoHub
+            courses={courses}
+            quizSets={quizSets}
+            flashcardSets={flashcardSets}
+            studiedCourses={studyStats.studiedCourses}
+            passedCourses={studyStats.passedCourses}
+            startedSets={studyStats.startedSets}
+            completedSetsCount={studyStats.completedSets.length}
+            totalMastered={studyStats.totalMastered}
+            studiedCoursesTotalQuestions={studyStats.studiedCoursesTotalQuestions}
+            onSelectCourse={onSelectCourse}
+            onSelectSet={onSelectSet}
+            onSwitchTab={switchTab}
+          />
 
           {/* Khu vực 1: Môn đang học (Tiến độ > 0%) & Vừa xem gần đây */}
           <section className="home-section-block">
@@ -1343,8 +1389,8 @@ export default function CourseSelector({
                 </button>
               </div>
             ) : (
-              <div className="home-cards-grid">
-                {homeActiveList.map((course) => renderCourseCard(course))}
+              <div className="home-cards-grid home-cards-grid--compact">
+                {homeActiveList.map((course) => renderCourseCard(course, true))}
               </div>
             )}
           </section>
@@ -1421,8 +1467,8 @@ export default function CourseSelector({
               </button>
             </div>
 
-            <div className="home-cards-grid">
-              {studyStats.featuredCourses.map((course) => renderCourseCard(course))}
+            <div className="home-cards-grid home-cards-grid--compact">
+              {studyStats.featuredCourses.map((course) => renderCourseCard(course, true))}
             </div>
           </section>
         </>

@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import progressRoutes from './routes/progress.js';
 import announcementsRoutes from './routes/announcements.js';
+import leaderboardRoutes from './routes/leaderboard.js';
 import adminRoutes from './routes/admin.js';
 
 export function createApp() {
@@ -89,6 +90,7 @@ export function createApp() {
   app.use('/api/profile', apiLimiter, profileRoutes);
   app.use('/api/progress', apiLimiter, progressRoutes);
   app.use('/api/announcements', apiLimiter, announcementsRoutes);
+  app.use('/api/leaderboard', apiLimiter, leaderboardRoutes);
   app.use('/api/admin', apiLimiter, adminRoutes);
 
   app.use((_req, res) => {
